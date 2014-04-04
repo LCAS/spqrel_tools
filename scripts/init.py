@@ -6,7 +6,7 @@ import sys
 import time
 import os
 
-import webinit, postureinit, behaviorinit, manage_BG_behaviors
+import webinit, postureinit, behaviorinit, manage_BG_behaviors, tmuxinit
 
 def main():
     parser = argparse.ArgumentParser()
@@ -35,8 +35,8 @@ def main():
     tts_service.say("Initialization started.")
 
     time.sleep(1)
-    webinit.do_init(session)
-    time.sleep(1)
+    #webinit.do_init(session)
+    #time.sleep(1)
     postureinit.do_init(session)
     time.sleep(1)
     manage_BG_behaviors.start_behaviors(session,pip,pport)
@@ -45,7 +45,11 @@ def main():
 
     tabletService = session.service("ALTabletService")
 
-    
+    tmuxinit.do_init()
+
+    tts_service.say("I am ready.")
+
+
 
 if __name__ == "__main__":
     print "Waiting 15 seconds before starting ..."

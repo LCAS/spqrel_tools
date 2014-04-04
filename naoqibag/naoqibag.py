@@ -9,14 +9,23 @@ import functools
 from naoqi import ALProxy
 import Image
 
+# Bag format
+# 0: SPQReL
+# 1: CSV typed
+bag_format = 1
+
+# data read from files
 keys_list = []
+shortnames_list = []
+types_list = []
 
 def readKeysFile(keys_file, memory_service):
+    global keys_list, shortnames_list, types_list
     for line in keys_file:
         key = line.strip()
-
-        if len(key) > 0 and key[0] == '#':
-            print "Skipped comment: ", key
+        if len(key) == 0 or key[0] == '#':
+            #print "Skipped comment: ", key
+            pass
         elif key[0:7] == 'include':
             new_keys_filename = key[8:len(key)]
             try:
@@ -27,8 +36,16 @@ def readKeysFile(keys_file, memory_service):
             except IOError:
                 print "Error opening keys file:", new_keys_filename
         else:
-            keys_list.append(key)
-
+            v = key.split(',')
+            keys_list.append(v[0])
+            n = v[0].strip()
+            if (len(v)>1):
+                n = v[1].strip()
+            shortnames_list.append(n)
+            t = 'double'
+            if (len(v)>2):
+                t = v[2].strip()
+            types_list.append(t)
 
 def onEventCamera(pip, pport, value):
     global camera_enabled
@@ -95,24 +112,102 @@ def cameraMonitorThread (pip, pport, rate):
 
 
 def rhMonitorThread (memory_service, rate, output_file):
-    print 'Starting recording data @%.2fHz'%rate
+    print 'Recording data at @%.2f Hz ...' %rate
 
     t = threading.currentThread()
-    output_file.write(str(keys_list))
-    output_file.write('\n')
+    logheader(output_file,keys_list)
     while getattr(t, "do_run", True):
         try:
             values = memory_service.getListData(keys_list)
-            ts = time.time()
-            timestamp = 'timestamp: %f\n' % ts
-            output_file.write(timestamp)
-            output_file.write(str(values))
-            output_file.write('\n')
-        except:
-            pass
+            if logdata(output_file,values):
+                sys.stdout.write('.') # full log ok
+            else:
+                sys.stdout.write('-') # missing values
+        except Exception as e:
+            sys.stdout.write('X') # error
+            print e
 
+
+        sys.stdout.flush()
         time.sleep(1.0/rate)
     print "Exiting Thread Log"
+
+
+# TTS callback
+#Event: "ALTextToSpeech/CurrentSentence"
+#callback(std::string eventName, std::string value, std::string subscriberIdentifier)
+
+def TTSCurrentSentenceCB(value):
+    print "TTSCurrentSentenceCB: ",value
+
+
+# Touch screen signal 
+
+# qi::Signal<float, float> ALTabletService::onTouchDown
+def touchscreenCB(x, y):
+    print "touchscreenCB: ", x, " ", y
+
+
+
+def logheader(output_file,keys_list):
+    global bag_format
+    if bag_format==0:  # SPQReL
+        output_file.write(str(keys_list))
+        output_file.write('\n')
+    elif bag_format==1:  # CSV typed
+        # names
+        output_file.write('timestamp')
+        output_file.write(',')
+        for n in shortnames_list[0:len(shortnames_list)-1]:            
+            output_file.write(n)
+            output_file.write(',')
+        output_file.write(shortnames_list[len(shortnames_list)-1])
+        output_file.write('\n')
+        # types
+        output_file.write('double') # timestamp
+        output_file.write(',')
+        for t in types_list[0:len(types_list)-1]:
+            output_file.write(t)
+            output_file.write(',')
+        output_file.write(types_list[len(types_list)-1])
+        output_file.write('\n')
+
+
+def checkValue(v):
+    if (v!=None):
+        return str(v)
+    else:
+        return 'NA'
+
+def logdata(output_file,values):
+    global bag_format
+    r = True # return true if not missing values
+    ts = time.time()
+    if bag_format==0:  # SPQReL
+        timestamp = 'timestamp: %f\n' % ts
+        output_file.write(timestamp)
+        output_file.write(str(values))
+        output_file.write('\n')
+    elif bag_format==1:  # CSV typed
+        output_file.write(str(ts))
+        output_file.write(',')
+        k = 0
+        for v in values[0:len(values)-1]:
+            s = checkValue(v)
+            if (s=='NA'):
+                print '*** ',keys_list[k]
+                r = False
+            output_file.write(s)
+            output_file.write(',')
+            k += 1
+        v = values[len(values)-1]
+        s = checkValue(v)
+        if (s=='NA'):
+            print '*** LAST ',v
+            r = False
+        output_file.write(s)
+        output_file.write('\n')
+    return r
 
 def main():
     global camera_enabled
@@ -151,16 +246,22 @@ def main():
     try:
         connection_url = "tcp://" + pip + ":" + str(pport)
         app = qi.Application(["naoqibag", "--qi-url=" + connection_url ])
+        app.start()
     except RuntimeError:
         print ("Can't connect to Naoqi at ip \"" + pip + "\" on port " + str(pport) +".\n"
                "Please check your script arguments. Run with -h option for help.")
         sys.exit(1)
 
-    app.start()
     session = app.session
     
     #Starting services
     memory_service  = session.service("ALMemory")
+    try:
+        tablet_service  = session.service("ALTabletService")
+    except:
+        tablet_service  = None
+        print 'Cannot open ALTabletService'
+    
 
     #Creating logging directory
     log_folder = time.strftime("%Y%m%d_%H%M%S", time.localtime())
@@ -193,11 +294,26 @@ def main():
     subscriber_camera = memory_service.subscriber("NAOqibag/EnableCamera")
     idEvent_camera = subscriber_camera.signal.connect(functools.partial(onEventCamera, pip, pport))
 
+    if (tablet_service!=None):
+        # Touch screen listener
+        sigTTS = tablet_service.onTouchDown.connect(callback)
+
+
+    eventTTS = 'ALTextToSpeech/CurrentSentence'
+    subTTS = memory_service.subscriber(eventTTS)
+    idEventTTS = subTTS.signal.connect(TTSCurrentSentenceCB)
+
 
     #Program stays at this point until we stop it
     app.run()
 
+
+    # Closing all event listeners
     subscriber_camera.signal.disconnect(idEvent_camera)
+    subTTS.signal.disconnect(idEventTTS)
+
+    if (tablet_service!=None):
+        tablet_service.onTouchDown.disconnect(sigTTS)
     
     if keylog_enabled:
         keylogThread.do_run = False

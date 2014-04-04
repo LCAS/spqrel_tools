@@ -33,6 +33,7 @@ def main():
 
     tts_service = session.service("ALTextToSpeech")
     tts_service.say("Initialization started.")
+    tts_service.setParameter("speed", 80)
 
     time.sleep(1)
     #webinit.do_init(session)

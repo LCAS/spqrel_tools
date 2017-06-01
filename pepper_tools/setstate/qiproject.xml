@@ -1,0 +1,3 @@
+<project name="setstate">
+  <depends buildtime="true" runtime="true" names="libnaoqi" />
+</project>

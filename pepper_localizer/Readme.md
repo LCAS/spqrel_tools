@@ -1,4 +1,7 @@
-# How to compile
+# Pepper localizer
+NAOqi version of the thin_localizer provided by G.Grisetti in https://bitbucket.org/ggrisetti/thin_navigation
+
+## How to compile
 **OpenCV** library within **NAOqi C++ SDK** is not ready to use visualization functions such as ```cv::namedWindow``` or ```cv::imshow```.  
 For this reason, you have to replace the **OpenCV** libraries in **NAOqi C++ SDK** by another version of the libraries in which these functions are implemented.  
 The **OpenCV** version of **NAOqi C++ SDK 2.5.5** is 2.4.9.
@@ -29,8 +32,7 @@ From the pepper_localizer folder (assuming qibuild environment set up accordingl
 $ qibuild configure -c linux64
 $ qibuild make -c linux64
 ```
-To compile for Pepper it is enough to use the NAOqi ctc to cross-compile. No visualization functions can be used.
-The procedure described above is to use the visualization tool running the software remotely.
+To compile for Pepper it is enough to use the NAOqi ctc to cross-compile.
 
 ### Usage
 From the folder ```build/sdk/bin```
@@ -38,3 +40,5 @@ From the folder ```build/sdk/bin```
 $ ./pepper_localizer --map <path-to-a-map.yaml>
 ```
 Use ```--help``` option for detail description of possible parameters.
+No visualization functions can be used when running the code in the robot. In that case, make sure you run the localizer with ```--use_gui 0``` (default value).  
+The procedure described above is to use the visualization tool running the software remotely.

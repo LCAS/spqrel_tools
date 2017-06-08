@@ -118,9 +118,15 @@ def rhMonitorThread (memory_service):
     while getattr(t, "do_run", True):
         sonarValues =  memory_service.getListData(sonarValueList)
         print "Sonar: [Front, Back]", sonarValues
-		laserValues =  memory_service.getListData(laserValueList)
-        print "Laser center: " laserValues[44],laserValues[45],laserValues[46]
-		set_condition(memory_service,'dooropen','false')
+        laserValues =  memory_service.getListData(laserValueList)
+        print "Laser center: ", laserValues[42],laserValues[44],laserValues[46] # X values of central beams
+        # TODO
+        if (laserValues[42]>3 and laserValues[44]>3 and laserValues[46]>3):
+            v = 'true'
+        else:
+            v = 'false'
+        set_condition(memory_service,'dooropen',v)
+        print 'dooropen = ',v
         time.sleep(1)
     print "Exiting Thread"
 

@@ -1,6 +1,7 @@
 
 #http://doc.aldebaran.com/2-5/naoqi/peopleperception/alfacedetection.html
 
+import os
 import qi
 import argparse
 import sys

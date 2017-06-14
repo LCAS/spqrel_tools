@@ -1,0 +1,74 @@
+# enter and goto room
+waitfor_dooropen;
+enter_maindoor;
+goto_partyroom;
+
+# first order
+lookfor_person;
+< persondetected? approach_person :
+  (not persondetected)? say_comehere >;
+waitfor_personhere;
+takeorder;
+waitfor_order1;
+
+# second order
+lookfor_person;
+< persondetected? approach_person :
+  (not persondetected)? say_comehere >;
+waitfor_personhere;
+takeorder;
+waitfor_order2;
+
+# third order (sitting person not calling)
+lookfor_sittingperson;
+< persondetected? 
+    approach_person;
+    waitfor_personhere;
+    takeorder;
+    waitfor_order3; >;
+
+goto_bar;
+
+# check valid orders received in previous phase
+# answers set Y variable to either {1,2,3}
+
+< valid_order1 ?
+    say_order1;
+    observe_objects;
+    < drinkavailable ? confirmdrink :
+      not_drinkavailable ? say_altdrink_order1 :
+      unknown_drinkavailable ? ask_altdrink; answer_altorder_@Y >; 
+>;
+
+< valid_order2 ?
+    say_order2;
+    observe_objects;
+    < drinkavailable ? confirmdrink :
+      not_drinkavailable ? say_altdrink_order2 :
+      unknown_drinkavailable ? ask_altdrink; answer_altorder_@Y >; 
+>;
+< valid_order3 ?
+    say_order3;
+    observe_objects;
+    < drinkavailable ? confirmdrink :
+      not_drinkavailable ? say_altdrink_order2 :
+      unknown_drinkavailable ? ask_altdrink; answer_altorder_@Y >; 
+>;
+
+# go back to party room to receive the corrected order
+goto_partyroom;
+callperson_order@Y;
+waitfor_personhere;
+say_altorder_@Y;
+takeorder;
+waitfor_order4;
+
+# go back to bar to place the corrected order
+goto_bar;
+say_order4;
+say_goodbye;
+
+# exit the arena
+goto_hall;
+exit_maindoor;
+

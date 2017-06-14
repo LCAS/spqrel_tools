@@ -3,6 +3,9 @@ waitfor_dooropen;
 enter_maindoor;
 goto_partyroom;
 
+# order_n (n=1,2,3,4) is a data structure containing information about an order
+# including: name of person, drink ordered, features of person, person location, ...
+
 # first order
 lookfor_person;
 < persondetected? approach_person :
@@ -35,31 +38,33 @@ goto_bar;
 < valid_order1 ?
     say_order1;
     observe_objects;
-    < drinkavailable ? confirmdrink :
-      not_drinkavailable ? say_altdrink_order1 :
-      unknown_drinkavailable ? ask_altdrink; answer_altorder_@Y >; 
+    < drinkavailable ? say_confirmdrink :
+      not_drinkavailable ? choosealt_order1; say_altorder1; set_@Y_1  :
+      unknown_drinkavailable ? ask_altdrink; answer_altorder1; set_@Y_1  >; 
 >;
 
 < valid_order2 ?
     say_order2;
     observe_objects;
-    < drinkavailable ? confirmdrink :
-      not_drinkavailable ? say_altdrink_order2 :
-      unknown_drinkavailable ? ask_altdrink; answer_altorder_@Y >; 
+    < drinkavailable ? say_confirmdrink :
+      not_drinkavailable ? choosealt_order2; say_altorder2; set_@Y_2  :
+      unknown_drinkavailable ? ask_altdrink; answer_altorder2; set_@Y_2  >; 
 >;
+
 < valid_order3 ?
     say_order3;
     observe_objects;
-    < drinkavailable ? confirmdrink :
-      not_drinkavailable ? say_altdrink_order2 :
-      unknown_drinkavailable ? ask_altdrink; answer_altorder_@Y >; 
+    < drinkavailable ? say_confirmdrink :
+      not_drinkavailable ? choosealt_order3; say_altorder3; set_@Y_3  :
+      unknown_drinkavailable ? ask_altdrink; answer_altorder3; set_@Y_3  >; 
 >;
+
 
 # go back to party room to receive the corrected order
 goto_partyroom;
 callperson_order@Y;
 waitfor_personhere;
-say_altorder_@Y;
+say_altorder@Y;
 takeorder;
 waitfor_order4;
 

@@ -1,6 +1,6 @@
 This folder contains actions for plans to be executed with pnp_naoqi
 
-Set-up
+Setup
 
 $ export PYTHONPATH=$PYTHONPATH:<PATH_TO>/PetriNetPlans/PNPpepper/actions
 
@@ -16,8 +16,8 @@ Convention for actions:
 
 Convention for conditions:
 
-Condition <phi> is implemented with the AL key "PNP_cond_"+<phi> whose value can be
-0,1 or false/true
+Condition <phi> is implemented with the AL key "PNP_cond_"+<phi> 
+whose value can be 0/1 or false/true
 
 
 

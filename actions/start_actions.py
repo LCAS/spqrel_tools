@@ -6,31 +6,26 @@ import sys
 import os
 import time
 
-import conditions
-from conditions import set_condition
+import action_base
+from action_base import *
 
-# function called when the signal onTouchDown is triggered
-def onTouched(x, y):
-	global memory_service
-	print "coordinates are x: ", x, " y: ", y
-	set_condition(memory_service,'screentouched','true')
-	time.sleep(1)
-	set_condition(memory_service,'screentouched','false')
-
+import dooropen
+import screentouched
+import say
+import waitfor
 
 def init(session):
-    global memory_service
+    screentouched.init(session)
+    dooropen.init(session)
+    say.init(session)
+    waitfor.init(session)
 
-    print "screentouched init"
-    #Starting services
-    tablet_service = session.service("ALTabletService")
-    memory_service  = session.service("ALMemory")
-
-    idTTouch = tablet_service.onTouchDown.connect(onTouched)
 
 def quit():
-    print "screentouched quit"
-
+    screentouched.quit()
+    dooropen.quit()
+    say.quit()
+    waitfor.quit()
 
 def main():
     global memory_service
@@ -47,7 +42,7 @@ def main():
     try:
         connection_url = "tcp://" + pip + ":" + str(pport)
         print "Connecting to ",    connection_url
-        app = qi.Application(["ScreenTouched", "--qi-url=" + connection_url ])
+        app = qi.Application(["StartActions", "--qi-url=" + connection_url ])
     except RuntimeError:
         print ("Can't connect to Naoqi at ip \"" + pip + "\" on port " + str(pport) +".\n"
                "Please check your script arguments. Run with -h option for help.")
@@ -55,10 +50,12 @@ def main():
 
     app.start()
     session = app.session
+
     init(session)
 
     app.run()    
 
+    quit()
 
 
 if __name__ == "__main__":

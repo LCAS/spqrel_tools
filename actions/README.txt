@@ -11,7 +11,7 @@ $ export PYTHONPATH=$PYTHONPATH:$HOME/src/PetriNetPlans/PNPpepper/actions
 
 Convention for actions:
 
-(see examples in PetriNetPlans/PNPpepper/actions and in this folder)
+(see examples in this folder)
 
 
 Convention for conditions:
@@ -20,4 +20,7 @@ Condition <phi> is implemented with the AL key "PNP_cond_"+<phi> whose value can
 0,1 or false/true
 
 
+Starting all the actions:
+
+Modify start_actions.py
 

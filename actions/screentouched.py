@@ -23,10 +23,16 @@ def init(session):
 
     print "screentouched init"
     #Starting services
-    tablet_service = session.service("ALTabletService")
     memory_service  = session.service("ALMemory")
+    try:
+        tablet_service = session.service("ALTabletService")
+        idTTouch = tablet_service.onTouchDown.connect(onTouched)    
+    except RuntimeError:
+        print "Cannot find ALTabletService. Condition screentouched not available"
 
-    idTTouch = tablet_service.onTouchDown.connect(onTouched)
+    
+
+    
 
 def quit():
     print "screentouched quit"

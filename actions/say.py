@@ -42,12 +42,12 @@ def actionThread_exec (params):
 
 
 def init(session):
-    print "say init"
+    print actionName+" init"
     action_base.init(session, actionName, actionThread_exec)
 
 
 def quit():
-    print "say quit"
+    print actionName+" quit"
     actionThread_exec.do_run = False
     
 

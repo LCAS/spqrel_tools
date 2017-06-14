@@ -9,23 +9,31 @@ import time
 import action_base
 from action_base import *
 
-import dooropen
-import screentouched
-import say
-import waitfor
+import dooropen, screentouched
+import say, waitfor, goto, enter, lookfor, takeorder, assign
 
 def init(session):
     screentouched.init(session)
     dooropen.init(session)
     say.init(session)
     waitfor.init(session)
-
+    goto.init(session)
+    enter.init(session)
+    lookfor.init(session)
+    takeorder.init(session)
+    assign.init(session)
 
 def quit():
     screentouched.quit()
     dooropen.quit()
     say.quit()
     waitfor.quit()
+    goto.quit()
+    enter.quit()
+    lookfor.quit()
+    takeorder.quit()
+    assign.quit()
+
 
 def main():
     global memory_service

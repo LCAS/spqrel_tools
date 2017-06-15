@@ -9,16 +9,21 @@ Example:
 $ export PYTHONPATH=$PYTHONPATH:$HOME/src/PetriNetPlans/PNPpepper/actions
 
 
-== Convention for actions ==
+== Actions ==
 
 (see examples in this folder)
 
 * Starting all the actions:
 
-Run init_actions.py
+    Run init_actions.py
+
+* Test a single action
+
+    $ cd actions
+    $ ./action_cmd -a <actionname> -p <params> -c <start|end|interrupt>
 
 
-== Convention for conditions ==
+== Conditions ==
 
 Condition <phi> is implemented with the AL key "PNP_cond_"+<phi> 
 whose value can be 0/1 or false/true

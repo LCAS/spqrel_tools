@@ -44,6 +44,35 @@ def actionThread_exec (params):
 
     print "   Done"
 
+    if motion_service.robotIsWakeUp():
+        stiff_body = 0.5
+        stiff_head = 0.25
+        stiff_arms = 0.0
+        print "   Stiffness - Body ",stiff_body," Head ",stiff_head," Arms ",stiff_arms
+        
+        # Valid names: Head, LArm, RArm, LHand, RHand
+
+        names = "Body"
+        stiffnessLists = stiff_body
+        timeLists = 1.0
+        motion_service.stiffnessInterpolation(names, stiffnessLists, timeLists)
+
+        names = "Head"
+        stiffnessLists = stiff_head
+        timeLists = 1.0
+        motion_service.stiffnessInterpolation(names, stiffnessLists, timeLists)
+
+        names = "LArm"
+        stiffnessLists = stiff_arms
+        timeLists = 1.0
+        motion_service.stiffnessInterpolation(names, stiffnessLists, timeLists)
+
+        names = "RArm"
+        stiffnessLists = stiff_arms
+        timeLists = 1.0
+        motion_service.stiffnessInterpolation(names, stiffnessLists, timeLists)
+
+
     #print motion_service.getSummary()
 
     # action end

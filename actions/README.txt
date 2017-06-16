@@ -1,6 +1,6 @@
 This folder contains actions for plans to be executed with pnp_naoqi
 
-Set-up
+== Setup ==
 
 $ export PYTHONPATH=$PYTHONPATH:<PATH_TO>/PetriNetPlans/PNPpepper/actions
 
@@ -9,15 +9,30 @@ Example:
 $ export PYTHONPATH=$PYTHONPATH:$HOME/src/PetriNetPlans/PNPpepper/actions
 
 
-Convention for actions:
+== Actions ==
 
-(see examples in PetriNetPlans/PNPpepper/actions and in this folder)
+(see examples in this folder)
+
+* Starting all the actions:
+
+    Run init_actions.py
+
+* Test a single action
+
+    $ cd actions
+    $ ./action_cmd -a <actionname> -p <params> -c <start|end|interrupt>
 
 
-Convention for conditions:
+== Conditions ==
 
-Condition <phi> is implemented with the AL key "PNP_cond_"+<phi> whose value can be
-0,1 or false/true
+Condition <phi> is implemented with the AL key "PNP_cond_"+<phi> 
+whose value can be 0/1 or false/true
+
+
+Setting condition example:
+
+  $ cd pepper_tools/memory
+  $ ./write.py --key PNP_cond_dooropen --val 1
 
 
 

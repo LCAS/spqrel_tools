@@ -1,0 +1,85 @@
+# enter and goto room
+waitfor_dooropen;
+enter_maindoor_in;
+goto_partyroom;
+
+# order_n (n=1,2,3,4) is a data structure containing information about an order
+# including: name of person, drink ordered, features of person, person location, ...
+
+# first order
+lookfor_person;
+< persondetected? approach_person :
+  (not persondetected)? say_comehere >;
+waitfor_personhere;
+takeorder;
+waitfor_order1;
+
+# second order
+lookfor_person;
+< persondetected? approach_person :
+  (not persondetected)? say_comehere >;
+waitfor_personhere;
+takeorder;
+waitfor_order2;
+
+# third order (sitting person not calling)
+lookfor_sittingperson;
+< persondetected? 
+    approach_person;
+    waitfor_personhere;
+    takeorder;
+    waitfor_order3 : 
+  (not persondetected)? 
+>;
+
+goto_bar;
+
+# check valid orders received in previous phase
+
+< valid_order1 ?
+    say_order1;
+    observe_objects;
+    < drinkavailable ? say_confirmdrink :
+      not_drinkavailable ? choosealt_order1; say_altorder1  :
+      unknown_drinkavailable ? ask_altdrink; answer_altorder1  > :
+  (not valid_order1)? 
+>;
+
+< valid_order2 ?
+    say_order2;
+    observe_objects;
+    < drinkavailable ? say_confirmdrink :
+      not_drinkavailable ? choosealt_order2; say_altorder2  :
+      unknown_drinkavailable ? ask_altdrink; answer_altorder2  > :
+  (not valid_order2)? 
+>;
+
+< valid_order3 ?
+    say_order3;
+    observe_objects;
+    < drinkavailable ? say_confirmdrink :
+      not_drinkavailable ? choosealt_order3; say_altorder3  :
+      unknown_drinkavailable ? ask_altdrink; answer_altorder3  > :
+  (not valid_order3)? 
+>;
+
+
+# go back to party room to receive the corrected order
+# altorder is either altorder1,2,3
+
+goto_partyroom;
+say_callperson_altorder;
+waitfor_personhere;
+say_altorder;
+takeorder;
+waitfor_order4;
+
+# go back to bar to place the corrected order
+goto_bar;
+say_order4;
+say_goodbye;
+
+# exit the arena
+goto_hall;
+enter_maindoor_out;
+

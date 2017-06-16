@@ -112,19 +112,42 @@ laserValueList = [
 import conditions
 from conditions import set_condition
 
+monitorThread = None
 
 def rhMonitorThread (memory_service):
     t = threading.currentThread()
     while getattr(t, "do_run", True):
         sonarValues =  memory_service.getListData(sonarValueList)
-        print "Sonar: [Front, Back]", sonarValues
-		laserValues =  memory_service.getListData(laserValueList)
-        print "Laser center: " laserValues[44],laserValues[45],laserValues[46]
-		set_condition(memory_service,'dooropen','false')
+#       print "Sonar: [Front, Back]", sonarValues
+        laserValues =  memory_service.getListData(laserValueList)
+#       print "Laser center: ", laserValues[42],laserValues[44],laserValues[46] # X values of central beams
+        # TODO
+        if (laserValues[42]>3 and laserValues[44]>3 and laserValues[46]>3):
+            v = 'true'
+        else:
+            v = 'false'
+        set_condition(memory_service,'dooropen',v)
+#        print 'dooropen = ',v
         time.sleep(1)
-    print "Exiting Thread"
+    print "dooropen thread quit"
 
 
+def init(session):
+    global monitorThread
+
+    print "dooropen init"
+
+    #Starting services
+    memory_service  = session.service("ALMemory")
+      
+    #create a thead that monitors directly the signal
+    monitorThread = threading.Thread(target = rhMonitorThread, args = (memory_service,))
+    monitorThread.start()
+
+def quit():
+    global monitorThread
+    print "dooropen quit"
+    monitorThread.do_run = False 
 
 def main():
     parser = argparse.ArgumentParser()
@@ -148,17 +171,12 @@ def main():
     app.start()
     session = app.session
 
-    #Starting services
-    memory_service  = session.service("ALMemory")
-      
-    #create a thead that monitors directly the signal
-    monitorThread = threading.Thread(target = rhMonitorThread, args = (memory_service,))
-    monitorThread.start()
+    init(session)
 
     #Program stays at this point until we stop it
     app.run()
 
-    monitorThread.do_run = False
+    quit()
     
     print "Finished"
 

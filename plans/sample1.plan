@@ -1,2 +1,7 @@
-waitfor_screentouched; say_hello; openarms;
+waitfor_screentouched;
+posture_Stand;
+say_hello; 
+waitfor_dooropen;
+say_starting;
+posture_Rest;
 

@@ -41,7 +41,26 @@ def actionThread_exec (params):
 	memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
 
 
+def init(session):
+    print actionName+" init"
+    action_base.init(session, actionName, actionThread_exec)
+
+
+def quit():
+    print actionName+" quit"
+    actionThread_exec.do_run = False
+    
+
 
 if __name__ == "__main__":
-    main(actionName, actionThread_exec)
+
+    app = action_base.initApp(actionName)
+    	
+    init(app.session)
+
+    #Program stays at this point until we stop it
+    app.run()
+
+    quit()
+
 

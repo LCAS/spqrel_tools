@@ -1,3 +1,0 @@
-<project name="pepper_localizer">
-  <depends buildtime="true" runtime="true" names="libnaoqi" />
-</project>

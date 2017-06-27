@@ -17,28 +17,36 @@ def coords(params):
 		return [5,5]
 	elif (params=='hall'):
 		return [2,2]
+	elif (params=='test'):
+		return [200,300]
 	return [0,0]
 
 def actionThread_exec (params):
-	t = threading.currentThread()
-	memory_service = getattr(t, "mem_serv", None)
-	print "Action "+actionName+" started with params "+params
-	# action init
-	count = 20
-	print "  -- Goto: "+str(coords(params))
-	# action init
-	while (getattr(t, "do_run", True) and count>0): 
-		print "Action "+actionName+" "+params+" exec..."
-		# action exec
-		count = count - 1		
-		# action exec
-		time.sleep(0.1)
+    t = threading.currentThread()
+    memory_service = getattr(t, "mem_serv", None)
+    print "Action "+actionName+" started with params "+params
+    # action init
+    target = coords(params)
+    print "  -- Goto: "+str(target)
+    mem_key_goal = "NAOqiPlanner/Goal"
+    mem_key_status = "NAOqiPlanner/Status"
+    memory_service.raiseEvent(mem_key_goal,target);
+    count = 10
+    # action init
+    while (getattr(t, "do_run", True) and count>0): 
+        print "Action "+actionName+" "+params+" exec..."
+        # action exec
+        time.sleep(0.1)
+        #val = memory_service.getData(mem_key_status)
+        #print val
+        count = count-1
+        # action exec
 		
-	print "Action "+actionName+" "+params+" terminated"
-	# action end
+    print "Action "+actionName+" "+params+" terminated"
+    # action end
 
-	# action end
-	memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+    # action end
+    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
 
 
 def init(session):

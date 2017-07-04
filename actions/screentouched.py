@@ -11,11 +11,11 @@ from conditions import set_condition
 
 # function called when the signal onTouchDown is triggered
 def onTouched(x, y):
-	global memory_service
-	print "coordinates are x: ", x, " y: ", y
-	set_condition(memory_service,'screentouched','true')
-	time.sleep(1)
-	set_condition(memory_service,'screentouched','false')
+    global memory_service
+    print "coordinates are x: ", x, " y: ", y
+    set_condition(memory_service,'screentouched','true')
+    time.sleep(1)
+    set_condition(memory_service,'screentouched','false')
 
 
 def init(session):

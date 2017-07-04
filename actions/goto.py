@@ -11,15 +11,15 @@ from action_base import *
 actionName = "goto"
 
 def coords(params):
-	if (params=='partyroom'):
-		return [10,10]
-	elif (params=='bar'):
-		return [5,5]
-	elif (params=='hall'):
-		return [2,2]
-	elif (params=='test'):
-		return [200,300]
-	return [0,0]
+    if (params=='partyroom'):
+        return [10,10]
+    elif (params=='bar'):
+        return [5,5]
+    elif (params=='hall'):
+        return [2,2]
+    elif (params=='test'):
+        return [200,300]
+    return [0,0]
 
 def actionThread_exec (params):
     t = threading.currentThread()
@@ -41,7 +41,7 @@ def actionThread_exec (params):
         #print val
         count = count-1
         # action exec
-		
+        
     print "Action "+actionName+" "+params+" terminated"
     # action end
 
@@ -63,7 +63,7 @@ def quit():
 if __name__ == "__main__":
 
     app = action_base.initApp(actionName)
-    	
+        
     init(app.session)
 
     #Program stays at this point until we stop it

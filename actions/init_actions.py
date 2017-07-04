@@ -20,7 +20,7 @@ def init(session):
     goto.init(session)
     enter.init(session)
     lookfor.init(session)
-    takeorder.init(session)
+    dialogue.init(session)
     posture.init(session)
 
 def quit():
@@ -31,7 +31,7 @@ def quit():
     goto.quit()
     enter.quit()
     lookfor.quit()
-    takeorder.quit()
+    dialogue.quit()
     posture.quit()
 
 def main():

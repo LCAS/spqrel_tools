@@ -11,24 +11,25 @@ lookfor_person;
 < persondetected? approach_person :
   (not persondetected)? say_comehere >;
 waitfor_personhere;
-takeorder;
-waitfor_order1;
+dialogue_takeorder_1;
+#waitfor_order1;
 
 # second order
 lookfor_person;
 < persondetected? approach_person :
   (not persondetected)? say_comehere >;
 waitfor_personhere;
-takeorder;
-waitfor_order2;
+dialogue_takeorder_2;
+#waitfor_order2;
 
 # third order (sitting person not calling)
 lookfor_sittingperson;
 < persondetected? 
     approach_person;
     waitfor_personhere;
-    takeorder;
-    waitfor_order3 : 
+    dialogue_takeorder_3;
+    #waitfor_order3 
+    : 
   (not persondetected)? 
 >;
 
@@ -39,7 +40,7 @@ goto_bar;
 < valid_order1 ?
     say_order1;
     observe_objects;
-    < drinkavailable ? say_confirmdrink :
+    < drinkavailable ? dialogue_confirmdrink_1 :
       not_drinkavailable ? choosealt_order1; say_altorder1  :
       unknown_drinkavailable ? ask_altdrink; answer_altorder1  > :
   (not valid_order1)? 

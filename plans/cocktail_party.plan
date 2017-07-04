@@ -72,7 +72,7 @@ goto_partyroom;
 say_callperson_altorder;
 waitfor_personhere;
 say_altorder;
-takeorder;
+dialogue_takeorder_4;
 waitfor_order4;
 
 # go back to bar to place the corrected order

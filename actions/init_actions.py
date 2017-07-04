@@ -10,7 +10,7 @@ import action_base
 from action_base import *
 
 import dooropen, screentouched
-import say, waitfor, goto, enter, lookfor, takeorder, posture
+import say, waitfor, goto, enter, lookfor, dialogue, posture
 
 def init(session):
     screentouched.init(session)

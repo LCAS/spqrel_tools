@@ -88,7 +88,7 @@ def init(session):
 def quit():
     print actionName+" quit"
     actionThread_exec.do_run = False
-    
+
 
 
 if __name__ == "__main__":

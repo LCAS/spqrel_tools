@@ -1,4 +1,5 @@
 waitfor_screentouched;
+dialogue_howareyou;
 posture_Stand;
 say_hello; 
 waitfor_dooropen;

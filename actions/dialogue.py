@@ -8,40 +8,48 @@ import action_base
 from action_base import *
 
 
-actionName = "enter"
+actionName = "dialogue"
 
-def coords(params):
-    if (params=='maindoor_in'):
-        return [2,2]
-    elif (params=='maindoor_out'):
-        return [1,1]
-    return [0,0]
+dialogue_response = False
+
+def response_cb(value):
+    print value
+    dialogue_response = True
+
 
 def actionThread_exec (params):
+    global response
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
-    print "Action "+actionName+" started with params "+params
+    
+    acb = memory_service.subscriber("DialogueVesponse")
+    acb.signal.connect(response_cb)
+
+
+    print "Action "+actionName+" "+params+" started"
+    # action init	
+    print "  -- Dialogue: "+params
+    memory_service.raiseEvent('DialogueVequest',params+'_start')
+    dialogue_response = False
     # action init
-    count = 10
-    print "  -- Enter: "+params
-    # action init
-    while (getattr(t, "do_run", True) and count>0): 
+    while (getattr(t, "do_run", True) and not dialogue_response): 
         print "Action "+actionName+" "+params+" exec..."
+        # action exec	
         # action exec
-        count = count - 1		
-        # action exec
-        time.sleep(0.1)
-        
+        time.sleep(0.5)
+
     print "Action "+actionName+" "+params+" terminated"
     # action end
-
+    memory_service.raiseEvent('DialogueVequest',params+'_stop')
     # action end
+
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
 
 
 def init(session):
     print actionName+" init"
     action_base.init(session, actionName, actionThread_exec)
+    session.service("ALMemory").declareEvent('DialogueVequest')
 
 
 def quit():

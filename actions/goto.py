@@ -43,7 +43,7 @@ def actionThread_exec (params):
         #print val
         count = count-1
         # action exec
-		
+        
     print "Action "+actionName+" "+params+" terminated"
     # action end
 
@@ -65,7 +65,7 @@ def quit():
 if __name__ == "__main__":
 
     app = action_base.initApp(actionName)
-    	
+        
     init(app.session)
 
     #Program stays at this point until we stop it

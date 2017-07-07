@@ -17,8 +17,10 @@ def coords(params):
 		return [5,5]
 	elif (params=='hall'):
 		return [2,2]
-	elif (params=='test'):
-		return [200,300]
+	elif (params=='test1'):
+		return [2,15]
+	elif (params=='test2'):
+		return [15,2]
 	return [0,0]
 
 def actionThread_exec (params):

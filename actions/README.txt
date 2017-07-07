@@ -2,11 +2,11 @@ This folder contains actions for plans to be executed with pnp_naoqi
 
 == Setup ==
 
-$ export PYTHONPATH=$PYTHONPATH:<PATH_TO>/PetriNetPlans/PNPpepper/actions
+$ export PYTHONPATH=$PYTHONPATH:<PATH_TO>/PetriNetPlans/PNPnaoqi/actions
 
 Example:
 
-$ export PYTHONPATH=$PYTHONPATH:$HOME/src/PetriNetPlans/PNPpepper/actions
+$ export PYTHONPATH=$PYTHONPATH:$HOME/src/PetriNetPlans/PNPnaoqi/actions
 
 
 == Actions ==

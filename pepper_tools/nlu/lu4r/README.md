@@ -1,6 +1,0 @@
-#Dependencies
-~~~
-json
-requests
-sys
-~~~

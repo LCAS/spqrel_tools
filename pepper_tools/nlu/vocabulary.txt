@@ -1,4 +1,0 @@
-yes
-no
-hi
-hello

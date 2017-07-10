@@ -31,6 +31,7 @@ def actionThread_exec (params):
     # action init	
     print "  -- Dialogue: "+params
     memory_service.raiseEvent('DialogueVequest',params+'_start')
+    memory_service.raiseEvent('ASRPause',0)
     dialogue_response = False
     # action init
     while (getattr(t, "do_run", True) and not dialogue_response): 
@@ -42,6 +43,7 @@ def actionThread_exec (params):
     print "Action "+actionName+" "+params+" terminated"
     # action end
     memory_service.raiseEvent('DialogueVequest',params+'_stop')
+    memory_service.raiseEvent('ASRPause',1)
     # action end
 
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");

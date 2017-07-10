@@ -1,0 +1,6 @@
+waitfor_dooropen;
+enter_maindoor;
+goto_inspectionpoint;  # er: if personhere say_hello
+goto_entrance;         # er: if personhere say_hello
+exit_maindoor;
+

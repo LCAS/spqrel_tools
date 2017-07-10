@@ -1,4 +1,4 @@
-#http://doc.aldebaran.com/2-5/naoqi/core/altabletservice-api.html
+#!/usr/bin/env python
 
 import qi
 import argparse

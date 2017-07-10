@@ -13,12 +13,13 @@ actionName = "dialogue"
 dialogue_response = False
 
 def response_cb(value):
+    global dialogue_response
     print value
     dialogue_response = True
 
 
 def actionThread_exec (params):
-    global response
+    global dialogue_response
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
     

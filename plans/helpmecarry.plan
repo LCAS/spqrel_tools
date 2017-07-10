@@ -1,14 +1,11 @@
 waitfor_personhere;
 dialogue_follow;
-follow; # er: stopfollowing
+follow; # er: stopfollowing -> skip_action
 memorize_car;
 dialogue_lookforhelp;
-goto_assistlocation; # er: personhere -> dialogue_whattime
+goto_assistlocation; # er: personhere -> dialogue_whattime; waitfor_not_personhere; restart_action
 find_person;
 dialogue_guide;
 goto_car; # er: (not personbehind) -> turn_around; dialogue_callperson
 dialogue_arrivedcar;
-
-
-
 

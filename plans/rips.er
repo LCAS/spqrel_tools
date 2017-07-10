@@ -1,0 +1,2 @@
+*if* personhere *during* goto *do* say_hello; waitfor_not_personhere; restart_action;
+

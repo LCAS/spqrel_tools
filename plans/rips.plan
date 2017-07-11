@@ -1,7 +1,11 @@
+posture_Stand;
+headpose_0_-4;
 waitfor_dooropen;
+say_starting;
+headpose_0_-4;
 goto_entrance;
-#goto_inspectionpoint;  # er: if personhere say_hello
 waitfor_screentouched;
-goto_exit;         # er: if personhere say_hello
-
+say_goodbye;
+headpose_0_-4;
+goto_exit;       
 

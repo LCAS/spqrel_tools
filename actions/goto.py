@@ -24,7 +24,7 @@ def coords(params):
 	elif (params=='entrance'):
 		return [-4.8, -5.6]
 	elif (params=='exit'):
-		return [-11.2, -7.7 ]
+		return [-11.3, -7.9 ]
 	return [0,0]
 
 
@@ -49,7 +49,7 @@ def actionThread_exec (params):
     print "  -- Goto: "+str(target)
     mem_key_goal = "NAOqiPlanner/Goal"
     mem_key_goal_reached = "NAOqiPlanner/GoalReached"
-    mem_key_goal_reset = "NAOqiPlanner/Reset"
+    mem_key_reset = "NAOqiPlanner/Reset"
     memory_service.raiseEvent(mem_key_goal,target);
 
     acb = memory_service.subscriber(mem_key_goal_reached)
@@ -58,7 +58,7 @@ def actionThread_exec (params):
 
     # action init
     while (getattr(t, "do_run", True) and not goal_reached): 
-        print "Action "+actionName+" "+params+" exec..."
+        #print "Action "+actionName+" "+params+" exec..."
         # action exec
         time.sleep(0.5)
         # action exec

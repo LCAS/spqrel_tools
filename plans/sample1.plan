@@ -2,8 +2,8 @@
 #dialogue_howareyou;
 #posture_Stand;
 headpose_0_-3;
-#waitfor_personhere;
-#say_hello; 
+waitfor_personhere;
+say_hello; 
 #waitfor_dooropen;
 #waitfor_screentouched;
 #say_starting;

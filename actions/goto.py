@@ -7,6 +7,8 @@ import threading
 import action_base
 from action_base import *
 
+import conditions
+from conditions import set_condition
 
 actionName = "goto"
 
@@ -32,15 +34,24 @@ def coords(params):
 
 goal_reached = False
 
-def goalreached_cb(value):
+def plannerstatus_cb(value):
     global goal_reached
-    print value
-    goal_reached = True
-    
+    global memory_service
+    print "NAOqi Planner status: ",value # GoalReached, PathFound, PathNotFound, WaitingForGoal
+    if (value=='GoalReached'):
+        goal_reached = True
+    elif (value=='PathNotFound'):
+        mem_key_execstatus = "NAOqiPlanner/ExecutionStatus"
+        distToGoal = memory_service.getData(mem_key_execstatus)
+        print distToGoal
+        set_condition(memory_service,'pathnotfound','true')
+        time.sleep(1)
+        set_condition(memory_service,'pathnotfound','false')
 
 
 def actionThread_exec (params):
     global goal_reached
+    global memory_service
 
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
@@ -50,12 +61,12 @@ def actionThread_exec (params):
     target = coords(params)
     print "  -- Goto: "+str(target)
     mem_key_goal = "NAOqiPlanner/Goal"
-    mem_key_goal_reached = "NAOqiPlanner/GoalReached"
+    mem_key_status = "NAOqiPlanner/Status"
     mem_key_reset = "NAOqiPlanner/Reset"
     memory_service.raiseEvent(mem_key_goal,target);
 
-    acb = memory_service.subscriber(mem_key_goal_reached)
-    acb.signal.connect(goalreached_cb)
+    acb = memory_service.subscriber(mem_key_status)
+    acb.signal.connect(plannerstatus_cb)
     goal_reached = False
 
     # action init

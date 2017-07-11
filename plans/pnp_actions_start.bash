@@ -2,7 +2,7 @@
 
 
 SESSION="${USER}-SPQReL"
-SPQREL_PREFIX="${SPQREL_PREFIX:-$HOME/src/SPQREL/spqrel_tools}"
+SPQREL_PREFIX="${SPQREL_PREFIX:-$HOME/src/SPQREL/qi_ws/spqrel_tools}"
 
 tmux -2 new-session -d -s $SESSION
 # Setup a window for tailing log files

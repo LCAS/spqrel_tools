@@ -4,10 +4,22 @@ PLANS:=$(shell find plans -name "*.plan")
 
 PNMLS=$(PLANS:.plan=.pnml)
 
+# set you toolchain according to your qibuild toolchains, default is cross-compilatio for pepper,
+# usually, we should have only "pepper" and "linux64", as described at https://sites.google.com/a/dis.uniroma1.it/peppino/software-setup
+TOOLCHAIN?=pepper
+
+AUX_DIRS=scripts actions plans maps setup.bash
+
+# path to the pnp_translator
 PNPTRANS?=$(shell readlink -f ../PetriNetPlans/PNPgen/bin/pnpgen_translator)
-INSTALL_TREE?=$(shell readlink -f ../../install)
+
+# install tree for the full installation
+INSTALL_TREE?=$(shell readlink -f ../../install-$(TOOLCHAIN))
+
+# worktree, usually one level up
 WORKTREE?=$(shell readlink -f ..)
-TOOLCHAIN?="pepper"
+
+GIT_BRANCH=$(TOOLCHAIN)
 
 QIBUILDS:=$(shell find $(WORKTREE) -name qiproject.xml)
 QIBUILDS_DIRS=$(QIBUILDS:/qiproject.xml=)
@@ -27,8 +39,8 @@ clean:
 	rm -rf $(INSTALL_TREE)
 	rm -rf cookies
 
-BINS:=$(shell find $(QIBUILDS_BUILD_DIRS) -type f  | xargs file | grep "LSB executable" | cut -f1 -d: | grep -v CMakeFiles)
-LIBS:=$(shell find $(QIBUILDS_BUILD_DIRS) -type f -a -name "*.so" | xargs file | grep "LSB shared object" | cut -f1 -d: | grep -v CMakeFiles)
+BINS:=$(shell find $(QIBUILDS_BUILD_DIRS) -type f  | xargs -r file | grep "LSB executable" | cut -f1 -d: | grep -v CMakeFiles)
+LIBS:=$(shell find $(QIBUILDS_BUILD_DIRS) -type f -a -name "*.so" | xargs -r file | grep "LSB shared object" | cut -f1 -d: | grep -v CMakeFiles)
 
 bins: build $(BINS) $(LIBS)
 	@echo $(QIBUILDS_BUILD_DIRS)
@@ -49,17 +61,20 @@ plans/%.pnml: plans/%.plan
 
 $(INSTALL_TREE)/.git:
 	mkdir -p $(INSTALL_TREE)
-	git clone --depth 1 https://github.com/lcas/spqrel_launch.git $(INSTALL_TREE)
+	(git clone --depth 1 -b $(GIT_BRANCH) \
+			--single-branch https://github.com/lcas/spqrel_launch.git $(INSTALL_TREE) || \
+	 git init $(INSTALL_TREE))
+	 
 
 install_prep: $(INSTALL_TREE)/.git
 
 install_pull: install_prep
-	(cd $(INSTALL_TREE); \
-		git pull --depth 1 -X theirs)
+	-(cd $(INSTALL_TREE); \
+		git pull --depth 1 -X theirs --no-edit)
 
 install: $(PNMLS)  install_bins
-	rsync -a --exclude '.git' --exclude '.gitignore' $(WORKTREE) $(INSTALL_TREE)
-	rsync -a --exclude '.git' --exclude '.gitignore' scripts actions plans $(INSTALL_TREE)
+	rsync -a --exclude '.git' --exclude '.gitignore' $(WORKTREE)/* $(INSTALL_TREE)
+	rsync -a --exclude '.git' --exclude '.gitignore' $(AUX_DIRS) $(INSTALL_TREE)
 	(cd $(INSTALL_TREE); \
 		git add -A --ignore-removal . && \
 		git commit --allow-empty -a -m "committed by $$USER from `hostname` at `date`")
@@ -68,19 +83,21 @@ push: install
 	(cd $(INSTALL_TREE); \
 		git push)
 
-
-
-build:	$(QIBUILDS) cookies/configure
+build:	$(QIBUILDS) cookies/configure-$(TOOLCHAIN)
 	for qb in $(QIBUILDS); do \
 		d=`dirname $$qb`; \
 		(cd $$d; pwd; qibuild make $(QI_MAKE_OPTS)) \
 	done
 
-cookies/configure:	$(QIBUILDS)
+cookies/configure-$(TOOLCHAIN):	$(QIBUILDS)
 	for qb in $(QIBUILDS); do \
 		d=`dirname $$qb`; \
 		(cd $$d; pwd; qibuild configure $(QI_CONF_OPTS)) \
 	done
 	mkdir -p cookies; touch $@
 
-configure: cookies/configure
+configure: cookies/configure-$(TOOLCHAIN)
+
+reconfigure: 
+	-rm cookies/configure-$(TOOLCHAIN)
+	$(MAKE) configure

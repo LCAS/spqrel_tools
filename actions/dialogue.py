@@ -44,6 +44,7 @@ def actionThread_exec (params):
     # action end
     memory_service.raiseEvent('DialogueVequest',params+'_stop')
     memory_service.raiseEvent('ASRPause',1)
+    # TODO acb. disconnect...
     # action end
 
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");

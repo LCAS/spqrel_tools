@@ -1,2 +1,4 @@
-waitfor_dooropen; say_starting; enterdoor
+waitfor_dooropen; 
+say_starting; 
+enterdoor
 

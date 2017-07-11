@@ -1,8 +1,14 @@
-waitfor_screentouched;
-dialogue_howareyou;
-posture_Stand;
-say_hello; 
-waitfor_dooropen;
-say_starting;
-posture_Rest;
+#waitfor_screentouched;
+#dialogue_howareyou;
+#posture_Stand;
+headpose_0_-3;
+#waitfor_personhere;
+#say_hello; 
+#waitfor_dooropen;
+#waitfor_screentouched;
+#say_starting;
+#goto_entrance;
+#say_hello;
+#posture_Rest;
+headpose_0_0;
 

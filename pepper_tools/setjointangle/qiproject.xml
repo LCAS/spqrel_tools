@@ -1,3 +1,0 @@
-<project name="setjointangle">
-  <depends buildtime="true" runtime="true" names="libnaoqi" />
-</project>

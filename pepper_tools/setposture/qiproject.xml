@@ -1,3 +1,0 @@
-<project name="setposture">
-  <depends buildtime="true" runtime="true" names="libnaoqi" />
-</project>

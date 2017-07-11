@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<aiml version="1.0">
+
+<category>
+	<pattern>FAILUREMANAGEMENT</pattern>
+	<template>
+		[SAY]
+		<random>
+			<li>I'm sorry, I don't understand.</li>
+			<li>What? I don't understand what you said.</li>
+			<li>Don't get upset, but I don't understand.</li>
+			<li>I'm just a poor robot and sometimes I don't get what you say.</li>
+			<li>Really sorry, but I don't understand.</li>
+			<li>I didn't get anything, sorry.</li>
+			<li>Maybe it's too noisy here.</li>
+		</random>
+		<srai>REQUESTREPEAT</srai>		
+	</template>
+</category>
+
+<category>
+	<pattern>REQUESTREPEAT</pattern>
+	<template>
+		<random>
+			<li>Can you repeat?</li>
+			<li>Repeat please.</li>
+			<li>Let's try again. Can you repeat?</li>
+			<li>It would be great if you could repeat your sentence.</li>
+		</random>
+	</template>
+</category>
+
+<category>
+	<pattern>*</pattern>
+	<template><srai>FAILUREMANAGEMENT</srai></template>
+</category>
+
+</aiml>

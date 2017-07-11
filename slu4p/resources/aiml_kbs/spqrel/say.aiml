@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0">
+
+<category>
+	<pattern>SAY *</pattern>
+	<template>
+		[SAY]
+		<srai><star/></srai>
+	</template>
+</category>
+
+<category>
+	<pattern>COMEHERE</pattern>
+	<template>
+		<random>
+			<li>Could you please come here?</li>
+			<li>Please, come here!</li>
+			<li>Come here, please!</li>
+			<li>Can you come here?</li>
+		</random>
+	</template>
+</category>
+
+<category>
+	<pattern>COMEHERE CUSTOMER *</pattern>
+	<template>
+		<random>
+			<li><star/>!</li>
+			<li>Hey <star/>!</li>
+			<li>Where is <star/>?</li>
+		</random>
+		<random>
+			<li>Could you please come here?</li>
+			<li>Please, come here!</li>
+			<li>Come here, please!</li>
+			<li>Can you come here?</li>
+		</random>
+	</template>
+</category>
+
+<category>
+	<pattern>ORDER CUSTOMER * DRINK *</pattern>
+	<template>
+		<random>
+			<li>Hi barman!</li>
+			<li>Hi!</li>
+			<li>Cheers my friend!</li>
+			<li>Hi buddy!</li>
+		</random>
+		<random>
+			<li>I have an order for <star index="1"/>. A <star index="2"/>, please!</li>
+			<li><star index="1"/> ordered a <star index="2"/>.</li>
+			<li><star index="1"/> would like a <star index="2"/>!</li>
+			<li>A <star index="2"/> for <star index="1"/>, please!</li>
+		</random>
+	</template>
+</category>
+
+<category>
+	<pattern>CONFIRMDRINK CUSTOMER * DRINK *</pattern>
+	<template>
+		<random>
+			<li>Nice!</li>
+			<li>Alright!</li>
+			<li>Good!</li>
+			<li>Perfect!</li>
+		</random>
+		<random>
+			<li>It seems that the <star index="2"/> for <star index="1"/> is available.</li>
+			<li>The <star index="2"/> for <star index="1"/> is available.</li>
+		</random>
+	</template>
+</category>
+
+<category>
+	<pattern>FOLLOWME</pattern>
+	<template>
+		<random>
+			<li>Okay!</li>
+			<li>Alright!</li>
+			<li>Good!</li>
+			<li>Perfect!</li>
+		</random>
+		<random>
+			<li>I'm following you.</li>
+			<li>I'm chasing you.</li>
+		</random>
+		Please go ahead!
+	</template>
+</category>
+
+<category>
+	<pattern>STOPFOLLOWING</pattern>
+	<template>
+		<random>
+			<li>Okay!</li>
+			<li>Alright!</li>
+			<li>Good!</li>
+			<li>Perfect!</li>
+		</random>
+		<random>
+			<li>Here we are.</li>
+			<li>Here I am.</li>
+		</random>
+	</template>
+</category>
+
+<category>
+	<pattern>WHATWEDONOW</pattern>
+	<template>
+		<random>
+			<li>What can we do now?</li>
+			<li>How can I help you?</li>
+			<li>Is there something I can do?</li>
+		</random>
+	</template>
+</category>
+
+</aiml>

@@ -1,0 +1,608 @@
+<?xml version="1.0"?>
+<aiml version="1.0">
+
+
+<topic name="FOLLOW">
+
+	<category>
+		<pattern>START</pattern>
+		<template>[SAY] I'm ready to follow you!</template>
+	</category>
+
+	<category>
+		<pattern>* FOLLOW *</pattern>
+		<template>
+			<srai>SAY FOLLOWME</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* FOLLOW</pattern>
+		<template>
+			<srai>SAY FOLLOWME</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>FOLLOW *</pattern>
+		<template>
+			<srai>SAY FOLLOWME</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>FOLLOW</pattern>
+		<template>
+			<srai>SAY FOLLOWME</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* CHASE *</pattern>
+		<template>
+			<srai>SAY FOLLOWME</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* CHASE</pattern>
+		<template>
+			<srai>SAY FOLLOWME</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>CHASE *</pattern>
+		<template>
+			<srai>SAY FOLLOWME</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>CHASE</pattern>
+		<template>
+			<srai>SAY FOLLOWME</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* STOP *</pattern>
+		<template>
+			<srai>SAY STOPFOLLOWING</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* STOP</pattern>
+		<template>
+			<srai>SAY STOPFOLLOWING</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>STOP *</pattern>
+		<template>
+			<srai>SAY STOPFOLLOWING</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* HERE *</pattern>
+		<template>
+			<srai>SAY STOPFOLLOWING</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* HERE</pattern>
+		<template>
+			<srai>SAY STOPFOLLOWING</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>HERE *</pattern>
+		<template>
+			<srai>SAY STOPFOLLOWING</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>HERE</pattern>
+		<template>
+			<srai>SAY STOPFOLLOWING</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>STOP</pattern>
+		<template>
+			<set name="topic"></set>
+			[STOP]
+		</template>
+	</category>
+	
+</topic>
+
+<topic name="LOOKFORHELP">
+
+	<category>
+		<pattern>START</pattern>
+		<template>
+			<srai>SAY WHATWEDONOW</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* KITCHEN *</pattern>
+		<template>
+			[LOOKFORDATA]kitchen
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* KITCHEN</pattern>
+		<template>
+			[LOOKFORDATA]kitchen
+		</template>
+	</category>
+	
+	<category>
+		<pattern>KITCHEN *</pattern>
+		<template>
+			[LOOKFORDATA]kitchen
+		</template>
+	</category>
+	
+	<category>
+		<pattern>KITCHEN</pattern>
+		<template>
+			[LOOKFORDATA]kitchen
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* CORRIDOR *</pattern>
+		<template>
+			[LOOKFORDATA]corridor
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* CORRIDOR</pattern>
+		<template>
+			[LOOKFORDATA]corridor
+		</template>
+	</category>
+	
+	<category>
+		<pattern>CORRIDOR *</pattern>
+		<template>
+			[LOOKFORDATA]corridor
+		</template>
+	</category>
+	
+	<category>
+		<pattern>CORRIDOR</pattern>
+		<template>
+			[LOOKFORDATA]corridor
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* LIVING ROOM *</pattern>
+		<template>
+			[LOOKFORDATA]living room
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* LIVING ROOM</pattern>
+		<template>
+			[LOOKFORDATA]living room
+		</template>
+	</category>
+	
+	<category>
+		<pattern>LIVING ROOM *</pattern>
+		<template>
+			[LOOKFORDATA]living room
+		</template>
+	</category>
+	
+	<category>
+		<pattern>LIVING ROOM</pattern>
+		<template>
+			[LOOKFORDATA]living room
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* DINING ROOM *</pattern>
+		<template>
+			[LOOKFORDATA]dining room
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* DINING ROOM</pattern>
+		<template>
+			[LOOKFORDATA]dining room
+		</template>
+	</category>
+	
+	<category>
+		<pattern>DINING ROOM *</pattern>
+		<template>
+			[LOOKFORDATA]dining room
+		</template>
+	</category>
+	
+	<category>
+		<pattern>DINING ROOM</pattern>
+		<template>
+			[LOOKFORDATA]dining room
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* BEDROOM *</pattern>
+		<template>
+			[LOOKFORDATA]bedroom
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* BEDROOM</pattern>
+		<template>
+			[LOOKFORDATA]bedroom
+		</template>
+	</category>
+	
+	<category>
+		<pattern>BEDROOM *</pattern>
+		<template>
+			[LOOKFORDATA]bedroom
+		</template>
+	</category>
+	
+	<category>
+		<pattern>BEDROOM</pattern>
+		<template>
+			[LOOKFORDATA]bedroom
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* TOILET *</pattern>
+		<template>
+			[LOOKFORDATA]toilet
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* TOILET</pattern>
+		<template>
+			[LOOKFORDATA]bedroom
+		</template>
+	</category>
+	
+	<category>
+		<pattern>TOILET *</pattern>
+		<template>
+			[LOOKFORDATA]bedroom
+		</template>
+	</category>
+	
+	<category>
+		<pattern>TOILET</pattern>
+		<template>
+			[LOOKFORDATA]bedroom
+		</template>
+	</category>
+	
+	<category>
+		<pattern>STOP</pattern>
+		<template>
+			<set name="topic"></set>
+			[STOP]
+		</template>
+	</category>
+</topic>
+
+<topic name="WHATTIME">
+
+	<category>
+		<pattern>START</pattern>
+		<template></template>
+	</category>
+	
+	<category>
+		<pattern>* TIME *</pattern>
+		<template>[WHATSTHETIME]</template>
+	</category>
+	
+	<category>
+		<pattern>* TIME</pattern>
+		<template>[WHATSTHETIME]</template>
+	</category>
+	
+	<category>
+		<pattern>TIME *</pattern>
+		<template>[WHATSTHETIME]</template>
+	</category>
+	
+	<category>
+		<pattern>TIME</pattern>
+		<template>[WHATSTHETIME]</template>
+	</category>
+	
+</topic>
+
+<topic name="GUIDE">
+
+	<category>
+		<pattern>RESET</pattern>
+		<template>
+			<think>
+				<set name="Operator">TOFILL</set>
+			</think>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>START</pattern>
+		<template>
+			<condition>
+				<li name="Operator" value="TOFILL">
+					<srai>AskName</srai>
+				</li>
+				<li>
+					<srai>NAMEACQUIRED</srai>
+				</li>
+			</condition>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>ASKNAME</pattern>
+		<template>
+			[SAY]
+			<random>
+				<li>Hi there!</li>
+				<li>Hello!</li>
+				<li>Nice to meet you!</li>
+			</random>
+			<random>
+				<li>Please, can you tell me your name?</li>
+				<li>What is your name?</li>
+				<li>What's your name?</li>
+				<li>Can I ask your name?</li>
+			</random>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* ANDREA *</pattern>
+		<template>
+			<think>
+				<set name="Operator">andrea</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* ANDREA</pattern>
+		<template>
+			<think>
+				<set name="Operator">andrea</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>ANDREA *</pattern>
+		<template>
+			<think>
+				<set name="Operator">andrea</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>ANDREA</pattern>
+		<template>
+			<think>
+				<set name="Operator">andrea</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* MAYTE *</pattern>
+		<template>
+			<think>
+				<set name="Operator">mayte</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* MAYTE</pattern>
+		<template>
+			<think>
+				<set name="Operator">mayte</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>MAYTE *</pattern>
+		<template>
+			<think>
+				<set name="Operator">mayte</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>MAYTE</pattern>
+		<template>
+			<think>
+				<set name="Operator">mayte</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* LUCA *</pattern>
+		<template>
+			<think>
+				<set name="Operator">luca</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>LUCA *</pattern>
+		<template>
+			<think>
+				<set name="Operator">luca</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* LUCA</pattern>
+		<template>
+			<think>
+				<set name="Operator">luca</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>LUCA</pattern>
+		<template>
+			<think>
+				<set name="Operator">luca</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* MARC *</pattern>
+		<template>
+			<think>
+				<set name="Operator">marc</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* MARC</pattern>
+		<template>
+			<think>
+				<set name="Operator">marc</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>MARC *</pattern>
+		<template>
+			<think>
+				<set name="Operator">marc</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>MARC</pattern>
+		<template>
+			<think>
+				<set name="Operator">marc</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>NAMEACQUIRED</pattern>
+		<template>
+			[SAY]
+			<random>
+				<li>Hi <get name="Operator"/>!</li>
+				<li>Hello <get name="Operator"/>!</li>
+			</random>
+			<random>
+				<li>Could you please follow me?</li>
+				<li>Can you follow me?</li>
+			</random>
+			<think>
+				<set name="topic"></set>
+		</template>
+	</category>
+	
+</topic>
+
+<category>
+	<pattern>CALLPERSON START</pattern>
+	<template>
+		[SAY]
+		<random>
+			<li>Hey <get name="Operator"/>, please pay attention!</li>
+			<li><get name="Operator"/>, please focus!</li>
+			<li>Do not distract, <get name="Operator"/>!</li>
+		</random>
+		<random>
+			<li>Our help is needed!</li>
+			<li>Someone requires our help!</li>
+			<li>Duty calls!</li>
+		</random>
+	</template>
+</category>
+
+<category>
+	<pattern>CALLPERSON STOP</pattern>
+	<template>
+		[STOP]
+	</template>
+</category>
+
+<category>
+	<pattern>ARRIVEDCAR START</pattern>
+	<template>
+		[SAY]
+		<random>
+			<li>Hey <get name="Operator"/>, we arrived at the car!</li>
+			<li><get name="Operator"/>, here we are!</li>
+			<li>Stop <get name="Operator"/>, this is the car!</li>
+		</random>
+	</template>
+</category>
+
+<category>
+	<pattern>ARRIVEDCAR STOP</pattern>
+	<template>
+		[STOP]
+	</template>
+</category>
+
+
+</aiml>

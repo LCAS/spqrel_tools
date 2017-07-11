@@ -1,0 +1,4 @@
+beer
+coke
+vodka
+whisky

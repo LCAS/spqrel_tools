@@ -1,0 +1,626 @@
+<?xml version="1.0"?>
+<aiml version="1.0">
+
+
+<topic name="TAKEORDER">
+	
+	<category>
+		<pattern>RESET</pattern>
+		<template>
+			<think>
+				<set name="Customer">TOFILL</set>
+				<set name="Drink">TOFILL</set>
+			</think>
+		</template>
+	</category>
+
+	<category>
+		<pattern>START</pattern>
+		<template>
+			<condition>
+				<li name="Customer" value="TOFILL">
+					<think>
+						<set name="topic">ASKNAME</set>
+					</think>
+					<srai>AskName</srai>
+				</li>
+				<li name="Drink" value="TOFILL">
+					<think>
+						<set name="topic">ASKDRINK</set>
+					</think>
+					<srai>AskDrink</srai>
+				</li>
+				<li>
+					<srai>COCKTAILDONE</srai>
+				</li>
+			</condition>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>STOP</pattern>
+		<template>
+			<set name="topic"></set>
+			[STOP]
+		</template>
+	</category>
+
+	<category>
+		<pattern>COCKTAILDONE</pattern>
+		<template>
+			[SAY]
+			<random>
+				<li><get name="Customer"/>, thanks for your order. I'm going to bring you a <get name="Drink"/>!</li>
+				<li>Perfect <get name="Customer"/>! Your <get name="Drink"/> is coming soon!</li>
+				<li>A <get name="Drink"/> for <get name="Customer"/>! This is my new mission!</li>
+				<li>Just a <get name="Drink"/>? I think you can do better, <get name="Customer"/>!</li>
+			</random>
+			<srai>TAKEORDERDATA</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>TAKEORDERDATA</pattern>
+		<template>
+			|[TAKEORDERDATA]<get name="Customer"/>(<get name="Drink"/>)
+		</template>
+	</category>
+</topic>
+
+
+
+
+
+<topic name="MISSINGDRINK">
+	<category>
+		<pattern>CUSTOMER * DRINK * START</pattern>
+		<template>
+			<think>
+				<set name="temp_customer"><star index="1"/></set>
+				<set name="temp_drink"><star index="2"/></set>
+				<set name="drink_availability">TOFILL</set>
+			</think>
+			[SAY]
+			<random>
+				<li>I'm sorry!</li>
+				<li>Excuse me!</li>
+				<li>Ops!</li>
+			</random>
+			<random>
+				<li>Is the <star index="2"/> available?</li>
+				<li>I didn't realize whether the <star index="2"/> is available or not. Is it?</li>
+				<li>Is there the <star index="2"/> for <star index="1"/>?</li>
+				<li>Is there the <star index="2"/>?</li>
+			</random>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* YES *</pattern>
+		<template>
+			<srai>POSITIVERESPONSE</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* YES</pattern>
+		<template>
+			<srai>POSITIVERESPONSE</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>YES *</pattern>
+		<template>
+			<srai>POSITIVERESPONSE</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>YES</pattern>
+		<template>
+			<srai>POSITIVERESPONSE</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* NO *</pattern>
+		<template>
+			<srai>NEGATIVERESPONSE</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* NO</pattern>
+		<template>
+			<srai>NEGATIVERESPONSE</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>NO *</pattern>
+		<template>
+			<srai>NEGATIVERESPONSE</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>NO</pattern>
+		<template>
+			<srai>NEGATIVERESPONSE</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>POSITIVERESPONSE</pattern>
+		<template>
+			[SAY]
+			<random>
+				<li>Great!</li>
+				<li>Perfect!</li>
+				<li>That's great!</li>
+				<li>Brilliant!</li>
+			</random>
+			<think>
+				<set name="drink_availability">True</set>
+			</think>
+			
+		</template>
+	</category>
+	
+	<category>
+		<pattern>NEGATIVERESPONSE</pattern>
+		<template>
+			[SAY]
+			<random>
+				<li>Okay, no problem!</li>
+				<li>Sure, no problem!</li>
+			</random>
+			<think>
+				<set name="drink_availability">False</set>
+			</think>
+			<srai>ASKALTERNATIVES</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>ASKALTERNATIVES</pattern>
+		<template>
+			[SAY]
+			<random>
+				<li>Which are the alternatives?</li>
+				<li>What do you have, instead?</li>
+				<li>What can I bring to <get name="temp_customer"/>, instead?</li>
+				<li>Do you have something else I can bring to <get name="temp_customer"/>, instead?</li>
+			</random>
+			<think>
+				<set name="drink_availability">False</set>
+			</think>
+		</template>
+	</category>
+	
+	<!--
+		I think the best way to catch the alternatives (as I don't know how they will be
+		given), is to take everything the user says and try to match (afterwards) the
+		possible drinks, among the ones pre-defined.
+	-->
+	<category><that>ASKALTERNATIVES</that>
+		<pattern>*</pattern>
+		<template>[DRINKSALTERNATIVES]<star/></template>
+	</category>
+	
+</topic>
+
+
+
+
+
+<topic name="ASKNAME">
+	<category>
+		<pattern>ASKNAME</pattern>
+		<template>
+			[SAY]
+			<random>
+				<li>Hi there, I'm Peppino!</li>
+				<li>Hello, I'm Peppino!</li>
+				<li>Nice to meet you, I'm Peppino!</li>
+			</random>
+			I'm ready to get your order!
+			<random>
+				<li>Please, can you tell me your name?</li>
+				<li>What is your name?</li>
+				<li>What's your name?</li>
+			</random>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* ANDREA *</pattern>
+		<template>
+			<think>
+				<set name="Customer">andrea</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* ANDREA</pattern>
+		<template>
+			<think>
+				<set name="Customer">andrea</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>ANDREA *</pattern>
+		<template>
+			<think>
+				<set name="Customer">andrea</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>ANDREA</pattern>
+		<template>
+			<think>
+				<set name="Customer">andrea</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* MAYTE *</pattern>
+		<template>
+			<think>
+				<set name="Customer">mayte</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* MAYTE</pattern>
+		<template>
+			<think>
+				<set name="Customer">mayte</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>MAYTE *</pattern>
+		<template>
+			<think>
+				<set name="Customer">mayte</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>MAYTE</pattern>
+		<template>
+			<think>
+				<set name="Customer">mayte</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* LUCA *</pattern>
+		<template>
+			<think>
+				<set name="Customer">luca</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>LUCA *</pattern>
+		<template>
+			<think>
+				<set name="Customer">luca</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* LUCA</pattern>
+		<template>
+			<think>
+				<set name="Customer">luca</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>LUCA</pattern>
+		<template>
+			<think>
+				<set name="Customer">luca</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* MARC *</pattern>
+		<template>
+			<think>
+				<set name="Customer">marc</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* MARC</pattern>
+		<template>
+			<think>
+				<set name="Customer">marc</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>MARC *</pattern>
+		<template>
+			<think>
+				<set name="Customer">marc</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>MARC</pattern>
+		<template>
+			<think>
+				<set name="Customer">marc</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+</topic>
+
+
+
+
+
+
+<topic name="ASKDRINK">
+	<category>
+		<pattern>ASKDRINK</pattern>
+		<template>
+			[SAY]
+			<random>
+				<li>Hey <get name="Customer"/>!</li>
+				<li>Hi <get name="Customer"/>!</li>
+				<li>Hello  <get name="Customer"/>!</li>
+				<li>Hi there, <get name="Customer"/>!</li>
+			</random>
+			<random>
+				<li>What do you want to drink?</li>
+				<li>Which drink do you want?</li>
+			</random>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* COKE *</pattern>
+		<template>
+			<think>
+				<set name="Drink">COKE</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>COKE *</pattern>
+		<template>
+			<think>
+				<set name="Drink">COKE</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* COKE</pattern>
+		<template>
+			<think>
+				<set name="Drink">COKE</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>COKE</pattern>
+		<template>
+			<think>
+				<set name="Drink">COKE</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* WHISKY *</pattern>
+		<template>
+			<think>
+				<set name="Drink">WHISKY</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>WHISKY *</pattern>
+		<template>
+			<think>
+				<set name="Drink">WHISKY</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* WHISKY</pattern>
+		<template>
+			<think>
+				<set name="Drink">WHISKY</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>WHISKY</pattern>
+		<template>
+			<think>
+				<set name="Drink">WHISKY</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* BEER *</pattern>
+		<template>
+			<think>
+				<set name="Drink">BEER</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>BEER *</pattern>
+		<template>
+			<think>
+				<set name="Drink">BEER</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* BEER</pattern>
+		<template>
+			<think>
+				<set name="Drink">BEER</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>BEER</pattern>
+		<template>
+			<think>
+				<set name="Drink">BEER</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<!--<category>
+		<pattern> * ME * </pattern>
+		<template>
+			<think>
+				<set name="Drink"><star index="2"/></set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>A * </pattern>
+		<template>
+			<think>
+				<set name="Drink"><star index="1"/></set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern> * A * </pattern>
+		<template>
+			<think>
+				<set name="Drink"><star index="2"/></set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern> * THAT * </pattern>
+		<template>
+			<think>
+				<set name="Drink"><star index="2"/></set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern> * </pattern>
+		<template>
+			<think>
+				<set name="Drink"><star index="1"/></set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>-->
+</topic>
+
+</aiml>

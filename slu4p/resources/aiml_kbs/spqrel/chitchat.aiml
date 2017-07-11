@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+<aiml version="1.0">
+
+<category>
+	<pattern>* HELLO *</pattern>
+	<template><srai>GREETINGS</srai></template>
+</category>
+
+<category>
+	<pattern>HELLO *</pattern>
+	<template><srai>GREETINGS</srai></template>
+</category>
+
+<category>
+	<pattern>* HELLO</pattern>
+	<template><srai>GREETINGS</srai></template>
+</category>
+
+<category>
+	<pattern>HELLO</pattern>
+	<template><srai>GREETINGS</srai></template>
+</category>
+
+<category>
+	<pattern>* HI *</pattern>
+	<template><srai>GREETINGS</srai></template>
+</category>
+
+<category>
+	<pattern>HI *</pattern>
+	<template><srai>GREETINGS</srai></template>
+</category>
+
+<category>
+	<pattern>* HI</pattern>
+	<template><srai>GREETINGS</srai></template>
+</category>
+
+<category>
+	<pattern>HI</pattern>
+	<template><srai>GREETINGS</srai></template>
+</category>
+
+<category>
+	<pattern>GREETINGS</pattern>
+	<template>
+	[SAY]
+		<random>
+			<li>Hello!</li>
+			<li>Hi there!</li>
+			<li>Hi!</li>
+			<li>Hello buddy!</li>
+		</random>
+	</template>
+</category>
+
+<category>
+	<pattern>* THANKS *</pattern>
+	<template><srai>THANKING</srai></template>
+</category>
+
+<category>
+	<pattern>THANKS *</pattern>
+	<template><srai>THANKING</srai></template>
+</category>
+
+<category>
+	<pattern>* THANKS</pattern>
+	<template><srai>THANKING</srai></template>
+</category>
+
+<category>
+	<pattern>THANKS</pattern>
+	<template><srai>THANKING</srai></template>
+</category>
+
+<category>
+	<pattern>* THANK *</pattern>
+	<template><srai>THANKING</srai></template>
+</category>
+
+<category>
+	<pattern>THANK *</pattern>
+	<template><srai>THANKING</srai></template>
+</category>
+
+<category>
+	<pattern>* THANK</pattern>
+	<template><srai>THANKING</srai></template>
+</category>
+
+<category>
+	<pattern>THANK</pattern>
+	<template><srai>THANKING</srai></template>
+</category>
+
+
+<category>
+	<pattern>THANKING</pattern>
+	<template>
+	[SAY]
+		<random>
+			<li>You're welcome!</li>
+			<li>Cheers!</li>
+			<li>It's a pleasure!</li>
+			<li>No worries!</li>
+		</random>
+	</template>
+</category>
+
+<category>
+		<pattern>* YES *</pattern>
+		<template>
+			<srai>POSITIVERESPONSE</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* YES</pattern>
+		<template>
+			<srai>POSITIVERESPONSE</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>YES *</pattern>
+		<template>
+			<srai>POSITIVERESPONSE</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>YES</pattern>
+		<template>
+			<srai>POSITIVERESPONSE</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* NO *</pattern>
+		<template>
+			<srai>NEGATIVERESPONSE</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* NO</pattern>
+		<template>
+			<srai>NEGATIVERESPONSE</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>NO *</pattern>
+		<template>
+			<srai>NEGATIVERESPONSE</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>NO</pattern>
+		<template>
+			<srai>NEGATIVERESPONSE</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>POSITIVERESPONSE</pattern>
+		<template>
+			[SAY]
+			<random>
+				<li>Great!</li>
+				<li>Perfect!</li>
+				<li>That's great!</li>
+				<li>Brilliant!</li>
+			</random>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>NEGATIVERESPONSE</pattern>
+		<template>
+			[SAY]
+			<random>
+				<li>Okay, no problem!</li>
+				<li>Sure, no problem!</li>
+			</random>
+		</template>
+	</category>
+
+</aiml>

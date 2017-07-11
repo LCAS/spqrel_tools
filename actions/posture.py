@@ -46,7 +46,7 @@ def actionThread_exec (params):
 
     if motion_service.robotIsWakeUp():
         stiff_body = 0.5
-        stiff_head = 0.25
+        stiff_head = 0.5
         stiff_arms = 0.0
         print "   Stiffness - Body ",stiff_body," Head ",stiff_head," Arms ",stiff_arms
         

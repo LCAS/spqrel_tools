@@ -22,9 +22,11 @@ def coords(params):
 	elif (params=='test2'):
 		return [15,2]
 	elif (params=='entrance'):
-		return [-4.8, -5.6]
+		return [-6.3, -6.2]
 	elif (params=='exit'):
-		return [-11.3, -7.9 ]
+		return [-2.6, -9.0 ]
+	elif (params=='rips'):
+		return [-1.0, -2.7 ]
 	return [0,0]
 
 

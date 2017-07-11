@@ -4,11 +4,17 @@ PLANS:=$(shell find plans -name "*.plan")
 
 PNMLS=$(PLANS:.plan=.pnml)
 
-PNPTRANS?=../../PetriNetPlans/PNPgen/bin/pnpgen_translator
-INSTALL_TREE?=../../install
-WORKTREE?=..
-QIBUILDS:=$(shell find $(WORKTREE) -name qiproject.xml)
+PNPTRANS?=$(shell readlink -f ../PetriNetPlans/PNPgen/bin/pnpgen_translator)
+INSTALL_TREE?=$(shell readlink -f ../../install)
+WORKTREE?=$(shell readlink -f ..)
+TOOLCHAIN?="pepper"
 
+QIBUILDS:=$(shell find $(WORKTREE) -name qiproject.xml)
+QIBUILDS_DIRS=$(QIBUILDS:/qiproject.xml=)
+QIBUILDS_BUILD_DIRS=$(QIBUILDS_DIRS:=/build-$(TOOLCHAIN))
+
+QI_CONF_OPTS:=-w $(WORKTREE) -c $(TOOLCHAIN) --release
+QI_MAKE_OPTS:=-c $(TOOLCHAIN)
 
 all:	$(PNMLS) build
 
@@ -20,6 +26,20 @@ clean:
 	done
 	rm -rf $(INSTALL_TREE)
 	rm -rf cookies
+
+BINS:=$(shell find $(QIBUILDS_BUILD_DIRS) -type f  | xargs file | grep "LSB executable" | cut -f1 -d: | grep -v CMakeFiles)
+LIBS:=$(shell find $(QIBUILDS_BUILD_DIRS) -type f -a -name "*.so" | xargs file | grep "LSB shared object" | cut -f1 -d: | grep -v CMakeFiles)
+
+bins: build $(BINS) $(LIBS)
+	@echo $(QIBUILDS_BUILD_DIRS)
+	@echo $(BINS)
+	@echo $(LIBS)
+
+
+install_bins: install_pull bins
+	install -d $(INSTALL_TREE)/bin $(INSTALL_TREE)/lib
+	install $(BINS) $(INSTALL_TREE)/bin
+	install -m 664 $(LIBS) $(INSTALL_TREE)/lib
 
 plans:	$(PNMLS)
 	@echo $^
@@ -33,20 +53,33 @@ $(INSTALL_TREE)/.git:
 
 install_prep: $(INSTALL_TREE)/.git
 
-install: $(PNMLS) build install_prep
+install_pull: install_prep
+	(cd $(INSTALL_TREE); \
+		git pull --depth 1 -X theirs)
+
+install: $(PNMLS)  install_bins
 	rsync -a --exclude '.git' --exclude '.gitignore' $(WORKTREE) $(INSTALL_TREE)
-	(cd $(INSTALL_TREE); git add -A && git commit --allow-empty -a -m "$$USER-`date`")
+	rsync -a --exclude '.git' --exclude '.gitignore' scripts actions plans $(INSTALL_TREE)
+	(cd $(INSTALL_TREE); \
+		git add -A --ignore-removal . && \
+		git commit --allow-empty -a -m "committed by $$USER from `hostname` at `date`")
+
+push: install
+	(cd $(INSTALL_TREE); \
+		git push)
+
+
 
 build:	$(QIBUILDS) cookies/configure
 	for qb in $(QIBUILDS); do \
 		d=`dirname $$qb`; \
-		(cd $$d; pwd; qibuild make) \
+		(cd $$d; pwd; qibuild make $(QI_MAKE_OPTS)) \
 	done
 
 cookies/configure:	$(QIBUILDS)
 	for qb in $(QIBUILDS); do \
 		d=`dirname $$qb`; \
-		(cd $$d; pwd; qibuild configure) \
+		(cd $$d; pwd; qibuild configure $(QI_CONF_OPTS)) \
 	done
 	mkdir -p cookies; touch $@
 

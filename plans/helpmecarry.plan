@@ -1,4 +1,6 @@
-headpose_0_-2;
+goto_exit;
+turn_130_ABS;
+headpose_0_-3;
 waitfor_personhere;
 #dialogue_follow;
 say_hello;

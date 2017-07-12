@@ -26,8 +26,8 @@ fi
 # default home is $HOME/spqrel
 export SPQREL_HOME=`readlink -f "${SPQREL_HOME:-$HOME/spqrel}"`
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SPQREL_HOME/lib
-export PATH=$PATH:$SPQREL_HOME/bin
+export LD_LIBRARY_PATH=$SPQREL_HOME/lib:$LD_LIBRARY_PATH
+export PATH=$SPQREL_HOME/bin:$PATH
 
 export PYTHONPATH=$SPQREL_HOME/spqrel_tools/slu4p:$SPQREL_HOME/PetriNetPlans/PNPnaoqi/actions:${PYTHONPATH}
 export SLU4R_ROOT=$SPQREL_HOME/spqrel_tools/slu4

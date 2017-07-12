@@ -32,6 +32,7 @@ fi
 export SPQREL_HOME=`real_path "${SPQREL_HOME:-$HOME/spqrel}"`
 
 export LD_LIBRARY_PATH=$SPQREL_HOME/lib:$LD_LIBRARY_PATH
+export DYLD_LIBRARY_PATH=$SPQREL_HOME/lib:$DYLD_LIBRARY_PATH
 export PATH=$SPQREL_HOME/bin:$PATH
 
 export PYTHONPATH=$SPQREL_HOME/spqrel_tools/slu4p:$SPQREL_HOME/worktree/PetriNetPlans/PNPnaoqi/actions:${PYTHONPATH}

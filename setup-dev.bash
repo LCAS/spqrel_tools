@@ -33,8 +33,9 @@ export SPQREL_HOME=`realpath "${SPQREL_HOME:-$HOME/spqrel}"`
 export PYNAOQI=`find "${SPQREL_HOME}" -path "*/pynao*/lib/python2.7/site-packages" | tr "\n" ":"`
 export PYTHONPATH=${PYNAOQI}:$PYTHONPATH
 
-export NAOQI_LIB=`find "${SPQREL_HOME}" -path "*/naoqi*/lib/libqi.so" | sed 's/libqi.so//' |  tr "\n" ":"`
+export NAOQI_LIB=`find "${SPQREL_HOME}" -path "*/naoqi*/lib/libqi.*" | sed 's/libqi.*$//' |  tr "\n" ":"`
 export LD_LIBRARY_PATH=${NAOQI_LIB}:${LD_LIBRARY_PATH}
+export DYLD_LIBRARY_PATH=${NAOQI_LIB}:${DYLD_LIBRARY_PATH}
 
 export NAOQI_BIN=`find "${SPQREL_HOME}" -path "*/naoqi*/bin/naoqi-bin" | sed 's/naoqi-bin//'  | tr "\n" ":"`
 export PATH=${NAOQI_BIN}:${PATH}

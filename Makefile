@@ -19,6 +19,9 @@ INSTALL_TREE?=$(shell readlink -f ../../install-$(TOOLCHAIN))
 # worktree, usually one level up
 WORKTREE?=$(shell readlink -f ..)
 
+# find git repos:
+GIT_REPOS:=$(shell find ${WORKTREE} -name .git -type d | sed 's/.git//' | xargs -n 1 -r readlink -f)
+
 GIT_BRANCH=$(TOOLCHAIN)
 
 QIBUILDS:=$(shell find $(WORKTREE) -name qiproject.xml)
@@ -29,6 +32,11 @@ QI_CONF_OPTS:=-w $(WORKTREE) -c $(TOOLCHAIN) --release
 QI_MAKE_OPTS:=-c $(TOOLCHAIN) -j4
 
 all:	$(PNMLS) build
+
+update:
+	for d in ${GIT_REPOS}; do \
+		(cd $$d; git pull); \
+	done
 
 clean: 
 	rm -rf $(PNMLS)

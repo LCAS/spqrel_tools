@@ -1,6 +1,8 @@
 #! /usr/bin/env python
 # -*- encoding: UTF-8 -*-
 
+"""Example: Use ALBehaviorManager Module"""
+
 import qi
 import argparse
 import sys
@@ -15,19 +17,13 @@ def main(session, behavior_name):
 
     behavior_mng_service = session.service("ALBehaviorManager")
 
-    #Behaviours loaded in the robot
-    names = behavior_mng_service.getInstalledBehaviors()
-    print
-    print "Behaviors on the robot:"
-    print
-    print names
-
     # Check that the behavior exists.
     if (behavior_mng_service.isBehaviorInstalled(behavior_name)):
         # Check that it is not already running.
         if (not behavior_mng_service.isBehaviorRunning(behavior_name)):
             # Launch behavior. This is a blocking call, use _async=True if you do not
             # want to wait for the behavior to finish.
+            print "Behavior Started"
             behavior_mng_service.runBehavior(behavior_name, _async=True)
             time.sleep(0.5)
         else:
@@ -36,8 +32,15 @@ def main(session, behavior_name):
     else:
         print
         print "Behavior not found!"
-        print 
-    return
+        print
+        time.sleep(1)
+         #Behaviours loaded in the robot
+        names = behavior_mng_service.getInstalledBehaviors()
+        print
+        print "Behaviors on the robot:"
+        print
+        print names
+        return
 
     names = behavior_mng_service.getRunningBehaviors()
     print "Running behaviors:"
@@ -46,6 +49,7 @@ def main(session, behavior_name):
     # Stop the behavior.
     if (behavior_mng_service.isBehaviorRunning(behavior_name)):
         behavior_mng_service.stopBehavior(behavior_name)
+        print "Behavior Stopped"
         time.sleep(1.0)
     else:
         print "Behavior is already stopped."

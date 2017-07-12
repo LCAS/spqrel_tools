@@ -1,8 +1,6 @@
 #! /usr/bin/env python
 # -*- encoding: UTF-8 -*-
 
-"""Example: Use ALBehaviorManager Module"""
-
 import qi
 import argparse
 import sys

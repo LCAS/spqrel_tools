@@ -29,8 +29,6 @@ def actionThread_exec (params):
 #    tablet_service.showWebview(url)
 #    tablet_service.showWebview("http://www.google.it/")
 
-    tablet_service.showWebview("http://35.161.166.53:9000/")
-
     # action init
     time.sleep(0.5)
         

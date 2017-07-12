@@ -1,13 +1,12 @@
-posture_Stand;
-headpose_0_-4;
-waitfor_dooropen;
-say_starting;
-headpose_0_-4;
+#posture_Stand;
+#waitfor_dooropen;
+#headpose_0_-4;
 goto_entrance;
 goto_rips;
-waitfor_screentouched;
+say_starting;
+#waitfor_screentouched;
 say_goodbye;
-headpose_0_-4;
+#headpose_0_-4;
 goto_entrance;
-goto_exit;       
+#goto_exit;       
 

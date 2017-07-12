@@ -74,6 +74,8 @@ def main():
 
     quit()
 
+    time.sleep(1)
+    sys.exit(0)
 
 if __name__ == "__main__":
     main()

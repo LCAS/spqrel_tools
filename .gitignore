@@ -108,3 +108,6 @@ ENV/
 # NAOqi build folders
 build-*/
 *~
+
+# PyCharm
+.idea/

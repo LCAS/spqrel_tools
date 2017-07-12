@@ -16,6 +16,11 @@ clean_path_var () {
   echo $path_var
 }
 
+real_path () {
+	python -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' "$1"
+}
+
+
 
 if [ "$1" ]; then
 	export SPQREL_HOME="$1"
@@ -24,7 +29,7 @@ else
 fi
 
 # default home is $HOME/spqrel
-export SPQREL_HOME=`readlink -f "${SPQREL_HOME:-$HOME/spqrel}"`
+export SPQREL_HOME=`real_path "${SPQREL_HOME:-$HOME/spqrel}"`
 
 export LD_LIBRARY_PATH=$SPQREL_HOME/lib:$LD_LIBRARY_PATH
 export PATH=$SPQREL_HOME/bin:$PATH

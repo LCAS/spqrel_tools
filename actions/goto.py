@@ -10,6 +10,10 @@ from action_base import *
 import conditions
 from conditions import set_condition
 
+headJointsNames = ["HeadYaw", "HeadPitch"]
+headYaw = 0.0
+headPitch = -0.3
+
 actionName = "goto"
 
 def coords(params):
@@ -69,11 +73,21 @@ def actionThread_exec (params):
     acb.signal.connect(plannerstatus_cb)
     goal_reached = False
 
+    head_count = 0
+    head_count_max = 6 
     # action init
     while (getattr(t, "do_run", True) and not goal_reached): 
         #print "Action "+actionName+" "+params+" exec..."
         # action exec
         time.sleep(0.5)
+        head_count = head_count + 1
+        if (head_count == head_count_max):
+            head_count = 0
+            print "Moving head to ", headYaw, headPitch
+            finalAngles = [yaw, pitch]
+            timeLists  = [1.0, 1.0]
+            isAbsolute = True
+            motion_service.angleInterpolation(headJointsNames, finalAngles, timeLists, isAbsolute)
         # action exec
         
     print "Action "+actionName+" "+params+" terminated"

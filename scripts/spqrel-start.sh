@@ -3,6 +3,8 @@
 SESSION="${USER}-SPQReL"
 SPQREL_PREFIX="${SPQREL_PREFIX:-$HOME/spqrel}"
 
+MAP="$SPQREL_PREFIX/maps/robolabINB1004/robolabINB1004.yaml"
+
 tmux -2 new-session -d -s $SESSION
 # Setup a window for tailing log files
 #tmux new-window -t $SESSION:0 -n 'pepper core'
@@ -31,12 +33,12 @@ tmux send-keys "# naoqi-bin"
 tmux select-window -t $SESSION:2
 tmux split-window -v
 tmux select-pane -t 0
-tmux send-keys "# navigation localiser" C-m
+tmux send-keys "# cd $SPQREL_PREFIX/bin; ./pepper_localizer --map $MAP --initial_pose_x 0 --initial_pose_y 0 --initial_pose_theta 0" C-m
 tmux select-pane -t 1
-tmux send-keys "# navigation planner" C-m
+tmux send-keys "# cd $SPQREL_PREFIX/bin; ./pepper_planner --map $MAP " C-m
 
 
-# Navigation Window
+# Speech Window
 tmux select-window -t $SESSION:3
 tmux split-window -v
 tmux select-pane -t 0

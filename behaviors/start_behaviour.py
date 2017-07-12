@@ -42,10 +42,6 @@ def main(session, behavior_name):
         print names
         return
 
-    names = behavior_mng_service.getRunningBehaviors()
-    print "Running behaviors:"
-    print names
-
     # Stop the behavior.
     if (behavior_mng_service.isBehaviorRunning(behavior_name)):
         behavior_mng_service.stopBehavior(behavior_name)

@@ -50,4 +50,4 @@ echo "PEPPER_IP=$PEPPER_IP"
 #echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" | tr ":" "\n\t"
 #echo "PYTHONPATH=$PYTHONPATH"| tr ":" "\n\t"
 
-
+export GIT_EXEC_PATH=${SPQREL_HOME}/libexec

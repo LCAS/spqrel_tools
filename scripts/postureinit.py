@@ -4,22 +4,10 @@ import sys
 import time
 import os
 
-
 def do_init(session):
-    tablet_service = session.service("ALTabletService")
+    posture_service = session.service("ALRobotPosture")
+    posture_service.goToPosture("Stand",0.5)
 
-    # Display a local image located in img folder in the root of the web server
-    # The ip of the robot from the tablet is 198.18.0.1
-    #tablet_service.showImage("http://198.18.0.1/apps/spqrel/spqrel_logo.jpg")
-
-    # tablet_service.showWebview("http://198.18.0.1/apps/spqrel")
-
-    tablet_service.showImage("http://198.18.0.1/apps/spqrel/img/logo.gif")
-
-    #time.sleep(10)
-
-    # Hide the web view
-    # tablet_service.hideImage()
 
 
 def main():

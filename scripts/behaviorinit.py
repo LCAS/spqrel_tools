@@ -4,22 +4,17 @@ import sys
 import time
 import os
 
+behavior_name = "start_proxies-3eff2a/start_proxies" 
 
 def do_init(session):
-    tablet_service = session.service("ALTabletService")
-
-    # Display a local image located in img folder in the root of the web server
-    # The ip of the robot from the tablet is 198.18.0.1
-    #tablet_service.showImage("http://198.18.0.1/apps/spqrel/spqrel_logo.jpg")
-
-    # tablet_service.showWebview("http://198.18.0.1/apps/spqrel")
-
-    tablet_service.showImage("http://198.18.0.1/apps/spqrel/img/logo.gif")
-
-    #time.sleep(10)
-
-    # Hide the web view
-    # tablet_service.hideImage()
+    behavior_mng_service = session.service("ALBehaviorManager")
+    if (behavior_mng_service.isBehaviorInstalled(behavior_name)):
+        # Check that it is not already running.
+        if (not behavior_mng_service.isBehaviorRunning(behavior_name)):
+            # Launch behavior. This is a blocking call, use _async=True if you do not
+            # want to wait for the behavior to finish.
+            print "Behavior Started"
+            behavior_mng_service.runBehavior(behavior_name, _async=True)
 
 
 def main():

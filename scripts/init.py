@@ -4,23 +4,7 @@ import sys
 import time
 import os
 
-
-def do_init(session):
-    tablet_service = session.service("ALTabletService")
-
-    # Display a local image located in img folder in the root of the web server
-    # The ip of the robot from the tablet is 198.18.0.1
-    #tablet_service.showImage("http://198.18.0.1/apps/spqrel/spqrel_logo.jpg")
-
-    # tablet_service.showWebview("http://198.18.0.1/apps/spqrel")
-
-    tablet_service.showImage("http://198.18.0.1/apps/spqrel/img/logo.gif")
-
-    #time.sleep(10)
-
-    # Hide the web view
-    # tablet_service.hideImage()
-
+import webinit, posture
 
 def main():
     parser = argparse.ArgumentParser()
@@ -42,6 +26,12 @@ def main():
                "Please check your script arguments. Run with -h option for help.")
         sys.exit(1)
 
+    time.sleep(20)
+    webinit.do_init(session)
+    time.sleep(5)
+    behaviorinit.do_init(session)
+    time.sleep(5)
+    postureinit.do_init(session)
 
 if __name__ == "__main__":
     main()

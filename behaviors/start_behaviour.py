@@ -58,7 +58,7 @@ if __name__ == "__main__":
                         help="Robot IP address. On robot or Local Naoqi: use '127.0.0.1'.")
     parser.add_argument("--port", type=int, default=9559,
                         help="Naoqi port number")
-    parser.add_argument("--behavior_name", type=str, required=True,
+    parser.add_argument("--behavior_name", type=str, default="start_proxies-3eff2a/start_proxies",
                         help="Name of the behavior")
 
     args = parser.parse_args()

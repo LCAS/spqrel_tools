@@ -46,8 +46,8 @@ export PYTHONPATH=`clean_path_var $PYTHONPATH`
 
 echo "SPQREL_HOME=$SPQREL_HOME"
 echo "PEPPER_IP=$PEPPER_IP"
-#echo "PATH=$PATH"| tr ":" "\n\t"
-#echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" | tr ":" "\n\t"
-#echo "PYTHONPATH=$PYTHONPATH"| tr ":" "\n\t"
+echo "PATH=$PATH"
+echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" 
+echo "PYTHONPATH=$PYTHONPATH"
 
 export GIT_EXEC_PATH=${SPQREL_HOME}/libexec

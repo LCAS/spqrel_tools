@@ -26,9 +26,19 @@ fi
 export SPQREL_HOME=`readlink -f "${SPQREL_HOME:-$HOME/spqrel}"`
 
 export PYNAOQI=`find "${SPQREL_HOME}" -path "*/pynao*/lib/python2.7/site-packages" | xargs -r -n 1 -- readlink -f | tr "\n" ":"`
-
 export PYTHONPATH=${PYNAOQI}:$PYTHONPATH
 
+export NAOQI_LIB=`find "${SPQREL_HOME}" -path "*/naoqi*/lib/libqi.so" | sed 's/libqi.so//' |  xargs -r -n 1 -- readlink -f | tr "\n" ":"`
+export LD_LIBRARY_PATH=${NAOQI_LIB}:${LD_LIBRARY_PATH}
+
+export NAOQI_BIN=`find "${SPQREL_HOME}" -path "*/naoqi*/bin/naoqi-bin" | sed 's/naoqi-bin//' |  xargs -r -n 1 -- readlink -f | tr "\n" ":"`
+export PATH=${NAOQI_BIN}:${PATH}
+
+
+
 PYTHONPATH=`clean_path_var $PYTHONPATH`
+LD_LIBRARY_PATH=`clean_path_var $LD_LIBRARY_PATH`
+PATH=`clean_path_var $PATH`
 
 echo "found pynaoqi in $PYNAOQI"
+echo "found SDK in $NAOQI_LIB"

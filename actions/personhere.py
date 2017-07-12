@@ -9,6 +9,7 @@ import argparse
 import sys
 import os
 import time
+import threading
 
 from naoqi import ALProxy
 
@@ -24,14 +25,48 @@ def zone1_callback(data):
     set_condition(memory_service,'personhere','false')
 
 
+def rhMonitorThread (memory_service):
+    t = threading.currentThread()
+    print "personhere thread started"
+    
+    while getattr(t, "do_run", True):
+        plist = memory_service.getData("PeoplePerception/PeopleList")
+        
+        personid = 0
+        if (plist!=None and len(plist)>0):
+            personid = plist[0]
+        #print 'personhere:: personid ',personid    
+        pmemkey = "PeoplePerception/Person/"+str(personid)+"/Distance"
+        v = 'false'
+        try:
+            pdist = memory_service.getData(pmemkey)
+            #print "personhere:: distance ",pdist
+            if (pdist<1.5):
+                v = 'true'
+        except:
+            v = 'false'
+        set_condition(memory_service,'personhere',v)
+        #print 'personhere:: value ',v
+
+        time.sleep(0.5)
+    print "personhere thread quit"
+
+
+
 def init(session):
     global memory_service
-    
+    global monitorThread
+
     print "Person here init"
 
     #Starting services
     memory_service  = session.service("ALMemory")
     zones_service = session.service("ALEngagementZones")
+    people_service = session.service("ALPeoplePerception")
+    people_service.resetPopulation()
+    
+    #waving_service = session.service("ALWavingDetection")
+    #movement_service = session.service("ALMovementDetection")
 
     # PARAMETERS
     zones_service.setFirstLimitDistance(1.5)
@@ -44,9 +79,19 @@ def init(session):
     except RuntimeError:
         print "Cannot find ALEngagementZones service. Condition personhere not available"
 
+    print "Creating the thread"
+
+    #create a thead that monitors directly the signal
+    monitorThread = threading.Thread(target = rhMonitorThread, args = (memory_service,))
+    monitorThread.start()
+
+
 
 def quit():
+    global monitorThread
     print "Person here quit"
+    monitorThread.do_run = False 
+
 
 
 def main():

@@ -10,7 +10,7 @@ import action_base
 from action_base import *
 
 import dooropen, screentouched
-import say, waitfor, goto, enter, lookfor, dialogue, posture, personhere, headpose
+import say, waitfor, goto, turn, lookfor, dialogue, posture, personhere, headpose, followuntil, movementdetected
 
 def init(session):
     screentouched.init(session)
@@ -18,12 +18,14 @@ def init(session):
     say.init(session)
     waitfor.init(session)
     goto.init(session)
-    enter.init(session)
+    turn.init(session)
     lookfor.init(session)
     dialogue.init(session)
     posture.init(session)
     personhere.init(session)
     headpose.init(session)
+    followuntil.init(session)
+    movementdetected.init(session)
 
 def quit():
     screentouched.quit()
@@ -31,12 +33,14 @@ def quit():
     say.quit()
     waitfor.quit()
     goto.quit()
-    enter.quit()
+    turn.quit()
     lookfor.quit()
     dialogue.quit()
     posture.quit()
     personhere.quit()
     headpose.quit()
+    followuntil.quit()
+    movementdetected.quit()
 
 def main():
     global memory_service

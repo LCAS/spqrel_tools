@@ -25,7 +25,7 @@ def actionThread_exec (params):
     print "Action "+actionName+" started with params "+params
     # action init
 
-    stiff_head = 0.5
+    stiff_head = 0.6
     print "   Stiffness -  Head ",stiff_head
         
     names = "Head"

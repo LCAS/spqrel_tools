@@ -69,7 +69,7 @@ plans/%.pnml: plans/%.plan
 
 $(INSTALL_TREE)/.git:
 	mkdir -p $(INSTALL_TREE)
-	(git clone --depth 1 -b $(GIT_BRANCH) \
+	(git clone --depth 1 --recursive -b $(GIT_BRANCH) \
 			--single-branch https://github.com/lcas/spqrel_launch.git $(INSTALL_TREE) || \
 	 git init $(INSTALL_TREE))
 	 
@@ -78,11 +78,11 @@ install_prep: $(INSTALL_TREE)/.git
 
 install_pull: install_prep
 	-(cd $(INSTALL_TREE); \
-		git pull --depth 1 -X theirs --no-edit)
+		git pull --depth 1 -X theirs --no-edit --recurse-submodules)
 
 install: $(PNMLS)  install_bins
-	rsync -a --exclude '.git' --exclude '.gitignore' $(WORKTREE)/* $(INSTALL_TREE)
-	rsync -a --exclude '.git' --exclude '.gitignore' $(AUX_DIRS) $(INSTALL_TREE)
+#	rsync -a --exclude '.git' --exclude '.gitignore' $(WORKTREE)/* $(INSTALL_TREE)
+#	rsync -a --exclude '.git' --exclude '.gitignore' $(AUX_DIRS) $(INSTALL_TREE)
 	(cd $(INSTALL_TREE); \
 		git add -A --ignore-removal . && \
 		git commit --allow-empty -a -m "committed by $$USER from `hostname` at `date`")

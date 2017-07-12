@@ -7,6 +7,8 @@ import os
 behavior_name = "start_proxies-3eff2a/start_proxies" 
 
 def do_init(session):
+    print "Init behavior ", behavior_name
+
     behavior_mng_service = session.service("ALBehaviorManager")
     if (behavior_mng_service.isBehaviorInstalled(behavior_name)):
         # Check that it is not already running.
@@ -28,15 +30,18 @@ def main():
     pip = args.pip
     pport = args.pport
 
-    #Start working session
-    session = qi.Session()
     try:
-        session.connect("tcp://" + pip + ":" + str(pport))
+        connection_url = "tcp://" + pip + ":" + str(pport)
+        print "Connecting to ",	connection_url
+        app = qi.Application(["BehaviorInit", "--qi-url=" + connection_url ])
     except RuntimeError:
         print ("Can't connect to Naoqi at ip \"" + pip + "\" on port " + str(pport) +".\n"
                "Please check your script arguments. Run with -h option for help.")
         sys.exit(1)
 
+    app.start()
+
+    do_init(app.session)
 
 if __name__ == "__main__":
     main()

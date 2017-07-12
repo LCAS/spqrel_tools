@@ -12,7 +12,7 @@ from conditions import set_condition
 
 headJointsNames = ["HeadYaw", "HeadPitch"]
 headYaw = 0.0
-headPitch = -0.3
+headPitch = -0.4 # head up
 
 actionName = "goto"
 
@@ -27,18 +27,21 @@ def coords(params):
 		return [2,15]
 	elif (params=='test2'):
 		return [15,2]
-	elif (params=='entrance'):
-		return [-6.3, -6.2]
 	elif (params=='exit'):
-		return [-2.6, -9.0 ]
+		return [8.4, -4.8 ]
+	elif (params=='entrance'):
+		return [6.0, -5.1 ]
+	elif (params=='tv'):
+		return [2.2, -5.6]
 	elif (params=='rips'):
-		return [-1.0, -2.7 ]
+		return [1.1, -2.0 ]
 	return [0,0]
 
 
 goal_reached = False
 
 def plannerstatus_cb(value):
+    global tts_service 
     global goal_reached
     global memory_service
     print "NAOqi Planner status: ",value # GoalReached, PathFound, PathNotFound, WaitingForGoal
@@ -46,32 +49,51 @@ def plannerstatus_cb(value):
         goal_reached = True
     elif (value=='PathNotFound'):
         mem_key_execstatus = "NAOqiPlanner/ExecutionStatus"
-        distToGoal = memory_service.getData(mem_key_execstatus)
-        print distToGoal
+        v = memory_service.getData(mem_key_execstatus)
+        print "Goto:: distance and angle to goal: ", v
+        distToGoal = v[0]
+        angleToGoal = v[1]
+        
+        if (math.abs(angleToGoal)<0.1 and distToGoal<3.0):
+            dist = int(distToGoal * 10) / 10.0
+            tts_service.say("I cannot reach the goal, but I know that it is quite close in front of me. Can you please push me ahead for about "+str(dist)+" meters?")
+
         set_condition(memory_service,'pathnotfound','true')
         time.sleep(1)
         set_condition(memory_service,'pathnotfound','false')
+
+        if (distToGoal<1.0):
+            set_condition(memory_service,'closetotarget','true')
+            time.sleep(1)
+            set_condition(memory_service,'closetotarget','false')
 
 
 def actionThread_exec (params):
     global goal_reached
     global memory_service
+    global tts_service 
 
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
+    tts_service = getattr(t, "session", None).service("ALTextToSpeech")
 
     print "Action "+actionName+" started with params "+params
+    tts_service.say("Going to location "+params)
+
     # action init
     target = coords(params)
     print "  -- Goto: "+str(target)
     mem_key_goal = "NAOqiPlanner/Goal"
     mem_key_status = "NAOqiPlanner/Status"
     mem_key_reset = "NAOqiPlanner/Reset"
-    memory_service.raiseEvent(mem_key_goal,target);
 
     acb = memory_service.subscriber(mem_key_status)
     acb.signal.connect(plannerstatus_cb)
+
+    motion_service = getattr(t, "session", None).service("ALMotion")
+
     goal_reached = False
+    memory_service.raiseEvent(mem_key_goal,target);
 
     head_count = 0
     head_count_max = 6 
@@ -83,8 +105,8 @@ def actionThread_exec (params):
         head_count = head_count + 1
         if (head_count == head_count_max):
             head_count = 0
-            print "Moving head to ", headYaw, headPitch
-            finalAngles = [yaw, pitch]
+            #print "Moving head to ", headYaw, headPitch
+            finalAngles = [headYaw, headPitch]
             timeLists  = [1.0, 1.0]
             isAbsolute = True
             motion_service.angleInterpolation(headJointsNames, finalAngles, timeLists, isAbsolute)

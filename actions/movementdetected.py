@@ -42,7 +42,7 @@ def rhMonitorThread (memory_service):
         v = 'false'
         try:
             if (delta_t < waving_delta):
-                print "waving!"
+                #print "waving!"
                 v = 'true'
                 for i in range(0, n_times):
                     times.append(0)
@@ -52,7 +52,7 @@ def rhMonitorThread (memory_service):
         # print 'personhere = ',v
 
         time.sleep(0.2)
-    print "personhere thread quit"
+    print "Movement detection thread quit"
 
 
 

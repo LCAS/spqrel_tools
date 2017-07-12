@@ -4,9 +4,12 @@ import sys
 import time
 import os
 
+postureinit = "Stand"
+
 def do_init(session):
+    print "Init posture to "+postureinit
     posture_service = session.service("ALRobotPosture")
-    posture_service.goToPosture("Stand",0.5)
+    posture_service.goToPosture(postureinit,0.5)
 
 
 
@@ -21,15 +24,18 @@ def main():
     pip = args.pip
     pport = args.pport
 
-    #Start working session
-    session = qi.Session()
     try:
-        session.connect("tcp://" + pip + ":" + str(pport))
+        connection_url = "tcp://" + pip + ":" + str(pport)
+        print "Connecting to ",	connection_url
+        app = qi.Application(["PostureInit", "--qi-url=" + connection_url ])
     except RuntimeError:
         print ("Can't connect to Naoqi at ip \"" + pip + "\" on port " + str(pport) +".\n"
                "Please check your script arguments. Run with -h option for help.")
         sys.exit(1)
 
+    app.start()
+
+    do_init(app.session)
 
 if __name__ == "__main__":
     main()

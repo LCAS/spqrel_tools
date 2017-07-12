@@ -23,10 +23,10 @@ alias kill-tmux="tmux list-panes -s -F \"#{pane_pid} #{pane_current_command}\" |
 # find all python dirs:
 
 # find Python API
-QIPY=`find "${SPQREL_HOME}" -path "*/lib/python2.7/site-packages/README" | sed "s@^\(.*\)/README@\1@" | xargs -n 1 -- readlink -f | tr "\n" ":"`
+#QIPY=`find "${SPQREL_HOME}" -path "*/lib/python2.7/site-packages/README" | sed "s@^\(.*\)/README@\1@" | xargs -n 1 -- readlink -f | tr "\n" ":"`
 
 # PYDIRS=`find "$SPQREL_HOME" -name "*.py" | xargs -n 1 dirname | sort -u | xargs -n 1 -- readlink -f | tr "\n" ":"`
-export PYTHONPATH=${QIPY}:${PYTHONPATH}
+#export PYTHONPATH=${QIPY}:${PYTHONPATH}
 
 
 

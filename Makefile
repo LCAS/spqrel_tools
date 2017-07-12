@@ -78,7 +78,7 @@ install_prep: $(INSTALL_TREE)/.git
 
 install_pull: install_prep
 	-(cd $(INSTALL_TREE); \
-		git pull --depth 1 -X theirs --no-edit)
+		git pull --depth 1 -X theirs --no-edit --recurse-submodules)
 
 install: $(PNMLS)  install_bins
 #	rsync -a --exclude '.git' --exclude '.gitignore' $(WORKTREE)/* $(INSTALL_TREE)

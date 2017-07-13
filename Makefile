@@ -20,7 +20,7 @@ INSTALL_TREE?=$(shell readlink -f ../../install-$(TOOLCHAIN))
 WORKTREE?=$(shell readlink -f ..)
 
 # find git repos:
-GIT_REPOS:=$(shell find ${WORKTREE} -name .git -type d | sed 's/.git//' | xargs -n 1 -r readlink -f)
+GIT_REPOS:=$(shell find ${WORKTREE} -name .git | sed 's/.git//' | xargs -n 1 -r readlink -f)
 
 GIT_BRANCH=$(TOOLCHAIN)
 

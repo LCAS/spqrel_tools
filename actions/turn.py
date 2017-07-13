@@ -22,8 +22,8 @@ def actionThread_exec (params):
     # action init
 
     val = params
-    if (params[0:3]=='000'):
-        print params[3:]
+    if (params[0]=='^'):
+        print params[1:]
         val = memory_service.getData(params[1:])
 
     mod = "REL"

@@ -4,7 +4,7 @@
 #headpose_0_-3;
 lookfor_personhere;
 say_greetperson; 
-turn_=Actions/personhere/PersonAngleYaw;
+turn_^Actions/personhere/PersonAngleYaw;
 headpose_0_-3;
 #waitfor_dooropen;
 #waitfor_screentouched;

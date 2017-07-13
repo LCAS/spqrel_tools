@@ -10,9 +10,12 @@ from action_base import *
 
 actionName = "say"
 
-def phraseToSay(params):
+def phraseToSay(memory_service,params):
     if (params=='hello'):
         return "Hello!"
+    elif (params=='greetperson'):
+        pid = memory_service.getData('Actions/personhere/PersonID')
+        return "Hello person "+str(pid)+" !"
     elif (params=='starting'):
         return "OK. Let's start!"
     elif (params=='goodbye'):
@@ -26,8 +29,9 @@ def actionThread_exec (params):
     print "Action "+actionName+" started with params "+params
     # action init
     count = 1
-    tts_service.say(phraseToSay(params))
-    print "  -- Say: "+phraseToSay(params)
+    tosay = phraseToSay(memory_service,params)
+    tts_service.say(tosay)
+    print "  -- Say: "+tosay
     # action init
     while (getattr(t, "do_run", True) and count>0): 
         print "Action "+actionName+" "+params+" exec..."

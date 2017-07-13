@@ -34,10 +34,11 @@ def main():
     tts_service = session.service("ALTextToSpeech")
     tts_service.say("Initialization started.")
 
+    time.sleep(1)
     webinit.do_init(session)
-    time.sleep(3)
+    time.sleep(1)
     behaviorinit.do_init(session)
-    time.sleep(3)
+    time.sleep(1)
     postureinit.do_init(session)
 
     tts_service.say("Initialization completed.")

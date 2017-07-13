@@ -49,6 +49,10 @@ def main():
 
     do_init(app.session)
 
+    #app.run()
+
+
+
 if __name__ == "__main__":
     main()
 

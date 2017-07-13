@@ -10,6 +10,8 @@ from action_base import *
 import conditions
 from conditions import set_condition
 
+import headpose
+
 headJointsNames = ["HeadYaw", "HeadPitch"]
 headYaw = 0.0
 headPitch = -0.4 # head up
@@ -105,11 +107,8 @@ def actionThread_exec (params):
         head_count = head_count + 1
         if (head_count == head_count_max):
             head_count = 0
-            #print "Moving head to ", headYaw, headPitch
-            finalAngles = [headYaw, headPitch]
-            timeLists  = [1.0, 1.0]
-            isAbsolute = True
-            motion_service.angleInterpolation(headJointsNames, finalAngles, timeLists, isAbsolute)
+            headtime = 1.0
+            headpose.moveHead(motion_service, headYaw, headPitch, headtime)
         # action exec
         
     print "Action "+actionName+" "+params+" terminated"

@@ -1,14 +1,16 @@
 #waitfor_screentouched;
 #dialogue_howareyou;
 #posture_Stand;
+#headpose_0_-3;
+lookfor_personhere;
+say_greetperson; 
+turn_=Actions/personhere/PersonAngleYaw;
 headpose_0_-3;
-waitfor_personhere;
-say_hello; 
 #waitfor_dooropen;
 #waitfor_screentouched;
 #say_starting;
 #goto_entrance;
 #say_hello;
 #posture_Rest;
-headpose_0_0;
+#headpose_0_0;
 

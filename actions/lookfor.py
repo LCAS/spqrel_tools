@@ -6,24 +6,44 @@ import threading
 
 import action_base
 from action_base import *
+import conditions
+from conditions import get_condition
 
+import headpose
 
 actionName = "lookfor"
+
+headYaw = [ 0.0, 0.7, -0.7 ]
+headPitch = [ -0.3, -0.3, -0.3 ]
+headtime = 1.0 # how much time to make a single movement
+wait = [ 5.0, 5.0, 5.0, 5.0 ] # waiting times in each position
+
+
 
 
 def actionThread_exec (params):
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
+    motion_service = getattr(t, "session", None).service("ALMotion")
     print "Action "+actionName+" started with params "+params
     # action init
-    count = 10
+    i = -1
+    dt = 0.25
+    count = 1
+    val = False
     # action init
-    while (getattr(t, "do_run", True) and count>0): 
-        print "Action "+actionName+" "+params+" exec..."
+    while (getattr(t, "do_run", True) and (not val)):         
         # action exec
-        count = count - 1		
+        count = count - 1
+        val = get_condition(memory_service, params)
+        if (count==0 and (not val)):
+            i = i + 1
+            if (i==len(headYaw)):
+                i = 0
+            headpose.moveHead(motion_service, headYaw[i], headPitch[i], headtime)
+            count = (int)(wait[i]/dt)
         # action exec
-        time.sleep(0.1)
+        time.sleep(dt)
         
     print "Action "+actionName+" "+params+" terminated"
     # action end

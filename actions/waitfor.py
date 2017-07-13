@@ -18,28 +18,16 @@ def actionThread_exec (params):
     memory_service = getattr(t, "mem_serv", None)
     print "Action "+actionName+" started with params "+params
 
-    v = params.split('_')
-    neg = False
-    cond = params
-    if (len(v)==2):
-        cond = v[1]
-        neg=True
-
     # action init
     val = False
     # action init
     while (getattr(t, "do_run", True) and (not val)): 
         #print "Action "+actionName+" "+params+" exec..."
         # action exec
-        try:
-            cval = get_condition(memory_service, cond)
-            if (not neg):
-                val = (cval.lower()=='true') or (cval=='1')
-            else:
-                val = (cval.lower()=='false') or (cval=='0')
-        except:
-            pass
+        val = get_condition(memory_service, params)
         # action exec
+
+
         time.sleep(0.25)
         
     print "Action "+actionName+" "+params+" terminated"

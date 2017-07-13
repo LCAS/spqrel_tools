@@ -21,9 +21,14 @@ def actionThread_exec (params):
     print "Action "+actionName+" started with params "+params
     # action init
 
+    val = params
+    if (params[0:3]=='000'):
+        print params[3:]
+        val = memory_service.getData(params[1:])
+
     mod = "REL"
     target_angle = 0
-    v = params.split('_')
+    v = val.split('_')
 
     if (len(v)==1):
         target_angle = int(v[0])
@@ -43,6 +48,7 @@ def actionThread_exec (params):
     x = 0.0
     y = 0.0
     
+    print "Turn to ", target_angle
     motion_service.moveTo(x, y, theta) #blocking function
     
     print "Action "+actionName+" "+params+" terminated"

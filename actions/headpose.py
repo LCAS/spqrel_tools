@@ -11,6 +11,15 @@ jointsNames = ["HeadYaw", "HeadPitch"]
 
 actionName = "headpose"
 
+def moveHead(motion_service, yaw, pitch, headtime):
+    # we move head to center
+    #print "Moving head to ", yaw, pitch
+    finalAngles = [yaw, pitch]
+    timeLists  = [headtime, headtime]
+    isAbsolute = True
+    motion_service.angleInterpolation(jointsNames, finalAngles, timeLists, isAbsolute)
+
+
 ### BIG WARNING ###
 #
 # Parameters for this action must be integer and are given in decimals
@@ -39,13 +48,9 @@ def actionThread_exec (params):
     if (len(v)==2):
         yaw = float(v[0])/10.0
         pitch = float(v[1])/10.0
+    headtime = 1.0
 
-    # we move head to center
-    print "Moving head to ", yaw, pitch
-    finalAngles = [yaw, pitch]
-    timeLists  = [2.0, 2.0]
-    isAbsolute = True
-    motion_service.angleInterpolation(jointsNames, finalAngles, timeLists, isAbsolute)
+    moveHead(motion_service, yaw, pitch, headtime)
 
     count=1
 

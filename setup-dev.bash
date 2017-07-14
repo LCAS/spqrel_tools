@@ -28,7 +28,7 @@ else
 fi
 
 # default home is $HOME/spqrel
-export SPQREL_HOME=`realpath "${SPQREL_HOME:-$HOME/spqrel}"`
+export SPQREL_HOME=`real_path "${SPQREL_HOME:-$HOME/spqrel}"`
 
 export PYNAOQI=`find "${SPQREL_HOME}" -path "*/pynao*/lib/python2.7/site-packages" | tr "\n" ":"`
 export PYTHONPATH=${PYNAOQI}:$PYTHONPATH

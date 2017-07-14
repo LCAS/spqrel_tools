@@ -8,48 +8,26 @@ import action_base
 from action_base import *
 
 
-actionName = "say"
+actionName = "wait"
 
-def phraseToSay(memory_service,params):
-    if (params=='hello'):
-        return "Hello!"
-    elif (params=='greetperson'):
-        tosay = "Hello person!"
-        try:
-            pid = memory_service.getData('Actions/personhere/PersonID')
-            tosay = "Hello person "+str(pid)+" !"
-        except:
-            pass
-        return tosay
-    elif (params=='starting'):
-        return "OK. Let's start!"
-    elif (params=='personnotfound'):
-        return "It seems there is nobody around here!"
-    elif (params=='goodbye'):
-        return "Goodbye! See you soon!"
-    return "Nothing to say."
 
 def actionThread_exec (params):
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
-    tts_service = getattr(t, "session", None).service("ALTextToSpeech")
     print "Action "+actionName+" started with params "+params
     # action init
-    count = 1
-    tosay = phraseToSay(memory_service,params)
-    tts_service.say(tosay)
-    print "  -- Say: "+tosay
+    dt = 0.25
+    count = int(float(params) / dt)
     # action init
     while (getattr(t, "do_run", True) and count>0): 
-        print "Action "+actionName+" "+params+" exec..."
+        #print "Action "+actionName+" "+params+" exec..."
         # action exec
-        count = count - 1
+        count = count-1
         # action exec
-        time.sleep(0.1)
-
+        time.sleep(dt)
     print "Action "+actionName+" "+params+" terminated"
     # action end
-
+    count = 0
     # action end
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
 
@@ -64,7 +42,6 @@ def quit():
     actionThread_exec.do_run = False
 
 
-
 if __name__ == "__main__":
 
     app = action_base.initApp(actionName)
@@ -75,5 +52,4 @@ if __name__ == "__main__":
     app.run()
 
     quit()
-
 

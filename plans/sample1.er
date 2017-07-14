@@ -1,0 +1,2 @@
+*if* timeout_lookfor_30 *during* lookfor *do* headpose_0_-3; say_personnotfound; turn_90_REL; restart_action
+

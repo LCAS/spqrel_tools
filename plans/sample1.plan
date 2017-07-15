@@ -1,16 +1,27 @@
-#waitfor_screentouched;
-#dialogue_howareyou;
-posture_Stand;
+waitfor_screentouched|5; # wait for screen touched with timeout of 5 seconds
+
+posture_Stand; # stand up
+
+LABEL_START;
 #headpose_0_-3;
 lookfor_personhere;
-say_greetperson; 
+
+< personhere? GOTO_LABEL_END : (not personhere)? GOTO_LABEL_START >;
+
 #turn_^Actions/personhere/PersonAngleYaw;
 #headpose_0_-3;
+
 #waitfor_dooropen;
 #waitfor_screentouched;
 #say_starting;
 #goto_entrance;
 #say_hello;
-#posture_Rest;
+
 #headpose_0_0;
+
+
+
+LABEL_END;
+say_greetperson;
+posture_Rest;
 

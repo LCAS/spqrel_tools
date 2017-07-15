@@ -1,3 +1,3 @@
 #!/bin/bash
-pnpgen_translator inline $1 $2
+../../PetriNetPlans/PNPnaoqi/build-linux64/sdk/bin/pnpgen_translator inline $1 $2
 

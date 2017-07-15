@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ ${PEPPER_IP:-localhost} == "localhost" ]; then
+  echo "Running naoqi..."
+  xterm -e "/opt/Aldebaran/naoqi/naoqi-sdk-2.5.5.5-linux64/naoqi " &
+  sleep 5
+fi
 
 SESSION="${USER}-SPQReL"
 SPQREL_PREFIX="${SPQREL_PREFIX:-$HOME/src/SPQReL/qi_ws/spqrel_tools}"

@@ -144,7 +144,7 @@ def rhMonitorThread (memory_service):
                         quit()
                         break
                         
-                        #set_condition(memory_service,'learnperson','true')
+                        set_condition(memory_service,'learnperson','true')
                         
                         
                         
@@ -152,7 +152,7 @@ def rhMonitorThread (memory_service):
         
                         print 'EXIT FALSE'
                         quit()
-                        #set_condition(memory_service,'learnperson','false')
+                        set_condition(memory_service,'learnperson','false')
 
         time.sleep(0.2)
     print "learnperson thread quit"

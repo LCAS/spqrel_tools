@@ -141,18 +141,18 @@ def rhMonitorThread (memory_service):
                         
                         
                         print 'EXIT TRUE'
-                        quit()
-                        break
+                                           
                         
                         set_condition(memory_service,'learnperson','true')
                         
-                        
+                        quit()
                         
                     elif learned is False:
         
                         print 'EXIT FALSE'
-                        quit()
+                        
                         set_condition(memory_service,'learnperson','false')
+                        quit()
 
         time.sleep(0.2)
     print "learnperson thread quit"

@@ -1,4 +1,4 @@
-goto_exit;
+#goto_exit;
 turn_130_ABS;
 headpose_0_-3;
 waitfor_personhere;

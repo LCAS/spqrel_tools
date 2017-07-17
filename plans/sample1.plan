@@ -4,7 +4,7 @@ posture_Stand; # stand up
 
 LABEL_START;
 #headpose_0_-3;
-lookfor_personhere;
+lookfor_personhere; ! *if* screentouched *do* GOTO_LABEL_END ! 
 
 < personhere? GOTO_LABEL_END : (not personhere)? GOTO_LABEL_START >;
 
@@ -20,8 +20,8 @@ lookfor_personhere;
 #headpose_0_0;
 
 
-
 LABEL_END;
 say_greetperson;
 posture_Rest;
+
 

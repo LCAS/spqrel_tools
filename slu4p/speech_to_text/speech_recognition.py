@@ -40,10 +40,10 @@ class SpeechRecognition(EventAbstractClass):
         )
 
     def start(self, *args, **kwargs):
-        self.subscribe(
-            event=SpeechRecognition.WR_EVENT,
-            callback=self.word_recognized_callback
-        )
+        #self.subscribe(
+        #    event=SpeechRecognition.WR_EVENT,
+        #    callback=self.word_recognized_callback
+        #)
         self.subscribe(
             event=SpeechRecognition.TD_EVENT,
             callback=self.text_done_callback
@@ -54,8 +54,8 @@ class SpeechRecognition(EventAbstractClass):
             callback=self.enable_callback
         )
 
-        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
-            SpeechRecognition.WR_EVENT)
+        #print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
+        #    SpeechRecognition.WR_EVENT)
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             SpeechRecognition.TD_EVENT)
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(

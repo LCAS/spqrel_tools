@@ -54,14 +54,16 @@ class SpeechRecognition(EventAbstractClass):
             callback=self.enable_callback
         )
 
-        #print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
-        #    SpeechRecognition.WR_EVENT)
+        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
+            SpeechRecognition.WR_EVENT)
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             SpeechRecognition.TD_EVENT)
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             SpeechRecognition.ASR_ENABLE)
 
         self.is_enabled = False
+
+        print "[" + self.inst.__class__.__name__ + "] ASR disabled"
 
         #self.audio_recorder.stopMicrophonesRecording()
         #self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
@@ -123,10 +125,11 @@ class SpeechRecognition(EventAbstractClass):
             print e.message
 
     def enable_callback(self, *args, **kwargs):
-        if args[1] == 1:
+        if args[1] == 0:
             self.audio_recorder.stopMicrophonesRecording()
             self.unsubscribe(SpeechRecognition.WR_EVENT)
             self.is_enabled = False
+            print "[" + self.inst.__class__.__name__ + "] ASR disabled"
         else:
             self.audio_recorder.stopMicrophonesRecording()
             self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
@@ -135,6 +138,7 @@ class SpeechRecognition(EventAbstractClass):
                 callback=self.word_recognized_callback
             )
             self.is_enabled = True
+            print "[" + self.inst.__class__.__name__ + "] ASR enabled"
 
     def reset(self):
         if self.is_enabled:

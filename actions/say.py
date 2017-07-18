@@ -27,17 +27,17 @@ def phraseToSay(memory_service,params):
         return "It seems there is nobody around here!"
     elif (params=='goodbye'):
         return "Goodbye! See you soon!"
-    elif (params=='carhere')
+    elif (params=='carhere'):
         return "OK! I am marking this location as the car position"
-    elif (params=='whatnow')
+    elif (params=='whatnow'):
         return "What do you want me to do now?"
-    elif (params=='lookatme')
+    elif (params=='lookatme'):
         return "Please, can you look at me for some seconds"
-    elif (params=='readytofollow')
+    elif (params=='readytofollow'):
         return "OK,I am ready to follow you. Let's go"
-    elif (param=='lookforhelp')
+    elif (param=='lookforhelp'):
         return "I'm looking for some help, I'm coming in a while"
-    elif (param=='arrivedcar')
+    elif (param=='arrivedcar'):
         return "We just arrived to the car, thank you for coming to help"
     return "Nothing to say."
 

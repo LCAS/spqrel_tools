@@ -57,7 +57,7 @@ tmux send-keys "sleep 9;cd $SPQREL_PREFIX/slu4p; python text_to_speech/text_to_s
 tmux select-window -t $SESSION:7
 tmux split-window -v
 tmux select-pane -t 0
-tmux send-keys "cd $SPQREL_PREFIX; pnp_naoqi" C-m
+tmux send-keys "cd $SPQREL_PREFIX; bin/pnp_naoqi" C-m
 tmux split-window -h
 tmux select-pane -t 1
 tmux send-keys "cd $SPQREL_PREFIX/actions; python init_actions.py" C-m
@@ -78,3 +78,4 @@ tmux select-window -t $SESSION:0
 tmux -2 attach-session -t $SESSION
 
 tmux setw -g mode-mouse off
+

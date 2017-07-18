@@ -6,7 +6,7 @@ PNMLS=$(PLANS:.plan=.pnml)
 
 # set you toolchain according to your qibuild toolchains, default is cross-compilatio for pepper,
 # usually, we should have only "pepper" and "linux64", as described at https://sites.google.com/a/dis.uniroma1.it/peppino/software-setup
-TOOLCHAIN?=pepper
+TOOLCHAIN?=linux64
 
 AUX_DIRS=scripts actions plans maps setup.bash
 

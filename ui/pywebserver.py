@@ -36,7 +36,7 @@ render = web.template.render(TEMPLATE_DIR, base='base', globals=globals())
 chdir(TEMPLATE_DIR)
 
 
-class MyWSProtocol(WebSocketServerProtocol):
+class JsonWSProtocol(WebSocketServerProtocol):
 
     def onConnect(self, request):
         info("Client connecting: {0}".format(request.peer))
@@ -44,15 +44,20 @@ class MyWSProtocol(WebSocketServerProtocol):
     def onOpen(self):
         info("WebSocket connection open.")
 
+    def send(self, data):
+        buf = dumps(data)
+        self.sendMessage(buf.encode('utf-8'), False)
+
     def onMessage(self, payload, isBinary):
         # Debug
         if isBinary:
-            info("Binary message received: {0} bytes".format(len(payload)))
+            warn("Binary message received: {0} bytes".format(len(payload)))
         else:
             info("Text message received: {0}".format(payload.decode('utf8')))
             message_text = payload.decode('utf8')
             payload = loads(message_text)
             info(pformat(payload))
+            self.send(payload)
 
     def onClose(self, wasClean, code, reason):
         info("WebSocket connection closed: {0}".format(reason))
@@ -76,7 +81,7 @@ class MyBackend(object):
 
     def talker(self):
         factory = WebSocketServerFactory(u"ws://0.0.0.0:8128")
-        factory.protocol = MyWSProtocol
+        factory.protocol = JsonWSProtocol()
 
         self.loop = asyncio.get_event_loop()
         coro = self.loop.create_server(factory, '0.0.0.0', 8128)

@@ -90,9 +90,9 @@ plans/%.pnml: plans/%.plan
 install: $(PNMLS)  install_bins
 #	rsync -a --exclude '.git' --exclude '.gitignore' $(WORKTREE)/* $(INSTALL_TREE)
 #	rsync -a --exclude '.git' --exclude '.gitignore' $(AUX_DIRS) $(INSTALL_TREE)
-	(cd $(INSTALL_TREE); \
-		git add -A --ignore-removal bin lib && \
-		git commit --allow-empty -a -m "committed by $$USER from `hostname` at `date`")
+	# (cd $(INSTALL_TREE); \
+	# 	git add -A --ignore-removal bin lib && \
+	# 	git commit --allow-empty -a -m "committed by $$USER from `hostname` at `date`")
 
 # push: install
 # 	(cd $(INSTALL_TREE); \
@@ -107,7 +107,7 @@ build:	$(QIBUILDS) cookies/configure-$(TOOLCHAIN)
 $(WORKTREE)/.qi:
 	cd $(WORKTREE); qibuild init; qibuild add-config pepper -t pepper; qibuild add-config linux64 -t linux64
 
-cookies/configure-$(TOOLCHAIN):	$(QIBUILDS) $(WORKTREE)/.qi
+cookies/configure-$(TOOLCHAIN):	$(QIBUILDS) $(WORKTREE)/.qi $(WORKTREE)/PetriNetPlans/PNPgen/bin/pnpgen_translator
 	for qb in $(QIBUILDS); do \
 		d=`dirname $$qb`; \
 		(cd $$d; pwd; qibuild configure $(QI_CONF_OPTS)) \

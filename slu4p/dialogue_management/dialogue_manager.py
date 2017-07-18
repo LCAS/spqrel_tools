@@ -5,6 +5,7 @@ import signal
 import slu_utils
 from event_abstract import *
 import datetime
+import json
 
 
 class DialogueManager(EventAbstractClass):
@@ -46,7 +47,8 @@ class DialogueManager(EventAbstractClass):
         self.broker.shutdown()
 
     def ranked_callback(self, *args, **kwargs):
-        transcriptions_dict = slu_utils.list_to_dict_w_probabilities(args[1])
+        #transcriptions_dict = slu_utils.list_to_dict_w_probabilities(args[1])
+        transcriptions_dict = json.loads(args[1])
         best_transcription = slu_utils.pick_best(transcriptions_dict)
         print "[" + self.inst.__class__.__name__ + "] User says: " + best_transcription
         reply = self.kernel.respond(best_transcription)
@@ -106,7 +108,7 @@ class DialogueManager(EventAbstractClass):
                 temp['customer'] = customer
                 self.cocktail_data[str(self.order_counter)] = temp
                 print self.cocktail_data
-                self.memory.raiseEvent("DialogueVesponse", self.cocktail_data)
+                self.memory.raiseEvent("DialogueVesponse", json.dumps(self.cocktail_data))
                 self.order_counter = self.order_counter + 1
             elif '[DRINKSALTERNATIVES]' in submessage:
                 data = submessage.replace('[DRINKSALTERNATIVES]', '').replace(')', '').strip()
@@ -114,7 +116,7 @@ class DialogueManager(EventAbstractClass):
             elif '[LOOKFORDATA]' in submessage:
                 data = submessage.replace('[TAKEORDERDATA]', '').strip()
                 self.location['location'] = data
-                self.memory.raiseEvent("DialogueVesponse", self.location)
+                self.memory.raiseEvent("DialogueVesponse", json.dumps(self.location))
             elif '[WHATSTHETIME]' in submessage:
                 now = datetime.datetime.now()
                 reply = "It's " + str(now.hour )+ " " + str(now.minute)

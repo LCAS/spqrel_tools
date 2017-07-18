@@ -65,8 +65,7 @@ class SpeechRecognition(EventAbstractClass):
 
         #self.audio_recorder.stopMicrophonesRecording()
         #self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
-
-        self.memory.raiseEvent(self.ASR_ENABLE, 0)
+        #self.memory.raiseEvent(self.ASR_ENABLE, 0)
 
         self._spin()
 
@@ -111,14 +110,17 @@ class SpeechRecognition(EventAbstractClass):
         self.memory.raiseEvent("VordRecognized", results)
 
     def text_done_callback(self, *args, **kwargs):
-        if self.is_enabled:
-            if args[1] == 0:
-                self.audio_recorder.stopMicrophonesRecording()
-                self.nuance_asr.pause(True)
-            else:
-                self.audio_recorder.stopMicrophonesRecording()
-                self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
-                self.nuance_asr.pause(False)
+        try:
+            if self.is_enabled:
+                if args[1] == 0:
+                    self.audio_recorder.stopMicrophonesRecording()
+                    self.nuance_asr.pause(True)
+                else:
+                    self.audio_recorder.stopMicrophonesRecording()
+                    self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
+                    self.nuance_asr.pause(False)
+        except Exception as e:
+            print e.message
 
     def enable_callback(self, *args, **kwargs):
         if args[1] == 1:

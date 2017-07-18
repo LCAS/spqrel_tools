@@ -4,6 +4,10 @@ import sys
 import time
 import threading
 import os
+import functools
+
+from naoqi import ALProxy
+import Image
 
 keys_list = []
 
@@ -32,21 +36,67 @@ def readKeysFile(keys_file, memory_service):
             #except RuntimeError:
             #    print "Read key: ", key, "Failed"
 
+global camProxy, videoClient
 
+def onEvent(pip, pport, rate, value):
+    global camProxy, videoClient
+    global camera_enabled
+    
+    print "value=",value
+    print "pip=",pip
+    print "pport=",pport
+
+    if (value==1):
+        camProxy = ALProxy("ALVideoDevice", pip, pport)
+        camera = 0
+        resolution = 2    # VGA
+        colorSpace = 11   # RGB
+        videoClient = camProxy.subscribeCamera("NAOqibag", camera, resolution, colorSpace, 5)
+        time.sleep(1) #to be sure camProxy is launched
+        camera_enabled = 1
+        
+    else:
+        camera_enabled = 0
+        time.sleep(1.0/rate) #to be sure the other threads finishes its loop before unsubscribe
+        camProxy.unsubscribe(videoClient)
+        
 def rhMonitorThread (memory_service, rate, output_file):
+    global camProxy, videoClient
+    global camera_enabled
+
     t = threading.currentThread()
     output_file.write(str(keys_list))
     output_file.write('\n')
     while getattr(t, "do_run", True):
         values =  memory_service.getListData(keys_list)
-        timestamp = 'timestamp: %f\n' % time.time()
+        ts = time.time()
+        timestamp = 'timestamp: %f\n' % ts
         output_file.write(timestamp)
         output_file.write(str(values))        
         output_file.write('\n')
+
+        if (camera_enabled):
+            output_file.write(timestamp)
+            pepperImage = camProxy.getImageRemote(videoClient)
+            imageWidth = pepperImage[0]
+            imageHeight = pepperImage[1]
+            array = pepperImage[6]
+
+            # Create a PIL Image from our pixel array.
+            im = Image.frombytes("RGB", (imageWidth, imageHeight), array)
+            
+            # Save the image.
+            image_name = 'spqrel_kTopCamera_%f_rgb.png' % ts
+            im.save(image_name, "PNG")
+        
+        
         time.sleep(1.0/rate)
     print "Exiting Thread"
 
 def main():
+    global camera_enabled
+    camera_enabled = 0
+    
     parser = argparse.ArgumentParser()
     parser.add_argument("--pip", type=str, default=os.environ['PEPPER_IP'],
                         help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
@@ -93,9 +143,14 @@ def main():
     monitorThread = threading.Thread(target = rhMonitorThread, args = (memory_service,rate,output_file))
     monitorThread.start()
 
+    #subscribe to any change on any touch sensor
+    subscriber = memory_service.subscriber("NAOqibag/EnableCamera")
+    idEvent = subscriber.signal.connect(functools.partial(onEvent, pip, pport, rate))
+
     #Program stays at this point until we stop it
     app.run()
 
+    subscriber.signal.disconnect(idEvent)
     monitorThread.do_run = False
     
     print "Finished"

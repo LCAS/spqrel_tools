@@ -66,7 +66,7 @@ class SpeechRecognition(EventAbstractClass):
         print "[" + self.inst.__class__.__name__ + "] ASR disabled"
 
         #self.audio_recorder.stopMicrophonesRecording()
-        #self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
+        #self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 44100, self.CHANNELS)
         #self.memory.raiseEvent(self.ASR_ENABLE, 0)
 
         self._spin()
@@ -108,7 +108,7 @@ class SpeechRecognition(EventAbstractClass):
         self.timeout = 0
         self.nuance_asr.pause(False)
         self.audio_recorder.stopMicrophonesRecording()
-        self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
+        self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 44100, self.CHANNELS)
         self.memory.raiseEvent("VordRecognized", results)
 
     def text_done_callback(self, *args, **kwargs):
@@ -119,7 +119,7 @@ class SpeechRecognition(EventAbstractClass):
                     self.nuance_asr.pause(True)
                 else:
                     self.audio_recorder.stopMicrophonesRecording()
-                    self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
+                    self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 44100, self.CHANNELS)
                     self.nuance_asr.pause(False)
         except Exception as e:
             print e.message
@@ -127,21 +127,21 @@ class SpeechRecognition(EventAbstractClass):
     def enable_callback(self, *args, **kwargs):
         if args[1] == 0:
             if self.is_enabled:
+                self.is_enabled = False
                 self.audio_recorder.stopMicrophonesRecording()
                 self.unsubscribe(SpeechRecognition.WR_EVENT)
-                self.is_enabled = False
                 print "[" + self.inst.__class__.__name__ + "] ASR disabled"
             else:
                 print "[" + self.inst.__class__.__name__ + "] ASR already disabled"
         else:
             if not self.is_enabled:
+                self.is_enabled = True
                 self.audio_recorder.stopMicrophonesRecording()
-                self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
+                self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 44100, self.CHANNELS)
                 self.subscribe(
                     event=SpeechRecognition.WR_EVENT,
                     callback=self.word_recognized_callback
                 )
-                self.is_enabled = True
                 print "[" + self.inst.__class__.__name__ + "] ASR enabled"
             else:
                 print "[" + self.inst.__class__.__name__ + "] ASR already enabled"
@@ -150,7 +150,7 @@ class SpeechRecognition(EventAbstractClass):
         if self.is_enabled:
             print "[" + self.inst.__class__.__name__ + "] Reset recording.."
             self.audio_recorder.stopMicrophonesRecording()
-            self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
+            self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 44100, self.CHANNELS)
 
     def _spin(self, *args):
         while not self.__shutdown_requested:

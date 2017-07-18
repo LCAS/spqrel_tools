@@ -8,7 +8,7 @@ import slu_utils
 class GoogleClient:
     timeout = 5
     url = ''
-    headers = {"Content-Type": "audio/x-flac; rate=16000"}
+    headers = {"Content-Type": "audio/x-flac; rate=44100"}
 
     def __init__(self, language, key_file):
         keys = slu_utils.lines_to_list(key_file)

@@ -2,7 +2,6 @@ import argparse
 import signal
 from slu_utils import *
 from event_abstract import *
-import json
 
 
 class ReRanker(EventAbstractClass):
@@ -39,11 +38,11 @@ class ReRanker(EventAbstractClass):
     def callback(self, *args, **kwargs):
         print "[" + self.inst.__class__.__name__ + "] ReRanking.."
         temp = args[1]
-        transcriptions = json.loads(temp)
+        transcriptions = list_to_dict(temp)
         if 'GoogleASR' in transcriptions:
             transcriptions = self.__re_rank(transcriptions)
             print "[" + self.inst.__class__.__name__ + "] " + str(transcriptions)
-        self.memory.raiseEvent("VRanked", json.dumps(transcriptions))
+        self.memory.raiseEvent("VRanked", transcriptions)
 
     def stop(self):
         self.__shutdown_requested = True

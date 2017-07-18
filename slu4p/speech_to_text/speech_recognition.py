@@ -109,7 +109,7 @@ class SpeechRecognition(EventAbstractClass):
         self.nuance_asr.pause(False)
         self.audio_recorder.stopMicrophonesRecording()
         self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 44100, self.CHANNELS)
-        self.memory.raiseEvent("VordRecognized", json.dumps(results))
+        self.memory.raiseEvent("VordRecognized", results)
 
     def text_done_callback(self, *args, **kwargs):
         try:

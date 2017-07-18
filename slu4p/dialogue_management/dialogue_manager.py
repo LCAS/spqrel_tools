@@ -47,8 +47,7 @@ class DialogueManager(EventAbstractClass):
         self.broker.shutdown()
 
     def ranked_callback(self, *args, **kwargs):
-        #transcriptions_dict = slu_utils.list_to_dict_w_probabilities(args[1])
-        transcriptions_dict = json.loads(args[1])
+        transcriptions_dict = slu_utils.list_to_dict_w_probabilities(args[1])
         best_transcription = slu_utils.pick_best(transcriptions_dict)
         print "[" + self.inst.__class__.__name__ + "] User says: " + best_transcription
         reply = self.kernel.respond(best_transcription)

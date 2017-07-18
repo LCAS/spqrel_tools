@@ -14,13 +14,13 @@ AUX_DIRS=scripts actions plans maps setup.bash
 WORKTREE?=$(shell readlink -f ..)
 
 # path to the pnp_translator
-PNPTRANS=$(shell readlink -f $(WORKTREE)/PetriNetPlans/PNPgen/bin/pnpgen_translator)
+PNPTRANS=$(WORKTREE)/PetriNetPlans/PNPgen/bin/pnpgen_translator
 
 # install tree for the full installation
 INSTALL_TREE?=$(shell readlink -f ../..)
 
 # find git repos:
-GIT_REPOS:=$(shell find ${WORKTREE} -name .git | sed 's/.git//' | xargs -n 1 -r readlink -f)
+GIT_REPOS:=$(shell find  ${WORKTREE} -maxdepth 2 -name .git  | sed 's/.git//' | xargs -n 1 -r readlink -f)
 
 GIT_BRANCH=$(TOOLCHAIN)
 
@@ -31,7 +31,7 @@ QIBUILDS_BUILD_DIRS=$(QIBUILDS_DIRS:=/build-$(TOOLCHAIN))
 QI_CONF_OPTS:=-w $(WORKTREE) -c $(TOOLCHAIN) --release
 QI_MAKE_OPTS:=-c $(TOOLCHAIN) 
 
-all:	$(PNMLS) build
+all:	 build
 
 update:
 	for d in ${GIT_REPOS}; do \
@@ -56,7 +56,7 @@ bins: build $(BINS) $(LIBS)
 
 pnp_trans: $(WORKTREE)/PetriNetPlans/PNPgen/bin/pnpgen_translator
 
-$(WORKTREE)/PetriNetPlans/PNPgen/bin/pnpgen_translator:
+$(PNPTRANS):
 	-(cd $(WORKTREE)/PetriNetPlans/PNP/include && ln -s /usr/include/FlexLexer.h .)
 	(cd $(WORKTREE)/PetriNetPlans/PNP && mkdir -p build && \
 		cd build && cmake .. && make)
@@ -71,7 +71,7 @@ install_bins: bins
 plans:	$(PNMLS)
 	@echo $^
 
-plans/%.pnml: plans/%.plan
+plans/%.pnml: plans/%.plan $(PNPTRANS)
 	cd plans/; $(PNPTRANS) inline $*.plan > $*-trans.log
 
 # $(INSTALL_TREE)/.git:
@@ -107,7 +107,7 @@ build:	$(QIBUILDS) cookies/configure-$(TOOLCHAIN)
 $(WORKTREE)/.qi:
 	cd $(WORKTREE); qibuild init; qibuild add-config pepper -t pepper; qibuild add-config linux64 -t linux64
 
-cookies/configure-$(TOOLCHAIN):	$(QIBUILDS) $(WORKTREE)/.qi $(WORKTREE)/PetriNetPlans/PNPgen/bin/pnpgen_translator
+cookies/configure-$(TOOLCHAIN):	$(QIBUILDS) $(WORKTREE)/.qi $(PNPTRANS)
 	for qb in $(QIBUILDS); do \
 		d=`dirname $$qb`; \
 		(cd $$d; pwd; qibuild configure $(QI_CONF_OPTS)) \

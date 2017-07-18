@@ -2,6 +2,7 @@
 # -*- encoding: UTF-8 -*-
 
 # DOCUMENTATION
+# http://doc.aldebaran.com/2-5/naoqi/peopleperception/alengagementzones-api.html#alengagementzones-api
 
 import qi
 import argparse
@@ -9,6 +10,7 @@ import sys
 import os
 import time
 import threading
+from utils import point2world
 
 from naoqi import ALProxy
 
@@ -18,41 +20,34 @@ from conditions import set_condition
 
 def rhMonitorThread (memory_service):
     t = threading.currentThread()
-    times = []
-
-    # PARAMETERS
-    n_times = 12 #lenght of the array
-    waving_delta = 5 #in seconds
-
-    i = 0
-    for i in range(0, n_times):
-        times.append(0)
-    #print "Movement detection started"
+    print "personsitting thread started"
     
     while getattr(t, "do_run", True):
-        data = memory_service.getData("MovementDetection/MovementInfo")
-        if (len(data) != 0):
-            t = int(data[0][0])
-            #print t
-            for i in range(0, n_times-1):
-                times[i] = times[i+1]
-            times[n_times-1] = t
-            delta_t = times[n_times-1] - times[0]
-            #print "delta: ", delta_t
+        plist = memory_service.getData("PeoplePerception/PeopleList")
+        
+        personid = 0
+        IsSitting = 0
         v = 'false'
         try:
-            if (delta_t < waving_delta):
-                #print "waving!"
-                v = 'true'
-                for i in range(0, n_times):
-                    times.append(0)
+            if (plist!=None and len(plist)>0):
+                for i in range (0,len(plist)):
+                    personid = plist[i]
+                    IsSitting = memory_service.getData("PeoplePerception/Person/"+str(personid)+"/IsSitting")
+                    # Save person position
+                    if (IsSitting == 1): 
+                        px,py,pz = memory_service.getData("PeoplePerception/Person/"+str(personid)+"/PositionInRobotFrame")
+                        memory_service.setData("")
+                        print "X: " + str(px) + "  Y: " + str(py)
+                        w_px, w_py = point2world(memory_service,[px,py])
+                        memory_service.insertData("personsitting/coordinates",[w_px,w_py])
+                        v = 'true'
         except:
             v = 'false'
-        set_condition(memory_service,'movementdetected',v)
-        # print 'personhere = ',v
+        set_condition(memory_service,'personsitting',v)
+        #print 'personhere:: value ',v
 
-        time.sleep(0.2)
-    print "Movement detection thread quit"
+        time.sleep(0.5)
+    print "personsitting thread quit"
 
 
 
@@ -60,14 +55,16 @@ def init(session):
     global memory_service
     global monitorThread
 
-    print "Movement detection init"
+    print "Person sitting init"
 
     #Starting services
     memory_service  = session.service("ALMemory")
-    movement_service = session.service("ALMovementDetection")
+    sitting_service = session.service("ALSittingPeopleDetection")
 
     # PARAMETERS
-    movement_service.setDepthSensitivity(0.1)
+    sitting_service.setSittingThreshold(1.4)
+    sitting_threshold = sitting_service.getSittingThreshold()
+    print "sitting threshold: ",sitting_threshold
 
     print "Creating the thread"
 
@@ -79,7 +76,7 @@ def init(session):
 
 def quit():
     global monitorThread
-    print "Movement detection quit"
+    print "Person sitting quit"
     monitorThread.do_run = False 
 
 
@@ -99,7 +96,7 @@ def main():
     try:
         connection_url = "tcp://" + pip + ":" + str(pport)
         print "Connecting to ",    connection_url
-        app = qi.Application(["PersonHere", "--qi-url=" + connection_url ])
+        app = qi.Application(["PersonSitting", "--qi-url=" + connection_url ])
     except RuntimeError:
         print ("Can't connect to Naoqi at ip \"" + pip + "\" on port " + str(pport) +".\n"
                "Please check your script arguments. Run with -h option for help.")

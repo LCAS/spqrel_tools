@@ -4,8 +4,11 @@ import sys
 import time
 import os
 
+webpageinit = "http://198.18.0.1/apps/spqrel/img/logo.gif"
 
 def do_init(session):
+    print "Init webpage to ",webpageinit
+
     tablet_service = session.service("ALTabletService")
 
     # Display a local image located in img folder in the root of the web server
@@ -14,7 +17,7 @@ def do_init(session):
 
     # tablet_service.showWebview("http://198.18.0.1/apps/spqrel")
 
-    tablet_service.showImage("http://198.18.0.1/apps/spqrel/img/logo.gif")
+    tablet_service.showImage(webpageinit)
 
     #time.sleep(10)
 
@@ -33,14 +36,21 @@ def main():
     pip = args.pip
     pport = args.pport
 
-    #Start working session
-    session = qi.Session()
     try:
-        session.connect("tcp://" + pip + ":" + str(pport))
+        connection_url = "tcp://" + pip + ":" + str(pport)
+        print "Connecting to ",	connection_url
+        app = qi.Application(["WebInit", "--qi-url=" + connection_url ])
     except RuntimeError:
         print ("Can't connect to Naoqi at ip \"" + pip + "\" on port " + str(pport) +".\n"
                "Please check your script arguments. Run with -h option for help.")
         sys.exit(1)
+
+    app.start()
+
+    do_init(app.session)
+
+    #app.run()
+
 
 
 if __name__ == "__main__":

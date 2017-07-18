@@ -10,39 +10,41 @@ import action_base
 from action_base import *
 
 import dooropen, screentouched
-import say, waitfor, goto, turn, lookfor, dialogue, posture, personhere, headpose, followuntil, movementdetected, webpage
+import say, wait, waitfor, goto, turn, lookfor, dialogue, posture, personhere, headpose, followuntil, movementdetected, webpage
 
 def init(session):
     screentouched.init(session)
     dooropen.init(session)
     say.init(session)
+    wait.init(session)
     waitfor.init(session)
     goto.init(session)
     turn.init(session)
+    headpose.init(session)
     lookfor.init(session)
     dialogue.init(session)
     posture.init(session)
     personhere.init(session)
-    headpose.init(session)
-    followuntil.init(session)
     movementdetected.init(session)
-    webpage.init(session)
+    #followuntil.init(session)
+    #webpage.init(session)
 
 def quit():
     screentouched.quit()
     dooropen.quit()
     say.quit()
+    wait.quit()
     waitfor.quit()
     goto.quit()
     turn.quit()
+    headpose.quit()
     lookfor.quit()
     dialogue.quit()
     posture.quit()
     personhere.quit()
-    headpose.quit()
-    followuntil.quit()
     movementdetected.quit()
-    webpage.quit()
+    #followuntil.quit()    
+    #webpage.quit()
 
 def main():
     global memory_service
@@ -74,6 +76,8 @@ def main():
 
     quit()
 
+    time.sleep(1)
+    sys.exit(0)
 
 if __name__ == "__main__":
     main()

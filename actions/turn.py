@@ -21,9 +21,14 @@ def actionThread_exec (params):
     print "Action "+actionName+" started with params "+params
     # action init
 
+    val = params
+    if (params[0]=='^'):
+        print params[1:]
+        val = memory_service.getData(params[1:])
+
     mod = "REL"
     target_angle = 0
-    v = params.split('_')
+    v = val.split('_')
 
     if (len(v)==1):
         target_angle = int(v[0])
@@ -32,10 +37,15 @@ def actionThread_exec (params):
         mod = v[1]
 
     if (mod=='ABS'):
-        [Rx,Ry,Rth_rad] = memory_service.getData('NAOqiLocalizer/RobotPose')
-        theta = (target_angle/180.0*math.pi) - Rth_rad
+        try:
+            [Rx,Ry,Rth_rad] = memory_service.getData('NAOqiLocalizer/RobotPose')
+            theta = (target_angle/180.0*math.pi) - Rth_rad
 
-        print "Robot theta: ", Rth_rad/math.pi*180, "Target theta: ", target_angle, "Diff: ", theta/math.pi*180
+            print "Robot theta: ", Rth_rad/math.pi*180, "Target theta: ", target_angle, "Diff: ", theta/math.pi*180
+        except:
+            print 'ERROR Turn ABS: cannot read robot pose'
+            target_angle = 0
+            theta = 0
     else:
         theta = target_angle/180.0*math.pi
 
@@ -43,6 +53,7 @@ def actionThread_exec (params):
     x = 0.0
     y = 0.0
     
+    print "Turn to ", target_angle
     motion_service.moveTo(x, y, theta) #blocking function
     
     print "Action "+actionName+" "+params+" terminated"

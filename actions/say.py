@@ -10,13 +10,35 @@ from action_base import *
 
 actionName = "say"
 
-def phraseToSay(params):
+def phraseToSay(memory_service,params):
     if (params=='hello'):
         return "Hello!"
+    elif (params=='greetperson'):
+        tosay = "Hello person!"
+        try:
+            pid = memory_service.getData('Actions/personhere/PersonID')
+            tosay = "Hello person "+str(pid)+" !"
+        except:
+            pass
+        return tosay
     elif (params=='starting'):
         return "OK. Let's start!"
+    elif (params=='personnotfound'):
+        return "It seems there is nobody around here!"
     elif (params=='goodbye'):
         return "Goodbye! See you soon!"
+    elif (params=='carhere'):
+        return "OK! I am marking this location as the car position"
+    elif (params=='whatnow'):
+        return "What do you want me to do now?"
+    elif (params=='lookatme'):
+        return "Please, can you look at me for some seconds"
+    elif (params=='readytofollow'):
+        return "OK,I am ready to follow you. Let's go"
+    elif (param=='lookforhelp'):
+        return "I'm looking for some help, I'm coming in a while"
+    elif (param=='arrivedcar'):
+        return "We just arrived to the car, thank you for coming to help"
     return "Nothing to say."
 
 def actionThread_exec (params):
@@ -26,8 +48,9 @@ def actionThread_exec (params):
     print "Action "+actionName+" started with params "+params
     # action init
     count = 1
-    tts_service.say(phraseToSay(params))
-    print "  -- Say: "+phraseToSay(params)
+    tosay = phraseToSay(memory_service,params)
+    tts_service.say(tosay)
+    print "  -- Say: "+tosay
     # action init
     while (getattr(t, "do_run", True) and count>0): 
         print "Action "+actionName+" "+params+" exec..."

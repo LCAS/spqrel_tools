@@ -39,11 +39,7 @@ def actionThread_exec (params):
     while (getattr(t, "do_run", True) and (not val)): 
         #print "Action "+actionName+" "+params+" exec..."
         # action exec
-        try:
-	        cval = get_condition(memory_service, params)
-	        val = (cval.lower()=='true') or (cval=='1')
-        except:
-	        pass
+        val = get_condition(memory_service, params)
         # action exec
         time.sleep(0.25)
 		

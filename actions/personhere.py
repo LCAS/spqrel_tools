@@ -10,11 +10,14 @@ import sys
 import os
 import time
 import threading
+import math
 
 from naoqi import ALProxy
 
 import conditions
 from conditions import set_condition
+
+last_personid = 0
 
 # function called when the signal "EngagementZones/PersonEnteredZone1" is triggered
 def zone1_callback(data):
@@ -26,9 +29,10 @@ def zone1_callback(data):
 
 
 def rhMonitorThread (memory_service):
+    global last_personid
     t = threading.currentThread()
     print "personhere thread started"
-    
+    personid = 0
     while getattr(t, "do_run", True):
         plist = memory_service.getData("PeoplePerception/PeopleList")
         
@@ -36,17 +40,29 @@ def rhMonitorThread (memory_service):
         if (plist!=None and len(plist)>0):
             personid = plist[0]
         #print 'personhere:: personid ',personid    
-        pmemkey = "PeoplePerception/Person/"+str(personid)+"/Distance"
+        pmemkey_dist = "PeoplePerception/Person/"+str(personid)+"/Distance"
+        pmemkey_angles = "PeoplePerception/Person/"+str(personid)+"/AnglesYawPitch"
+        pmemkey_pos = "PeoplePerception/Person/"+str(personid)+"/PositionInTorsoFrame"
+
         v = 'false'
         try:
-            pdist = memory_service.getData(pmemkey)
+            pdist = memory_service.getData(pmemkey_dist)
             #print "personhere:: distance ",pdist
-            if (pdist<1.5):
+            if (personid>0 and pdist<1.5):
                 v = 'true'
         except:
             v = 'false'
+
         set_condition(memory_service,'personhere',v)
-        #print 'personhere:: value ',v
+        if (v=='true' and personid != last_personid):
+            pangles = memory_service.getData(pmemkey_angles)
+            ppos = memory_service.getData(pmemkey_pos)
+            print 'personhere: ',str(personid),' dist: ', pdist, ' angle: ',pangles
+            print 'personhere: ',str(personid),' Position (local): ',ppos
+            memory_service.insertData('Actions/personhere/PersonAngleYaw', str((int)(pangles[0]/math.pi*180.0))+"_REL")
+            memory_service.insertData('Actions/personhere/PersonID', personid)
+            last_personid = personid
+
 
         time.sleep(0.5)
     print "personhere thread quit"

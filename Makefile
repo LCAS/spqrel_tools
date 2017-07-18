@@ -20,7 +20,7 @@ INSTALL_TREE?=$(shell readlink -f ../../install-$(TOOLCHAIN))
 WORKTREE?=$(shell readlink -f ..)
 
 # find git repos:
-GIT_REPOS:=$(shell find ${WORKTREE} -name .git -type d | sed 's/.git//' | xargs -n 1 -r readlink -f)
+GIT_REPOS:=$(shell find ${WORKTREE} -name .git | sed 's/.git//' | xargs -n 1 -r readlink -f)
 
 GIT_BRANCH=$(TOOLCHAIN)
 
@@ -29,7 +29,7 @@ QIBUILDS_DIRS=$(QIBUILDS:/qiproject.xml=)
 QIBUILDS_BUILD_DIRS=$(QIBUILDS_DIRS:=/build-$(TOOLCHAIN))
 
 QI_CONF_OPTS:=-w $(WORKTREE) -c $(TOOLCHAIN) --release
-QI_MAKE_OPTS:=-c $(TOOLCHAIN) -j4
+QI_MAKE_OPTS:=-c $(TOOLCHAIN) 
 
 all:	$(PNMLS) build
 
@@ -42,7 +42,7 @@ clean:
 	rm -rf $(PNMLS)
 	for qb in $(QIBUILDS); do \
 		d=`dirname $$qb`; \
-		(cd $$d; pwd; qibuild clean -f) \
+		(cd $$d; pwd; qibuild clean -z -s -f) \
 	done
 	rm -rf $(INSTALL_TREE)
 	rm -rf cookies
@@ -78,7 +78,7 @@ install_prep: $(INSTALL_TREE)/.git
 
 install_pull: install_prep
 	-(cd $(INSTALL_TREE); \
-		git pull --depth 1 -X theirs --no-edit)
+		git pull --depth 1 -X theirs --no-edit --recurse-submodules)
 
 install: $(PNMLS)  install_bins
 #	rsync -a --exclude '.git' --exclude '.gitignore' $(WORKTREE)/* $(INSTALL_TREE)

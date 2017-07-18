@@ -1,3 +1,6 @@
+#! /usr/bin/env python
+# -*- encoding: UTF-8 -*-
+
 import qi
 import argparse
 import sys
@@ -10,29 +13,42 @@ import conditions
 from conditions import get_condition
 
 
-actionName = "waitfor"
+actionName = "trackface"
 
 
 def actionThread_exec (params):
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
+    session = getattr(t, "session", None)
+
     print "Action "+actionName+" started with params "+params
 
     # action init
+    tracker_service = session.service("ALTracker")
+
+    tracker_service.setMode("Head")
+
+    tracker_service.registerTarget("Face",0.15)
+    tracker_service.track("Face")
+    
     val = False
     # action init
+
     while (getattr(t, "do_run", True) and (not val)): 
         #print "Action "+actionName+" "+params+" exec..."
         # action exec
-        val = get_condition(memory_service, params)
+        try:
+	        cval = get_condition(memory_service, params)
+	        val = (cval.lower()=='true') or (cval=='1')
+        except:
+	        pass
         # action exec
-
-
         time.sleep(0.25)
-        
+		
     print "Action "+actionName+" "+params+" terminated"
     # action end
-
+    tracker_service.stopTracker()
+    tracker_service.unregisterAllTargets()
     # action end
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
 
@@ -50,11 +66,10 @@ def quit():
 if __name__ == "__main__":
 
     app = action_base.initApp(actionName)
-        
+    	
     init(app.session)
 
     #Program stays at this point until we stop it
     app.run()
 
     quit()
-

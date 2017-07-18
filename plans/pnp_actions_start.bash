@@ -1,8 +1,13 @@
 #!/bin/bash
 
+if [ ${PEPPER_IP:-localhost} == "localhost" ]; then
+  echo "Running naoqi..."
+  xterm -e "/opt/Aldebaran/naoqi/naoqi-sdk-2.5.5.5-linux64/naoqi " &
+  sleep 5
+fi
 
 SESSION="${USER}-SPQReL"
-SPQREL_PREFIX="${SPQREL_PREFIX:-$HOME/src/SPQREL/qi_ws/spqrel_tools}"
+SPQREL_PREFIX="${SPQREL_PREFIX:-$HOME/src/SPQReL/qi_ws/spqrel_tools}"
 
 tmux -2 new-session -d -s $SESSION
 # Setup a window for tailing log files
@@ -13,7 +18,7 @@ tmux new-window -t $SESSION:0 -n 'plans'
 tmux select-window -t $SESSION:0
 tmux split-window -v
 tmux select-pane -t 0
-tmux send-keys "cd $SPQREL_PREFIX; $HOME/src/PetriNetPlans/PNPnaoqi/build-linux64/sdk/bin/pnp_naoqi" C-m
+tmux send-keys "cd $SPQREL_PREFIX; ../PetriNetPlans/PNPnaoqi/build-linux64/sdk/bin/pnp_naoqi" C-m
 tmux split-window -h
 tmux select-pane -t 1
 tmux send-keys "cd $SPQREL_PREFIX/actions; python init_actions.py" C-m

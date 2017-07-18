@@ -59,6 +59,8 @@ class DialogueManager(EventAbstractClass):
         to_send = ' '.join(splitted)
         if 'start' in splitted:
             self.memory.raiseEvent("ASR_enable", 1)
+        if 'end' in splitted:
+            self.memory.raiseEvent("ASR_enable", 0)
         if 'stop' in splitted:
             self.memory.raiseEvent("ASR_enable", 0)
         if 'missingdrink' in splitted:

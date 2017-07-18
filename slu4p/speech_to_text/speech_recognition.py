@@ -61,10 +61,12 @@ class SpeechRecognition(EventAbstractClass):
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             SpeechRecognition.ASR_ENABLE)
 
-        self.is_enabled = True
+        #self.is_enabled = True
 
-        self.audio_recorder.stopMicrophonesRecording()
-        self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
+        #self.audio_recorder.stopMicrophonesRecording()
+        #self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
+
+        self.memory.raiseEvent(self.ASR_ENABLE, 0)
 
         self._spin()
 

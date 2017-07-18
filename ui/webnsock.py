@@ -44,7 +44,7 @@ class JsonWSProtocol(WebSocketServerProtocol):
     def onOpen(self):
         info("WebSocket connection open.")
 
-    def send(self, data):
+    def sendJSON(self, data):
         buf = dumps(data)
         self.sendMessage(buf.encode('utf-8'), False)
 
@@ -56,17 +56,28 @@ class JsonWSProtocol(WebSocketServerProtocol):
             info("Text message received: {0}".format(payload.decode('utf8')))
             message_text = payload.decode('utf8')
             payload = loads(message_text)
-            info(pformat(payload))
-            self.send(payload)
+            debug(pformat(payload))
+            self.onJSON(payload)
+
+    #@abstractmethod
+    def onJSON(self, payload):
+        warn('should not work')
 
     def onClose(self, wasClean, code, reason):
         info("WebSocket connection closed: {0}".format(reason))
+
+
+class EchoJSONProtocol(JsonWSProtocol):
+    def onJSON(self, payload):
+        info('called')
+        self.sendJSON(payload)
 
 
 class MyBackend(object):
 
     def wait_until_shutdown(self, loop):
         self.is_running = True
+        info('backend is running')
         while self.is_running:
             try:
                 time.sleep(.1)
@@ -81,7 +92,7 @@ class MyBackend(object):
 
     def talker(self):
         factory = WebSocketServerFactory(u"ws://0.0.0.0:8128")
-        factory.protocol = JsonWSProtocol()
+        factory.protocol = EchoJSONProtocol
 
         self.loop = asyncio.get_event_loop()
         coro = self.loop.create_server(factory, '0.0.0.0', 8128)

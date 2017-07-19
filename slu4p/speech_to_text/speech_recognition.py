@@ -67,6 +67,8 @@ class SpeechRecognition(EventAbstractClass):
             self.AUDIO_FILE_DIR = expanduser('~') + '/bags/asr_logs/'
         else:
             self.AUDIO_FILE_DIR = '/tmp/recording/'
+        if not os.path.exists(self.AUDIO_FILE_DIR):
+            os.makedirs(self.AUDIO_FILE_DIR)
         self.AUDIO_FILE_PATH = self.AUDIO_FILE_DIR + 'SPQReL_mic_'
 
         self._spin()

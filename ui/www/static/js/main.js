@@ -3,6 +3,7 @@ console.log(hostname);
 
 
 function send(data) {
+  data['_location'] = location;
   var buffer=JSON.stringify(data);
   socket.send(buffer);
 }

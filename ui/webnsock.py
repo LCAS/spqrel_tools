@@ -73,7 +73,10 @@ class EchoJSONProtocol(JsonWSProtocol):
         self.sendJSON(payload)
 
 
-class MyBackend(object):
+class WSBackend(object):
+
+    def __init__(self, protocol=EchoJSONProtocol):
+        self.protocol = protocol
 
     def wait_until_shutdown(self, loop):
         self.is_running = True
@@ -92,7 +95,7 @@ class MyBackend(object):
 
     def talker(self):
         factory = WebSocketServerFactory(u"ws://0.0.0.0:8128")
-        factory.protocol = EchoJSONProtocol
+        factory.protocol = self.protocol
 
         self.loop = asyncio.get_event_loop()
         coro = self.loop.create_server(factory, '0.0.0.0', 8128)
@@ -141,18 +144,18 @@ class Index(object):
         return render.index()
 
 
-class MyWebserver(Thread):
+class Webserver(Thread):
 
     def __init__(self, app, port=8127):
         self.app = app
         self.port = port
-        super(MyWebserver, self).__init__()
+        super(Webserver, self).__init__()
 
     def run(self):
         port = 8127
-        info("MyWebserver started.")
+        info("Webserver started.")
         self.app.run(port=port)
-        info("MyWebserver stopped.")
+        info("Webserver stopped.")
 
     def stop(self):
         self.app.stop()
@@ -168,8 +171,8 @@ def signal_handler(webserver, backend, signum, frame):
 
 if __name__ == "__main__":
 
-    webserver = MyWebserver(ControlServer())
-    backend = MyBackend()
+    webserver = Webserver(ControlServer())
+    backend = WSBackend(EchoJSONProtocol)
     signal.signal(signal.SIGINT,
                   lambda s, f: signal_handler(webserver, backend, s, f))
     webserver.start()

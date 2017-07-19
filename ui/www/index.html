@@ -1,0 +1,120 @@
+$var title: Main
+$var jsfiles: 
+
+
+
+
+<script>
+document.onready = function() {
+ init();
+}
+</script>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div  style="background-color: #333333; min-height: 200px; max-height: 200px;" class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">I last said:</h3>
+                    </div>
+                    
+                    <div class="panel-body">
+                        <h2 style="color: #ffffff;" id="speech_output"></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+	            <div class="row">
+	                <div class="panel panel-primary">
+	                    <div class="panel-heading">
+	                        <h3 class="panel-title">Button-Box</h3>
+	                    </div>
+	                    <div class="panel-body">
+                        <button id="testbtn" onclick="send({
+                            'method':'button', 
+                            'id': 'testbtn',
+                            'text': $$('#testbtn').text()
+                            });" 
+                            class="btn btn-default col-md-12 btn-lg btn-danger">Test</button>
+	                    </div>
+	                </div>
+	            </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Robot Status</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-condensed table-striped">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-3">Current Action:</td>
+                                    <td class="col-md-9"><p id="actiontext">-</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">Battery:</td>
+                                    <td class="col-md-9"><p id="batterytext">xx%</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">Current Navgoal:</td>
+                                    <td class="col-md-9"><p id="currentnavgoal">XXX</p></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Plan</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"></h3>
+                                </div>
+                                <div class="panel-body">
+                                <iframe width="100%" height="400px" src="http://localhost:1036/"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal_dlg">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Notfall-Progamm aktivieren?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Soll das Notfall-Programm aktiviert werden? Der Roboter wird zur naechsten Sicherheitszone fahren und sich dort abschalten. Sollte er dort im Weg sein, kann er einfach weg geschoben werden. Bitte informieren Sie nach der Aktivierung das Roboter-Admin Team, damit zu einem späteren Zeitpunkt der Betrieb wieder aufgenommen werden kann.</p>
+      </div>
+      <div class="modal-footer">
+        <button onclick="emergency_stop();" type="button" class="btn btn-danger btn-default" data-dismiss="modal">Notfall auslösen</button>
+        <button type="button" class="btn" data-dismiss="modal">Zurück zum Normalbetrieb</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

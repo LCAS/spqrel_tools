@@ -3,6 +3,7 @@ import signal
 from naoqi import ALProxy, ALBroker, ALModule
 from google_client import *
 from event_abstract import *
+from os.path import expanduser
 
 
 class SpeechRecognition(EventAbstractClass):
@@ -10,11 +11,10 @@ class SpeechRecognition(EventAbstractClass):
     TD_EVENT = "ALTextToSpeech/TextDone"
     ASR_ENABLE = "ASR_enable"
     FLAC_COMM = 'flac -f '
-    FILE_PATH = '/tmp/recording'
     CHANNELS = [0, 0, 1, 0]
     timeout = 0
 
-    def __init__(self, ip, port, language, word_spotting, audio, visual, vocabulary_file, google_keys):
+    def __init__(self, ip, port, language, word_spotting, audio, visual, vocabulary_file, google_keys, asr_logging):
         super(self.__class__, self).__init__(self, ip, port)
 
         self.__shutdown_requested = False
@@ -25,11 +25,15 @@ class SpeechRecognition(EventAbstractClass):
             nuance_language = 'English'
             google_language = "en-US"
 
+        self.logging = asr_logging
+
         self.nuance_asr = ALProxy("ALSpeechRecognition")
 
         self.audio_recorder = ALProxy("ALAudioRecorder")
 
         self.google_asr = GoogleClient(google_language, google_keys)
+
+        self.memory_proxy = ALProxy("ALMemory")
 
         self.configure(
             vocabulary=vocabulary,
@@ -40,10 +44,6 @@ class SpeechRecognition(EventAbstractClass):
         )
 
     def start(self, *args, **kwargs):
-        self.subscribe(
-            event=SpeechRecognition.WR_EVENT,
-            callback=self.word_recognized_callback
-        )
         self.subscribe(
             event=SpeechRecognition.TD_EVENT,
             callback=self.text_done_callback
@@ -61,14 +61,22 @@ class SpeechRecognition(EventAbstractClass):
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             SpeechRecognition.ASR_ENABLE)
 
-        self.is_enabled = True
+        self.is_enabled = False
 
-        self.audio_recorder.stopMicrophonesRecording()
-        self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
+        print "[" + self.inst.__class__.__name__ + "] ASR disabled"
+
+        if self.logging:
+            self.AUDIO_FILE_DIR = expanduser('~') + '/bags/asr_logs/'
+        else:
+            self.AUDIO_FILE_DIR = '/tmp/asr_logs/'
+        if not os.path.exists(self.AUDIO_FILE_DIR):
+            os.makedirs(self.AUDIO_FILE_DIR)
+        self.AUDIO_FILE_PATH = self.AUDIO_FILE_DIR + 'SPQReL_mic_'
 
         self._spin()
 
-        self.unsubscribe(SpeechRecognition.WR_EVENT)
+        if self.is_enabled == True:
+            self.unsubscribe(SpeechRecognition.WR_EVENT)
         self.unsubscribe(SpeechRecognition.TD_EVENT)
         self.unsubscribe(SpeechRecognition.ASR_ENABLE)
         self.broker.shutdown()
@@ -93,8 +101,8 @@ class SpeechRecognition(EventAbstractClass):
         """
         Convert Wave file into Flac file
         """
-        os.system(self.FLAC_COMM + self.FILE_PATH + '.wav')
-        f = open(self.FILE_PATH + '.flac', 'rb')
+        os.system(self.FLAC_COMM + self.AUDIO_FILE + '.wav')
+        f = open(self.AUDIO_FILE + '.flac', 'rb')
         flac_cont = f.read()
         f.close()
 
@@ -105,38 +113,64 @@ class SpeechRecognition(EventAbstractClass):
         self.timeout = 0
         self.nuance_asr.pause(False)
         self.audio_recorder.stopMicrophonesRecording()
-        self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
+        self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
+        self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
         self.memory.raiseEvent("VordRecognized", results)
 
     def text_done_callback(self, *args, **kwargs):
-        if self.is_enabled:
-            if args[1] == 0:
-                self.audio_recorder.stopMicrophonesRecording()
-                self.nuance_asr.pause(True)
-            else:
-                self.audio_recorder.stopMicrophonesRecording()
-                self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
-                self.nuance_asr.pause(False)
+        try:
+            if self.is_enabled:
+                if args[1] == 0:
+                    self.audio_recorder.stopMicrophonesRecording()
+                    self.nuance_asr.pause(True)
+                else:
+                    self.audio_recorder.stopMicrophonesRecording()
+                    self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
+                    self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+                    self.nuance_asr.pause(False)
+        except Exception as e:
+            print e.message
 
     def enable_callback(self, *args, **kwargs):
-        if args[1] == 1:
-            self.audio_recorder.stopMicrophonesRecording()
-            self.unsubscribe(SpeechRecognition.WR_EVENT)
-            self.is_enabled = False
+        if args[1] == "0":
+            if self.is_enabled:
+                self.is_enabled = False
+                self.audio_recorder.stopMicrophonesRecording()
+                self.unsubscribe(SpeechRecognition.WR_EVENT)
+                print "[" + self.inst.__class__.__name__ + "] ASR disabled"
+            else:
+                print "[" + self.inst.__class__.__name__ + "] ASR already disabled"
         else:
-            self.audio_recorder.stopMicrophonesRecording()
-            self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
-            self.subscribe(
-                event=SpeechRecognition.WR_EVENT,
-                callback=self.word_recognized_callback
-            )
-            self.is_enabled = True
+            if not self.is_enabled:
+                #try:
+                #    self.AUDIO_FILE_DIR = self.memory_proxy.getData("NAOqibag/CurrentLogFolder") + "/asr_logs/"
+                #except:
+                self.AUDIO_FILE_DIR = expanduser('~') + '/bags/no_data/asr_logs/'
+                if not os.path.exists(self.AUDIO_FILE_DIR):
+                    os.makedirs(self.AUDIO_FILE_DIR)
+                self.AUDIO_FILE_PATH = self.AUDIO_FILE_DIR + 'SPQReL_mic_'
+                self.is_enabled = True
+                self.audio_recorder.stopMicrophonesRecording()
+                self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
+                self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+                self.subscribe(
+                    event=SpeechRecognition.WR_EVENT,
+                    callback=self.word_recognized_callback
+                )
+                print "[" + self.inst.__class__.__name__ + "] ASR enabled"
+            else:
+                print "[" + self.inst.__class__.__name__ + "] ASR already enabled"
 
     def reset(self):
         if self.is_enabled:
             print "[" + self.inst.__class__.__name__ + "] Reset recording.."
             self.audio_recorder.stopMicrophonesRecording()
-            self.audio_recorder.startMicrophonesRecording(self.FILE_PATH + ".wav", "wav", 16000, self.CHANNELS)
+            try:
+                os.remove(self.AUDIO_FILE + ".wav")
+            except:
+                print "No such file: " + self.AUDIO_FILE + ".wav"
+            self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
+            self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
 
     def _spin(self, *args):
         while not self.__shutdown_requested:
@@ -174,6 +208,8 @@ def main():
                         help="A txt file containing the list of sentences composing the vocabulary")
     parser.add_argument("-k", "--keys", type=str, default="resources/google_keys.txt",
                         help="A txt file containing the list of the keys for the Google ASR")
+    parser.add_argument("-o", "--asr-logging", type=bool, default=False,
+                        help="Logs the audio files")
     args = parser.parse_args()
 
     sr = SpeechRecognition(
@@ -184,7 +220,8 @@ def main():
         audio=not args.no_audio,
         visual=not args.no_visual,
         vocabulary_file=args.vocabulary,
-        google_keys=args.keys
+        google_keys=args.keys,
+        asr_logging=args.asr_logging
     )
     sr.update_globals(globals())
     sr.start()

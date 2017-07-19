@@ -6,7 +6,7 @@ import sys
 import time
 import os
 
-import webinit, postureinit, behaviorinit
+import webinit, postureinit, behaviorinit, manage_BG_behaviors
 
 def main():
     parser = argparse.ArgumentParser()
@@ -37,12 +37,13 @@ def main():
     time.sleep(1)
     webinit.do_init(session)
     time.sleep(1)
-    behaviorinit.do_init(session)
+    manage_BG_behaviors.start_behaviors()
     time.sleep(1)
     postureinit.do_init(session)
 
     tts_service.say("Initialization completed.")
 
 if __name__ == "__main__":
+    time.sleep(10)
     main()
 

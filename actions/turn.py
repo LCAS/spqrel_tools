@@ -37,10 +37,15 @@ def actionThread_exec (params):
         mod = v[1]
 
     if (mod=='ABS'):
-        [Rx,Ry,Rth_rad] = memory_service.getData('NAOqiLocalizer/RobotPose')
-        theta = (target_angle/180.0*math.pi) - Rth_rad
+        try:
+            [Rx,Ry,Rth_rad] = memory_service.getData('NAOqiLocalizer/RobotPose')
+            theta = (target_angle/180.0*math.pi) - Rth_rad
 
-        print "Robot theta: ", Rth_rad/math.pi*180, "Target theta: ", target_angle, "Diff: ", theta/math.pi*180
+            print "Robot theta: ", Rth_rad/math.pi*180, "Target theta: ", target_angle, "Diff: ", theta/math.pi*180
+        except:
+            print 'ERROR Turn ABS: cannot read robot pose'
+            target_angle = 0
+            theta = 0
     else:
         theta = target_angle/180.0*math.pi
 

@@ -33,7 +33,11 @@ export SPQREL_HOME=`real_path "${SPQREL_HOME:-$HOME/spqrel}"`
 
 export LD_LIBRARY_PATH=$SPQREL_HOME/lib:$LD_LIBRARY_PATH
 export DYLD_LIBRARY_PATH=$SPQREL_HOME/lib:$DYLD_LIBRARY_PATH
-export PATH=$SPQREL_HOME/bin:$PATH
+
+# find pnpgen binaries
+export PNPGEN_BIN=`find $SPQREL_HOME -path "*/bin/pnpgen_translator"| sed 's@/pnpgen_translator@@'`
+
+export PATH=$SPQREL_HOME/bin:$PATH:$PNPGEN_BIN
 
 export PYTHONPATH=$SPQREL_HOME/spqrel_tools/slu4p:$SPQREL_HOME/worktree/PetriNetPlans/PNPnaoqi/actions:${PYTHONPATH}
 export SLU4R_ROOT=$SPQREL_HOME/spqrel_tools/slu4

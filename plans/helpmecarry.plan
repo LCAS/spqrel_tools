@@ -1,17 +1,39 @@
-goto_exit;
-turn_130_ABS;
+#### 1 - WAIT FOR THE PERSON TO FOLLOW
+
+#goto_exit;
+#turn_130_ABS;
 headpose_0_-3;
 waitfor_personhere;
 #dialogue_follow;
+waitfor_screentouched;
 say_hello;
+say_lookatme;
+#trackface_learnface;
+say_readytofollow;
+
+
+#### 2 - START THE FOLLOWING PHASE
+
 followuntil_screentouched;
-say_goodbye; 
+say_carhere;
+say_whatnow;
 headpose_0_0;
 #memorize_car;
 #dialogue_lookforhelp;
+
+
+#### 3 - LOOK FOR HELP
+
+say_lookforhelp
+
 #goto_assistlocation; # er: personhere -> dialogue_whattime; waitfor_not_personhere; restart_action
 #find_person;
 #dialogue_guide;
+
+
+#### 4 - COMING BACK TO THE CAR
+
 #goto_car; # er: (not personbehind) -> turn_around; dialogue_callperson
+#say_arrivedcar
 #dialogue_arrivedcar;
 

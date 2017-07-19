@@ -1,12 +1,11 @@
-#posture_Stand;
-#waitfor_dooropen;
-#headpose_0_-4;
+posture_Stand;
+waitfor_dooropen;
+say_starting;
 goto_entrance;
 goto_rips;
-say_starting;
-#waitfor_screentouched;
+waitfor_screentouched;
 say_goodbye;
-#headpose_0_-4;
 goto_entrance;
-#goto_exit;       
+goto_exit;
+posture_Rest
 

@@ -11,29 +11,26 @@ import argparse
 #from event_abstract import EventAbstractClass
 
 
-class SpeechToScreen():
-    PATH = ''
+class ALSubscriber():
     EVENT_NAME = "Veply"
 
-    def on_text(self, data):
-        info('on_text: %s' % pformat(data))
+    def on_event(self, data):
+        info('on_event: %s' % pformat(data))
+        self.handler(data)
 
-    def __init__(self):
-        global memory_service
+    def __init__(self, memory_service, subscriber, handler):
         self.memory_service = memory_service
+        self.handler = handler
         try:
-            veply_sub = self.memory_service.subscriber("Veply")
-            veply_con = veply_sub.signal.connect(self.on_text)
+            self.veply_sub = self.memory_service.subscriber(subscriber)
+            self.veply_sub.signal.connect(self.on_event)
+            info('subscribed to %s' % subscriber)
         except RuntimeError:
-            warn("Cannot sign up to Veply")
+            warn("Cannot sign up to %s" %  subscriber)
 
         #self.breathing = ALProxy("ALMotion")
         #self.breathing.setBreathEnabled('Arms', True)
         #self.configuration = {"bodyLanguageMode": body_language_mode}
-
-
-
-
 
 class SQPReLProtocol(webnsock.JsonWSProtocol):
 
@@ -52,6 +49,19 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
     #     else:
     #         warn("don't know what to do with message %s" % pformat(payload))
 
+    def __init__(self):
+        global memory_service
+        self.sts = ALSubscriber(memory_service, "Veply", self.new_tts)
+        super(SQPReLProtocol, self).__init__()
+
+    def new_tts(self, data):
+        info('got new speech: %s' % pformat(data))
+        self.sendJSON({
+            'method': 'update_html',
+            'id': 'speech_output',
+            'html': data
+        })
+
 
     def on_ping(self, payload):
         info('ping!')
@@ -61,18 +71,13 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
         info('button pressed: \n%s' % pformat(payload))
         self.sendJSON({'method': 'ping'})
         self.sendJSON({
-            'method': 'update_html',
-            'id': 'hurga',
-            'html': "it worked"
-        })
-        self.sendJSON({
             'method': 'modal_dlg',
             'id': 'modal_dlg'},
             lambda p: pprint(p))
         return {'button_outcome': True}
 
 
-def main():
+def qi_init():
     global memory_service
     parser = argparse.ArgumentParser()
     parser.add_argument("--pip", type=str, default=os.environ['PEPPER_IP'],
@@ -97,15 +102,11 @@ def main():
     app.start()
     session = app.session
     memory_service = session.service("ALMemory")
-    sts = SpeechToScreen()
-
-
-
-if __name__ == "__main__":
-    main()
+    #app.run()
 
 
 if __name__ == "__main__":
+    qi_init()
 
     webserver = webnsock.Webserver(webnsock.ControlServer())
     backend = webnsock.WSBackend(SQPReLProtocol)

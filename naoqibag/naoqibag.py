@@ -30,15 +30,17 @@ def readKeysFile(keys_file, memory_service):
             keys_list.append(key)
 
 
-def onEvent(pip, pport, rate, value):
+def onEvent(pip, pport, value):
     global camera_enabled
+    global camera_frame_rate
+    print "value: ", value 
     if (value==0):
         camera_enabled = 0
     else:
         camera_enabled = 1
-        rate = value
+        camera_frame_rate = value
         #create a thead that monitors directly the signal
-        camMonitorThread = threading.Thread(target = cameraMonitorThread, args = (pip, pport, rate))
+        camMonitorThread = threading.Thread(target = cameraMonitorThread, args = (pip, pport, camera_frame_rate))
         camMonitorThread.start()        
 
 def cameraMonitorThread (pip, pport, rate):
@@ -48,7 +50,7 @@ def cameraMonitorThread (pip, pport, rate):
     if not os.path.exists(camera_log_dir):
         os.makedirs(camera_log_dir)
 
-    print 'Starting recording camera @%dHz'%rate
+    print 'Starting recording camera @%.2fHz'%rate
     camProxy = ALProxy("ALVideoDevice", pip, pport)
     camera = 0
     resolution = 2    # VGA
@@ -92,15 +94,16 @@ def rhMonitorThread (memory_service, rate, output_file):
 def main():
     global camera_enabled
     global current_log_dir
-    
+    global camera_frame_rate
     camera_enabled = 0
+    camera_frame_rate = 0
     
     parser = argparse.ArgumentParser()
     parser.add_argument("--pip", type=str, default=os.environ['PEPPER_IP'],
                         help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
     parser.add_argument("--pport", type=int, default=9559,
                         help="Naoqi port number")
-    parser.add_argument("--rate", type=int, default=5,
+    parser.add_argument("--rate", type=float, default=5,
                         help="Logging rate in Hz")
     parser.add_argument("--keys", type=str, required=True, help="File contaning list of keys to register")
     parser.add_argument("--path", type=str, default=os.getcwd(), help="Path of folder that will contain the logs")
@@ -154,16 +157,19 @@ def main():
 
     #subscribe to any change on any touch sensor
     subscriber = memory_service.subscriber("NAOqibag/EnableCamera")
-    idEvent = subscriber.signal.connect(functools.partial(onEvent, pip, pport, rate))
+    idEvent = subscriber.signal.connect(functools.partial(onEvent, pip, pport))
 
     #Program stays at this point until we stop it
     app.run()
 
     subscriber.signal.disconnect(idEvent)
     monitorThread.do_run = False
-    camera_enabled = 0
-
-    time.sleep(1)
+    if camera_enabled:
+        camera_enabled = 0
+        #we give time a cycle of the camera thread to finish
+        time.sleep(1/camera_frame_rate)
+        
+        
     print "Finished"
 
 

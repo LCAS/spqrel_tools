@@ -132,7 +132,7 @@ class SpeechRecognition(EventAbstractClass):
             print e.message
 
     def enable_callback(self, *args, **kwargs):
-        if args[1] == 0:
+        if args[1] == "0":
             if self.is_enabled:
                 self.is_enabled = False
                 self.audio_recorder.stopMicrophonesRecording()

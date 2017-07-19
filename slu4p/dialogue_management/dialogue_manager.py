@@ -59,11 +59,11 @@ class DialogueManager(EventAbstractClass):
         splitted = args[1].split('_')
         to_send = ' '.join(splitted)
         if 'start' in splitted:
-            self.memory.raiseEvent("ASR_enable", 1)
+            self.memory.raiseEvent("ASR_enable", "1")
         if 'end' in splitted:
-            self.memory.raiseEvent("ASR_enable", 0)
+            self.memory.raiseEvent("ASR_enable", "0")
         if 'stop' in splitted:
-            self.memory.raiseEvent("ASR_enable", 0)
+            self.memory.raiseEvent("ASR_enable", "0")
         if 'missingdrink' in splitted:
             customer = self.cocktail_data.get(splitted[1], None)['customer']
             drink = self.cocktail_data[splitted[1]]['drink']
@@ -122,7 +122,7 @@ class DialogueManager(EventAbstractClass):
                 print "[" + self.inst.__class__.__name__ + "] Robot says: " + reply
                 self.memory.raiseEvent("Veply", reply)
             elif '[STOP]' in submessage:
-                self.memory.raiseEvent("ASR_enable", 0)
+                self.memory.raiseEvent("ASR_enable", "0")
             else:
                 print submessage
 

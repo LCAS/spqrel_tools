@@ -51,17 +51,32 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
 
     def __init__(self):
         global memory_service
-        self.sts = ALSubscriber(memory_service, "Veply", self.new_tts)
+
+        self.sts = ALSubscriber(memory_service, "Veply",
+                                lambda d: self.sendJSON({
+                                    'method': 'update_html',
+                                    'id': 'speech_output',
+                                    'html': d
+                                }))
+        self.battery = ALSubscriber(memory_service, "BatteryChargeChanged",
+                                    lambda d: self.sendJSON({
+                                        'method': 'update_html',
+                                        'id': 'batterytext',
+                                        'html': d
+                                    }))
+        self.caction = ALSubscriber(memory_service, "PNP_action",
+                                    lambda d: self.sendJSON({
+                                        'method': 'update_html',
+                                        'id': 'actiontext',
+                                        'html': d
+                                    }))
+        self.navgoal = ALSubscriber(memory_service, "NAOqiPlanner/Goal",
+                                    lambda d: self.sendJSON({
+                                        'method': 'update_html',
+                                        'id': 'currentnavgoal',
+                                        'html': d
+                                    }))
         super(SQPReLProtocol, self).__init__()
-
-    def new_tts(self, data):
-        info('got new speech: %s' % pformat(data))
-        self.sendJSON({
-            'method': 'update_html',
-            'id': 'speech_output',
-            'html': data
-        })
-
 
     def on_ping(self, payload):
         info('ping!')
@@ -78,7 +93,7 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
 
 
 def qi_init():
-    global memory_service
+    global memory_service, tablet_service
     parser = argparse.ArgumentParser()
     parser.add_argument("--pip", type=str, default=os.environ['PEPPER_IP'],
                         help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
@@ -102,6 +117,13 @@ def qi_init():
     app.start()
     session = app.session
     memory_service = session.service("ALMemory")
+    try:
+        tablet_service = session.service("ALTabletService")
+    except RuntimeError:
+        warn('cannot find ALTabletService')
+        tablet_service = None
+    if tablet_service:
+        tablet_service.showWebview('http://localhost:8127/')
     #app.run()
 
 

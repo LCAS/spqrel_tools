@@ -3,6 +3,7 @@ import argparse
 import sys
 import time
 import threading
+import json
 
 import action_base
 from action_base import *
@@ -17,9 +18,12 @@ def phraseToSay(memory_service,params):
         tosay = "Hello person!"
         try:
             pid = memory_service.getData('Actions/personhere/PersonID')
-            tosay = "Hello person "+str(pid)+" !"
-        except:
-            pass
+            pinfo = memory_service.getData('DialogueVesponse')
+            pdict = json.loads(pinfo)
+            tosay = "Hello "+pdict['Name']+" !"
+        except Exception as e:
+            print str(e)
+
         return tosay
     elif (params=='starting'):
         return "OK. Let's start!"

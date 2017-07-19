@@ -12,6 +12,7 @@ from conditions import get_condition
 
 actionName = "soundtrack"
 
+# typical values:  distance = 1.0 m, confidence = 0.5
 
 def actionThread_exec (params):
     t = threading.currentThread()

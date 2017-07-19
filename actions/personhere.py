@@ -59,7 +59,10 @@ def rhMonitorThread (memory_service):
             ppos = memory_service.getData(pmemkey_pos)
             print 'personhere: ',str(personid),' dist: ', pdist, ' angle: ',pangles
             print 'personhere: ',str(personid),' Position (local): ',ppos
-            memory_service.insertData('Actions/personhere/PersonAngleYaw', str((int)(pangles[0]/math.pi*180.0))+"_REL")
+            memory_service.insertData('Actions/personhere/PersonAngleYaw',                    
+                                      str(pangles[0]))
+            memory_service.insertData('Actions/personhere/PersonAngleTurn',                    
+                                      str((int)(pangles[0]/math.pi*180.0))+"_REL")
             memory_service.insertData('Actions/personhere/PersonID', personid)
             last_personid = personid
 

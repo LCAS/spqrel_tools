@@ -3,10 +3,12 @@ import argparse
 import sys
 import time
 import threading
+import json
 
 import action_base
 from action_base import *
 
+allOrders = {}
 
 actionName = "dialogue"
 
@@ -19,7 +21,7 @@ def response_cb(value):
 
 
 def actionThread_exec (params):
-    global dialogue_response
+    global dialogue_response, orderID
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
     
@@ -31,7 +33,7 @@ def actionThread_exec (params):
     # action init	
     print "  -- Dialogue: "+params
     memory_service.raiseEvent('DialogueVequest',params+'_start')
-    memory_service.raiseEvent('ASRPause',0)
+    
     dialogue_response = False
     # action init
     while (getattr(t, "do_run", True) and not dialogue_response): 
@@ -43,7 +45,13 @@ def actionThread_exec (params):
     print "Action "+actionName+" "+params+" terminated"
     # action end
     memory_service.raiseEvent('DialogueVequest',params+'_stop')
-    memory_service.raiseEvent('ASRPause',1)
+    
+    if (params=='takeorder'):
+        pinfo = memory_service.getData('DialogueVesponse')
+        orderID = orderID+1
+        memkey = "Humans/Profile"+str(orderID)
+        memory_service.insertData(memkey, pinfo)
+
     # TODO acb. disconnect...
     # action end
 
@@ -51,9 +59,11 @@ def actionThread_exec (params):
 
 
 def init(session):
+    global orderID
     print actionName+" init"
     action_base.init(session, actionName, actionThread_exec)
     session.service("ALMemory").declareEvent('DialogueVequest')
+    orderID = 0
 
 
 def quit():

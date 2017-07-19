@@ -8,47 +8,36 @@ import action_base
 from action_base import *
 
 
-actionName = "vsay"
-
-
+actionName = "dialoguestart"
 
 def actionThread_exec (params):
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
-    tts_service = getattr(t, "session", None).service("ALTextToSpeech")
-    print "Action "+actionName+" started with params "+params
-
+    
+    print "Action "+actionName+" "+params+" started"
     # action init
-    memory_service.raiseEvent('DialogueVequest',"say_"+params)
-    print "  -- VSay: "+params
-    val = 0
-    time.sleep(1)
+    memory_service.raiseEvent('DialogueVequest',params+'_start')
     # action init
     
-    while (getattr(t, "do_run", True) and val==0): 
-        # print "Action "+actionName+" "+params+" exec..."
-        # action exec 
-        val = memory_service.getData("ALTextToSpeech/TextDone")
-        # action exec
-        time.sleep(0.5)
-
+    time.sleep(1.0)
 
     print "Action "+actionName+" "+params+" terminated"
-    # action end
 
-    # action end
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
 
 
 def init(session):
+    global orderID
     print actionName+" init"
     action_base.init(session, actionName, actionThread_exec)
+    session.service("ALMemory").declareEvent('DialogueVequest')
+    orderID = 0
 
 
 def quit():
     print actionName+" quit"
     actionThread_exec.do_run = False
-
+    
 
 
 if __name__ == "__main__":

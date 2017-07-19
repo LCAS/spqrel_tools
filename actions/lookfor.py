@@ -16,7 +16,7 @@ actionName = "lookfor"
 headYaw = [ 0.0, 0.7, -0.7 ]
 headPitch = [ -0.3, -0.3, -0.3 ]
 headtime = 1.0 # how much time to make a single movement
-wait = [ 5.0, 5.0, 5.0, 5.0 ] # waiting times in each position
+wait = [ 3.0, 3.0, 3.0, 3.0 ] # waiting times in each position
 
 
 

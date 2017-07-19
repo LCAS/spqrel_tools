@@ -143,7 +143,7 @@ class SpeechRecognition(EventAbstractClass):
         else:
             if not self.is_enabled:
                 try:
-                    self.AUDIO_FILE_DIR = self.memory_proxy.getData("CurrentLogFolder")
+                    self.AUDIO_FILE_DIR = self.memory_proxy.getData("CurrentLogFolder") + "/asr_logs"
                 except:
                     self.AUDIO_FILE_DIR = expanduser('~') + '/bags/no_data/asr_logs/'
                 if not os.path.exists(self.AUDIO_FILE_DIR):

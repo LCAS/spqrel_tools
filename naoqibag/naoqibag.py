@@ -28,42 +28,53 @@ def readKeysFile(keys_file, memory_service):
                 print "Error opening keys file:", new_keys_filename
         else:
             keys_list.append(key)
-            #I was thinking to append only valid keys but will not work if some module is not active yet
-            #try:
-            #    value =  memory_service.getData(key)
-            #    keys_list.append(key)
-            #    print "Read key: ", key, value
-            #except RuntimeError:
-            #    print "Read key: ", key, "Failed"
 
-global camProxy, videoClient
 
 def onEvent(pip, pport, rate, value):
-    global camProxy, videoClient
     global camera_enabled
-    
-    print "value=",value
-    print "pip=",pip
-    print "pport=",pport
-
-    if (value==1):
-        camProxy = ALProxy("ALVideoDevice", pip, pport)
-        camera = 0
-        resolution = 2    # VGA
-        colorSpace = 11   # RGB
-        videoClient = camProxy.subscribeCamera("NAOqibag", camera, resolution, colorSpace, 5)
-        time.sleep(1) #to be sure camProxy is launched
-        camera_enabled = 1
-        
-    else:
+    if (value==0):
         camera_enabled = 0
-        time.sleep(1.0/rate) #to be sure the other threads finishes its loop before unsubscribe
-        camProxy.unsubscribe(videoClient)
-        
-def rhMonitorThread (memory_service, rate, output_file):
-    global camProxy, videoClient
-    global camera_enabled
+    else:
+        camera_enabled = 1
+        rate = value
+        #create a thead that monitors directly the signal
+        camMonitorThread = threading.Thread(target = cameraMonitorThread, args = (pip, pport, rate))
+        camMonitorThread.start()        
 
+def cameraMonitorThread (pip, pport, rate):
+    global camera_enabled
+    global current_log_dir
+    camera_log_dir = os.path.join(current_log_dir, "kTopCamera")
+    if not os.path.exists(camera_log_dir):
+        os.makedirs(camera_log_dir)
+
+    print 'Starting recording camera @%dHz'%rate
+    camProxy = ALProxy("ALVideoDevice", pip, pport)
+    camera = 0
+    resolution = 2    # VGA
+    colorSpace = 11   # RGB
+    videoClient = camProxy.subscribeCamera("NAOqibag", camera, resolution, colorSpace, 5)
+    while (camera_enabled):
+        pepperImage = camProxy.getImageRemote(videoClient)
+        imageWidth = pepperImage[0]
+        imageHeight = pepperImage[1]
+        array = pepperImage[6]
+    
+        # Create a PIL Image from our pixel array.
+        im = Image.frombytes("RGB", (imageWidth, imageHeight), array)
+            
+        # Save the image.
+        image_name = os.path.join(camera_log_dir, 'spqrel_kTopCamera_%f_rgb.png' % time.time())
+        im.save(image_name, "PNG")
+                
+    
+        time.sleep(1.0/rate)
+        
+    camProxy.unsubscribe(videoClient)
+    print "Exiting Thread Log Camera "
+
+
+def rhMonitorThread (memory_service, rate, output_file):
     t = threading.currentThread()
     output_file.write(str(keys_list))
     output_file.write('\n')
@@ -75,26 +86,13 @@ def rhMonitorThread (memory_service, rate, output_file):
         output_file.write(str(values))        
         output_file.write('\n')
 
-        if (camera_enabled):
-            output_file.write(timestamp)
-            pepperImage = camProxy.getImageRemote(videoClient)
-            imageWidth = pepperImage[0]
-            imageHeight = pepperImage[1]
-            array = pepperImage[6]
-
-            # Create a PIL Image from our pixel array.
-            im = Image.frombytes("RGB", (imageWidth, imageHeight), array)
-            
-            # Save the image.
-            image_name = 'spqrel_kTopCamera_%f_rgb.png' % ts
-            im.save(image_name, "PNG")
-        
-        
         time.sleep(1.0/rate)
-    print "Exiting Thread"
+    print "Exiting Thread Log"
 
 def main():
     global camera_enabled
+    global current_log_dir
+    
     camera_enabled = 0
     
     parser = argparse.ArgumentParser()
@@ -105,7 +103,8 @@ def main():
     parser.add_argument("--rate", type=int, default=5,
                         help="Logging rate in Hz")
     parser.add_argument("--keys", type=str, required=True, help="File contaning list of keys to register")
-    parser.add_argument("--o", type=str, default="out.log" ,
+    parser.add_argument("--path", type=str, default=os.getcwd(), help="Path of folder that will contain the logs")
+    parser.add_argument("--o", type=str, default="keys.log" ,
                         help="Output file registered values")    
     
     
@@ -115,6 +114,7 @@ def main():
     rate = args.rate
     keys_filename = args.keys
     output_filename = args.o
+    log_path = args.path
 
     #Starting application
     try:
@@ -131,13 +131,22 @@ def main():
     #Starting services
     memory_service  = session.service("ALMemory")
 
+    #Creating logging directory
+    log_folder = time.strftime("%Y%m%d_%H%M%S", time.localtime())
+    current_log_dir = os.path.join(log_path, log_folder)
+    if not os.path.exists(current_log_dir):
+        os.makedirs(current_log_dir)
+
+    print "Logging data in: ", current_log_dir
+    memory_service.insertData("NAOqibag/CurrentLogFolder", current_log_dir)
+    
     #Opening input and output files
     keys_file = open(keys_filename, "r") 
-    output_file = open(output_filename, "w")
+    output_file = open(os.path.join(current_log_dir,output_filename), "w")
 
     readKeysFile(keys_file, memory_service)
-
     print keys_list
+
     
     #create a thead that monitors directly the signal
     monitorThread = threading.Thread(target = rhMonitorThread, args = (memory_service,rate,output_file))
@@ -152,7 +161,9 @@ def main():
 
     subscriber.signal.disconnect(idEvent)
     monitorThread.do_run = False
-    
+    camera_enabled = 0
+
+    time.sleep(1)
     print "Finished"
 
 

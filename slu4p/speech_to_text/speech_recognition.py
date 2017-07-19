@@ -165,7 +165,10 @@ class SpeechRecognition(EventAbstractClass):
         if self.is_enabled:
             print "[" + self.inst.__class__.__name__ + "] Reset recording.."
             self.audio_recorder.stopMicrophonesRecording()
-            os.remove(self.AUDIO_FILE)
+            try:
+                os.remove(self.AUDIO_FILE + ".wav")
+            except:
+                print "No such file: " + self.AUDIO_FILE + ".wav"
             self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
             self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
 

@@ -60,4 +60,4 @@ echo "PATH=$PATH"
 echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" 
 echo "PYTHONPATH=$PYTHONPATH"
 
-export GIT_EXEC_PATH=${SPQREL_HOME}/libexec
+export GIT_EXEC_PATH=${SPQREL_HOME}/libexec/git-core

@@ -1,5 +1,6 @@
 import os
 from Kernel import Kernel
+from naoqi import ALProxy, ALBroker, ALModule
 import argparse
 import signal
 import slu_utils
@@ -21,6 +22,8 @@ class DialogueManager(EventAbstractClass):
 
         self.__shutdown_requested = False
         signal.signal(signal.SIGINT, self.signal_handler)
+
+        self.memory_proxy = ALProxy("ALMemory")
 
         self.kernel = Kernel()
         self.__learn(aiml_path)
@@ -59,11 +62,11 @@ class DialogueManager(EventAbstractClass):
         splitted = args[1].split('_')
         to_send = ' '.join(splitted)
         if 'start' in splitted:
-            self.memory.raiseEvent("ASR_enable", 1)
+            self.memory.raiseEvent("ASR_enable", "1")
         if 'end' in splitted:
-            self.memory.raiseEvent("ASR_enable", 0)
+            self.memory.raiseEvent("ASR_enable", "0")
         if 'stop' in splitted:
-            self.memory.raiseEvent("ASR_enable", 0)
+            self.memory.raiseEvent("ASR_enable", "0")
         if 'missingdrink' in splitted:
             customer = self.cocktail_data.get(splitted[1], None)['customer']
             drink = self.cocktail_data[splitted[1]]['drink']
@@ -102,12 +105,16 @@ class DialogueManager(EventAbstractClass):
             elif '[TAKEORDERDATA]' in submessage:
                 data = submessage.replace('[TAKEORDERDATA]', '').replace(')', '').strip()
                 customer, drink = data.split('(')
+                try:
+                    self.person_id = self.memory_proxy.getData("Actions/personhere/PersonID")
+                except:
+                    self.person_id = 9999
                 temp = {}
-                temp['drink'] = drink
-                temp['customer'] = customer
+                temp['PersonID'] = self.person_id
+                temp['Name'] = customer
+                temp['Drink'] = drink
                 self.cocktail_data[str(self.order_counter)] = temp
-                print self.cocktail_data
-                self.memory.raiseEvent("DialogueVesponse", json.dumps(self.cocktail_data))
+                self.memory.raiseEvent("DialogueVesponse", json.dumps(temp))
                 self.order_counter = self.order_counter + 1
             elif '[DRINKSALTERNATIVES]' in submessage:
                 data = submessage.replace('[DRINKSALTERNATIVES]', '').replace(')', '').strip()
@@ -122,7 +129,7 @@ class DialogueManager(EventAbstractClass):
                 print "[" + self.inst.__class__.__name__ + "] Robot says: " + reply
                 self.memory.raiseEvent("Veply", reply)
             elif '[STOP]' in submessage:
-                self.memory.raiseEvent("ASR_enable", 0)
+                self.memory.raiseEvent("ASR_enable", "0")
             else:
                 print submessage
 

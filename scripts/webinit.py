@@ -4,7 +4,7 @@ import sys
 import time
 import os
 
-webpageinit = "http://198.18.0.1/apps/spqrel/img/logo.gif"
+webpageinit = "http://198.18.0.1/apps/spqrel/img/spqrel_logo.jpg"
 
 def do_init(session):
     print "Init webpage to ",webpageinit

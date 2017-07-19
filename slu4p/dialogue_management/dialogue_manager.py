@@ -109,7 +109,6 @@ class DialogueManager(EventAbstractClass):
                     self.person_id = self.memory_proxy.getData("Actions/personhere/PersonID")
                 except:
                     self.person_id = 9999
-
                 temp = {}
                 temp['PersonID'] = self.person_id
                 temp['Name'] = customer

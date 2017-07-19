@@ -4,6 +4,35 @@ import webnsock
 from signal import signal, SIGINT
 from logging import error, warn, info, debug, basicConfig, INFO
 from pprint import pformat, pprint
+import qi
+import os
+import argparse
+
+#from event_abstract import EventAbstractClass
+
+
+class SpeechToScreen():
+    PATH = ''
+    EVENT_NAME = "Veply"
+
+    def on_text(self, data):
+        info('on_text: %s' % pformat(data))
+
+    def __init__(self):
+        global memory_service
+        self.memory_service = memory_service
+        try:
+            veply_sub = self.memory_service.subscriber("Veply")
+            veply_con = veply_sub.signal.connect(self.on_text)
+        except RuntimeError:
+            warn("Cannot sign up to Veply")
+
+        #self.breathing = ALProxy("ALMotion")
+        #self.breathing.setBreathEnabled('Arms', True)
+        #self.configuration = {"bodyLanguageMode": body_language_mode}
+
+
+
 
 
 class SQPReLProtocol(webnsock.JsonWSProtocol):
@@ -43,6 +72,37 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
         return {'button_outcome': True}
 
 
+def main():
+    global memory_service
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--pip", type=str, default=os.environ['PEPPER_IP'],
+                        help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
+    parser.add_argument("--pport", type=int, default=9559,
+                        help="Naoqi port number")
+    args = parser.parse_args()
+    pip = args.pip
+    pport = args.pport
+
+    #Starting application
+    try:
+        connection_url = "tcp://" + pip + ":" + str(pport)
+        print "Connecting to ", connection_url
+        app = qi.Application(["SPQReLUI", "--qi-url=" + connection_url])
+    except RuntimeError:
+        print ("Can't connect to Naoqi at ip \"" +
+               pip + "\" on port " + str(pport) + ".\n"
+               "Please check your script arguments. Run with -h option for help.")
+        sys.exit(1)
+
+    app.start()
+    session = app.session
+    memory_service = session.service("ALMemory")
+    sts = SpeechToScreen()
+
+
+
+if __name__ == "__main__":
+    main()
 
 
 if __name__ == "__main__":

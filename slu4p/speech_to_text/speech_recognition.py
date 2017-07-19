@@ -33,6 +33,8 @@ class SpeechRecognition(EventAbstractClass):
 
         self.google_asr = GoogleClient(google_language, google_keys)
 
+        self.memory_proxy = ALProxy("ALMemory")
+
         self.configure(
             vocabulary=vocabulary,
             nuance_language=nuance_language,
@@ -66,7 +68,7 @@ class SpeechRecognition(EventAbstractClass):
         if self.logging:
             self.AUDIO_FILE_DIR = expanduser('~') + '/bags/asr_logs/'
         else:
-            self.AUDIO_FILE_DIR = '/tmp/recording/'
+            self.AUDIO_FILE_DIR = '/tmp/asr_logs/'
         if not os.path.exists(self.AUDIO_FILE_DIR):
             os.makedirs(self.AUDIO_FILE_DIR)
         self.AUDIO_FILE_PATH = self.AUDIO_FILE_DIR + 'SPQReL_mic_'
@@ -111,7 +113,7 @@ class SpeechRecognition(EventAbstractClass):
         self.timeout = 0
         self.nuance_asr.pause(False)
         self.audio_recorder.stopMicrophonesRecording()
-        self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(int(time.time()))
+        self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
         self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
         self.memory.raiseEvent("VordRecognized", results)
 
@@ -123,7 +125,7 @@ class SpeechRecognition(EventAbstractClass):
                     self.nuance_asr.pause(True)
                 else:
                     self.audio_recorder.stopMicrophonesRecording()
-                    self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(int(time.time()))
+                    self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
                     self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
                     self.nuance_asr.pause(False)
         except Exception as e:
@@ -140,9 +142,16 @@ class SpeechRecognition(EventAbstractClass):
                 print "[" + self.inst.__class__.__name__ + "] ASR already disabled"
         else:
             if not self.is_enabled:
+                try:
+                    self.AUDIO_FILE_DIR = self.memory_proxy.getData("CurrentLogFolder")
+                except:
+                    self.AUDIO_FILE_DIR = expanduser('~') + '/bags/no_data/asr_logs/'
+                if not os.path.exists(self.AUDIO_FILE_DIR):
+                    os.makedirs(self.AUDIO_FILE_DIR)
+                self.AUDIO_FILE_PATH = self.AUDIO_FILE_DIR + 'SPQReL_mic_'
                 self.is_enabled = True
                 self.audio_recorder.stopMicrophonesRecording()
-                self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(int(time.time()))
+                self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
                 self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
                 self.subscribe(
                     event=SpeechRecognition.WR_EVENT,
@@ -156,7 +165,8 @@ class SpeechRecognition(EventAbstractClass):
         if self.is_enabled:
             print "[" + self.inst.__class__.__name__ + "] Reset recording.."
             self.audio_recorder.stopMicrophonesRecording()
-            self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(int(time.time()))
+            os.remove(self.AUDIO_FILE)
+            self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
             self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
 
     def _spin(self, *args):

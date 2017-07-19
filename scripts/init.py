@@ -44,5 +44,6 @@ def main():
     tts_service.say("Initialization completed.")
 
 if __name__ == "__main__":
+    time.sleep(10)
     main()
 

@@ -8,6 +8,8 @@ import os
 
 from naoqi import ALProxy
 
+PEPPER_IP='127.0.0.1'
+PEPPER_PORT=9559
 
 def start_behaviors():
 
@@ -20,8 +22,8 @@ def start_behaviors():
 #    zonesdetection = ALProxy("ALEngagementZones")
 #    sittingdetection = ALProxy("ALSittingPeopleDetection")
 
-    facedetectionProxy = ALProxy("ALFaceDetection",os.getenv('PEPPER_IP'),9559)
-    peopledetectionProxy = ALProxy("ALPeoplePerception",os.getenv('PEPPER_IP'),9559)
+    facedetectionProxy = ALProxy("ALFaceDetection",PEPPER_IP,PEPPER_PORT)
+    peopledetectionProxy = ALProxy("ALPeoplePerception",PEPPER_IP,PEPPER_PORT)
 
     facedetectionProxy.subscribe("Face_Behavior", 500, 0.0)
     peopledetectionProxy.subscribe("People_Behavior", 500, 0.0)
@@ -34,8 +36,8 @@ def quit_behaviors():
     print "   Quitting background behaviors   "
     print "==================================="
 
-    facedetectionProxy = ALProxy("ALFaceDetection",os.getenv('PEPPER_IP'),9559)
-    peopledetectionProxy = ALProxy("ALPeoplePerception",os.getenv('PEPPER_IP'),9559)
+    facedetectionProxy = ALProxy("ALFaceDetection",PEPPER_IP,PEPPER_PORT)
+    peopledetectionProxy = ALProxy("ALPeoplePerception",PEPPER_IP,PEPPER_PORT)
 
     facedetectionProxy.unsubscribe("Face_Behavior")
     peopledetectionProxy.unsubscribe("People_Behavior")

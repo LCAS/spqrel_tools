@@ -39,10 +39,12 @@ def phraseToSay(memory_service,params):
         return "Please, can you look at me for some seconds"
     elif (params=='readytofollow'):
         return "OK,I am ready to follow you. Let's go"
-    elif (param=='lookforhelp'):
+    elif (params=='lookforhelp'):
         return "I'm looking for some help, I'm coming in a while"
-    elif (param=='arrivedcar'):
+    elif (params=='arrivedcar'):
         return "We just arrived to the car, thank you for coming to help"
+    elif (params=='followme'):
+        return "Please, follow me to the car"
     return "Nothing to say."
 
 def actionThread_exec (params):

@@ -3,6 +3,7 @@
 #goto_exit;
 #turn_130_ABS;
 headpose_0_-3;
+say_hello;
 waitfor_personhere;
 #dialogue_follow;
 waitfor_screentouched;
@@ -16,7 +17,7 @@ say_readytofollow;
 
 dialoguestart_stopfollowing; # non-blocking action, it will se condition stopfollowing to true when user speaks so
 
-followuntil_screentouched;
+followuntil_stopfollowing;
 
 dialoguestop_stopfollowing;   # terminates the action
 
@@ -37,6 +38,10 @@ say_lookforhelp
 
 
 #### 4 - COMING BACK TO THE CAR
+
+say_followme;
+waitfor_personbehind;
+say_goodbye;
 
 #goto_car; # er: (not personbehind) -> turn_around; dialogue_callperson
 #say_arrivedcar

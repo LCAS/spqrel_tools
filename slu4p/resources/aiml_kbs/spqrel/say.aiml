@@ -10,6 +10,29 @@
 </category>
 
 <category>
+	<pattern>HELLO</pattern>
+	<template>
+		<srai>GREETINGS</srai>
+	</template>
+</category>
+
+<category>
+	<pattern>LOOKATME</pattern>
+	<template>
+		<random>
+			<li>Hey <get name="Operator"/>, please pay attention!</li>
+			<li><get name="Operator"/>, please focus!</li>
+			<li>Do not distract, <get name="Operator"/>!</li>
+		</random>
+		<random>
+			<li>Our help is needed!</li>
+			<li>Someone requires our help!</li>
+			<li>Duty calls!</li>
+		</random>
+	</template>
+</category>
+
+<category>
 	<pattern>COMEHERE</pattern>
 	<template>
 		<random>
@@ -66,8 +89,23 @@
 			<li>Perfect!</li>
 		</random>
 		<random>
-			<li>It seems that the <star index="2"/> for <star index="1"/> is available.</li>
-			<li>The <star index="2"/> for <star index="1"/> is available.</li>
+			<li>I've seen that the <star index="2"/> for <star index="1"/> is available.</li>
+			<li>My sensors confirm that the <star index="2"/> for <star index="1"/> is available.</li>
+		</random>
+	</template>
+</category>
+
+<category>
+	<pattern>CONFIRMNOTAVAILABLE CUSTOMER * DRINK *</pattern>
+	<template>
+		<random>
+			<li>Oh I'm sorry!</li>
+			<li>Mmm...</li>
+		</random>
+		<random>
+			<li>I've seen that the <star index="2"/> for <star index="1"/> is not available.</li>
+			<li>I'm pretty sure that the <star index="2"/> for <star index="1"/> is not available.</li>
+			<li>I don't see any <star index="2"/> for <star index="1"/> here.</li>
 		</random>
 	</template>
 </category>

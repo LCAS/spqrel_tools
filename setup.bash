@@ -39,11 +39,11 @@ export PNPGEN_BIN=`find $SPQREL_HOME -path "*/bin/pnpgen_translator"| sed 's@/pn
 
 export PATH=$SPQREL_HOME/bin:$PATH:$PNPGEN_BIN
 
-export PYTHONPATH=$SPQREL_HOME/spqrel_tools/slu4p:$SPQREL_HOME/worktree/PetriNetPlans/PNPnaoqi/actions:${PYTHONPATH}
-export SLU4R_ROOT=$SPQREL_HOME/spqrel_tools/slu4
+export PYTHONPATH=$SPQREL_HOME/slu4p:$SPQREL_HOME/worktree/PetriNetPlans/PNPnaoqi/actions:${PYTHONPATH}
+export SLU4R_ROOT=$SPQREL_HOME/slu4p
 
 # Pepper's IP
-export PEPPER_IP=localhost
+export PEPPER_IP="${PEPPER_IP:-localhost}"
 
 alias shutdown-tmux="tmux list-panes -s -F \"#{pane_pid} #{pane_current_command}\" | grep -v tmux | awk \"{print \\\$1}\" | xargs kill"
 alias kill-tmux="tmux list-panes -s -F \"#{pane_pid} #{pane_current_command}\" | grep -v tmux | awk \"{print \\\$1}\" | xargs kill -9"
@@ -60,4 +60,4 @@ echo "PATH=$PATH"
 echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" 
 echo "PYTHONPATH=$PYTHONPATH"
 
-export GIT_EXEC_PATH=${SPQREL_HOME}/libexec
+export GIT_EXEC_PATH=${SPQREL_HOME}/libexec/git-core

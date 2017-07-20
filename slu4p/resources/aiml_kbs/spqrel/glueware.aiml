@@ -13,10 +13,20 @@
 </category>
 
 <category>
-	<pattern>MISSINGDRINK *</pattern>
+	<pattern>ALTDRINK *</pattern>
 	<template>
 		<think>
-			<set name="topic">MISSINGDRINK</set>
+			<set name="topic">ALTDRINK</set>
+		</think>
+		<srai><star/></srai>
+	</template>
+</category>
+
+<category>
+	<pattern>UNKNOWNAVAILABLE *</pattern>
+	<template>
+		<think>
+			<set name="topic">UNKNOWNAVAILABLE</set>
 		</think>
 		<srai><star/></srai>
 	</template>

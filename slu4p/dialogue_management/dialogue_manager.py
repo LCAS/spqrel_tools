@@ -1,10 +1,12 @@
 import os
 from Kernel import Kernel
+from naoqi import ALProxy, ALBroker, ALModule
 import argparse
 import signal
 import slu_utils
 from event_abstract import *
 import datetime
+import json
 
 
 class DialogueManager(EventAbstractClass):
@@ -14,12 +16,15 @@ class DialogueManager(EventAbstractClass):
     cocktail_data = {}
     location = {}
     order_counter = 0
+    possible_drinks = ['beer', 'coke', 'whisky', 'water', 'wine']
 
     def __init__(self, ip, port, aiml_path):
         super(self.__class__, self).__init__(self, ip, port)
 
         self.__shutdown_requested = False
         signal.signal(signal.SIGINT, self.signal_handler)
+
+        self.memory_proxy = ALProxy("ALMemory")
 
         self.kernel = Kernel()
         self.__learn(aiml_path)
@@ -57,15 +62,45 @@ class DialogueManager(EventAbstractClass):
     def request_callback(self, *args, **kwargs):
         splitted = args[1].split('_')
         to_send = ' '.join(splitted)
+        print 'to_send: ' + to_send
         if 'start' in splitted:
-            self.memory.raiseEvent("ASR_enable", 1)
-        if 'missingdrink' in splitted:
-            customer = self.cocktail_data.get(splitted[1], None)['customer']
-            drink = self.cocktail_data[splitted[1]]['drink']
-            to_send = 'missingdrink customer ' + customer + ' drink ' + drink + ' '+ splitted[2]
-        print to_send
+            print 'Found start'
+            self.memory.raiseEvent("ASR_enable", "1")
+        if 'end' in splitted:
+            print 'Found end'
+            self.memory.raiseEvent("ASR_enable", "0")
+        if 'stop' in splitted:
+            print 'Found stop'
+            self.memory.raiseEvent("ASR_enable", "0")
+        if 'order' == splitted[1] or 'confirmdrink' == splitted[1] or 'confirmnotavailable' == splitted[1] or 'unknownavailable' == splitted[1]:
+            try:
+                self.current_user_id = splitted[2]
+                self.user_profile = json.loads(self.memory_proxy.getData("Humans/Profile" + self.current_user_id))
+            except:
+                print 'Invalid User'
+            #Need to define how to get back the names and drink
+            name = self.user_profile['Name']
+            drink = self.user_profile['Drink']
+            to_send = 'say ' + splitted[1] + ' customer ' + name + ' drink ' + drink
+        if 'unknownavailable' == splitted[0]:
+            print 'Found unknownavailable'
+            self.current_user_id = splitted[1]
+            try:
+                self.user_profile = json.loads(self.memory_proxy.getData("Humans/Profile" + self.current_user_id))
+            except:
+                print 'Invalid User'
+            to_send = splitted[0] + ' customer ' + self.user_profile['Name'] + ' drink ' + self.user_profile['Drink'] + ' ' + splitted[2]
+        if 'altdrink' == splitted[0]:
+            print 'Found altdrink'
+            try:
+                self.current_user_id = splitted[1]
+                self.user_profile = json.loads(self.memory_proxy.getData("Humans/Profile" + self.current_user_id))
+            except:
+                print 'Invalid User'
+            #Need to define how to get back the names and drink
+            name = self.user_profile['Name']
+            to_send = splitted[0] + ' customer ' + name + ' ' + splitted[2]
         reply = self.kernel.respond(to_send)
-        print reply
         self.do_something(reply)
 
 
@@ -97,27 +132,45 @@ class DialogueManager(EventAbstractClass):
             elif '[TAKEORDERDATA]' in submessage:
                 data = submessage.replace('[TAKEORDERDATA]', '').replace(')', '').strip()
                 customer, drink = data.split('(')
-                temp = {}
-                temp['drink'] = drink
-                temp['customer'] = customer
-                self.cocktail_data[str(self.order_counter)] = temp
-                print self.cocktail_data
-                self.memory.raiseEvent("DialogueVesponse", self.cocktail_data)
-                self.order_counter = self.order_counter + 1
+                try:
+                    self.person_id = self.memory_proxy.getData("Actions/personhere/PersonID")
+                except:
+                    self.person_id = 9999
+                cocktail_data = {}
+                cocktail_data['PersonID'] = self.person_id
+                cocktail_data['Name'] = customer
+                cocktail_data['Drink'] = drink
+                self.memory.raiseEvent("DialogueVesponse", json.dumps(cocktail_data))
             elif '[DRINKSALTERNATIVES]' in submessage:
                 data = submessage.replace('[DRINKSALTERNATIVES]', '').replace(')', '').strip()
-                # search for drinks from the drinks' list
+                alternatives = []
+                for drink in self.possible_drinks:
+                    if drink in data:
+                        alternatives.append(drink)
+                self.user_profile['DrinkAlternatives'] = alternatives
+                self.user_profile['DrinkAvailability'] = False
+                reply = 'So'
+                for available_drink in alternatives:
+                    reply = reply + ', ' + available_drink
+                reply = reply + '. I am going to notify the alternatives.'
+                self.memory.raiseEvent("Veply", reply)
+                self.memory.raiseEvent("DialogueVesponse", json.dumps(self.user_profile))
+                self.memory_proxy.insertData("Humans/Profile" + self.current_user_id, json.dumps(self.user_profile))
+            elif '[DRINKAVAILABLE]' in submessage:
+                self.user_profile['DrinkAvailability'] = True
+                self.memory.raiseEvent("DialogueVesponse", json.dumps(self.user_profile))
+                self.memory_proxy.insertData("Humans/Profile" + self.current_user_id, json.dumps(self.user_profile))
             elif '[LOOKFORDATA]' in submessage:
-                data = submessage.replace('[TAKEORDERDATA]', '').strip()
+                data = submessage.replace('[LOOKFORDATA]', '').strip()
                 self.location['location'] = data
-                self.memory.raiseEvent("DialogueVesponse", self.location)
+                self.memory.raiseEvent("DialogueVesponse", json.dumps(self.location))
             elif '[WHATSTHETIME]' in submessage:
                 now = datetime.datetime.now()
-                reply = "It's " + str(now.hour )+ " " + str(now.minute)
+                reply = "It's " + str(now.hour) + " " + str(now.minute)
                 print "[" + self.inst.__class__.__name__ + "] Robot says: " + reply
                 self.memory.raiseEvent("Veply", reply)
             elif '[STOP]' in submessage:
-                self.memory.raiseEvent("ASR_enable", 1)
+                self.memory.raiseEvent("ASR_enable", "0")
             else:
                 print submessage
 

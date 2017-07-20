@@ -9,13 +9,16 @@ import time
 import action_base
 from action_base import *
 
-import dooropen, screentouched
-import say, wait, waitfor, goto, turn, lookfor, dialogue, posture, personhere, headpose, followuntil, movementdetected, webpage,personbehind,trackface
+import dooropen, obstaclehere, screentouched
+import say, vsay, wait, waitfor, goto, turn, lookfor, dialogue, dialoguestart, dialoguestop
+import posture, personhere, headpose, followuntil, movementdetected, webpage
 
 def init(session):
     screentouched.init(session)
     dooropen.init(session)
+    obstaclehere.init(session)
     say.init(session)
+    vsay.init(session)
     wait.init(session)
     waitfor.init(session)
     goto.init(session)
@@ -23,18 +26,20 @@ def init(session):
     headpose.init(session)
     lookfor.init(session)
     dialogue.init(session)
+    dialoguestart.init(session)
+    dialoguestop.init(session)
     posture.init(session)
     personhere.init(session)
     movementdetected.init(session)
     followuntil.init(session)
-    personbehind.init(session)
-    trackface.init(session)
-    #webpage.init(session)
+
 
 def quit():
     screentouched.quit()
     dooropen.quit()
+    obstaclehere.quit()
     say.quit()
+    vsay.quit()
     wait.quit()
     waitfor.quit()
     goto.quit()
@@ -42,13 +47,13 @@ def quit():
     headpose.quit()
     lookfor.quit()
     dialogue.quit()
+    dialoguestart.quit()
+    dialoguestop.quit()
     posture.quit()
     personhere.quit()
     movementdetected.quit()
-    followuntil.quit()
-    personbehind.quit()
-    trackface.quit()   
-    #webpage.quit()
+    followuntil.quit()    
+
 
 def main():
     global memory_service

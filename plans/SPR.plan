@@ -1,0 +1,70 @@
+# SPR
+
+# 1
+
+vsay_SPRready;
+
+# 2
+
+wait_10;
+turn_180;
+
+# 3
+
+lookfor_SPRinfocollected|60; # timeout
+
+vsay_SPRinfocollected;
+
+vsay_playwithme;
+
+# 4
+
+dialogue_fivequestions;
+
+# 5
+
+start_sounddetected;
+
+dialoguemute_question;
+
+< (and sounddetected questionready)? turn_... ; vsay_lastresponse :
+  (and (not sounddetected) questionready)? vsay_lastresponse :
+  (and sounddetected (not questionready)? turn_... ; dialogue_response :
+  (and (not sounddetected) (not questionready))? vsay_nextquestion
+>
+
+dialoguemute_question;
+
+< (and sounddetected questionready)? turn_... ; vsay_lastresponse :
+  (and (not sounddetected) questionready)? vsay_lastresponse :
+  (and sounddetected (not questionready)? turn_... ; dialogue_response :
+  (and (not sounddetected) (not questionready))? vsay_nextquestion
+>
+
+dialoguemute_question;
+
+< (and sounddetected questionready)? turn_... ; vsay_lastresponse :
+  (and (not sounddetected) questionready)? vsay_lastresponse :
+  (and sounddetected (not questionready)? turn_... ; dialogue_response :
+  (and (not sounddetected) (not questionready))? vsay_nextquestion
+>
+
+dialoguemute_question;
+
+< (and sounddetected questionready)? turn_... ; vsay_lastresponse :
+  (and (not sounddetected) questionready)? vsay_lastresponse :
+  (and sounddetected (not questionready)? turn_... ; dialogue_response :
+  (and (not sounddetected) (not questionready))? vsay_nextquestion
+>
+
+dialoguemute_question;
+
+< (and sounddetected questionready)? turn_... ; vsay_lastresponse :
+  (and (not sounddetected) questionready)? vsay_lastresponse :
+  (and sounddetected (not questionready)? turn_... ; dialogue_response :
+  (and (not sounddetected) (not questionready))? vsay_nextquestion
+>
+
+
+
+

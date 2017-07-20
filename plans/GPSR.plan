@@ -1,0 +1,72 @@
+
+# enter the arena and goto location
+waitfor_dooropen;
+enter_maindoor_in;
+
+#LABEL_STARTPOSITION;
+goto_location;
+
+
+LABEL_WAITING1;
+
+waitfor_command_1;
+< valid_command1 ? vsay_confirmcommand_1 : GOTO_LABEL_PLAN1
+      not valid_command1 ? dialogue_command_1 : 
+>;
+waitfor_command_1;
+< valid_command1 ? vsay_confirmcommand_1 : GOTO_LABEL_PLAN1
+      not valid_command1 ? dialogue_command_1 : 
+>;
+waitfor_command_1;
+< valid_command1 ? vsay_confirmcommand_1 : GOTO_LABEL_PLAN1
+      not valid_command1 ? dialogue_command_1 : GOTO_LABEL_WAITING2
+>;
+
+
+LABEL_PLAN1;
+#create_plan
+
+
+goto_location;
+
+LABEL_WAITING2;
+
+waitfor_command_2;
+< valid_command2 ? vsay_confirmcommand_2 : GOTO_LABEL_PLAN2
+      not valid_command1 ? dialogue_command_2 :
+>;
+< valid_command2 ? vsay_confirmcommand_2 : GOTO_LABEL_PLAN2
+      not valid_command1 ? dialogue_command_2 :
+>;
+< valid_command2 ? vsay_confirmcommand_2 : GOTO_LABEL_PLAN2
+      not valid_command1 ? dialogue_command_2 : GOTO_LABEL_WAITING3
+>;
+
+LABEL_PLAN2;
+#create_plan
+
+goto_location;
+
+LABEL_WAITING3;
+
+waitfor_command_3;
+< valid_command1 ? vsay_confirmcommand_3 : GOTO_LABEL_PLAN3
+      not valid_command1 ? dialogue_command_3 : 
+>;
+< valid_command1 ? vsay_confirmcommand_3 : GOTO_LABEL_PLAN3
+      not valid_command1 ? dialogue_command_3 : 
+>;
+< valid_command1 ? vsay_confirmcommand_3 : GOTO_LABEL_PLAN3
+      not valid_command1 ? dialogue_command_3 : GOTO_LABEL_EXIT
+>;
+
+
+LABEL_PLAN3;
+#create_plan
+
+goto_location;
+
+LABEL_EXIT;
+# exit the arena
+goto_hall;
+enter_maindoor_out;

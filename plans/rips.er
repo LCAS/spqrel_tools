@@ -1,2 +1,2 @@
-*if* personhere *during* goto *do* say_hello; waitfor_not_personhere; restart_action
+*if* obstaclehere *during* goto *do* say_obstacle; waitfor_not_obstaclehere; restart_action
 

@@ -4,12 +4,14 @@ posture_Stand; # stand up
 
 LABEL_START;
 #headpose_0_-3;
+
 lookfor_personhere; ! *if* screentouched *do* GOTO_LABEL_END ! 
 
-< personhere? GOTO_LABEL_END : (not personhere)? GOTO_LABEL_START >;
+# < personhere? GOTO_LABEL_END : (not personhere)? GOTO_LABEL_START >;
 
-#turn_^Actions/personhere/PersonAngleYaw;
-#headpose_0_-3;
+turn_^Actions/personhere/PersonAngleTurn;
+
+dialogue_takeorder;
 
 #waitfor_dooropen;
 #waitfor_screentouched;
@@ -17,11 +19,10 @@ lookfor_personhere; ! *if* screentouched *do* GOTO_LABEL_END !
 #goto_entrance;
 #say_hello;
 
-#headpose_0_0;
 
+say_greetperson;
 
 LABEL_END;
-say_greetperson;
-posture_Rest;
+#posture_Rest;
 
 

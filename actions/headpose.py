@@ -45,9 +45,12 @@ def actionThread_exec (params):
     v = params.split('_')
     yaw = 0
     pitch = 0
-    if (len(v)==2):
-        yaw = float(v[0])/10.0
-        pitch = float(v[1])/10.0
+    try:
+        if (len(v)==2):
+            yaw = float(v[0])/10.0
+            pitch = float(v[1])/10.0
+    except:
+        print "headpose: ERROR in values ",v[0]," ",v[1]," - (using 0,0)"
     headtime = 1.0
 
     moveHead(motion_service, yaw, pitch, headtime)

@@ -14,7 +14,12 @@ say_readytofollow;
 
 #### 2 - START THE FOLLOWING PHASE
 
+dialoguestart_stopfollowing; # non-blocking action, it will se condition stopfollowing to true when user speaks so
+
 followuntil_screentouched;
+
+dialoguestp_stopfollowing;   # terminates the action
+
 say_carhere;
 say_whatnow;
 headpose_0_0;

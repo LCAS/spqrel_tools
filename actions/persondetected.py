@@ -24,16 +24,9 @@ def rhMonitorThread (memory_service):
     personid = 0
     while getattr(t, "do_run", True):
         plist = memory_service.getData("PeoplePerception/PeopleList")
-        
-        personid = 0
-        if (plist!=None and len(plist)>0):
-            personid = plist[0]
-
         v = 'false'
         try:
-            pdist = memory_service.getData(pmemkey_dist)
-            #print "personhere:: distance ",pdist
-            if (personid>0):
+            if (len(plist)>0):
                 v = 'true'
         except:
             v = 'false'

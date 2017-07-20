@@ -34,7 +34,7 @@ say_whatnow;
 #### 3 - LOOK FOR HELP
 
 say_lookforhelp
-headpose_0_-3;
+headpose_0_-1;
 
 #goto_assistlocation; # er: personhere -> dialogue_whattime; waitfor_not_personhere; restart_action
 

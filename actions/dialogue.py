@@ -8,8 +8,6 @@ import json
 import action_base
 from action_base import *
 
-allOrders = {}
-
 actionName = "dialogue"
 
 dialogue_response = False

@@ -1,212 +1,290 @@
-#!/usr/bin/env python
+import qi
+import os
+import sys
+import argparse
+
+from naoqi import ALProxy
+
+# To get the constants relative to the video.
+import vision_definitions
+
+# opencv
+import numpy as np
+import cv2
+from cv2 import cv
 
 
-import time 
-from cv2 import startWindowThread, imencode, imread
-from StringIO import StringIO
+import threading
+import time
+import datetime
+from json import dumps
+import functools
 
-from json import dumps,loads
-from math import pi
-from util import Key, CognitiveFaceException
-import person_group as PG
-import person as PERSON
-import face as CF
+from  face_api_naoqi import CognitiveFace
 
-# big hack to stop annoying warnings
-try:
-    from requests.packages.urllib3 import disable_warnings
-    disable_warnings()
-except:
-    pass
-#
+global imageWidget
 
-class CognitiveFace():
 
-    def __init__(self):
+thread_rate=4 
+       
+class ImageWidget():
+    """
+    Tiny widget to display camera images from Naoqi.
+    """
+    def __init__(self, IP, PORT, CameraID, parent=None):
+        """
+        Initialization.
+        """
+
+        self._image = None
         
-        self._api_key = 'be062e88698e4777ac6196623d7230dd'
-        self._topic_timeout = 10 
-        #startWindowThread()
-        Key.set(self._api_key)
 
-        self._person_group_id = 'robocup_test' 
-                                                
-        self._init_person_group(self._person_group_id,False)
+        self._imgWidth = 320
+        self._imgHeight = 240
+        self._cameraID = CameraID
+
+
+        # Proxy to ALVideoDevice.
+        self._videoProxy = None
+
+        # Our video module name.
+        self._imgClient = ""
+
+        # This will contain this alImage we get from Nao.
+        self._alImage = None
+
+        self._registerImageClient(IP, PORT)
+
+        # Trigger 'timerEvent' every ms.
+        self.delay=0.1
         
-    def _init_person_group(self, gid, delete_first=False):
-        person_group = None
-        try:
-            person_group = PG.get(gid)
-            print('getting person group "%s"'
-                          % person_group)
-        except CognitiveFaceException as e:
-            print('person group "%s" doesn\'t exist, needs creating.'
-                          ' Exception: %s'
-                          % (gid, e))
-        try:
-            # if we are expected to reinitialise this, and the group
-            # already existed, delete it first
-            if person_group is not None and delete_first:
-                print('delete existing person group "%s"'
-                              ' before re-creating it.' % gid)
-                PG.delete(gid)
-                person_group = None
-            # if the group does not exist, we gotto create it
-            if person_group is None:
-                print('creating new person group "%s".'
-                              % gid)
-                PG.create(gid, user_data=dumps({
-                    'created_by': 'Pepper'
-                }))
-            print('active person group is now "%s".' % gid)
-            self._person_group_id = gid
-        except CognitiveFaceException as e:
-            print('Operation failed for person group "%s".'
-                          ' Exception: %s'
-                          % (gid, e))
-
-    def _find_person_by_name(self, name):
-        persons = PERSON.lists(self._person_group_id)
-        for p in persons:
-            if p['name'] == name:
-                return p
-        return None
-
-    def _init_person(self, name, delete_first=False):
-        gid = self._person_group_id
-        person = self._find_person_by_name(name)
-        try:
-            # if we are expected to reinitialise this, and the group
-            # already existed, delete it first
-            if person is not None and delete_first:
-                print('delete existing person "%s"'
-                              ' before re-creating it.' % name)
-                PERSON.delete(gid, person['personId'])
-                person = None
-            # if the group does not exist, we gotto create it
-            if person is None:
-                print('creating new person "%s".'
-                              % name)
-                PERSON.create(gid, name, user_data=dumps({
-                    'created_by': 'Pepper'
-                }))
-                person = self._find_person_by_name(name)
-        except CognitiveFaceException as e:
-            print('Operation failed for person "%s".'
-                          ' Exception: %s'
-                          % (gid, e))
-        return person
-
-    def _convert_jpg(self, image_msg):
-
-        retval, buf = imencode('.jpg', image_msg)
-        return buf.tostring()
-
-    def add_face_srv(self, req):
-        img_msg = self._get_image(req)
-        faces = self._detect(img_msg, False)
-        target_face = None        
+        self.opencvframe=None
+        # Show opencv image
+        self.showvideo=True
         
-        # biggest face
-        max_area = 0.0
-        biggest_face = None
-        for f in faces.faces:
-            area = float(f.faceRectangle.width * f.faceRectangle.height)
-            if area > max_area:
-                max_area = area
-                biggest_face = f
-        biggest_face.person = req.person
+        self.output_path='./data/'+datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')+'/'
+        # Define the codec and create VideoWriter object
+        self.enabledwriter=False
+        self._fps=2.0
+        self.outvideo=self.output_path+'log.avi'
+        self._fourcc = cv2.cv.FOURCC(*'XVID')
+        self._out =None
+        self.numframe=0
+
+
+    def _registerImageClient(self, IP, PORT):
+        """
+        Register our video module to the robot.
+        """
+        self._videoProxy = ALProxy("ALVideoDevice", IP, PORT)
+        resolution = vision_definitions.kQVGA  # kQVGA =320 * 240  ,kVGA =640x480
+
+        colorSpace = vision_definitions.kRGBColorSpace
+        self._imgClient = self._videoProxy.subscribe("msface_naoqi_client", resolution, colorSpace, 5)
+
+        # Select camera.
+        self._videoProxy.setParam(vision_definitions.kCameraSelectID,
+                                  self._cameraID)
+
+
+    def _unregisterImageClient(self):
+        """
+        Unregister our naoqi video module.
+        """
+        if self._imgClient != "":
+            self._videoProxy.unsubscribe(self._imgClient)
+
+
+    def _updateImage(self):
+        """
+        Retrieve a new image from Nao.
+        [0]: width.
+        [1]: height.
+        [2]: number of layers.
+        [3]: ColorSpace.
+        [4]: time stamp from qi::Clock (seconds).
+        [5]: time stamp from qi::Clock (microseconds).
+        [6]: binary array of size height * width * nblayers containing image data.
+        [7]: camera ID (kTop=0, kBottom=1).
+        [8]: left angle (radian). 0.49
+        [9]: topAngle (radian). 0.38
+        [10]: rightAngle (radian). -0.49
+        [11]: bottomAngle (radian). -0.38
+
+        """
         
-        target_face=biggest_face
+
+        alImage = self._videoProxy.getImageRemote(self._imgClient)
+
+        self._imgWidth = alImage[0]
+        self._imgHeight = alImage[1]
+#        # CV2
+        img_str=str(alImage[6])
+
+        nparr = np.fromstring(img_str, dtype=np.uint8).reshape( alImage[1],alImage[0], 3)
+        open_cv_image = cv2.cvtColor(nparr, cv2.cv.CV_BGR2RGB)
+        self.opencvframe=open_cv_image
+        if self.showvideo is True:
+            cv2.imshow('window_name', open_cv_image) # show frame on window
+        
+        if self.enabledwriter is True:
+            self._out.write(open_cv_image)
 
 
-        self._add_face_target(img_msg,target_face)
-
-        return target_face
+    def save_frame(self,frame,timestamp):
+        
+        path_image=self.output_path+'frames'
+        if not os.path.exists(path_image):
+            os.makedirs(path_image)
             
+        cv2.imwrite(path_image+'/'+str(timestamp)+'.png',frame)
+         
+        
+    def timerEvent(self):
+        """
+        Called periodically. Retrieve a nao image, and update the widget.
+        """
+        self._updateImage()
+        time.sleep(self.delay)
 
 
-    def _person_group_select(self, req):
-        self._init_person_group(req.id, req.delete_group)
-        return []
+    def __del__(self):
+        """
+        When the widget is deleted, we unregister our naoqi video module.
+        """
+        self._unregisterImageClient()
 
-    def _get_image(self, req):
-        if req.filename is not '':
-            img = imread(req.filename)
+    def initWriter(self):
+        
+        if not os.path.exists(self.output_path):
+            os.makedirs(self.output_path)
+        self._out = cv2.VideoWriter(self.outvideo, self._fourcc, self._fps, (self._imgWidth,self._imgHeight))
+        self.enabledwriter=True
 
-        return img
+    def close(self):
+        """
+        When the widget is deleted, we unregister our naoqi video module.
+        """
+        self._unregisterImageClient()
+        self._out.release()
+        cv2.destroyAllWindows()
 
-    def detect_srv(self, image, identify=False):
-        faces = []
-        try:
-            data = CF.detect(
-                StringIO(self._convert_jpg(image)),
-                
-                landmarks=False,
-                attributes='age,gender,headPose,smile,glasses,hair,facialhair,accessories')
-            identities = {}
-            if identify:
-                print('trying to identify persons')
-                ids = [f['faceId'] for f in data]
-                print 'ids=',ids
-                try:
-                    identified = CF.identify(ids[0:10], self._person_group_id)
-                    for i in identified:
-                        if len(i['candidates']) > 0:
-                            pid = i['candidates'][0]['personId']
-                            person = PERSON.get(self._person_group_id, pid)
-                            identities[i['faceId']] = person['name']
-                    print('identified %d persons in this image: %s'
-                                  % (len(identities), str(identities)))
-                except CognitiveFaceException as e:
-                    print('identification did not work: %s' %
-                                  str(e))
-            for f in data:
-                
-                faceId = f['faceId']
-                if faceId in identities:
-                    person = identities[faceId]
-                else:
-                    person = ''
-                    
-#                pose={'x':f['faceRectangle']['left'],'y':f['faceRectangle']['top'],'w':f['faceRectangle']['width'],'h':f['faceRectangle']['height']}
 
-                gender = f['faceAttributes']['gender']
-                age = f['faceAttributes']['age']
-                smile = f['faceAttributes']['smile']
-                
-                facialhair = f['faceAttributes']['FacialHair']
-                glasses= f['Glasses']
-                accessories= f['Accessories']
-                hair = f['faceAttributes']['Hair']
-                
-                # color with max confidence
-                index_def_hair=None
-                max_conf=0.0
-                for i in range(len(hair['HairColor'])):
-                    if hair['HairColor'][i]['Confidence']>max_conf:                        
-                        max_conf=hair['HairColor'][i]['Confidence']
-                        index_def_hair=i
-                        
-                def_hair=hair['HairColor'][i]
-                
-     
-#                face.rpy.x = (f['faceAttributes']['headPose']['roll'] /
-#                              180.0 * math.pi)
-#                face.rpy.y = (f['faceAttributes']['headPose']['pitch'] /
-#                              180.0 * math.pi)
-#                face.rpy.z = (f['faceAttributes']['headPose']['yaw'] /
-#                              180.0 * math.pi)
-#     
-                face_info='gender': gender, 'smile':smile, 'hair':def_hair,'facialhair':facialhair, 'glasses':glasses, 'accessories':accessories}                
-                face={ 'name':person, 'faceinfo':face_info}                         
-                
-                faces.append(face)
+def onEvent(value ):
+    
+    print ' onEvent :',value
+    global camera_enabled
+    global imageWidget
+    command=value.split('_')
+    
+    if command[0]== 'camera' :
+        if command[1]== 'start' :
+            camera_enabled = 1
             
-        except Exception as e:
-            print('failed to detect via the MS Face API: %s' %
-                          str(e))
-        return faces
+            imageWidget = ImageWidget(args.pip,args.pport ,args.camera)
+            imageWidget.initWriter()
+            
+            #create a thread that monitors directly the signal
+            imageThread = threading.Thread(target = rhImageThread, )
+            imageThread.start()
+            
+        elif command[1]== 'stop' :
+            camera_enabled = 0
+            
+            imageThread.do_run = False
+        
+    elif command[0]== 'addface' :
+        
+        json_person=cognitiveface.add_face_srv(imageWidget.frame,command[1]) # (image, name)
+        ## Write data in ALMemory
+        str_person=json.dumps(json_person)
+        memory_service.insertData('Actions/FaceRecognition/Recognition', str_person)
+        time.sleep(0.5)
+        memory_service.insertData('Actions/FaceRecognition/Recognition', '')
+        
+    elif command[0]== 'detect' :
+        
+        json_person=cognitiveface.detect_face_srv(imageWidget.frame,command[1]) #command[1]==True recognition
+        ## Write data in ALMemory
+        str_person=json.dumps(json_person)
+        memory_service.insertData('Actions/FaceRecognition/Recognition', str_person)
+        time.sleep(0.5)
+        memory_service.insertData('Actions/FaceRecognition/Recognition', '')
 
-#cfa = CognitiveFace()
 
+    
+def rhImageThread ():
+    
+    t = threading.currentThread()
+        
+
+    
+    
+    while getattr(t, "do_run", True):
+        
+            
+        imageWidget.timerEvent()
+ 
+        
+    print "Exiting Thread"
+    imageWidget.close()
+
+
+def quit():
+    
+    memory_service.insertData('Actions/FaceRecognition/Enabled', 'false')    
+    
+def main():
+    
+    
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--pip", type=str, default=os.environ['PEPPER_IP'],
+                        help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
+    parser.add_argument("--pport", type=int, default=9559,
+                        help="Naoqi port number")
+    parser.add_argument("--camera", type=int, default=0,
+                        help="Robot camera ID address. 0 by default")
+    parser.add_argument("--outvideo", type=str, default='output.avi',
+                        help="Output video name output.avi")                        
+
+    global args
+    args = parser.parse_args()
+    #Starting application
+    try:
+        connection_url = "tcp://" + args.pip + ":" + str(args.pport)
+        app = qi.Application(["MSFACE_naoqi", "--qi-url=" + connection_url ])
+    except RuntimeError:
+        print ("Can't connect to Naoqi at ip \"" + args.pip + "\" on port " + str(args.pport) +".\n"
+               "Please check your script arguments. Run with -h option for help.")
+        sys.exit(1)
+
+    app.start()
+    session = app.session
+
+
+    global cognitiveface
+    cognitiveface=CognitiveFace()
+
+
+    global memory_service
+    
+    #Starting services
+    memory_service  = session.service("ALMemory")
+
+    #subscribe to any change 
+    subscriber = memory_service.subscriber("Actions/FaceRecognition/Command")
+#    idEvent = subscriber.signal.connect(functools.partial(onEvent, args.pip, args.pport,args.camera ))
+    idEvent = subscriber.signal.connect(onEvent)            
+    memory_service.insertData('Actions/FaceRecognition/Enabled', 'true')
+    
+    #Program stays at this point until we stop it
+    app.run()
+
+    imageThread.do_run = False
+      
+
+    print "Finished"            
+
+if __name__ == "__main__":
+    main()

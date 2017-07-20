@@ -6,14 +6,13 @@ Wait for 1 face detection with minimum size
 
 I in that moment there is not Peopledetection take the idperson from  ALMemory 'Actions/personhere/PersonID'
 
-Update  'Actions/memorizepeople/Person/IDNUMBER' 
+Update  'Actions/MemorizePeople/Person/IDNUMBER' 
 
 
 TODO
 -----
 Where is the name ??? Parameter or memory??
 
-Finish the Microsoft API integration
 
 ''''
 
@@ -43,7 +42,8 @@ min_size={'w':0.10 ,'h':0.10}
 actionName = "memorizeface"
 
 
-face_learned= False
+
+global msface_naoqi_enabled
 
 def onFaceDetection(facevalues):
     
@@ -143,14 +143,14 @@ def updateMemorizePeople(person):
 
     ## Write data in ALMemory
     str_person=json.dumps(json_person)
-    memory_service.insertData('Actions/memorizepeople/Person/'+person['personid'], person)
+    memory_service.insertData('Actions/MemorizePeople/Person/'+person['personid'], person)
     
-    people_list=memory_service.getData('Actions/memorizepeople/PeopleList/')
+    people_list=memory_service.getData('Actions/MemorizePeople/PeopleList/')
     
-    if person['personid'] is not in people_list:
+    if person['personid'] not in people_list:
         
         people_list.append(person['personid'])
-        memory_service.insertData('Actions/memorizepeople/PeopleList/', people_list)
+        memory_service.insertData('Actions/MemorizePeople/PeopleList/', people_list)
         
 
 def actionThread_exec (params):
@@ -161,28 +161,19 @@ def actionThread_exec (params):
     memory_service = getattr(t, "mem_serv", None)
     faces_service = getattr(t, "session", None).service("ALFaceDetection")
     faces_service.setRecognitionEnabled(True)
-    face_char_service = session.service("ALFaceCharacteristics")
+    face_char_service = getattr(t, "session", None).service("ALFaceCharacteristics")
     print "Action "+actionName+" started with params "+params
 
-
-    ## START MICROSOFT API 
-    
-    #memory_service.raiseEvent('FaceRecognition/Enabled',True)
-    
-    
     nameuser=params
 
+    ## START MICROSOFT API 
+    global msface_naoqi_enabled
+    msface_naoqi_enabled=memory_service.getData('Actions/FaceRecognition/Enabled')
+    if msface_naoqi_enabled== 'true':    
+        memory_service.raiseEvent('Actions/FaceRecognition/Command','camera_start')
+    
     # action init
-
-    acb = memory_service.subscriber("FaceDetected")
-    acb.signal.connect(waitingface_cb)
-
-
-
-    face_learned = False
-
-    # action init
-    while (getattr(t, "do_run", True) and not face_learned): 
+    while (getattr(t, "do_run", True) ): 
         
         
         facevalues =  memory_service.getData("FaceDetected")        
@@ -197,27 +188,40 @@ def actionThread_exec (params):
     
                 face_naoqi=onFaceDetection(facesarray)
                                 
-                if float(face['pose']['width'])>= float(min_size['w']) and float(face['pose']['height'])>=min_size['h']: 
+                if float(face_naoqi['pose']['width'])>= float(min_size['w']) and float(face_naoqi['pose']['height'])>=min_size['h']: 
                     
                     print 'Learning face ',nameuser
                     learned=faces_service.learnFace(nameuser)
                     #learned=True
                     print 'Face learned =',learned
                     face_naoqi['name']=nameuser
+                    
+                    
                     face_ms_api={}
                     
-                    
-                    ## START MICROSOFT API 
+                    ## ADD FACE MICROSOFT API 
+                    if msface_naoqi_enabled== 'true': 
+                        #memory_service.inserData("Actions/FaceRecognition/Recognition",'')
+                        memory_service.raiseEvent('Actions/FaceRecognition/Command','addface_'+nameuser)
+                        
+                        learned=False
+                        new_recognition=''
+                        while len(new_recognition) < 1:
     
-                    #memory_service.raiseEvent('FaceRecognition/AddPerson',True)
-                    # wait for data
-                    #new_recognition=memory_service.getData("FaceRecognition/recognition")
-                    #if new_recognition is not '':
-                        #face_ms_api=json.loads(new_recognition)
-                        #learned=True
+                            new_recognition=memory_service.getData("Actions/FaceRecognition/Recognition")
     
-    
-    
+                            time.sleep(0.3)
+                        
+                        if new_recognition is 'false':
+                            
+                            print 'MS FACE API: not person added '
+                            
+                            ## TRY AGAIN??
+                            
+                        else :
+                            face_ms_api=json.loads(new_recognition)
+                            learned=True
+
                     if learned is True:
 
                         person=None
@@ -244,6 +248,11 @@ def actionThread_exec (params):
 
                             print 'EXIT TRUE'
                             
+                            
+                            ## START MICROSOFT API 
+                            if msface_naoqi_enabled== 'true': 
+                                memory_service.raiseEvent('Actions/FaceRecognition/Command','camera_stop')
+                                
                             memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
                             
                         else:
@@ -252,21 +261,18 @@ def actionThread_exec (params):
                             ###
                             ## FORGET THE FACE ???
                             ## OR SAY SOMETHING
-                    else:
-                        print 'EXIT FALSE'
-                        memory_service.raiseEvent("PNP_action_result_"+actionName,"fail");
+#                    else:
+#                        print 'EXIT FALSE'
+#                        memory_service.raiseEvent("PNP_action_result_"+actionName,"fail");
         
-        #print "Action "+actionName+" "+params+" exec..."
-        # action exec
+
         time.sleep(0.3)
 
-        # action exec
+    # action end
 
         
     print "Action "+actionName+" "+params+" terminated"
 
-    # TODO acb. disconnect...
-    # action end
 
 
 

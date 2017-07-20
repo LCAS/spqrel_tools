@@ -38,6 +38,10 @@ say_lookforhelp
 
 #### 4 - COMING BACK TO THE CAR
 
+say_followme;
+waitfor_personbehind;
+say_goodbye;
+
 #goto_car; # er: (not personbehind) -> turn_around; dialogue_callperson
 #say_arrivedcar
 #dialogue_arrivedcar;

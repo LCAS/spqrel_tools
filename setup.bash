@@ -39,8 +39,8 @@ export PNPGEN_BIN=`find $SPQREL_HOME -path "*/bin/pnpgen_translator"| sed 's@/pn
 
 export PATH=$SPQREL_HOME/bin:$PATH:$PNPGEN_BIN
 
-export PYTHONPATH=$SPQREL_HOME/spqrel_tools/slu4p:$SPQREL_HOME/worktree/PetriNetPlans/PNPnaoqi/actions:${PYTHONPATH}
-export SLU4R_ROOT=$SPQREL_HOME/spqrel_tools/slu4
+export PYTHONPATH=$SPQREL_HOME/slu4p:$SPQREL_HOME/worktree/PetriNetPlans/PNPnaoqi/actions:${PYTHONPATH}
+export SLU4R_ROOT=$SPQREL_HOME/slu4p
 
 # Pepper's IP
 export PEPPER_IP="${PEPPER_IP:-localhost}"

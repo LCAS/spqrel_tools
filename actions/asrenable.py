@@ -17,9 +17,6 @@ def actionThread_exec (params):
     print "Action "+actionName+" "+params+" started"
     # action init
     memory_service.raiseEvent('ASR_enable','1')
-
-ASR_enabled 1
-
     # action init
     
     time.sleep(1.0)

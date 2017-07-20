@@ -95,6 +95,10 @@ class TMux:
             pane_no += 1
         winconf['_running'] = True
 
+    def launch_all_windows(self):
+        for winconf in self.config['windows']:
+            self.launch_window(winconf['name'])
+
     def stop_all_windows(self):
         for winconf in self.config['windows']:
             self.stop_window(winconf['name'])
@@ -172,7 +176,7 @@ if __name__ == "__main__":
         print(pformat(tmux.list_windows()))
     elif args.cmd == 'launch':
         if args.window == '':
-            warn('not implemented yet')
+            tmux.launch_all_windows()
             pass
         else:
             tmux.launch_window(args.window)

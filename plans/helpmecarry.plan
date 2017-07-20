@@ -18,7 +18,7 @@ dialoguestart_stopfollowing; # non-blocking action, it will se condition stopfol
 
 followuntil_screentouched;
 
-dialoguestp_stopfollowing;   # terminates the action
+dialoguestop_stopfollowing;   # terminates the action
 
 say_carhere;
 say_whatnow;

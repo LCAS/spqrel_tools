@@ -43,7 +43,7 @@ export PYTHONPATH=$SPQREL_HOME/spqrel_tools/slu4p:$SPQREL_HOME/worktree/PetriNet
 export SLU4R_ROOT=$SPQREL_HOME/spqrel_tools/slu4
 
 # Pepper's IP
-export PEPPER_IP=localhost
+export PEPPER_IP="${PEPPER_IP:-localhost}"
 
 alias shutdown-tmux="tmux list-panes -s -F \"#{pane_pid} #{pane_current_command}\" | grep -v tmux | awk \"{print \\\$1}\" | xargs kill"
 alias kill-tmux="tmux list-panes -s -F \"#{pane_pid} #{pane_current_command}\" | grep -v tmux | awk \"{print \\\$1}\" | xargs kill -9"

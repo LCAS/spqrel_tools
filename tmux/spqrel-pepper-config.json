@@ -53,8 +53,8 @@
     {
       "name": "task_start",
       "panes": [
-        "cd $SPQREL_HOME/actions; ./action_cmd.py -a   -p   -c start",
-        "cd $SPQREL_HOME/plans; ./run_plan.py"
+        "#cd $SPQREL_HOME/actions; ./action_cmd.py -a   -p   -c start",
+        "#cd $SPQREL_HOME/plans; ./run_plan.py"
       ]
     }
 

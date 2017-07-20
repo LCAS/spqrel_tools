@@ -53,7 +53,7 @@
 				<li><get name="Customer"/>, thanks for your order. I'm going to bring you a <get name="Drink"/>!</li>
 				<li>Perfect <get name="Customer"/>! Your <get name="Drink"/> is coming soon!</li>
 				<li>A <get name="Drink"/> for <get name="Customer"/>! This is my new mission!</li>
-				<li>Just a <get name="Drink"/>? I think you can do better, <get name="Customer"/>!</li>
+				<li>Just a <get name="Drink"/>? I think you can do better, <get name="Customer"/>! However, I'll bring you a <get name="Drink"/>...</li>
 			</random>
 			<srai>TAKEORDERDATA</srai>
 		</template>
@@ -68,27 +68,24 @@
 </topic>
 
 
-
-
-
-<topic name="MISSINGDRINK">
+<topic name="UNKNOWNAVAILABLE">
 	<category>
 		<pattern>CUSTOMER * DRINK * START</pattern>
 		<template>
 			<think>
 				<set name="temp_customer"><star index="1"/></set>
-				<set name="temp_drink"><star index="2"/></set>
-				<set name="drink_availability">TOFILL</set>
 			</think>
 			[SAY]
 			<random>
 				<li>I'm sorry!</li>
+				<li>Wait...</li>
 				<li>Excuse me!</li>
-				<li>Ops!</li>
 			</random>
 			<random>
-				<li>Is the <star index="2"/> available?</li>
-				<li>I didn't realize whether the <star index="2"/> is available or not. Is it?</li>
+				<li>I don't know whether the <star index="2"/> for <star index="1"/> is available or not.</li>
+				<li>I'm not able to see if the <star index="2"/> for <star index="1"/> is available.</li>
+			</random>
+			<random>
 				<li>Is there the <star index="2"/> for <star index="1"/>?</li>
 				<li>Is there the <star index="2"/>?</li>
 			</random>
@@ -161,10 +158,7 @@
 				<li>That's great!</li>
 				<li>Brilliant!</li>
 			</random>
-			<think>
-				<set name="drink_availability">True</set>
-			</think>
-			
+			|[DRINKAVAILABLE]
 		</template>
 	</category>
 	
@@ -176,26 +170,38 @@
 				<li>Okay, no problem!</li>
 				<li>Sure, no problem!</li>
 			</random>
-			<think>
-				<set name="drink_availability">False</set>
-			</think>
-			<srai>ASKALTERNATIVES</srai>
+			<srai>ALTDRINK CUSTOMER <get name="temp_customer"/> START</srai>
 		</template>
 	</category>
 	
 	<category>
-		<pattern>ASKALTERNATIVES</pattern>
+		<pattern>CUSTOMER * DRINK * STOP</pattern>
+		<template>
+			<set name="topic"></set>
+			[STOP]
+		</template>
+	</category>
+	
+</topic>
+
+<topic name="ALTDRINK">
+<category>
+		<pattern>CUSTOMER * START</pattern>
 		<template>
 			[SAY]
 			<random>
-				<li>Which are the alternatives?</li>
 				<li>What do you have, instead?</li>
-				<li>What can I bring to <get name="temp_customer"/>, instead?</li>
-				<li>Do you have something else I can bring to <get name="temp_customer"/>, instead?</li>
+				<li>What can I bring to <star index="1"/>, instead?</li>
+				<li>Do you have something else I can bring to <star index="1"/>, instead?</li>
 			</random>
-			<think>
-				<set name="drink_availability">False</set>
-			</think>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>CUSTOMER * STOP</pattern>
+		<template>
+			<set name="topic"></set>
+			[STOP]
 		</template>
 	</category>
 	
@@ -204,12 +210,38 @@
 		given), is to take everything the user says and try to match (afterwards) the
 		possible drinks, among the ones pre-defined.
 	-->
-	<category><that>ASKALTERNATIVES</that>
+	<category><that>INSTEAD</that>
 		<pattern>*</pattern>
 		<template>[DRINKSALTERNATIVES]<star/></template>
 	</category>
 	
+	
 </topic>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -439,7 +471,7 @@
 		<pattern>* COKE *</pattern>
 		<template>
 			<think>
-				<set name="Drink">COKE</set>
+				<set name="Drink">coke</set>
 				<set name="topic">TAKEORDER</set>
 			</think>
 			<srai>START</srai>
@@ -450,7 +482,7 @@
 		<pattern>COKE *</pattern>
 		<template>
 			<think>
-				<set name="Drink">COKE</set>
+				<set name="Drink">coke</set>
 				<set name="topic">TAKEORDER</set>
 			</think>
 			<srai>START</srai>
@@ -461,7 +493,7 @@
 		<pattern>* COKE</pattern>
 		<template>
 			<think>
-				<set name="Drink">COKE</set>
+				<set name="Drink">coke</set>
 				<set name="topic">TAKEORDER</set>
 			</think>
 			<srai>START</srai>
@@ -472,7 +504,7 @@
 		<pattern>COKE</pattern>
 		<template>
 			<think>
-				<set name="Drink">COKE</set>
+				<set name="Drink">coke</set>
 				<set name="topic">TAKEORDER</set>
 			</think>
 			<srai>START</srai>
@@ -483,7 +515,7 @@
 		<pattern>* WHISKY *</pattern>
 		<template>
 			<think>
-				<set name="Drink">WHISKY</set>
+				<set name="Drink">whisky</set>
 				<set name="topic">TAKEORDER</set>
 			</think>
 			<srai>START</srai>
@@ -494,7 +526,7 @@
 		<pattern>WHISKY *</pattern>
 		<template>
 			<think>
-				<set name="Drink">WHISKY</set>
+				<set name="Drink">whisky</set>
 				<set name="topic">TAKEORDER</set>
 			</think>
 			<srai>START</srai>
@@ -505,7 +537,7 @@
 		<pattern>* WHISKY</pattern>
 		<template>
 			<think>
-				<set name="Drink">WHISKY</set>
+				<set name="Drink">whisky</set>
 				<set name="topic">TAKEORDER</set>
 			</think>
 			<srai>START</srai>
@@ -516,7 +548,7 @@
 		<pattern>WHISKY</pattern>
 		<template>
 			<think>
-				<set name="Drink">WHISKY</set>
+				<set name="Drink">whisky</set>
 				<set name="topic">TAKEORDER</set>
 			</think>
 			<srai>START</srai>
@@ -527,7 +559,7 @@
 		<pattern>* BEER *</pattern>
 		<template>
 			<think>
-				<set name="Drink">BEER</set>
+				<set name="Drink">beer</set>
 				<set name="topic">TAKEORDER</set>
 			</think>
 			<srai>START</srai>
@@ -538,7 +570,7 @@
 		<pattern>BEER *</pattern>
 		<template>
 			<think>
-				<set name="Drink">BEER</set>
+				<set name="Drink">beer</set>
 				<set name="topic">TAKEORDER</set>
 			</think>
 			<srai>START</srai>
@@ -549,7 +581,7 @@
 		<pattern>* BEER</pattern>
 		<template>
 			<think>
-				<set name="Drink">BEER</set>
+				<set name="Drink">beer</set>
 				<set name="topic">TAKEORDER</set>
 			</think>
 			<srai>START</srai>
@@ -560,7 +592,7 @@
 		<pattern>BEER</pattern>
 		<template>
 			<think>
-				<set name="Drink">BEER</set>
+				<set name="Drink">beer</set>
 				<set name="topic">TAKEORDER</set>
 			</think>
 			<srai>START</srai>

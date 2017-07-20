@@ -1,5 +1,6 @@
 import requests
 import json
+import time
 
 
 class LU4RClient:
@@ -22,10 +23,9 @@ class LU4RClient:
 
         self.LU4R_STATUS_URL = 'http://' + self.ip + ':' + str(self.port) + '/init/status'
         self.LU4R_INFO_URL = 'http://' + self.ip + ':' + str(self.port) + '/init/info'
-        self.LU4R_PARSE_URL = 'http://' + self.ip + ':' + str(self.port) + '/service/slu'
-
-        self.status()
-
+        self.LU4R_PARSE_URL = 'http://' + self.ip + ':' + str(self.port) + '/service/nlu'
+        while not self.status():
+            time.sleep(10)
         info = json.loads(self.info())
         self.chain_type = info['chain_type']
         self.output_type = info['output_type']
@@ -34,19 +34,19 @@ class LU4RClient:
     def status(self):
         try:
             response = requests.post(self.LU4R_STATUS_URL, {}, headers=self.HEADERS)
-            print "[" + self.inst.__class__.__name__ + "]" + response.text
-            return 1
+            print "[" + self.__class__.__name__ + "]" + response.text
+            return True
         except requests.exceptions.RequestException as e:
-            print "[" + self.inst.__class__.__name__ + "] [STATUS]ERROR! LU4R is not running. Launch it and retry."
-            return 0
+            print "[" + self.__class__.__name__ + "] [STATUS]ERROR! LU4R is not running. Waiting for it..."
+            return False
 
     def info(self):
         try:
             response = requests.post(self.LU4R_INFO_URL, {}, headers=self.HEADERS)
             return response.text
         except requests.exceptions.RequestException as e:
-            print "[" + self.inst.__class__.__name__ + "] [INFO]ERROR! LU4R is not running. Launch it and retry."
-            return 0
+            print "[" + self.__class__.__name__ + "] [INFO]ERROR! LU4R is not running. Launch it and retry."
+            return False
 
     def parse_sentence(self, sentence):
         try:
@@ -55,7 +55,7 @@ class LU4RClient:
             response = requests.post(self.LU4R_PARSE_URL, to_send, headers=self.HEADERS)
             return response.text
         except requests.exceptions.RequestException as e:
-            print "[" + self.inst.__class__.__name__ + "] [PARSE]ERROR! LU4R cannot to parse."
+            print "[" + self.__class__.__name__ + "] [PARSE]ERROR! LU4R cannot to parse."
 
     def parse_sentences(self, sentences):
         sentences_dict = []
@@ -73,10 +73,10 @@ class LU4RClient:
             response = requests.post(self.LU4R_PARSE_URL, to_send, headers=self.HEADERS)
             return response.text
         except requests.exceptions.RequestException as e:
-            print "[" + self.inst.__class__.__name__ + "] [PARSE]ERROR! LU4R cannot to parse."
+            print "[" + self.__class__.__name__ + "] [PARSE]ERROR! LU4R cannot to parse."
 
     def parse_sentence_perceptual(self, sentence, entities):
         if self.chain_type != 'SIMPLE':
-            print "[" + self.inst.__class__.__name__ + "] [WARNING]BASIC chain active. Perceptual information will be neglected."
+            print "[" + self.__class__.__name__ + "] [WARNING]BASIC chain active. Perceptual information will be neglected."
         self.json_entities = entities
         return self.parse_sentence(sentence)

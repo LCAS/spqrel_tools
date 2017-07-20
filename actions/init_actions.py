@@ -11,7 +11,7 @@ from action_base import *
 
 import dooropen, obstaclehere, screentouched
 import say, vsay, wait, waitfor, goto, turn, lookfor, dialogue, dialoguestart, dialoguestop, asrenable
-import posture, personhere, headpose, followuntil, movementdetected, webpage, personbehind
+import posture, personhere, headpose, followuntil, movementdetected, webpage, personbehind, persondetected
 
 def init(session):
     screentouched.init(session)
@@ -34,6 +34,7 @@ def init(session):
     movementdetected.init(session)
     followuntil.init(session)
     personbehind.init(session)
+    persondetected.init(session)
 
 
 def quit():
@@ -57,6 +58,7 @@ def quit():
     movementdetected.quit()
     followuntil.quit()
     personbehind.quit()
+    persondetected.quit()
 
 
 def main():

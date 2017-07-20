@@ -16,7 +16,7 @@ say_readytofollow;
 
 dialoguestart_stopfollowing; # non-blocking action, it will se condition stopfollowing to true when user speaks so
 
-followuntil_screentouched;
+followuntil_stopfollowing;
 
 dialoguestop_stopfollowing;   # terminates the action
 

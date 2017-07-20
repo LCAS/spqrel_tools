@@ -468,94 +468,6 @@
 	</category>
 	
 	<category>
-		<pattern>* COKE *</pattern>
-		<template>
-			<think>
-				<set name="Drink">coke</set>
-				<set name="topic">TAKEORDER</set>
-			</think>
-			<srai>START</srai>
-		</template>
-	</category>
-	
-	<category>
-		<pattern>COKE *</pattern>
-		<template>
-			<think>
-				<set name="Drink">coke</set>
-				<set name="topic">TAKEORDER</set>
-			</think>
-			<srai>START</srai>
-		</template>
-	</category>
-	
-	<category>
-		<pattern>* COKE</pattern>
-		<template>
-			<think>
-				<set name="Drink">coke</set>
-				<set name="topic">TAKEORDER</set>
-			</think>
-			<srai>START</srai>
-		</template>
-	</category>
-	
-	<category>
-		<pattern>COKE</pattern>
-		<template>
-			<think>
-				<set name="Drink">coke</set>
-				<set name="topic">TAKEORDER</set>
-			</think>
-			<srai>START</srai>
-		</template>
-	</category>
-	
-	<category>
-		<pattern>* WHISKY *</pattern>
-		<template>
-			<think>
-				<set name="Drink">whisky</set>
-				<set name="topic">TAKEORDER</set>
-			</think>
-			<srai>START</srai>
-		</template>
-	</category>
-	
-	<category>
-		<pattern>WHISKY *</pattern>
-		<template>
-			<think>
-				<set name="Drink">whisky</set>
-				<set name="topic">TAKEORDER</set>
-			</think>
-			<srai>START</srai>
-		</template>
-	</category>
-	
-	<category>
-		<pattern>* WHISKY</pattern>
-		<template>
-			<think>
-				<set name="Drink">whisky</set>
-				<set name="topic">TAKEORDER</set>
-			</think>
-			<srai>START</srai>
-		</template>
-	</category>
-	
-	<category>
-		<pattern>WHISKY</pattern>
-		<template>
-			<think>
-				<set name="Drink">whisky</set>
-				<set name="topic">TAKEORDER</set>
-			</think>
-			<srai>START</srai>
-		</template>
-	</category>
-	
-	<category>
 		<pattern>* BEER *</pattern>
 		<template>
 			<think>
@@ -565,7 +477,7 @@
 			<srai>START</srai>
 		</template>
 	</category>
-	
+
 	<category>
 		<pattern>BEER *</pattern>
 		<template>
@@ -576,7 +488,7 @@
 			<srai>START</srai>
 		</template>
 	</category>
-	
+
 	<category>
 		<pattern>* BEER</pattern>
 		<template>
@@ -587,7 +499,7 @@
 			<srai>START</srai>
 		</template>
 	</category>
-	
+
 	<category>
 		<pattern>BEER</pattern>
 		<template>
@@ -598,23 +510,12 @@
 			<srai>START</srai>
 		</template>
 	</category>
-	
-	<!--<category>
-		<pattern> * ME * </pattern>
-		<template>
-			<think>
-				<set name="Drink"><star index="2"/></set>
-				<set name="topic">TAKEORDER</set>
-			</think>
-			<srai>START</srai>
-		</template>
-	</category>
-	
+
 	<category>
-		<pattern>A * </pattern>
+		<pattern>* COKE *</pattern>
 		<template>
 			<think>
-				<set name="Drink"><star index="1"/></set>
+				<set name="Drink">coke</set>
 				<set name="topic">TAKEORDER</set>
 			</think>
 			<srai>START</srai>
@@ -622,21 +523,10 @@
 	</category>
 
 	<category>
-		<pattern> * A * </pattern>
+		<pattern>COKE *</pattern>
 		<template>
 			<think>
-				<set name="Drink"><star index="2"/></set>
-				<set name="topic">TAKEORDER</set>
-			</think>
-			<srai>START</srai>
-		</template>
-	</category>
-	
-	<category>
-		<pattern> * THAT * </pattern>
-		<template>
-			<think>
-				<set name="Drink"><star index="2"/></set>
+				<set name="Drink">coke</set>
 				<set name="topic">TAKEORDER</set>
 			</think>
 			<srai>START</srai>
@@ -644,15 +534,203 @@
 	</category>
 
 	<category>
-		<pattern> * </pattern>
+		<pattern>* COKE</pattern>
 		<template>
 			<think>
-				<set name="Drink"><star index="1"/></set>
+				<set name="Drink">coke</set>
 				<set name="topic">TAKEORDER</set>
 			</think>
 			<srai>START</srai>
 		</template>
-	</category>-->
+	</category>
+
+	<category>
+		<pattern>COKE</pattern>
+		<template>
+			<think>
+				<set name="Drink">coke</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* VODKA *</pattern>
+		<template>
+			<think>
+				<set name="Drink">vodka</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>VODKA *</pattern>
+		<template>
+			<think>
+				<set name="Drink">vodka</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* VODKA</pattern>
+		<template>
+			<think>
+				<set name="Drink">vodka</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>VODKA</pattern>
+		<template>
+			<think>
+				<set name="Drink">vodka</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* WHISKY *</pattern>
+		<template>
+			<think>
+				<set name="Drink">whisky</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>WHISKY *</pattern>
+		<template>
+			<think>
+				<set name="Drink">whisky</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* WHISKY</pattern>
+		<template>
+			<think>
+				<set name="Drink">whisky</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>WHISKY</pattern>
+		<template>
+			<think>
+				<set name="Drink">whisky</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* WATER *</pattern>
+		<template>
+			<think>
+				<set name="Drink">water</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>WATER *</pattern>
+		<template>
+			<think>
+				<set name="Drink">water</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* WATER</pattern>
+		<template>
+			<think>
+				<set name="Drink">water</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>WATER</pattern>
+		<template>
+			<think>
+				<set name="Drink">water</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* WINE *</pattern>
+		<template>
+			<think>
+				<set name="Drink">wine</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>WINE *</pattern>
+		<template>
+			<think>
+				<set name="Drink">wine</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* WINE</pattern>
+		<template>
+			<think>
+				<set name="Drink">wine</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>WINE</pattern>
+		<template>
+			<think>
+				<set name="Drink">wine</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+	
 </topic>
 
 </aiml>

@@ -8,16 +8,20 @@ class ReRanker(EventAbstractClass):
     PATH = ''
     EVENT_NAME = "VordRecognized"
 
-    def __init__(self, ip, port, alpha, noun_cost, verb_cost, grammar_cost, nuance_cost, noun_dictionary,
-                 verb_dictionary, nuance_grammar):
+    def __init__(self, ip, port, alpha, noun_cost, verb_cost, drinks_cost, persons_cost, grammar_cost, nuance_cost, noun_dictionary,
+                 verb_dictionary, drinks_dictionary, persons_dictionary, nuance_grammar):
         super(self.__class__, self).__init__(self, ip, port)
         self.alpha = alpha
         self.noun_cost = noun_cost
         self.verb_cost = verb_cost
+        self.drinks_cost = drinks_cost
+        self.persons_cost = persons_cost
         self.grammar_cost = grammar_cost
         self.nuance_cost = nuance_cost
         self.noun_dictionary = lines_to_list(noun_dictionary)
         self.verb_dictionary = lines_to_list(verb_dictionary)
+        self.drinks_dictionary = lines_to_list(drinks_dictionary)
+        self.persons_dictionary = lines_to_list(persons_dictionary)
         self.nuance_grammar = lines_to_list(nuance_grammar)
         self.__shutdown_requested = False
         signal.signal(signal.SIGINT, self.signal_handler)
@@ -66,8 +70,10 @@ class ReRanker(EventAbstractClass):
          - compute prior
          - first evidence (noun elements)
          - second evidence (verb elements)
-         - third evidence (grammar generated - if the sentence is present into the vocabulary defined for the NuanceASR)
-         - fourth evidence (recognized by grammar - if the sentence is present into the list of the sentences recognized
+         - third evidence (drinks elements)
+         - fourth evidence (persons)
+         - fifth evidence (grammar generated - if the sentence is present into the vocabulary defined for the NuanceASR)
+         - sixth evidence (recognized by grammar - if the sentence is present into the list of the sentences recognized
            by the NuanceASR)
         :param transcriptions:
         :return: ordered dictionary
@@ -75,6 +81,8 @@ class ReRanker(EventAbstractClass):
         transcriptions = self.__compute_prior(transcriptions)
         transcriptions = self.__compute_noun_posterior(transcriptions)
         transcriptions = self.__compute_verb_posterior(transcriptions)
+        transcriptions = self.__compute_drinks_posterior(transcriptions)
+        transcriptions = self.__compute_persons_posterior(transcriptions)
         transcriptions = self.__compute_grammar_posterior(transcriptions)
         transcriptions = self.__compute_overlap_posterior(transcriptions)
         return transcriptions
@@ -106,6 +114,26 @@ class ReRanker(EventAbstractClass):
                     for noun in self.verb_dictionary:
                         if noun in trans:
                             transcriptions[asr][trans] = transcriptions[asr][trans] * float(self.verb_cost)
+                transcriptions[asr] = normalize(transcriptions[asr])
+        return transcriptions
+
+    def __compute_drinks_posterior(self, transcriptions):
+        for asr in transcriptions:
+            if len(transcriptions[asr]) > 1:
+                for trans in transcriptions[asr]:
+                    for noun in self.drinks_dictionary:
+                        if noun in trans:
+                            transcriptions[asr][trans] = transcriptions[asr][trans] * float(self.drink_cost)
+                transcriptions[asr] = normalize(transcriptions[asr])
+        return transcriptions
+
+    def __compute_persons_posterior(self, transcriptions):
+        for asr in transcriptions:
+            if len(transcriptions[asr]) > 1:
+                for trans in transcriptions[asr]:
+                    for noun in self.persons_dictionary:
+                        if noun in trans:
+                            transcriptions[asr][trans] = transcriptions[asr][trans] * float(self.persons_cost)
                 transcriptions[asr] = normalize(transcriptions[asr])
         return transcriptions
 
@@ -142,6 +170,10 @@ def main():
                         help="Cost for the noun posterior distribution")
     parser.add_argument("-v", "--verb-cost", type=float, default=.7,
                         help="Cost for the verb posterior distribution")
+    parser.add_argument("-d", "--drinks-cost", type=float, default=.1,
+                        help="Cost for the drinks posterior distribution")
+    parser.add_argument("-e", "--persons-cost", type=float, default=.1,
+                        help="Cost for the persons posterior distribution")
     parser.add_argument("-g", "--grammar-cost", type=float, default=.1,
                         help="Cost for the grammar posterior distribution")
     parser.add_argument("-o", "--overlap-cost", type=float, default=.1,
@@ -150,6 +182,10 @@ def main():
                         help="A txt file containing the list of domain nouns")
     parser.add_argument("--verb-dictionary", type=str, default="resources/verb_dictionary.txt",
                         help="A txt file containing the list of domain verbs")
+    parser.add_argument("--drinks-dictionary", type=str, default="resources/drinks_dictionary.txt",
+                        help="A txt file containing the list of drinks")
+    parser.add_argument("--persons-dictionary", type=str, default="resources/persons_dictionary.txt",
+                        help="A txt file containing the list of persons")
     parser.add_argument("--nuance-grammar", type=str, default="resources/nuance_grammar.txt",
                         help="A txt file containing the list of sentences composing the vocabulary")
 
@@ -161,10 +197,14 @@ def main():
         alpha=args.alpha,
         noun_cost=args.noun_cost,
         verb_cost=args.verb_cost,
+        drinks_cost=args.drinks_cost,
+        persons_cost=args.persons_cost,
         grammar_cost=args.grammar_cost,
         nuance_cost=args.overlap_cost,
         noun_dictionary=args.noun_dictionary,
         verb_dictionary=args.verb_dictionary,
+        drinks_dictionary=args.drinks_dictionary,
+        persons_dictionary=args.persons_dictionary,
         nuance_grammar=args.nuance_grammar
     )
     rr.update_globals(globals())

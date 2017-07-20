@@ -16,9 +16,8 @@ class DialogueManager(EventAbstractClass):
     cocktail_data = {}
     location = {}
     order_counter = 0
-    possible_drinks = ['beer', 'coke', 'whisky', 'water', 'wine']
 
-    def __init__(self, ip, port, aiml_path):
+    def __init__(self, ip, port, aiml_path, drinks_path):
         super(self.__class__, self).__init__(self, ip, port)
 
         self.__shutdown_requested = False
@@ -28,6 +27,8 @@ class DialogueManager(EventAbstractClass):
 
         self.kernel = Kernel()
         self.__learn(aiml_path)
+
+        self.possible_drinks = slu_utils.lines_to_list(drinks_path)
 
     def start(self, *args, **kwargs):
         self.subscribe(
@@ -56,8 +57,6 @@ class DialogueManager(EventAbstractClass):
         print "[" + self.inst.__class__.__name__ + "] User says: " + best_transcription
         reply = self.kernel.respond(best_transcription)
         self.do_something(reply)
-        #print "[" + self.inst.__class__.__name__ + "] Robot says: " + reply
-        #self.memory.raiseEvent("Veply", reply)
 
     def request_callback(self, *args, **kwargs):
         splitted = args[1].split('_')
@@ -102,7 +101,6 @@ class DialogueManager(EventAbstractClass):
             to_send = splitted[0] + ' customer ' + name + ' ' + splitted[2]
         reply = self.kernel.respond(to_send)
         self.do_something(reply)
-
 
     def _spin(self, *args):
         while not self.__shutdown_requested:
@@ -184,12 +182,15 @@ def main():
                         help="Robot port number")
     parser.add_argument("-a", "--aiml-path", type=str, default="resources/aiml_kbs/spqrel",
                         help="Path to the root folder of AIML Knowledge Base")
+    parser.add_argument("-d", "--drinks-path", type=str, default="resources/drinks_dictionary.txt",
+                        help="Path to a file containing the list of drinks")
     args = parser.parse_args()
 
     dm = DialogueManager(
         ip=args.pip,
         port=args.pport,
-        aiml_path=args.aiml_path
+        aiml_path=args.aiml_path,
+        drinks_path=args.drinks_path
     )
     dm.update_globals(globals())
     dm.start()

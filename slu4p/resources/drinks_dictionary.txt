@@ -1,0 +1,6 @@
+beer
+coke
+vodka
+whisky
+water
+wine

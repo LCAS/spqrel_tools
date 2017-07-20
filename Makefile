@@ -87,7 +87,7 @@ plans/%.pnml: plans/%.plan $(PNPTRANS)
 # 	(cd $(INSTALL_TREE); \
 # 		git pull && git checkout $(TOOLCHAIN))
 
-install: $(PNMLS)  install_bins
+install: install_bins
 #	rsync -a --exclude '.git' --exclude '.gitignore' $(WORKTREE)/* $(INSTALL_TREE)
 #	rsync -a --exclude '.git' --exclude '.gitignore' $(AUX_DIRS) $(INSTALL_TREE)
 	# (cd $(INSTALL_TREE); \

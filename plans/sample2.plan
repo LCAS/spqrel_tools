@@ -1,4 +1,14 @@
-waitfor_dooropen; 
-say_starting; 
-enterdoor
+#waitfor_dooropen; 
+#say_starting; 
+#enterdoor
+
+dialogue_follow;
+
+wait_10;
+
+asrenable; # non-blocking
+
+waitfor_stopfollowing;
+
+
 

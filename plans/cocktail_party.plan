@@ -38,7 +38,7 @@ goto_bar;
 # check valid orders received in previous phase
 
 < valid_order1 ?
-    vsay_order_1;
+    vsay_order_1;  # robot describes the info in Humans/ProfileX 
     observe_objects;
     < drinkavailable ? vsay_confirmdrink_1 :
       not_drinkavailable ? vsay_confirmnotavailable_1; dialogue_altdrink_1  :
@@ -69,9 +69,9 @@ goto_bar;
 # altorder is either altorder1,2,3
 
 goto_partyroom;
-say_callperson_altorder;
+say_callperson_altorder; 
 waitfor_personhere;
-say_altorder;
+vsay_altorder_4; # robot speaks alternative drinks 
 dialogue_takeorder_4;
 waitfor_order4;
 

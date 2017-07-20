@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 from libtmux import Server
 from json import load
 from logging import error, warn, info, debug, basicConfig, INFO
@@ -5,6 +6,7 @@ from pprint import pformat
 from time import sleep
 import signal
 import os
+import argparse
 
 from datetime import datetime
 basicConfig(level=INFO)
@@ -130,15 +132,67 @@ class TMux:
 
 
 if __name__ == "__main__":
-    tmux = TMux(configfile="spqrel-pepper-config.json")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", type=str,
+                        default='spqrel-pepper-config.json',
+                        help="JSON config file. see sample-config.json. Default: spqrel-pepper-config.json")
+    parser.add_argument("--init", type=bool, default=True,
+                        help="Should tmux be initialised? Default: True")
+    parser.add_argument("--session", type=str,
+                        default='spqrel',
+                        help="The session that is controlled. Default: spqrel")
+
+    subparsers = parser.add_subparsers(dest='cmd',
+                                       help='sub-command help')
+    parser_list = subparsers.add_parser('list', help='show windows')
+    parser_launch = subparsers.add_parser('launch', help='launch window(s)')
+    parser_launch.add_argument("--window", '-w', type=str,
+                               default="",
+                               help="Window to be launched. Default: ALL")
+    parser_stop = subparsers.add_parser('stop', help='stop windows(s)')
+    parser_stop.add_argument("--window", '-w', type=str,
+                             default="",
+                             help="Window to be stopped. Default: ALL")
+    parser_kill = subparsers.add_parser('kill', help='kill window(s)')
+    parser_kill.add_argument("--window", '-w', type=str,
+                             default="",
+                             help="Window to be killed. Default: ALL")
+
+    args = parser.parse_args()
+
+    tmux = TMux(configfile=args.config)
     #info(pformat(tmux.list_windows()))
-    tmux.init()
-    windows_to_launch = [
-        'htop', 'navigation', 'speech', 'ui', 'pnp', 'dataset'
-    ]
-    for w in windows_to_launch:
-        tmux.launch_window(w, True)
-        sleep(1)
-    #sleep(8)
-    tmux.stop_all_windows()
-    tmux.terminate()
+    
+    if (args.init):
+        tmux.init()
+
+    print(args)
+
+    if args.cmd == 'list':
+        print(pformat(tmux.list_windows()))
+    elif args.cmd == 'launch':
+        if args.window == '':
+            warn('not implemented yet')
+            pass
+        else:
+            tmux.launch_window(args.window)
+    elif args.cmd == 'stop':
+        if args.window == '':
+            tmux.stop_all_windows()
+        else:
+            tmux.stop_window(args.window)
+    elif args.cmd == 'kill':
+        if args.window == '':
+            tmux.terminate()
+        else:
+            tmux.kill_window(args.window)
+
+    # windows_to_launch = [
+    #     'htop', 'navigation', 'speech', 'ui', 'pnp', 'dataset'
+    # ]
+    # for w in windows_to_launch:
+    #     tmux.launch_window(w, True)
+    #     sleep(1)
+    # #sleep(8)
+    # tmux.stop_all_windows()
+    # tmux.terminate()

@@ -44,7 +44,7 @@ def actionThread_exec (params):
     # action end
     memory_service.raiseEvent('DialogueVequest',params+'_stop')
     
-    if (params=='takeorder'):
+    if (params=='takeorder' and dialogue_response):
         pinfo = memory_service.getData('DialogueVesponse')
         orderID = orderID+1
         memkey = "Humans/Profile"+str(orderID)

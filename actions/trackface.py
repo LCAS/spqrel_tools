@@ -38,8 +38,7 @@ def actionThread_exec (params):
         #print "Action "+actionName+" "+params+" exec..."
         # action exec
         try:
-	        cval = get_condition(memory_service, params)
-	        val = (cval.lower()=='true') or (cval=='1')
+            val = get_condition(memory_service, params)
         except:
 	        pass
         # action exec

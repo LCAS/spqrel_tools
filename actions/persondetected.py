@@ -26,7 +26,6 @@ def rhMonitorThread (memory_service):
         plist = memory_service.getData("PeoplePerception/PeopleList")
         v = 'false'
         try:
-            print len(plist)
             if (len(plist)>0):
                 v = 'true'
         except:

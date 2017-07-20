@@ -3,6 +3,7 @@
 #goto_exit;
 #turn_130_ABS;
 headpose_0_-3;
+say_hello;
 waitfor_personhere;
 #dialogue_follow;
 waitfor_screentouched;

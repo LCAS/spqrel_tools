@@ -147,7 +147,7 @@
     <position x="860" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>waitfor_screentouched.exec</value>
+    <value>say_hello.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -185,7 +185,7 @@
     <position x="1100" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>say_hello.exec</value>
+    <value>dialoguestart_startfollow.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -223,7 +223,7 @@
     <position x="1340" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>say_lookatme.exec</value>
+    <value>waitfor_screentouched.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -261,7 +261,7 @@
     <position x="1580" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>say_readytofollow.exec</value>
+    <value>dialoguestop_startfollow.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -299,7 +299,7 @@
     <position x="1820" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>dialoguestart_stopfollowing.exec</value>
+    <value>say_lookatme.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -337,7 +337,7 @@
     <position x="2060" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>followuntil_stopfollowing.exec</value>
+    <value>say_readytofollow.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -375,7 +375,7 @@
     <position x="2300" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>dialoguestop_stopfollowing.exec</value>
+    <value>followuntil_screentouched.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -489,7 +489,7 @@
     <position x="3020" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>headpose_0_0.exec</value>
+    <value>say_lookforhelp headpose_0_-3.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -527,7 +527,7 @@
     <position x="3260" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>say_lookforhelp say_followme.exec</value>
+    <value>lookfor_persondetected.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -565,7 +565,7 @@
     <position x="3500" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>waitfor_personbehind.exec</value>
+    <value>say_followme.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -603,7 +603,7 @@
     <position x="3740" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>say_goodbye.exec</value>
+    <value>waitfor_personbehind.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -620,6 +620,44 @@
 <place id="n64">
   <graphics>
     <position x="3860" y="500" />    <size width="32" height="32" />
+  </graphics>
+  <name>
+    <value>X64</value>
+    <graphics>
+      <offset x="0" y="40" />
+    </graphics>
+  </name>
+  <toolspecific tool="JARP" version="1.2">
+    <FrameColor>
+      <value>java.awt.Color[r=0,g=0,b=0]</value>
+    </FrameColor>
+    <FillColor>
+      <value>java.awt.Color[r=255,g=255,b=255]</value>
+    </FillColor>
+  </toolspecific>
+</place>
+<place id="n66">
+  <graphics>
+    <position x="3980" y="500" />    <size width="32" height="32" />
+  </graphics>
+  <name>
+    <value>say_goodbye.exec</value>
+    <graphics>
+      <offset x="0" y="40" />
+    </graphics>
+  </name>
+  <toolspecific tool="JARP" version="1.2">
+    <FrameColor>
+      <value>java.awt.Color[r=0,g=0,b=0]</value>
+    </FrameColor>
+    <FillColor>
+      <value>java.awt.Color[r=255,g=255,b=255]</value>
+    </FillColor>
+  </toolspecific>
+</place>
+<place id="n68">
+  <graphics>
+    <position x="4100" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>goal</value>
@@ -748,7 +786,7 @@
   <graphics>
     <position x="800" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>waitfor_screentouched.start</value>
+    <value>say_hello.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -766,7 +804,7 @@
   <graphics>
     <position x="920" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>waitfor_screentouched.end</value>
+    <value>say_hello.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -784,7 +822,7 @@
   <graphics>
     <position x="1040" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>say_hello.start</value>
+    <value>dialoguestart_startfollow.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -802,7 +840,7 @@
   <graphics>
     <position x="1160" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>say_hello.end</value>
+    <value>dialoguestart_startfollow.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -820,7 +858,7 @@
   <graphics>
     <position x="1280" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>say_lookatme.start</value>
+    <value>waitfor_screentouched.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -838,7 +876,7 @@
   <graphics>
     <position x="1400" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>say_lookatme.end</value>
+    <value>waitfor_screentouched.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -856,7 +894,7 @@
   <graphics>
     <position x="1520" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>say_readytofollow.start</value>
+    <value>dialoguestop_startfollow.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -874,7 +912,7 @@
   <graphics>
     <position x="1640" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>say_readytofollow.end</value>
+    <value>dialoguestop_startfollow.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -892,7 +930,7 @@
   <graphics>
     <position x="1760" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>dialoguestart_stopfollowing.start</value>
+    <value>say_lookatme.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -910,7 +948,7 @@
   <graphics>
     <position x="1880" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>dialoguestart_stopfollowing.end</value>
+    <value>say_lookatme.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -928,7 +966,7 @@
   <graphics>
     <position x="2000" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>followuntil_stopfollowing.start</value>
+    <value>say_readytofollow.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -946,7 +984,7 @@
   <graphics>
     <position x="2120" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>followuntil_stopfollowing.end</value>
+    <value>say_readytofollow.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -964,7 +1002,7 @@
   <graphics>
     <position x="2240" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>dialoguestop_stopfollowing.start</value>
+    <value>followuntil_screentouched.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -982,7 +1020,7 @@
   <graphics>
     <position x="2360" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>dialoguestop_stopfollowing.end</value>
+    <value>followuntil_screentouched.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1072,7 +1110,7 @@
   <graphics>
     <position x="2960" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>headpose_0_0.start</value>
+    <value>say_lookforhelp headpose_0_-3.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1090,7 +1128,7 @@
   <graphics>
     <position x="3080" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>headpose_0_0.end</value>
+    <value>say_lookforhelp headpose_0_-3.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1108,7 +1146,7 @@
   <graphics>
     <position x="3200" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>say_lookforhelp say_followme.start</value>
+    <value>lookfor_persondetected.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1126,7 +1164,7 @@
   <graphics>
     <position x="3320" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>say_lookforhelp say_followme.end</value>
+    <value>lookfor_persondetected.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1144,7 +1182,7 @@
   <graphics>
     <position x="3440" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>waitfor_personbehind.start</value>
+    <value>say_followme.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1162,7 +1200,7 @@
   <graphics>
     <position x="3560" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>waitfor_personbehind.end</value>
+    <value>say_followme.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1180,7 +1218,7 @@
   <graphics>
     <position x="3680" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>say_goodbye.start</value>
+    <value>waitfor_personbehind.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1197,6 +1235,42 @@
 <transition id="n63">
   <graphics>
     <position x="3800" y="500" />    <size width="8" height="32" />  </graphics>
+  <name>
+    <value>waitfor_personbehind.end</value>
+    <graphics>
+      <offset x="0" y="-20" />
+    </graphics>
+  </name>
+  <toolspecific tool="JARP" version="1.2">
+    <FrameColor>
+      <value>java.awt.Color[r=0,g=0,b=0]</value>
+    </FrameColor>
+    <FillColor>
+      <value>java.awt.Color[r=200,g=200,b=220]</value>
+    </FillColor>
+  </toolspecific>
+</transition>
+<transition id="n65">
+  <graphics>
+    <position x="3920" y="500" />    <size width="8" height="32" />  </graphics>
+  <name>
+    <value>say_goodbye.start</value>
+    <graphics>
+      <offset x="0" y="-20" />
+    </graphics>
+  </name>
+  <toolspecific tool="JARP" version="1.2">
+    <FrameColor>
+      <value>java.awt.Color[r=0,g=0,b=0]</value>
+    </FrameColor>
+    <FillColor>
+      <value>java.awt.Color[r=200,g=200,b=220]</value>
+    </FillColor>
+  </toolspecific>
+</transition>
+<transition id="n67">
+  <graphics>
+    <position x="4040" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>say_goodbye.end</value>
     <graphics>
@@ -2032,6 +2106,58 @@
   </toolspecific>
 </arc>
 <arc id="a63" source="n63" target="n64" >
+    <graphics>
+      <offset x="0" y="40" />
+    </graphics>
+  <toolspecific tool="JARP" version="1.2">
+    <FrameColor>
+      <value>java.awt.Color[r=128,g=128,b=128]</value>
+    </FrameColor>
+    <ArrowMode>
+      <value>2</value>
+    </ArrowMode>
+  </toolspecific>
+</arc>
+<arc id="a64" source="n64" target="n65" >
+    <graphics>
+      <offset x="0" y="40" />
+    </graphics>
+  <toolspecific tool="JARP" version="1.2">
+    <FrameColor>
+      <value>java.awt.Color[r=128,g=128,b=128]</value>
+    </FrameColor>
+    <ArrowMode>
+      <value>2</value>
+    </ArrowMode>
+  </toolspecific>
+</arc>
+<arc id="a65" source="n65" target="n66" >
+    <graphics>
+      <offset x="0" y="40" />
+    </graphics>
+  <toolspecific tool="JARP" version="1.2">
+    <FrameColor>
+      <value>java.awt.Color[r=128,g=128,b=128]</value>
+    </FrameColor>
+    <ArrowMode>
+      <value>2</value>
+    </ArrowMode>
+  </toolspecific>
+</arc>
+<arc id="a66" source="n66" target="n67" >
+    <graphics>
+      <offset x="0" y="40" />
+    </graphics>
+  <toolspecific tool="JARP" version="1.2">
+    <FrameColor>
+      <value>java.awt.Color[r=128,g=128,b=128]</value>
+    </FrameColor>
+    <ArrowMode>
+      <value>2</value>
+    </ArrowMode>
+  </toolspecific>
+</arc>
+<arc id="a67" source="n67" target="n68" >
     <graphics>
       <offset x="0" y="40" />
     </graphics>

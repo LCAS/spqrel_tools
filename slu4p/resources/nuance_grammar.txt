@@ -6,3 +6,11 @@ how are you
 hi there
 how are you doing
 hi pepper
+take the order
+what day is today
+what is your name
+what is your team’s name
+what time is it
+in which year was RoboCup at home founded
+in which year was robocop at home founded
+what was the last question

@@ -337,7 +337,7 @@
     <position x="2060" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>followuntil_stopfollowing.exec</value>
+    <value>followuntil_screentouched.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -774,6 +774,44 @@
     <position x="4100" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
+    <value>X82</value>
+    <graphics>
+      <offset x="0" y="40" />
+    </graphics>
+  </name>
+  <toolspecific tool="JARP" version="1.2">
+    <FrameColor>
+      <value>java.awt.Color[r=0,g=0,b=0]</value>
+    </FrameColor>
+    <FillColor>
+      <value>java.awt.Color[r=255,g=255,b=255]</value>
+    </FillColor>
+  </toolspecific>
+</place>
+<place id="n84">
+  <graphics>
+    <position x="4220" y="500" />    <size width="32" height="32" />
+  </graphics>
+  <name>
+    <value>d.exec</value>
+    <graphics>
+      <offset x="0" y="40" />
+    </graphics>
+  </name>
+  <toolspecific tool="JARP" version="1.2">
+    <FrameColor>
+      <value>java.awt.Color[r=0,g=0,b=0]</value>
+    </FrameColor>
+    <FillColor>
+      <value>java.awt.Color[r=255,g=255,b=255]</value>
+    </FillColor>
+  </toolspecific>
+</place>
+<place id="n86">
+  <graphics>
+    <position x="4340" y="500" />    <size width="32" height="32" />
+  </graphics>
+  <name>
     <value>goal</value>
     <graphics>
       <offset x="0" y="40" />
@@ -1080,7 +1118,7 @@
   <graphics>
     <position x="2000" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>followuntil_stopfollowing.start</value>
+    <value>followuntil_screentouched.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1098,7 +1136,7 @@
   <graphics>
     <position x="2120" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>followuntil_stopfollowing.end</value>
+    <value>followuntil_screentouched.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1152,7 +1190,7 @@
   <graphics>
     <position x="2060" y="400" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>followuntil_stopfollowing.interrupt [(not persondetected)]</value>
+    <value>followuntil_screentouched.interrupt [(not persondetected)]</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1531,6 +1569,42 @@
     <position x="4040" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>say_goodbye.end</value>
+    <graphics>
+      <offset x="0" y="-20" />
+    </graphics>
+  </name>
+  <toolspecific tool="JARP" version="1.2">
+    <FrameColor>
+      <value>java.awt.Color[r=0,g=0,b=0]</value>
+    </FrameColor>
+    <FillColor>
+      <value>java.awt.Color[r=200,g=200,b=220]</value>
+    </FillColor>
+  </toolspecific>
+</transition>
+<transition id="n83">
+  <graphics>
+    <position x="4160" y="500" />    <size width="8" height="32" />  </graphics>
+  <name>
+    <value>d.start</value>
+    <graphics>
+      <offset x="0" y="-20" />
+    </graphics>
+  </name>
+  <toolspecific tool="JARP" version="1.2">
+    <FrameColor>
+      <value>java.awt.Color[r=0,g=0,b=0]</value>
+    </FrameColor>
+    <FillColor>
+      <value>java.awt.Color[r=200,g=200,b=220]</value>
+    </FillColor>
+  </toolspecific>
+</transition>
+<transition id="n85">
+  <graphics>
+    <position x="4280" y="500" />    <size width="8" height="32" />  </graphics>
+  <name>
+    <value>d.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -2624,6 +2698,58 @@
   </toolspecific>
 </arc>
 <arc id="a83" source="n81" target="n82" >
+    <graphics>
+      <offset x="0" y="40" />
+    </graphics>
+  <toolspecific tool="JARP" version="1.2">
+    <FrameColor>
+      <value>java.awt.Color[r=128,g=128,b=128]</value>
+    </FrameColor>
+    <ArrowMode>
+      <value>2</value>
+    </ArrowMode>
+  </toolspecific>
+</arc>
+<arc id="a84" source="n82" target="n83" >
+    <graphics>
+      <offset x="0" y="40" />
+    </graphics>
+  <toolspecific tool="JARP" version="1.2">
+    <FrameColor>
+      <value>java.awt.Color[r=128,g=128,b=128]</value>
+    </FrameColor>
+    <ArrowMode>
+      <value>2</value>
+    </ArrowMode>
+  </toolspecific>
+</arc>
+<arc id="a85" source="n83" target="n84" >
+    <graphics>
+      <offset x="0" y="40" />
+    </graphics>
+  <toolspecific tool="JARP" version="1.2">
+    <FrameColor>
+      <value>java.awt.Color[r=128,g=128,b=128]</value>
+    </FrameColor>
+    <ArrowMode>
+      <value>2</value>
+    </ArrowMode>
+  </toolspecific>
+</arc>
+<arc id="a86" source="n84" target="n85" >
+    <graphics>
+      <offset x="0" y="40" />
+    </graphics>
+  <toolspecific tool="JARP" version="1.2">
+    <FrameColor>
+      <value>java.awt.Color[r=128,g=128,b=128]</value>
+    </FrameColor>
+    <ArrowMode>
+      <value>2</value>
+    </ArrowMode>
+  </toolspecific>
+</arc>
+<arc id="a87" source="n85" target="n86" >
     <graphics>
       <offset x="0" y="40" />
     </graphics>

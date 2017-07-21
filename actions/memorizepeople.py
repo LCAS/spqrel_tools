@@ -22,8 +22,7 @@ posetopological={'current_node':'TODO','closest_node':'TODO'}
 
 How and when remove all this data???
 
-
-''''
+'''
 
 
 
@@ -62,8 +61,12 @@ def update_data(currentuser):
         
         if currentuser['person_naoqiid']==people_list[i]:
             
-            mem_person=memory_service.getData('Actions/memorizepeople/'+people_list[i])
-            json_person=json.loads(mem_person)
+            try:
+                mem_person=memory_service.getData('Actions/memorizepeople/'+people_list[i])
+                json_person=json.loads(mem_person)
+            except:
+                break
+            
             b_new=False
             
             json_person['info']['height']=currentuser['info']['height']
@@ -78,7 +81,7 @@ def update_data(currentuser):
                 
             ## Write data in ALMemory
             str_person=json.dumps(json_person)
-            memory_service.insertData('Actions/memorizepeople/Person/'+currentuser['personid'], str_person)
+            memory_service.insertData('Actions/memorizepeople/Person/'+str(currentuser['personid']), str_person)
             
     ## ADD new person    
     if b_new is True:
@@ -87,7 +90,7 @@ def update_data(currentuser):
         
         ## Write data in ALMemory
         str_person=json.dumps(currentuser)
-        memory_service.insertData('Actions/memorizepeople/Person/'+currentuser['personid'], currentuser)
+        memory_service.insertData('Actions/memorizepeople/Person/'+str(currentuser['personid']), currentuser)
         
     memory_service.insertData('Actions/memorizepeople/PeopleList/', people_list)
 
@@ -101,14 +104,16 @@ def rhMonitorThread (memory_service):
     while getattr(t, "do_run", True):
         
         
-        people_list =  memory_service.getData("PeoplePerception/PeopleList")
+        naoqi_people_list =  memory_service.getData("PeoplePerception/PeopleList")
                                 
         person=None
         poseinworld=None
-        
-        for personid in people_list:
+#        print 'naoqi_people_list= ',naoqi_people_list
+#        print '#################'
+        for personid in naoqi_people_list:
             
             print 'personid= ',personid
+#            print '__________'
             face={'name':'','faceinfo':{}}
             age={'val':0.0,'conf':0.0}
             gender={'val':0.0,'conf':0.0}
@@ -167,7 +172,7 @@ def rhMonitorThread (memory_service):
 
                 shirtcolor={'name': shirtcolorName, 'hsv':shirtcolorHSV}
                 personinfo={'height': round(height,2), 'shirtcolor': shirtcolor,'posture':posture}
-                face['faceinfo']=facecharacteristics
+                
                 
                 w_px, w_py = point2world(memory_service,[PositionInRobotFrame[0],PositionInRobotFrame[1]])
                 poseinworld={'x':w_px,'y': w_py}
@@ -177,11 +182,13 @@ def rhMonitorThread (memory_service):
                 
             except:
                 print 'Person info error '
+                
+            face['faceinfo']=facecharacteristics
         
             posetopological={'current_node':'TODO','closest_node':'TODO'}
             lastlocation= {'world':poseinworld , 'topological':posetopological}
             
-            user={'personid': personid ,'person_naoqiid': personid,'info': personinfo, 'lastlocation':lastlocation, 'face_naoqi': {},'face_ms_api': {}}
+            user={'personid': personid ,'person_naoqiid': personid,'info': personinfo, 'lastlocation':lastlocation, 'face_naoqi': face,'face_ms_api': {}}
             
             
             update_data(user)        

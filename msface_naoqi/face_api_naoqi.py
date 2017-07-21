@@ -267,7 +267,7 @@ class CognitiveFace():
 #                face.rpy.z = (f['faceAttributes']['headPose']['yaw'] /
 #                              180.0 * math.pi)
 #     
-        face_info={'gender': gender, 'smile':smile, 'hair':def_hair,'facialhair':facialhair, 'glasses': glasses, 'accessories':accessories}                
+        face_info={'gender': gender, 'age': age, 'smile':smile, 'hair':def_hair,'facialhair':facialhair, 'glasses': glasses, 'accessories':accessories}                
         face={ 'faceid':f['faceId'],'name':f['name'], 'faceinfo':face_info}     
 
         return face                    

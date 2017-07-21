@@ -1,14 +1,10 @@
-#waitfor_dooropen; 
+waitfor_dooropen; *if*  (not screentouched)   *do* skip_action
 #say_starting; 
 #enterdoor
 
-dialogue_follow;
-
-wait_10;
-
-asrenable; # non-blocking
-
-waitfor_stopfollowing;
+#dialogue_follow;
+#wait_10;
+#waitfor_stopfollowing;
 
 
 

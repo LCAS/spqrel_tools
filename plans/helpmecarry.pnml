@@ -1478,7 +1478,7 @@
   <graphics>
     <position x="3020" y="400" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>lookfor_persondetected.interrupt [timeout_lookfor_persondetected_20]</value>
+    <value>lookfor_persondetected.interrupt [timeout_lookfor_20]</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>

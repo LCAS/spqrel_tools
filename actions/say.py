@@ -45,6 +45,8 @@ def phraseToSay(memory_service,params):
         return "We just arrived to the car, thank you for coming to help"
     elif (params=='followme'):
         return "Please, follow me to the car"
+    elif (params=='comehere'):
+        return "I cannot see you, could you come here please?"
     return "Nothing to say."
 
 def actionThread_exec (params):

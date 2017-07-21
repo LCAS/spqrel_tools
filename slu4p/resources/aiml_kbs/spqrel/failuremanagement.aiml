@@ -25,6 +25,7 @@
                     |[STOP]
                     <think>
                         <set name="topic"></set>
+                        <set name="firstmisunderstanding">FALSE</set>
                     </think>
                 </li>
                 <li>

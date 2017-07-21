@@ -45,6 +45,7 @@ class ReRanker(EventAbstractClass):
         transcriptions = list_to_dict(temp)
         if 'GoogleASR' in transcriptions:
             transcriptions = self.__re_rank(transcriptions)
+            self.memory.raiseEvent("ASR_transcription", pick_best(transcriptions))
             print "[" + self.inst.__class__.__name__ + "] " + str(transcriptions)
         self.memory.raiseEvent("VRanked", transcriptions)
 

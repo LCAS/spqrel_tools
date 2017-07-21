@@ -110,7 +110,7 @@ class CognitiveFace():
 
     def add_face_srv(self,image, nameperson):
         img_msg = self._convert_jpg(image)
-        faces = self.detect(img_msg, False)
+    
         target_face = None        
         data = CF.detect(
             StringIO(img_msg),
@@ -129,7 +129,7 @@ class CognitiveFace():
         
         target_face=biggest_face
 
-
+        
         person = self._init_person(biggest_face['name'] , delete_first=True)
         
         pfid = PERSON.add_face(
@@ -137,19 +137,21 @@ class CognitiveFace():
             self._person_group_id,
             person['personId'],
             target_face="%d,%d,%d,%d"
-            % (target_face['faceRectangle']['x_offset'],
-               target_face['faceRectangle']['y_offset'],
+            % (target_face['faceRectangle']['left'],
+               target_face['faceRectangle']['top'],
                target_face['faceRectangle']['width'],
                target_face['faceRectangle']['height']))
                
         # print "PFID: " +str(pfid)
-        target_face['faceid'] = pfid['persistedFaceId']
+        target_face['faceId'] = pfid['persistedFaceId']
         # print PERSON.get(self._person_group_id, person['personId'])
         print('restarting training with new '
                       'face for group "%s".' % self._person_group_id)
         PG.train(self._person_group_id)
+        
+        ret_face=self._parse_to_naoqi_json(target_face)
 
-        return target_face
+        return ret_face
             
 
 
@@ -163,12 +165,10 @@ class CognitiveFace():
 
         return img
 
-    def detect_srv(self, image, identify=False):
 
-        self._detect(image, identify)
-
-    def _detect(self, image, identify=False):
+    def detect_face_srv(self, image, identify=False):
         faces = []
+        json_faces=None
         try:
             data = CF.detect(
                 StringIO(self._convert_jpg(image)),
@@ -179,13 +179,14 @@ class CognitiveFace():
             if identify:
                 print('trying to identify persons')
                 ids = [f['faceId'] for f in data]
-                print 'ids=',ids
+               
                 try:
                     identified = CF.identify(ids[0:10], self._person_group_id)
                     for i in identified:
                         if len(i['candidates']) > 0:
                             pid = i['candidates'][0]['personId']
                             person = PERSON.get(self._person_group_id, pid)
+                            print 'person=',person
                             identities[i['faceId']] = person['name']
                     print('identified %d persons in this image: %s'
                                   % (len(identities), str(identities)))
@@ -200,28 +201,65 @@ class CognitiveFace():
                 else:
                     person = ''
                     
-#                pose={'x':f['faceRectangle']['left'],'y':f['faceRectangle']['top'],'w':f['faceRectangle']['width'],'h':f['faceRectangle']['height']}
+                f['name']=person    
+                ret_face=self._parse_to_naoqi_json(f)
+                faces.append(ret_face)
+                
+            json_faces={'faces':faces}
+            
+            
+        except Exception as e:
+            print('failed to detect via the MS Face API: %s' %
+                          str(e))
+        return json_faces
 
-                gender = f['faceAttributes']['gender']
-                age = f['faceAttributes']['age']
-                smile = f['faceAttributes']['smile']
+    def delete_person_srv(self,  name):
+        gid = self._person_group_id
+        person = self._find_person_by_name(name)
+        try:
+            # if we are expected to reinitialise this, and the group
+            # already existed, delete it first
+            if person is not None :
+                print('delete existing person "%s"' % name)
+                PERSON.delete(gid, person['personId'])
+                person = None
+        except CognitiveFaceException as e:
+            print('Operation failed for person "%s".'
+                          ' Exception: %s'
+                          % (gid, e))
+        return True
+
+    def delete_allpersons_srv(self, gid):
+        
+        self._init_person_group(gid, delete_first=True)
+
+    def _parse_to_naoqi_json(self,f):
+
+#        pose={'x':f['faceRectangle']['left'],'y':f['faceRectangle']['top'],'w':f['faceRectangle']['width'],'h':f['faceRectangle']['height']}
+        
+        gender = f['faceAttributes']['gender']
+        age = f['faceAttributes']['age']
+        smile = f['faceAttributes']['smile']
+        
+        facialhair = f['faceAttributes']['facialHair']
+        glasses= f['faceAttributes']['glasses']
+        accessories= f['faceAttributes']['accessories']
+        hair = f['faceAttributes']['hair']
+        
+        # color with max confidence
+        index_def_hair=None
+        max_conf=0.0
+        for i in range(len(hair['hairColor'])):
+            if hair['hairColor'][i]['confidence']>max_conf:                        
+                max_conf=hair['hairColor'][i]['confidence']
+                index_def_hair=i
                 
-                facialhair = f['faceAttributes']['FacialHair']
-                glasses= f['Glasses']
-                accessories= f['Accessories']
-                hair = f['faceAttributes']['Hair']
-                
-                # color with max confidence
-                index_def_hair=None
-                max_conf=0.0
-                for i in range(len(hair['HairColor'])):
-                    if hair['HairColor'][i]['Confidence']>max_conf:                        
-                        max_conf=hair['HairColor'][i]['Confidence']
-                        index_def_hair=i
-                        
-                def_hair=hair['HairColor'][i]
-                
-     
+        def_hair=hair['hairColor'][i]
+        if hair['bald']>0.7:
+            def_hair['color']='bald'
+            def_hair['confidence']=hair['bald']
+        
+ 
 #                face.rpy.x = (f['faceAttributes']['headPose']['roll'] /
 #                              180.0 * math.pi)
 #                face.rpy.y = (f['faceAttributes']['headPose']['pitch'] /
@@ -229,39 +267,10 @@ class CognitiveFace():
 #                face.rpy.z = (f['faceAttributes']['headPose']['yaw'] /
 #                              180.0 * math.pi)
 #     
-                face_info={'gender': gender, 'smile':smile, 'hair':def_hair,'facialhair':facialhair, 'glasses': glasses, 'accessories':accessories}                
-                face={ 'faceid':faceId,'name':person, 'faceinfo':face_info}                         
-                
-                faces.append(face)
-                
-                json_faces={'faces':faces}
-            
-        except Exception as e:
-            print('failed to detect via the MS Face API: %s' %
-                          str(e))
-        return json_faces
+        face_info={'gender': gender, 'age': age, 'smile':smile, 'hair':def_hair,'facialhair':facialhair, 'glasses': glasses, 'accessories':accessories}                
+        face={ 'faceid':f['faceId'],'name':f['name'], 'faceinfo':face_info}     
 
-    def delete_person_srv(self,  nameperson):
-        gid = self._person_group_id
-        person = self._find_person_by_name(name)
-        try:
-            # if we are expected to reinitialise this, and the group
-            # already existed, delete it first
-            if person is not None :
-                print('delete existing person "%s"'
-                              ' before re-creating it.' % name)
-                PERSON.delete(gid, person['personId'])
-                person = None
-        except CognitiveFaceException as e:
-            print('Operation failed for person "%s".'
-                          ' Exception: %s'
-                          % (gid, e))
-        return person
-
-    def delete_allpersons_srv(self, gid):
-        
-        self._init_person_group(gid, delete_first=True)
-
+        return face                    
                 
 #cfa = CognitiveFace()
 

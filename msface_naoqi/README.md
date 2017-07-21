@@ -53,6 +53,32 @@ optional arguments:
 
 ```
 
+### Result attributes
 
-
+```
+{
+  "faces": [
+    {
+      "faceid": "35adb184-2c7f-4fa4-a93d-f631c3e7b966", 
+      "faceinfo": {
+        "gender": "male",
+        "age": 38.0,
+        "accessories": [], 
+        "facialhair": {
+          "sideburns": 0.2, 
+          "moustache": 0.4, 
+          "beard": 0.5
+        }, 
+        "hair": {
+          "color": "red", 
+          "confidence": 0.06
+        }, 
+        "smile": 0.01, 
+        "glasses": "NoGlasses"
+      }, 
+      "name": ""
+    }
+  ]
+}
+```
 

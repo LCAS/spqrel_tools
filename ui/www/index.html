@@ -27,9 +27,11 @@ document.onready = function() {
 	            <div class="row">
                     <div  style="background-color: #333333; min-height: 400px; max-height: 400px;" class="panel panel-primary">
                         <div class="panel-heading">
-	                        <h3 class="panel-title">Button-Box</h3>
+	                        <h3 class="panel-title">Quick Replies</h3>
 	                    </div>
 	                    <div class="panel-body">
+                        <div id="dialog-buttons">
+                        </div>
                         <button id="testbtn" onclick="send({
                             'method':'button', 
                             'id': 'testbtn',

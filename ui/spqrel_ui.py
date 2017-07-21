@@ -102,7 +102,13 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
 
     def __init__(self):
         global memory_service
+        self.memory_service = memory_service
 
+        self.answeroptions = ALSubscriber(memory_service, "AnswerOptions",
+                                          lambda actstr: self.sendJSON({
+                                              'method': 'show_buttons',
+                                              'buttons': self._answer_options_parse(actstr)
+                                          }))
         self.sts = ALSubscriber(memory_service, "Veply",
                                 lambda d: self.sendJSON({
                                     'method': 'update_html',
@@ -129,9 +135,17 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
                                     }))
         super(SQPReLProtocol, self).__init__()
 
+    def _answer_options_parse(self, inp, skip=1):
+        inp = inp.replace('%', ' ')
+        return inp.split('_')[skip:]
+
     def on_ping(self, payload):
         info('ping!')
         return {'result': True}
+
+    def on_dialog_button(self, payload):
+        info('dialog button pressed: \n%s' % pformat(payload))
+        self.memory_service.raiseEvent('TabletAnswer', payload['text'])
 
     def on_button(self, payload):
         info('button pressed: \n%s' % pformat(payload))

@@ -31,15 +31,14 @@ fi
 # default home is $HOME/spqrel
 export SPQREL_HOME=`real_path "${SPQREL_HOME:-$HOME/spqrel}"`
 
-export LD_LIBRARY_PATH=$SPQREL_HOME/lib:$LD_LIBRARY_PATH
-export DYLD_LIBRARY_PATH=$SPQREL_HOME/lib:$DYLD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SPQREL_HOME/lib
 
 # find pnpgen binaries
 export PNPGEN_BIN=`find $SPQREL_HOME -path "*/bin/pnpgen_translator"| sed 's@/pnpgen_translator@@'`
 
-export PATH=$SPQREL_HOME/bin:$PATH:$PNPGEN_BIN
+export PATH=$PATH:$SPQREL_HOME/bin:$PNPGEN_BIN
 
-export PYTHONPATH=$SPQREL_HOME/slu4p:$SPQREL_HOME/worktree/PetriNetPlans/PNPnaoqi/actions:${PYTHONPATH}
+export PYTHONPATH=${PYTHONPATH}:$SPQREL_HOME/slu4p:$SPQREL_HOME/worktree/PetriNetPlans/PNPnaoqi/actions
 export SLU4R_ROOT=$SPQREL_HOME/slu4p
 
 # Pepper's IP

@@ -25,7 +25,7 @@ say_readytofollow;
 #### 2 - START THE FOLLOWING PHASE
 
 asrenable; #new from andrea
-followuntil_stopfollowing; ! *if* (not persondetected) *do* say_comehere; restart_action !
+followuntil_screentouched; ! *if* (not persondetected) *do* say_comehere; restart_action !
 
 say_carhere;
 #saveposition_car;
@@ -57,4 +57,4 @@ waitfor_personbehind;
 #say_arrivedcar
 #dialogue_arrivedcar;
 
-say_goodbye;
+say_goodbye;d

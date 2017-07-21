@@ -1,13 +1,21 @@
 #!/usr/bin/env python
 
+import os
+import sys
+
+sys.path.append(os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '..'))
+)
+
+print sys.path
+
 import webnsock
 import web
 from signal import signal, SIGINT
 from logging import error, warn, info, debug, basicConfig, INFO
 from pprint import pformat, pprint
-#from ..tmux.tmux import TMux
+from tmux.tmux import TMux
 import qi
-import os
 from os import path
 import argparse
 
@@ -50,6 +58,8 @@ class SPQReLUIServer(webnsock.ControlServer):
         )
         print TEMPLATE_DIR, __file__
 
+        os.chdir(TEMPLATE_DIR)
+
         render = web.template.render(TEMPLATE_DIR,
                                      base='base', globals=globals())
 
@@ -63,7 +73,7 @@ class SPQReLUIServer(webnsock.ControlServer):
             path = '/tmux'
 
             def GET(self):
-                return render.index()
+                return render.tmux()
 
 
 

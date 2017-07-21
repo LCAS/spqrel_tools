@@ -61,7 +61,8 @@ optional arguments:
     {
       "faceid": "35adb184-2c7f-4fa4-a93d-f631c3e7b966", 
       "faceinfo": {
-        "gender": "male", 
+        "gender": "male",
+        "age": 38.0,
         "accessories": [], 
         "facialhair": {
           "sideburns": 0.2, 

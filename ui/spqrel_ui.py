@@ -23,6 +23,8 @@ import argparse
 import action_base
 from action_base import *
 
+from time import sleep
+
 #from event_abstract import EventAbstractClass
 
 
@@ -213,6 +215,7 @@ def qi_init():
     session = app.session
     memory_service = session.service("ALMemory")
 
+    # make action known
     action_base.init(session, "speechbtn", speechbtn_action_exec)
     return session
 
@@ -220,23 +223,22 @@ def qi_init():
 if __name__ == "__main__":
     session = qi_init()
 
-
     webserver = webnsock.Webserver(SPQReLUIServer())
     backend = webnsock.WSBackend(SQPReLProtocol)
     signal(SIGINT,
            lambda s, f: webnsock.signal_handler(webserver, backend, s, f))
     webserver.start()
 
-
     try:
+        # wait for the webserver to be running before displaying it
+        sleep(5)
         tablet_service = session.service("ALTabletService")
     except RuntimeError:
         warn('cannot find ALTabletService')
         tablet_service = None
+
     if tablet_service:
         tablet_service.showWebview('http://localhost:8127/')
-
-
 
     backend.talker()
 

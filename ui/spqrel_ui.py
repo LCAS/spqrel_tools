@@ -75,6 +75,12 @@ class SPQReLUIServer(webnsock.ControlServer):
             def GET(self):
                 return render.tmux()
 
+        class tmux(self.page):
+            path = '/blockly'
+
+            def GET(self):
+                return render.blockly()
+
 
 
 class SQPReLProtocol(webnsock.JsonWSProtocol):

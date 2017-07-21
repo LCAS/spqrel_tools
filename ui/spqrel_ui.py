@@ -141,7 +141,7 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
         super(SQPReLProtocol, self).__init__()
 
     def _answer_options_parse(self, inp, skip=1):
-        inp = inp.replace('%', ' ')
+        inp = inp.replace('+', ' ')
         return inp.split('_')[skip:]
 
     def on_ping(self, payload):

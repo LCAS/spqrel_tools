@@ -19,28 +19,28 @@ headPitch = -0.4 # head up
 actionName = "goto"
 
 def coords(params):
-	if (params=='partyroom'):
-		return [10,10]
-	elif (params=='bar'):
-		return [5,5]
-	elif (params=='hall'):
-		return [2,2]
-	elif (params=='test1'):
-		return [2,15]
-	elif (params=='test2'):
-		return [15,2]
-	elif (params=='exit'):
-		return [8.4, -4.8 ]
-	elif (params=='entrance'):
-		return [6.0, -5.1 ]
-	elif (params=='tv'):
-		return [2.2, -5.6]
-	elif (params=='rips'):
-		return [1.1, -2.0 ]
+    if (params=='partyroom'):
+        return [10,10]
+    elif (params=='bar'):
+        return [5,5]
+    elif (params=='hall'):
+        return [2,2]
+    elif (params=='test1'):
+        return [2,15]
+    elif (params=='test2'):
+        return [15,2]
+    elif (params=='exit'):
+        return [8.4, -4.8 ]
+    elif (params=='entrance'):
+        return [6.0, -5.1 ]
+    elif (params=='tv'):
+        return [2.2, -5.6]
+    elif (params=='rips'):
+        return [1.1, -2.0 ]
     elif (params=='car'):
         car_x,car_y = memory_service.getData("car/coordinates")
         return [car_x,car_y]
-	return [0,0]
+    return [0,0]
 
 
 goal_reached = False

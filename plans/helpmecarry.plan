@@ -41,7 +41,7 @@ headpose_0_-1;
 
 # er: personhere -> dialogue_whattime; waitfor_not_personhere; restart_action
 
-lookfor_persondetected; ! *if* timeout_lookfor_persondetected_20 *do* say_comehere; restart_action !
+lookfor_persondetected; ! *if* timeout_lookfor_20 *do* say_comehere; restart_action !
 #dialogue_guide;
 
 

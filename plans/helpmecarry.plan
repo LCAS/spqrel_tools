@@ -10,16 +10,16 @@ waitfor_personhere;
 say_hello;
 
 #dialoguestart_startfollow;
-#waitfor_screentouched; #waitfor_startfollow;
+waitfor_screentouched; #waitfor_startfollow;
 #dialoguestop_startfollow;
 
-dialogue_following; #new from andrea
+#dialogue_following; #new from andrea
 
 say_lookatme;
 #trackface_learnface;
 say_readytofollow;
 
-dialogue_following; #new from andrea
+#dialogue_following; #new from andrea
 
 
 #### 2 - START THE FOLLOWING PHASE
@@ -50,7 +50,10 @@ lookfor_persondetected; ! *if* timeout_lookfor_20 *do* say_comehere; restart_act
 say_followme;
 waitfor_personbehind;
 
-#goto_car; # er: (not personbehind) -> turn_around; dialogue_callperson
+#goto_car; ! *if* (not personbehind) -> turn_around; dialogue_callperson
+#waitfor_screentouched; ! *if* (not personbehind)
+
+
 #say_arrivedcar
 #dialogue_arrivedcar;
 

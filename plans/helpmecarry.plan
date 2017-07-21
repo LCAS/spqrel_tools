@@ -13,6 +13,8 @@ say_hello;
 #waitfor_screentouched; #waitfor_startfollow;
 #dialoguestop_startfollow;
 
+dialogue_following; #new from andrea
+
 say_lookatme;
 #trackface_learnface;
 say_readytofollow;
@@ -23,10 +25,10 @@ dialogue_following; #new from andrea
 #### 2 - START THE FOLLOWING PHASE
 
 asrenable; #new from andrea
-followuntil_stopfollowing; #new from andrea
+followuntil_stopfollowing; ! *if* (not persondetected) *do* say_comehere; restart_action !
 
-#say_carhere;
-#memorize_car;
+say_carhere;
+#saveposition_car;
 
 vsay_whatnow;
 #dialogue_lookforhelp; #understand the location to go "helplocation"
@@ -38,8 +40,6 @@ say_lookforhelp;
 headpose_0_-1;
 
 #goto_helplocation; ! *if* personhere *do* dialogue_whattime; restart_action !
-
-# er: personhere -> dialogue_whattime; waitfor_not_personhere; restart_action
 
 lookfor_persondetected; ! *if* timeout_lookfor_20 *do* say_comehere; restart_action !
 #dialogue_guide;

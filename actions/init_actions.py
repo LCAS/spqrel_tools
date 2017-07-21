@@ -12,7 +12,7 @@ from action_base import *
 import dooropen, obstaclehere, screentouched
 import say, vsay, wait, waitfor, goto, turn, lookfor, dialogue, dialoguestart, dialoguestop, asrenable
 import posture, personhere, headpose, followuntil, movementdetected, webpage, personbehind, persondetected
-import execplan
+import execplan, saveposition
 
 def init(session):
     screentouched.init(session)
@@ -37,6 +37,7 @@ def init(session):
     personbehind.init(session)
     persondetected.init(session)
     execplan.init(session)
+    saveposition.init(session)
 
 
 def quit():
@@ -62,6 +63,7 @@ def quit():
     personbehind.quit()
     persondetected.quit()
     execplan.quit()
+    saveposition.quit()
 
 
 def main():

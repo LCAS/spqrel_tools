@@ -1,17 +1,25 @@
 # enter the arena and goto location
 waitfor_dooropen;
-enter_maindoor_in;
+vsay_starting;
+goto_entrance;
+goto_location; ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
 
-#LABEL_STARTPOSITION;
-goto_location;
+# RUN 1
 execplan;
+goto_location;
 
-goto_location;
+# RUN 2
 execplan;
+goto_location;
 
-goto_location;
+# RUN 3
 execplan;
+goto_location;
+
+
 
 # exit the arena
-goto_hall;
-enter_maindoor_out;
+vsay_farewell;
+goto_entrance; ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
+goto_exit;
+

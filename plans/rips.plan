@@ -1,11 +1,16 @@
-posture_Stand;
+# enter the arena and goto RIPS location
 waitfor_dooropen;
-say_starting;
+vsay_starting;
 goto_entrance;
-goto_rips;
-waitfor_screentouched;
-say_goodbye;
+goto_ripslocation;
+
+# 
+vsay_inspectme;
+waitfor_screentouched;  # replace with push a specific button on the GUI
+
+# exit the arena
+vsay_farewell;
 goto_entrance;
 goto_exit;
-posture_Rest
+
 

@@ -1,2 +1,2 @@
-*if* obstaclehere *during* goto *do* say_obstacle; waitfor_not_obstaclehere; restart_action
+
 

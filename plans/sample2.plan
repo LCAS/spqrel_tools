@@ -1,6 +1,6 @@
 waitfor_dooropen; *if*  (not screentouched)   *do* skip_action
 #say_starting; 
-#enterdoor
+
 
 #dialogue_follow;
 #wait_10;

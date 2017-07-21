@@ -185,7 +185,7 @@
     <position x="1100" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>waitfor_screentouched.exec</value>
+    <value>dialogue_following.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -299,7 +299,7 @@
     <position x="1820" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>followuntil_screentouched.exec</value>
+    <value>dialogue_following.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -332,12 +332,12 @@
     </FillColor>
   </toolspecific>
 </place>
-<place id="n33">
+<place id="n34">
   <graphics>
-    <position x="1880" y="400" />    <size width="32" height="32" />
+    <position x="2060" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>I33</value>
+    <value>asrenable.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -351,12 +351,12 @@
     </FillColor>
   </toolspecific>
 </place>
-<place id="n35">
+<place id="n36">
   <graphics>
-    <position x="2000" y="400" />    <size width="32" height="32" />
+    <position x="2180" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>say_comehere.exec</value>
+    <value>X36</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -370,12 +370,12 @@
     </FillColor>
   </toolspecific>
 </place>
-<place id="n37">
+<place id="n38">
   <graphics>
-    <position x="2120" y="400" />    <size width="32" height="32" />
+    <position x="2300" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>X37</value>
+    <value>followuntil_stopfollowing.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -389,12 +389,12 @@
     </FillColor>
   </toolspecific>
 </place>
-<place id="n39">
+<place id="n40">
   <graphics>
-    <position x="2240" y="400" />    <size width="32" height="32" />
+    <position x="2420" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>waitfor_personhere.exec</value>
+    <value>X40</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -413,7 +413,7 @@
     <position x="2360" y="400" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>X41</value>
+    <value>I41</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -432,7 +432,7 @@
     <position x="2480" y="400" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>say_readytofollow.exec</value>
+    <value>say_comehere.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -467,7 +467,7 @@
 </place>
 <place id="n49">
   <graphics>
-    <position x="2060" y="500" />    <size width="32" height="32" />
+    <position x="2540" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>say_carhere.exec</value>
@@ -486,7 +486,7 @@
 </place>
 <place id="n51">
   <graphics>
-    <position x="2180" y="500" />    <size width="32" height="32" />
+    <position x="2660" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>X51</value>
@@ -505,10 +505,10 @@
 </place>
 <place id="n53">
   <graphics>
-    <position x="2300" y="500" />    <size width="32" height="32" />
+    <position x="2780" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>say_whatnow.exec</value>
+    <value>vsay_whatnow.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -524,7 +524,7 @@
 </place>
 <place id="n55">
   <graphics>
-    <position x="2420" y="500" />    <size width="32" height="32" />
+    <position x="2900" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>X55</value>
@@ -543,7 +543,7 @@
 </place>
 <place id="n57">
   <graphics>
-    <position x="2540" y="500" />    <size width="32" height="32" />
+    <position x="3020" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>say_lookforhelp.exec</value>
@@ -562,7 +562,7 @@
 </place>
 <place id="n59">
   <graphics>
-    <position x="2660" y="500" />    <size width="32" height="32" />
+    <position x="3140" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>X59</value>
@@ -581,7 +581,7 @@
 </place>
 <place id="n61">
   <graphics>
-    <position x="2780" y="500" />    <size width="32" height="32" />
+    <position x="3260" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>headpose_0_-1.exec</value>
@@ -600,7 +600,7 @@
 </place>
 <place id="n63">
   <graphics>
-    <position x="2900" y="500" />    <size width="32" height="32" />
+    <position x="3380" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>X63</value>
@@ -619,7 +619,7 @@
 </place>
 <place id="n65">
   <graphics>
-    <position x="3020" y="500" />    <size width="32" height="32" />
+    <position x="3500" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>lookfor_persondetected.exec</value>
@@ -638,7 +638,7 @@
 </place>
 <place id="n67">
   <graphics>
-    <position x="3140" y="500" />    <size width="32" height="32" />
+    <position x="3620" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>X67</value>
@@ -657,7 +657,7 @@
 </place>
 <place id="n68">
   <graphics>
-    <position x="3080" y="400" />    <size width="32" height="32" />
+    <position x="3560" y="400" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>I68</value>
@@ -676,7 +676,7 @@
 </place>
 <place id="n70">
   <graphics>
-    <position x="3200" y="400" />    <size width="32" height="32" />
+    <position x="3680" y="400" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>say_comehere.exec</value>
@@ -695,7 +695,7 @@
 </place>
 <place id="n72">
   <graphics>
-    <position x="3320" y="400" />    <size width="32" height="32" />
+    <position x="3800" y="400" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>X72</value>
@@ -714,7 +714,7 @@
 </place>
 <place id="n76">
   <graphics>
-    <position x="3260" y="500" />    <size width="32" height="32" />
+    <position x="3740" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>say_followme.exec</value>
@@ -733,7 +733,7 @@
 </place>
 <place id="n78">
   <graphics>
-    <position x="3380" y="500" />    <size width="32" height="32" />
+    <position x="3860" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>X78</value>
@@ -752,7 +752,7 @@
 </place>
 <place id="n80">
   <graphics>
-    <position x="3500" y="500" />    <size width="32" height="32" />
+    <position x="3980" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>waitfor_personbehind.exec</value>
@@ -771,7 +771,7 @@
 </place>
 <place id="n82">
   <graphics>
-    <position x="3620" y="500" />    <size width="32" height="32" />
+    <position x="4100" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>X82</value>
@@ -790,7 +790,7 @@
 </place>
 <place id="n84">
   <graphics>
-    <position x="3740" y="500" />    <size width="32" height="32" />
+    <position x="4220" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>say_goodbye.exec</value>
@@ -809,7 +809,7 @@
 </place>
 <place id="n86">
   <graphics>
-    <position x="3860" y="500" />    <size width="32" height="32" />
+    <position x="4340" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
     <value>goal</value>
@@ -974,7 +974,7 @@
   <graphics>
     <position x="1040" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>waitfor_screentouched.start</value>
+    <value>dialogue_following.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -992,7 +992,7 @@
   <graphics>
     <position x="1160" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>waitfor_screentouched.end</value>
+    <value>dialogue_following.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1082,7 +1082,7 @@
   <graphics>
     <position x="1760" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>followuntil_screentouched.start</value>
+    <value>dialogue_following.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1100,7 +1100,7 @@
   <graphics>
     <position x="1880" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>followuntil_screentouched.end</value>
+    <value>dialogue_following.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1114,11 +1114,11 @@
     </FillColor>
   </toolspecific>
 </transition>
-<transition id="n34">
+<transition id="n33">
   <graphics>
-    <position x="1940" y="400" />    <size width="8" height="32" />  </graphics>
+    <position x="2000" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>say_comehere.start</value>
+    <value>asrenable.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1132,11 +1132,11 @@
     </FillColor>
   </toolspecific>
 </transition>
-<transition id="n36">
+<transition id="n35">
   <graphics>
-    <position x="2060" y="400" />    <size width="8" height="32" />  </graphics>
+    <position x="2120" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>say_comehere.end</value>
+    <value>asrenable.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1150,11 +1150,11 @@
     </FillColor>
   </toolspecific>
 </transition>
-<transition id="n38">
+<transition id="n37">
   <graphics>
-    <position x="2180" y="400" />    <size width="8" height="32" />  </graphics>
+    <position x="2240" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>waitfor_personhere.start</value>
+    <value>followuntil_stopfollowing.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1168,11 +1168,11 @@
     </FillColor>
   </toolspecific>
 </transition>
-<transition id="n40">
+<transition id="n39">
   <graphics>
-    <position x="2300" y="400" />    <size width="8" height="32" />  </graphics>
+    <position x="2360" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>waitfor_personhere.end</value>
+    <value>followuntil_stopfollowing.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1190,7 +1190,7 @@
   <graphics>
     <position x="2420" y="400" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>say_readytofollow.start</value>
+    <value>say_comehere.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1208,7 +1208,7 @@
   <graphics>
     <position x="2540" y="400" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>say_readytofollow.end</value>
+    <value>say_comehere.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1224,9 +1224,9 @@
 </transition>
 <transition id="n46">
   <graphics>
-    <position x="1820" y="400" />    <size width="8" height="32" />  </graphics>
+    <position x="2300" y="400" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>followuntil_screentouched.interrupt [not_persondetected]</value>
+    <value>followuntil_stopfollowing.interrupt [(not persondetected)]</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1260,7 +1260,7 @@
 </transition>
 <transition id="n48">
   <graphics>
-    <position x="2000" y="500" />    <size width="8" height="32" />  </graphics>
+    <position x="2480" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>say_carhere.start</value>
     <graphics>
@@ -1278,7 +1278,7 @@
 </transition>
 <transition id="n50">
   <graphics>
-    <position x="2120" y="500" />    <size width="8" height="32" />  </graphics>
+    <position x="2600" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>say_carhere.end</value>
     <graphics>
@@ -1296,9 +1296,9 @@
 </transition>
 <transition id="n52">
   <graphics>
-    <position x="2240" y="500" />    <size width="8" height="32" />  </graphics>
+    <position x="2720" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>say_whatnow.start</value>
+    <value>vsay_whatnow.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1314,9 +1314,9 @@
 </transition>
 <transition id="n54">
   <graphics>
-    <position x="2360" y="500" />    <size width="8" height="32" />  </graphics>
+    <position x="2840" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>say_whatnow.end</value>
+    <value>vsay_whatnow.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1332,7 +1332,7 @@
 </transition>
 <transition id="n56">
   <graphics>
-    <position x="2480" y="500" />    <size width="8" height="32" />  </graphics>
+    <position x="2960" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>say_lookforhelp.start</value>
     <graphics>
@@ -1350,7 +1350,7 @@
 </transition>
 <transition id="n58">
   <graphics>
-    <position x="2600" y="500" />    <size width="8" height="32" />  </graphics>
+    <position x="3080" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>say_lookforhelp.end</value>
     <graphics>
@@ -1368,7 +1368,7 @@
 </transition>
 <transition id="n60">
   <graphics>
-    <position x="2720" y="500" />    <size width="8" height="32" />  </graphics>
+    <position x="3200" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>headpose_0_-1.start</value>
     <graphics>
@@ -1386,7 +1386,7 @@
 </transition>
 <transition id="n62">
   <graphics>
-    <position x="2840" y="500" />    <size width="8" height="32" />  </graphics>
+    <position x="3320" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>headpose_0_-1.end</value>
     <graphics>
@@ -1404,7 +1404,7 @@
 </transition>
 <transition id="n64">
   <graphics>
-    <position x="2960" y="500" />    <size width="8" height="32" />  </graphics>
+    <position x="3440" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>lookfor_persondetected.start</value>
     <graphics>
@@ -1422,7 +1422,7 @@
 </transition>
 <transition id="n66">
   <graphics>
-    <position x="3080" y="500" />    <size width="8" height="32" />  </graphics>
+    <position x="3560" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>lookfor_persondetected.end</value>
     <graphics>
@@ -1440,7 +1440,7 @@
 </transition>
 <transition id="n69">
   <graphics>
-    <position x="3140" y="400" />    <size width="8" height="32" />  </graphics>
+    <position x="3620" y="400" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>say_comehere.start</value>
     <graphics>
@@ -1458,7 +1458,7 @@
 </transition>
 <transition id="n71">
   <graphics>
-    <position x="3260" y="400" />    <size width="8" height="32" />  </graphics>
+    <position x="3740" y="400" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>say_comehere.end</value>
     <graphics>
@@ -1476,7 +1476,7 @@
 </transition>
 <transition id="n73">
   <graphics>
-    <position x="3020" y="400" />    <size width="8" height="32" />  </graphics>
+    <position x="3500" y="400" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>lookfor_persondetected.interrupt [timeout_lookfor_20]</value>
     <graphics>
@@ -1494,7 +1494,7 @@
 </transition>
 <transition id="n74">
   <graphics>
-    <position x="3380" y="400" />    <size width="8" height="32" />  </graphics>
+    <position x="3860" y="400" />    <size width="8" height="32" />  </graphics>
   <name>
     <value> </value>
     <graphics>
@@ -1512,7 +1512,7 @@
 </transition>
 <transition id="n75">
   <graphics>
-    <position x="3200" y="500" />    <size width="8" height="32" />  </graphics>
+    <position x="3680" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>say_followme.start</value>
     <graphics>
@@ -1530,7 +1530,7 @@
 </transition>
 <transition id="n77">
   <graphics>
-    <position x="3320" y="500" />    <size width="8" height="32" />  </graphics>
+    <position x="3800" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>say_followme.end</value>
     <graphics>
@@ -1548,7 +1548,7 @@
 </transition>
 <transition id="n79">
   <graphics>
-    <position x="3440" y="500" />    <size width="8" height="32" />  </graphics>
+    <position x="3920" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>waitfor_personbehind.start</value>
     <graphics>
@@ -1566,7 +1566,7 @@
 </transition>
 <transition id="n81">
   <graphics>
-    <position x="3560" y="500" />    <size width="8" height="32" />  </graphics>
+    <position x="4040" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>waitfor_personbehind.end</value>
     <graphics>
@@ -1584,7 +1584,7 @@
 </transition>
 <transition id="n83">
   <graphics>
-    <position x="3680" y="500" />    <size width="8" height="32" />  </graphics>
+    <position x="4160" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>say_goodbye.start</value>
     <graphics>
@@ -1602,7 +1602,7 @@
 </transition>
 <transition id="n85">
   <graphics>
-    <position x="3800" y="500" />    <size width="8" height="32" />  </graphics>
+    <position x="4280" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
     <value>say_goodbye.end</value>
     <graphics>
@@ -2034,7 +2034,7 @@
     </ArrowMode>
   </toolspecific>
 </arc>
-<arc id="a32" source="n33" target="n34" >
+<arc id="a32" source="n32" target="n33" >
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -2047,7 +2047,7 @@
     </ArrowMode>
   </toolspecific>
 </arc>
-<arc id="a33" source="n34" target="n35" >
+<arc id="a33" source="n33" target="n34" >
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -2060,7 +2060,7 @@
     </ArrowMode>
   </toolspecific>
 </arc>
-<arc id="a34" source="n35" target="n36" >
+<arc id="a34" source="n34" target="n35" >
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -2073,7 +2073,7 @@
     </ArrowMode>
   </toolspecific>
 </arc>
-<arc id="a35" source="n36" target="n37" >
+<arc id="a35" source="n35" target="n36" >
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -2086,7 +2086,7 @@
     </ArrowMode>
   </toolspecific>
 </arc>
-<arc id="a36" source="n37" target="n38" >
+<arc id="a36" source="n36" target="n37" >
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -2099,7 +2099,7 @@
     </ArrowMode>
   </toolspecific>
 </arc>
-<arc id="a37" source="n38" target="n39" >
+<arc id="a37" source="n37" target="n38" >
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -2112,7 +2112,7 @@
     </ArrowMode>
   </toolspecific>
 </arc>
-<arc id="a38" source="n39" target="n40" >
+<arc id="a38" source="n38" target="n39" >
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -2125,7 +2125,7 @@
     </ArrowMode>
   </toolspecific>
 </arc>
-<arc id="a39" source="n40" target="n41" >
+<arc id="a39" source="n39" target="n40" >
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -2190,7 +2190,7 @@
     </ArrowMode>
   </toolspecific>
 </arc>
-<arc id="a44" source="n30" target="n46" >
+<arc id="a44" source="n38" target="n46" >
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -2203,7 +2203,7 @@
     </ArrowMode>
   </toolspecific>
 </arc>
-<arc id="a45" source="n46" target="n33" >
+<arc id="a45" source="n46" target="n41" >
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -2229,7 +2229,7 @@
     </ArrowMode>
   </toolspecific>
 </arc>
-<arc id="a47" source="n47" target="n28" >
+<arc id="a47" source="n47" target="n36" >
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -2242,7 +2242,7 @@
     </ArrowMode>
   </toolspecific>
 </arc>
-<arc id="a48" source="n32" target="n48" >
+<arc id="a48" source="n40" target="n48" >
     <graphics>
       <offset x="0" y="40" />
     </graphics>

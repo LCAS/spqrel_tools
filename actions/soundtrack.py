@@ -26,7 +26,7 @@ def actionThread_exec (params):
     tracker_service = session.service("ALTracker")
     tracker_service.setMode("WholeBody")
 
-    tracker_service.registerTarget("Sound",["1","0.1"])
+    tracker_service.registerTarget("Sound",[1,0.1])
     tracker_service.track("Sound")
     val = False
     # action init

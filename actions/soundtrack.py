@@ -25,12 +25,7 @@ def actionThread_exec (params):
 
     tracker_service = session.service("ALTracker")
     tracker_service.setMode("WholeBody")
-    v = params.split('_')
-    #distance = v[0]
-    #confidence = v[1]
-    distance = 1
-    confidence = 0.5
-
+    
     tracker_service.registerTarget("Sound",["1","0.5"])
     tracker_service.track("Sound")
     val = False

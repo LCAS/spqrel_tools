@@ -17,9 +17,6 @@ IDNUMBER for now is the same as the personid providede by PeopleDetected
 
 TODO
 -----
-Topological position 
-posetopological={'current_node':'TODO','closest_node':'TODO'}
-
 How and when remove all this data???
 
 '''
@@ -37,8 +34,8 @@ import json
 from naoqi import ALProxy
 
 from utils import point2world
-#import conditions
-#from conditions import set_condition
+import conditions
+from conditions import set_condition
 
 
 

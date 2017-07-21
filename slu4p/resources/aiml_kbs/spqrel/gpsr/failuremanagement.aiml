@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<aiml version="1.0">
+
+    <category>
+        <pattern>SOFTFAILUREMANAGEMENT</pattern>
+        <template>
+            <srai>MISUNDERSTAND</srai>
+            <srai>REQUESTREPEAT</srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>FAILUREMANAGEMENT</pattern>
+        <template>
+            [SAY]
+            <srai>MISUNDERSTAND</srai>
+            <condition>
+                <li name="firstmisunderstanding" value="TRUE">
+                    <srai>GIVEUP</srai>
+                    <think>
+                        <set name="topic"></set>
+                        <set name="firstmisunderstanding">FALSE</set>
+                    </think>
+                </li>
+                <li>
+                    <srai>REQUESTREPEAT</srai>
+                </li>
+            </condition>
+            <think>
+                <set name="firstmisunderstanding">TRUE</set>
+            </think>
+        </template>
+    </category>
+
+    <category>
+        <pattern>MISUNDERSTAND</pattern>
+        <template>
+            <random>
+                <li>I'm sorry, I don't understand.</li>
+                <li>What? I don't understand what you said.</li>
+                <li>Don't get upset, but I don't understand.</li>
+                <li>I'm just a poor robot and sometimes I don't get what you say.</li>
+                <li>Really sorry, but I don't understand.</li>
+                <li>I didn't get anything, sorry.</li>
+                <li>Maybe it's too noisy here.</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>REQUESTREPEAT</pattern>
+        <template>
+            <random>
+                <li>Can you repeat?</li>
+                <li>Repeat please.</li>
+                <li>Let's try again. Can you repeat?</li>
+                <li>It would be great if you could repeat your sentence.</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>GIVEUP</pattern>
+        <template>
+            <random>
+                <li>Let's go on. Tell me the next question or command.</li>
+                <li>I think it's better to proceed to the next question or command.</li>
+                <li>I cannot understand this question or command. Let's move to the next one.</li>
+            </random>
+            |[STOP]
+        </template>
+    </category>
+
+</aiml>

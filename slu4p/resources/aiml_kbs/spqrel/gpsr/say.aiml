@@ -235,4 +235,27 @@
         </template>
     </category>
 
+    <category>
+        <pattern>STARTING</pattern>
+        <template>
+            <random>
+                <li>Let's start!</li>
+                <li>I'm ready to do it!</li>
+                <li>Great! Let's do it!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>FAREWELL</pattern>
+        <template>
+            <random>
+                <li>It was a pleasure to help you!</li>
+                <li>Well done!</li>
+                <li>Mission accomplished!</li>
+            </random>
+            Bye bye!
+        </template>
+    </category>
+
 </aiml>

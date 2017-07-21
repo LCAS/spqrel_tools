@@ -35,7 +35,7 @@ dialogue_mutequestion;
 
 < (sounddetected)? turn_...
 >
-dialogue_lastresponse; #need to handle the case in which the robot do not understand
+dialogue_lastresponse;
 
 dialogue_mutequestion;
 

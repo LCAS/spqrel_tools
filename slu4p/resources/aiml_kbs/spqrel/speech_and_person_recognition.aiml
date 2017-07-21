@@ -5,17 +5,6 @@
     <topic name="FIVEQUESTIONS">
 
         <category>
-            <pattern>RESET</pattern>
-            <template>
-                <think>
-                    <think>
-                        <set name="counter">TOFILL</set>
-                    </think>
-                </think>
-            </template>
-        </category>
-
-        <category>
             <pattern>START</pattern>
             <template>
             </template>

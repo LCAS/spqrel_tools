@@ -18,14 +18,13 @@ def actionThread_exec (params):
     print "Action "+actionName+" started with params "+params
     # action init
     count = 1
-    tosay = phraseToSay(params)
-    tts_service.say(tosay)
-    print "  -- Say: "+tosay
+    position_name = params
     # action init
     while (getattr(t, "do_run", True) and count>0): 
         print "Action "+actionName+" "+params+" exec..."
         # action exec
         count = count - 1
+        print "saved" + position_name 
         # action exec
         time.sleep(0.1)
 

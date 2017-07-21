@@ -25,10 +25,10 @@ dialogue_following; #new from andrea
 asrenable; #new from andrea
 followuntil_stopfollowing; #new from andrea
 
-say_carhere;
+#say_carhere;
 #memorize_car;
 
-say_whatnow;
+vsay_whatnow;
 #dialogue_lookforhelp; #understand the location to go "helplocation"
 
 

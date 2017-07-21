@@ -6,60 +6,11 @@
 
         <category>
             <pattern>START</pattern>
-            <template>[SAY] I'm ready to follow you!|[STOPASR]</template>
+            <template>[SAY] I'm ready to follow you!</template>
         </category>
 
         <category>
-            <pattern>* FOLLOW *</pattern>
-            <template>
-                <srai>SAY FOLLOWME</srai>
-            </template>
-        </category>
-
-        <category>
-            <pattern>* FOLLOW</pattern>
-            <template>
-                <srai>SAY FOLLOWME</srai>
-            </template>
-        </category>
-
-        <category>
-            <pattern>FOLLOW *</pattern>
-            <template>
-                <srai>SAY FOLLOWME</srai>
-            </template>
-        </category>
-
-        <category>
-            <pattern>FOLLOW</pattern>
-            <template>
-                <srai>SAY FOLLOWME</srai>
-            </template>
-        </category>
-
-        <category>
-            <pattern>* CHASE *</pattern>
-            <template>
-                <srai>SAY FOLLOWME</srai>
-            </template>
-        </category>
-
-        <category>
-            <pattern>* CHASE</pattern>
-            <template>
-                <srai>SAY FOLLOWME</srai>
-            </template>
-        </category>
-
-        <category>
-            <pattern>CHASE *</pattern>
-            <template>
-                <srai>SAY FOLLOWME</srai>
-            </template>
-        </category>
-
-        <category>
-            <pattern>CHASE</pattern>
+            <pattern>*</pattern>
             <template>
                 <srai>SAY FOLLOWME</srai>
             </template>
@@ -68,6 +19,7 @@
         <category>
             <pattern>STOP</pattern>
             <template>
+                [STOP]
                 <set name="topic">WAITFORSTOPFOLLOWING</set>
             </template>
         </category>

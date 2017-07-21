@@ -167,6 +167,7 @@
                 <li>I'm chasing you.</li>
             </random>
             Please go ahead!
+            |[STOP]
         </template>
     </category>
 
@@ -214,7 +215,7 @@
 
 
     <category>
-        <pattern>WHATWEDONOW</pattern>
+        <pattern>WHATNOW</pattern>
         <template>
             <random>
                 <li>What can we do now?</li>

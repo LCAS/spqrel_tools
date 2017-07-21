@@ -9,6 +9,7 @@ sys.path.append(os.path.abspath(
 
 print sys.path
 
+import threading
 import webnsock
 import web
 from signal import signal, SIGINT
@@ -18,6 +19,9 @@ from tmux.tmux import TMux
 import qi
 from os import path
 import argparse
+
+import action_base
+from action_base import *
 
 #from event_abstract import EventAbstractClass
 
@@ -157,6 +161,32 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
         return {'button_outcome': True}
 
 
+def speechbtn_action_exec(params):
+    t = threading.currentThread()
+    memory_service = getattr(t, "mem_serv", None)
+    # tts_service = getattr(t, "session", None).service("ALTextToSpeech")
+    print "Action speechbtn started with params " + params
+    # action init
+    # action init
+    if len(params) > 0:
+        memory_service.raiseEvent('AnswerOptions', 'speechbtn_' + params)
+    else:
+        memory_service.raiseEvent('AnswerOptions', 'speechbtn')
+    print "Action speechbtn terminated"
+    # action end
+    memory_service.raiseEvent("PNP_action_result_speechbtn",
+                              "success")
+
+
+
+def quit():
+    print actionName+" quit"
+    actionThread_exec.do_run = False
+
+
+
+
+
 def qi_init():
     global memory_service, tablet_service
     parser = argparse.ArgumentParser()
@@ -182,6 +212,22 @@ def qi_init():
     app.start()
     session = app.session
     memory_service = session.service("ALMemory")
+
+    action_base.init(session, "speechbtn", speechbtn_action_exec)
+    return session
+
+
+if __name__ == "__main__":
+    session = qi_init()
+
+
+    webserver = webnsock.Webserver(SPQReLUIServer())
+    backend = webnsock.WSBackend(SQPReLProtocol)
+    signal(SIGINT,
+           lambda s, f: webnsock.signal_handler(webserver, backend, s, f))
+    webserver.start()
+
+
     try:
         tablet_service = session.service("ALTabletService")
     except RuntimeError:
@@ -189,16 +235,8 @@ def qi_init():
         tablet_service = None
     if tablet_service:
         tablet_service.showWebview('http://localhost:8127/')
-    #app.run()
 
 
-if __name__ == "__main__":
-    qi_init()
 
-    webserver = webnsock.Webserver(SPQReLUIServer())
-    backend = webnsock.WSBackend(SQPReLProtocol)
-    signal(SIGINT,
-           lambda s, f: webnsock.signal_handler(webserver, backend, s, f))
-    webserver.start()
     backend.talker()
 

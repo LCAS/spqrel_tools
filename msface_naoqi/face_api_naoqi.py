@@ -22,17 +22,23 @@ except:
 
 class CognitiveFace():
 
-    def __init__(self):
+    def __init__(self,person_group_id='robocup_test', delete_group_first=False):
         
         self._api_key = 'be062e88698e4777ac6196623d7230dd'
         self._topic_timeout = 10 
         #startWindowThread()
         Key.set(self._api_key)
 
-        self._person_group_id = 'robocup_test' 
+        self._person_group_id = person_group_id
                                                 
-        self._init_person_group(self._person_group_id,False)
+        self._init_person_group(self._person_group_id,delete_group_first)
+
+
+    def init_group_srv(self, gid):
         
+        self._init_person_group(gid, delete_first=False)
+
+                
     def _init_person_group(self, gid, delete_first=False):
         person_group = None
         try:
@@ -235,5 +241,27 @@ class CognitiveFace():
                           str(e))
         return json_faces
 
+    def delete_person_srv(self,  nameperson):
+        gid = self._person_group_id
+        person = self._find_person_by_name(name)
+        try:
+            # if we are expected to reinitialise this, and the group
+            # already existed, delete it first
+            if person is not None :
+                print('delete existing person "%s"'
+                              ' before re-creating it.' % name)
+                PERSON.delete(gid, person['personId'])
+                person = None
+        except CognitiveFaceException as e:
+            print('Operation failed for person "%s".'
+                          ' Exception: %s'
+                          % (gid, e))
+        return person
+
+    def delete_allpersons_srv(self, gid):
+        
+        self._init_person_group(gid, delete_first=True)
+
+                
 #cfa = CognitiveFace()
 

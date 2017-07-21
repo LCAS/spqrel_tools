@@ -19,4 +19,40 @@ During initialization it active the memory `Actions/FaceRecognition/Enabled` wit
  * `detect_<identify bool>` tries to identify all the detected faces and extract attributes like "gender", "smile", and "age". Returns a JSON structure in `Actions/FaceRecognition/Recognition`. if the `identify` flag is `true` in the request, the API tries to identify all the detected faces.
 
 
+ * `initgroup_<namegroup>`
+
+ * `deleteperson_<nameperson>`
+
+ * `deleteallpersons_<namegroup>`
+
+
+### Running
+
+```
+$ python init_naoqi_bridge.py --group_recognition robocup_test
+```
+### Usage
+
+```
+usage: init_naoqi_bridge.py [-h] [--pip PIP] [--pport PPORT] [--camera CAMERA]
+                            [--outvideo OUTVIDEO]
+                            [--group_recognition GROUP_RECOGNITION]
+                            [--delete_group_first DELETE_GROUP_FIRST]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --pip PIP             Robot IP address. On robot or Local Naoqi: use
+                        '127.0.0.1'.
+  --pport PPORT         Naoqi port number
+  --camera CAMERA       Robot camera ID address. 0 by default
+  --outvideo OUTVIDEO   Output video name output.avi
+  --group_recognition GROUP_RECOGNITION
+                        Name of group for recognition robocup_test
+  --delete_group_first DELETE_GROUP_FIRST
+                        Initialization of the group deleting all persons
+
+```
+
+
+
 

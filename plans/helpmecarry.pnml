@@ -337,7 +337,7 @@
     <position x="2060" y="500" />    <size width="32" height="32" />
   </graphics>
   <name>
-    <value>followuntil_stopfollowing.exec</value>
+    <value>followuntil_screentouched.exec</value>
     <graphics>
       <offset x="0" y="40" />
     </graphics>
@@ -1080,7 +1080,7 @@
   <graphics>
     <position x="2000" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>followuntil_stopfollowing.start</value>
+    <value>followuntil_screentouched.start</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1098,7 +1098,7 @@
   <graphics>
     <position x="2120" y="500" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>followuntil_stopfollowing.end</value>
+    <value>followuntil_screentouched.end</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>
@@ -1152,7 +1152,7 @@
   <graphics>
     <position x="2060" y="400" />    <size width="8" height="32" />  </graphics>
   <name>
-    <value>followuntil_stopfollowing.interrupt [(not persondetected)]</value>
+    <value>followuntil_screentouched.interrupt [(not persondetected)]</value>
     <graphics>
       <offset x="0" y="-20" />
     </graphics>

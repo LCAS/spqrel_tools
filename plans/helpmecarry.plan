@@ -25,7 +25,7 @@ say_readytofollow;
 #### 2 - START THE FOLLOWING PHASE
 
 asrenable; #new from andrea
-followuntil_stopfollowing; ! *if* (not persondetected) *do* say_comehere; restart_action !
+followuntil_screentouched; ! *if* (not persondetected) *do* say_comehere; restart_action !
 
 say_carhere;
 #saveposition_car;
@@ -50,9 +50,9 @@ lookfor_persondetected; ! *if* timeout_lookfor_20 *do* say_comehere; restart_act
 say_followme;
 waitfor_personbehind;
 
-#goto_car; ! *if* (not personbehind) -> turn_around; dialogue_callperson
-#waitfor_screentouched; ! *if* (not personbehind)
+#goto_car; ! *if* (not personbehind) *do*  turn_180; vsay_gotocar ; turn_180 ; waitfor_personbehind; restart_action ;
 
+## gotocar: "hey dont get distracted, please follow me again to the car, place yourself behind me to continue"
 
 #say_arrivedcar
 #dialogue_arrivedcar;

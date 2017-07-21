@@ -25,11 +25,8 @@ def actionThread_exec (params):
 
     tracker_service = session.service("ALTracker")
     tracker_service.setMode("WholeBody")
-    v = params.split('_')
-    distance = v[0]
-    confidence = v[1]
 
-    tracker_service.registerTarget("Sound",distance,confidence)
+    tracker_service.registerTarget("Sound",[1,0.1])
     tracker_service.track("Sound")
     val = False
     # action init
@@ -38,8 +35,7 @@ def actionThread_exec (params):
         #print "Action "+actionName+" "+params+" exec..."
         # action exec
         try:
-	        cval = get_condition(memory_service, params)
-	        val = (cval.lower()=='true') or (cval=='1')
+            val = get_condition(memory_service, params)
         except:
 	        pass
         # action exec

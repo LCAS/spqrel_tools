@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 
 import webnsock
+import web
 from signal import signal, SIGINT
 from logging import error, warn, info, debug, basicConfig, INFO
 from pprint import pformat, pprint
+#from ..tmux.tmux import TMux
 import qi
 import os
+from os import path
 import argparse
 
 #from event_abstract import EventAbstractClass
@@ -31,6 +34,38 @@ class ALSubscriber():
         #self.breathing = ALProxy("ALMotion")
         #self.breathing.setBreathEnabled('Arms', True)
         #self.configuration = {"bodyLanguageMode": body_language_mode}
+
+
+class SPQReLUIServer(webnsock.ControlServer):
+
+    def __init__(self):
+
+        webnsock.ControlServer.__init__(self)
+
+        TEMPLATE_DIR = path.realpath(
+            path.join(
+                path.dirname(__file__),
+                'www'
+            )
+        )
+        print TEMPLATE_DIR, __file__
+
+        render = web.template.render(TEMPLATE_DIR,
+                                     base='base', globals=globals())
+
+        class Index(self.page):
+            path = '/'
+
+            def GET(self):
+                return render.index()
+
+        class tmux(self.page):
+            path = '/tmux'
+
+            def GET(self):
+                return render.index()
+
+
 
 class SQPReLProtocol(webnsock.JsonWSProtocol):
 
@@ -130,7 +165,7 @@ def qi_init():
 if __name__ == "__main__":
     qi_init()
 
-    webserver = webnsock.Webserver(webnsock.ControlServer())
+    webserver = webnsock.Webserver(SPQReLUIServer())
     backend = webnsock.WSBackend(SQPReLProtocol)
     signal(SIGINT,
            lambda s, f: webnsock.signal_handler(webserver, backend, s, f))

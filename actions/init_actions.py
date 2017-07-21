@@ -16,7 +16,7 @@ from action_base import *
 
 import dooropen, obstaclehere, screentouched
 import say, vsay, wait, waitfor, goto, turn, lookfor, dialogue, dialoguestart, dialoguestop, asrenable
-import posture, personhere, headpose, followuntil, movementdetected, webpage, personbehind, persondetected
+import posture, personhere, headpose, followuntil, movementdetected, webpage, personbehind, persondetected, speechbtn
 import execplan, saveposition, soundtrack
 
 def init(session):
@@ -44,6 +44,7 @@ def init(session):
     execplan.init(session)
     saveposition.init(session)
     soundtrack.init(session)
+    speechbtn.init(session)
 
 
 def quit():
@@ -71,6 +72,7 @@ def quit():
     execplan.quit()
     saveposition.quit()
     soundtrack.quit()
+    speechbtn.quit()
 
 
 def main():

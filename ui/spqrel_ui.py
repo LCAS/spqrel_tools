@@ -163,32 +163,6 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
         return {'button_outcome': True}
 
 
-def speechbtn_action_exec(params):
-    t = threading.currentThread()
-    memory_service = getattr(t, "mem_serv", None)
-    # tts_service = getattr(t, "session", None).service("ALTextToSpeech")
-    print "Action speechbtn started with params " + params
-    # action init
-    # action init
-    if len(params) > 0:
-        memory_service.raiseEvent('AnswerOptions', 'speechbtn_' + params)
-    else:
-        memory_service.raiseEvent('AnswerOptions', 'speechbtn')
-    print "Action speechbtn terminated"
-    # action end
-    memory_service.raiseEvent("PNP_action_result_speechbtn",
-                              "success")
-
-
-
-def quit():
-    print actionName+" quit"
-    actionThread_exec.do_run = False
-
-
-
-
-
 def qi_init():
     global memory_service, tablet_service
     parser = argparse.ArgumentParser()
@@ -214,11 +188,7 @@ def qi_init():
     app.start()
     session = app.session
     memory_service = session.service("ALMemory")
-
-    # make action known
-    action_base.init(session, "speechbtn", speechbtn_action_exec)
     return session
-
 
 if __name__ == "__main__":
     session = qi_init()

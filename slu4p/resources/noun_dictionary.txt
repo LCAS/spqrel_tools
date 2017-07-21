@@ -5,6 +5,7 @@ basket
 bread
 cappucino
 cereals
+chair
 chocolate cookies
 cloth
 coffee cup

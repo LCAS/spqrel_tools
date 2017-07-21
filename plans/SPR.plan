@@ -2,7 +2,7 @@
 
 # 1
 
-vsay_SPRready;
+vsay_playriddles;
 
 # 2
 
@@ -19,49 +19,55 @@ vsay_playwithme;
 
 # 4
 
-dialogue_fivequestions;
+wait_10;
+
+dialogue_fivequestions_1;
+dialogue_fivequestions_2;
+dialogue_fivequestions_3;
+dialogue_fivequestions_4;
+dialogue_fivequestions_5;
 
 # 5
 
 start_sounddetected;
 
-dialoguemute_question;
+dialogue_mutequestion;
 
-< (and sounddetected questionready)? turn_... ; vsay_lastresponse :
-  (and (not sounddetected) questionready)? vsay_lastresponse :
-  (and sounddetected (not questionready)? turn_... ; dialogue_response :
+< (and sounddetected questionready)? turn_... ; dialogue_lastresponse :
+  (and (not sounddetected) questionready)? dialogue_lastresponse :
+  (and sounddetected (not questionready)? turn_... ; dialogue_fivequestions_1 :
   (and (not sounddetected) (not questionready))? vsay_nextquestion
 >
 
-dialoguemute_question;
+dialogue_mutequestion;
 
-< (and sounddetected questionready)? turn_... ; vsay_lastresponse :
-  (and (not sounddetected) questionready)? vsay_lastresponse :
-  (and sounddetected (not questionready)? turn_... ; dialogue_response :
+< (and sounddetected questionready)? turn_... ; dialogue_lastresponse :
+  (and (not sounddetected) questionready)? dialogue_lastresponse :
+  (and sounddetected (not questionready)? turn_... ; dialogue_fivequestions_2 :
   (and (not sounddetected) (not questionready))? vsay_nextquestion
 >
 
-dialoguemute_question;
+dialogue_mutequestion;
 
-< (and sounddetected questionready)? turn_... ; vsay_lastresponse :
-  (and (not sounddetected) questionready)? vsay_lastresponse :
-  (and sounddetected (not questionready)? turn_... ; dialogue_response :
+< (and sounddetected questionready)? turn_... ; dialogue_lastresponse :
+  (and (not sounddetected) questionready)? dialogue_lastresponse :
+  (and sounddetected (not questionready)? turn_... ; dialogue_fivequestions_3 :
   (and (not sounddetected) (not questionready))? vsay_nextquestion
 >
 
-dialoguemute_question;
+dialogue_mutequestion;
 
-< (and sounddetected questionready)? turn_... ; vsay_lastresponse :
-  (and (not sounddetected) questionready)? vsay_lastresponse :
-  (and sounddetected (not questionready)? turn_... ; dialogue_response :
+< (and sounddetected questionready)? turn_... ; dialogue_lastresponse :
+  (and (not sounddetected) questionready)? dialogue_lastresponse :
+  (and sounddetected (not questionready)? turn_... ; dialogue_fivequestions_4 :
   (and (not sounddetected) (not questionready))? vsay_nextquestion
 >
 
-dialoguemute_question;
+dialogue_mutequestion;
 
-< (and sounddetected questionready)? turn_... ; vsay_lastresponse :
-  (and (not sounddetected) questionready)? vsay_lastresponse :
-  (and sounddetected (not questionready)? turn_... ; dialogue_response :
+< (and sounddetected questionready)? turn_... ; dialogue_lastresponse :
+  (and (not sounddetected) questionready)? dialogue_lastresponse :
+  (and sounddetected (not questionready)? turn_... ; dialogue_fivequestions_5 :
   (and (not sounddetected) (not questionready))? vsay_nextquestion
 >
 

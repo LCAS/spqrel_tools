@@ -9,6 +9,11 @@ import time
 import action_base
 from action_base import *
 
+# For each new action, add the following:
+# import actionname
+# actionname.init(session) in init function
+# actionname.quit() in quit function
+
 import dooropen, obstaclehere, screentouched
 import say, vsay, wait, waitfor, goto, turn, lookfor, dialogue, dialoguestart, dialoguestop, asrenable
 import posture, personhere, headpose, followuntil, movementdetected, webpage, personbehind, persondetected

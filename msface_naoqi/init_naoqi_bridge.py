@@ -211,6 +211,18 @@ def onEvent(value ):
         time.sleep(0.5)
         memory_service.insertData('Actions/FaceRecognition/Recognition', '')
 
+    elif command[0]== 'initgroup' : #change group without clear persons
+        
+        res=cognitiveface.init_group_srv(command[1]) #command[1]==name grup
+        
+    elif command[0]== 'deleteperson' :
+        
+        res=cognitiveface.delete_person_srv(command[1]) #command[1]==name recognition
+
+    elif command[0]== 'deleteallpersons' :
+        
+        res=cognitiveface.delete_allpersons_srv(command[1]) #command[1]==name grup        
+        
 
     
 def rhImageThread ():
@@ -247,7 +259,10 @@ def main():
                         help="Robot camera ID address. 0 by default")
     parser.add_argument("--outvideo", type=str, default='output.avi',
                         help="Output video name output.avi")                        
-
+    parser.add_argument("--group_recognition", type=str, default='robocup_test',
+                        help="Name of group for recognition robocup_test")  
+    parser.add_argument("--delete_group_first", type=bool, default=False,
+                        help="Initialization of the group deleting all persons  ")                          
     global args
     args = parser.parse_args()
     #Starting application
@@ -264,7 +279,7 @@ def main():
 
 
     global cognitiveface
-    cognitiveface=CognitiveFace()
+    cognitiveface=CognitiveFace(args.group_recognition, args.delete_group_first)
 
 
     global memory_service

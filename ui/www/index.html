@@ -19,7 +19,7 @@ document.onready = function() {
                     </div>
                     
                     <div class="panel-body">
-                        <h1 style="color: #ffffff;" id="speech_output">my last words</h1>
+                        <h1 style="color: #ffffff;" id="Veply">my last words</h1>
                     </div>
                 </div>
             </div>
@@ -59,16 +59,24 @@ document.onready = function() {
                         <table class="table table-condensed table-striped">
                             <tbody>
                                 <tr>
-                                    <td class="col-md-3">Current Action:</td>
-                                    <td class="col-md-9"><p id="actiontext">-</p></td>
+                                    <td class="col-md-3">Current Plan:</td>
+                                    <td class="col-md-9"><p id="PNP_CurrentPlan">-</p></td>
                                 </tr>
                                 <tr>
+                                    <td class="col-md-3">Current Action:</td>
+                                    <td class="col-md-9"><p id="PNP_CurrentAction">-</p></td>
+                                </tr>
+<!--                                 <tr>
+                                    <td class="col-md-3">Current PNP Places:</td>
+                                    <td class="col-md-9"><p id="PNP_active_places">-</p></td>
+                                </tr> -->
+                                <tr>
                                     <td class="col-md-3">Battery:</td>
-                                    <td class="col-md-9"><p id="batterytext">xx%</p></td>
+                                    <td class="col-md-9"><p id="BatteryChargeChanged">xx%</p></td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-3">Current Navgoal:</td>
-                                    <td class="col-md-9"><p id="currentnavgoal">XXX</p></td>
+                                    <td class="col-md-9"><p id="NAOqiPlanner_Goal">XXX</p></td>
                                 </tr>
                             </tbody>
                         </table>

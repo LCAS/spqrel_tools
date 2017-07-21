@@ -111,34 +111,33 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
         self.memory_service = memory_service
 
         self.answeroptions = ALSubscriber(memory_service, "AnswerOptions",
-                                          lambda actstr: self.sendJSON({
-                                              'method': 'show_buttons',
-                                              'buttons': self._answer_options_parse(actstr)
-                                          }))
-        self.sts = ALSubscriber(memory_service, "Veply",
-                                lambda d: self.sendJSON({
-                                    'method': 'update_html',
-                                    'id': 'speech_output',
-                                    'html': d
-                                }))
-        self.battery = ALSubscriber(memory_service, "BatteryChargeChanged",
-                                    lambda d: self.sendJSON({
-                                        'method': 'update_html',
-                                        'id': 'batterytext',
-                                        'html': d
-                                    }))
-        self.caction = ALSubscriber(memory_service, "PNP_action",
-                                    lambda d: self.sendJSON({
-                                        'method': 'update_html',
-                                        'id': 'actiontext',
-                                        'html': d
-                                    }))
-        self.navgoal = ALSubscriber(memory_service, "NAOqiPlanner/Goal",
-                                    lambda d: self.sendJSON({
-                                        'method': 'update_html',
-                                        'id': 'currentnavgoal',
-                                        'html': d
-                                    }))
+                         lambda actstr: self.sendJSON({
+                             'method': 'show_buttons',
+                             'buttons': self._answer_options_parse(actstr)
+                         }))
+
+        # all the ones that are just HTML updates
+        als_names = [
+            "PNP/CurrentAction",
+            "PNP/CurrentPlan",
+            "Veply",
+            "BatteryChargeChanged",
+            "NAOqiPlanner/Goal"
+        ]
+
+        self.als = {}
+        for a in als_names:
+            clean_name = a.replace('/', '_').replace(' ', '_')
+            try:
+                self.als[clean_name] = ALSubscriber(memory_service, a,
+                                 lambda d,id=clean_name: self.sendJSON({
+                                     'method': 'update_html',
+                                     'id': id,
+                                     'html': d
+                                 }))
+            except Exception as e:
+                error(str(e))
+
         super(SQPReLProtocol, self).__init__()
 
     def _answer_options_parse(self, inp, skip=1):
@@ -201,13 +200,13 @@ if __name__ == "__main__":
 
     try:
         # wait for the webserver to be running before displaying it
-        sleep(5)
         tablet_service = session.service("ALTabletService")
     except RuntimeError:
         warn('cannot find ALTabletService')
         tablet_service = None
 
     if tablet_service:
+        sleep(5)
         tablet_service.showWebview('http://localhost:8127/')
 
     backend.talker()

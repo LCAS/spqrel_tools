@@ -33,6 +33,7 @@ function _ping(payload) {
 }
 
 function _update_html(payload) {
+  console.log('html update for id=' + payload['id'])
   $('#'+payload['id']).html(payload['html'])
 }
 

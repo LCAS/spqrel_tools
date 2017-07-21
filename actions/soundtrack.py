@@ -31,7 +31,7 @@ def actionThread_exec (params):
     distance = 1
     confidence = 0.5
 
-    tracker_service.registerTarget("Sound",distance,confidence)
+    tracker_service.registerTarget("Sound",str(distance),str(confidence))
     tracker_service.track("Sound")
     val = False
     # action init

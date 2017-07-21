@@ -33,44 +33,31 @@ start_sounddetected;
 
 dialogue_mutequestion;
 
-< (and sounddetected questionready)? turn_... ; dialogue_lastresponse :
-  (and (not sounddetected) questionready)? dialogue_lastresponse :
-  (and sounddetected (not questionready)? turn_... ; dialogue_fivequestions_1 :
-  (and (not sounddetected) (not questionready))? vsay_nextquestion
+< (sounddetected)? turn_...
 >
+dialogue_lastresponse; #need to handle the case in which the robot do not understand
 
 dialogue_mutequestion;
 
-< (and sounddetected questionready)? turn_... ; dialogue_lastresponse :
-  (and (not sounddetected) questionready)? dialogue_lastresponse :
-  (and sounddetected (not questionready)? turn_... ; dialogue_fivequestions_2 :
-  (and (not sounddetected) (not questionready))? vsay_nextquestion
+< (sounddetected)? turn_...
 >
+dialogue_lastresponse;
 
 dialogue_mutequestion;
 
-< (and sounddetected questionready)? turn_... ; dialogue_lastresponse :
-  (and (not sounddetected) questionready)? dialogue_lastresponse :
-  (and sounddetected (not questionready)? turn_... ; dialogue_fivequestions_3 :
-  (and (not sounddetected) (not questionready))? vsay_nextquestion
+< (sounddetected)? turn_...
 >
+dialogue_lastresponse;
 
 dialogue_mutequestion;
 
-< (and sounddetected questionready)? turn_... ; dialogue_lastresponse :
-  (and (not sounddetected) questionready)? dialogue_lastresponse :
-  (and sounddetected (not questionready)? turn_... ; dialogue_fivequestions_4 :
-  (and (not sounddetected) (not questionready))? vsay_nextquestion
+< (sounddetected)? turn_...
 >
+dialogue_lastresponse;
 
 dialogue_mutequestion;
 
-< (and sounddetected questionready)? turn_... ; dialogue_lastresponse :
-  (and (not sounddetected) questionready)? dialogue_lastresponse :
-  (and sounddetected (not questionready)? turn_... ; dialogue_fivequestions_5 :
-  (and (not sounddetected) (not questionready))? vsay_nextquestion
+< (sounddetected)? turn_...
 >
-
-
-
+dialogue_lastresponse;
 

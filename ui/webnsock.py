@@ -35,7 +35,7 @@ html_config = {
 
 render = web.template.render(TEMPLATE_DIR, base='base', globals=globals())
 
-chdir(TEMPLATE_DIR)
+#chdir(TEMPLATE_DIR)
 
 
 class JsonWSProtocol(WebSocketServerProtocol):
@@ -150,16 +150,16 @@ class WSBackend(object):
         self.loop.close()
 
 
-
-
-
-
-class ControlServer(web.application):
+class ControlServer(web.auto_application):
     def __init__(self):
-        urls = (
-            '/', 'Index',
-        )
-        web.application.__init__(self, urls, globals())
+
+        web.auto_application.__init__(self)
+
+        class Index(self.page):
+            path = '/'
+
+            def GET(self):
+                return render.index()
 
     def run(self, port=8027, *middleware):
         info('webserver running.')
@@ -167,26 +167,12 @@ class ControlServer(web.application):
         return web.httpserver.runsimple(func, ('0.0.0.0', port))
 
 
-
-# def set_ws_protocol():
-#     forward =  web.ctx.env.get('HTTP_X_FORWARDED_HOST','')
-#     if 'lcas.lincoln.ac.uk' in forward:
-#         html_config['rosws_protocol'] = 'wss'
-#     else:
-#         html_config['rosws_protocol'] = 'ws'
-#     info html_config['rosws_protocol']
-
-
-class Index(object):
-    def GET(self):
-        return render.index()
-
-
 class Webserver(Thread):
 
     def __init__(self, app, port=8127):
         self.app = app
         self.port = port
+
         super(Webserver, self).__init__()
 
     def run(self):

@@ -384,15 +384,6 @@
     <topic name="MUTEQUESTION">
 
         <category>
-            <pattern>RESET</pattern>
-            <template>
-                <think>
-                    <set name="counter">TOFILL</set>
-                </think>
-            </template>
-        </category>
-
-        <category>
             <pattern>START</pattern>
             <template>
             </template>
@@ -412,10 +403,10 @@
             <pattern>* WHERE IS THE *</pattern>
             <template>
                 <think>
-                        <set name="lastresponse">[WHEREIS]
-                            <star index="2"/>
-                        </set>
-                    </think>
+                    <set name="lastresponse">[WHEREIS]
+                        <star index="2"/>
+                    </set>
+                </think>
                 <srai>STOP</srai>
             </template>
         </category>
@@ -910,6 +901,19 @@
             * Object questions
             * Predefined questions
         -->
+
+        <category>
+            <pattern>*</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">
+                        <srai>FAILUREMANAGEMENT</srai>
+                    </set>
+                    <set name="topic">FIVEQUESTIONS</set>
+                </think>
+                [STOP]
+            </template>
+        </category>
 
     </topic>
 

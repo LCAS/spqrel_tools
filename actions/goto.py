@@ -37,6 +37,9 @@ def coords(params):
 		return [2.2, -5.6]
 	elif (params=='rips'):
 		return [1.1, -2.0 ]
+    elif (params=='car'):
+        car_x,car_y = memory_service.getData("car/coordinates")
+        return [car_x,car_y]
 	return [0,0]
 
 

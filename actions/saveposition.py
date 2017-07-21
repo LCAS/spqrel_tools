@@ -24,7 +24,8 @@ def actionThread_exec (params):
         print "Action "+actionName+" "+params+" exec..."
         # action exec
         count = count - 1
-        print "saved" + position_name 
+        print "saved" + position_name
+        memory_service.insertData(position_name+"/coordinates",[car_x,car_y]) 
         # action exec
         time.sleep(0.1)
 

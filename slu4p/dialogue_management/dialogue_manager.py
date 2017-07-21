@@ -7,6 +7,7 @@ import slu_utils
 from event_abstract import *
 import datetime
 import json
+from conditions import set_condition
 
 
 class DialogueManager(EventAbstractClass):
@@ -23,7 +24,7 @@ class DialogueManager(EventAbstractClass):
         self.__shutdown_requested = False
         signal.signal(signal.SIGINT, self.signal_handler)
 
-        self.memory_proxy = ALProxy("ALMemory")
+        self.memory = ALProxy("ALMemory")
 
         self.kernel = Kernel()
         self.__learn(aiml_path)
@@ -74,7 +75,7 @@ class DialogueManager(EventAbstractClass):
         if 'order' == splitted[1] or 'confirmdrink' == splitted[1] or 'confirmnotavailable' == splitted[1] or 'unknownavailable' == splitted[1]:
             try:
                 self.current_user_id = splitted[2]
-                self.user_profile = json.loads(self.memory_proxy.getData("Humans/Profile" + self.current_user_id))
+                self.user_profile = json.loads(self.memory.getData("Humans/Profile" + self.current_user_id))
             except:
                 print 'Invalid User'
             #Need to define how to get back the names and drink
@@ -85,7 +86,7 @@ class DialogueManager(EventAbstractClass):
             print 'Found unknownavailable'
             self.current_user_id = splitted[1]
             try:
-                self.user_profile = json.loads(self.memory_proxy.getData("Humans/Profile" + self.current_user_id))
+                self.user_profile = json.loads(self.memory.getData("Humans/Profile" + self.current_user_id))
             except:
                 print 'Invalid User'
             to_send = splitted[0] + ' customer ' + self.user_profile['Name'] + ' drink ' + self.user_profile['Drink'] + ' ' + splitted[2]
@@ -93,12 +94,14 @@ class DialogueManager(EventAbstractClass):
             print 'Found altdrink'
             try:
                 self.current_user_id = splitted[1]
-                self.user_profile = json.loads(self.memory_proxy.getData("Humans/Profile" + self.current_user_id))
+                self.user_profile = json.loads(self.memory.getData("Humans/Profile" + self.current_user_id))
             except:
                 print 'Invalid User'
             #Need to define how to get back the names and drink
             name = self.user_profile['Name']
             to_send = splitted[0] + ' customer ' + name + ' ' + splitted[2]
+        if 'fivequestions' == splitted[0]:
+            to_send = splitted[0] + ' ' + splitted[2]
         reply = self.kernel.respond(to_send)
         self.do_something(reply)
 
@@ -131,7 +134,7 @@ class DialogueManager(EventAbstractClass):
                 data = submessage.replace('[TAKEORDERDATA]', '').replace(')', '').strip()
                 customer, drink = data.split('(')
                 try:
-                    self.person_id = self.memory_proxy.getData("Actions/personhere/PersonID")
+                    self.person_id = self.memory.getData("Actions/personhere/PersonID")
                 except:
                     self.person_id = 9999
                 cocktail_data = {}
@@ -153,22 +156,97 @@ class DialogueManager(EventAbstractClass):
                 reply = reply + '. I am going to notify the alternatives.'
                 self.memory.raiseEvent("Veply", reply)
                 self.memory.raiseEvent("DialogueVesponse", json.dumps(self.user_profile))
-                self.memory_proxy.insertData("Humans/Profile" + self.current_user_id, json.dumps(self.user_profile))
+                self.memory.insertData("Humans/Profile" + self.current_user_id, json.dumps(self.user_profile))
             elif '[DRINKAVAILABLE]' in submessage:
                 self.user_profile['DrinkAvailability'] = True
                 self.memory.raiseEvent("DialogueVesponse", json.dumps(self.user_profile))
-                self.memory_proxy.insertData("Humans/Profile" + self.current_user_id, json.dumps(self.user_profile))
+                self.memory.insertData("Humans/Profile" + self.current_user_id, json.dumps(self.user_profile))
             elif '[LOOKFORDATA]' in submessage:
                 data = submessage.replace('[LOOKFORDATA]', '').strip()
                 self.location['location'] = data
                 self.memory.raiseEvent("DialogueVesponse", json.dumps(self.location))
+            elif '[STOPFOLLOWING]' in submessage:
+                self.memory.raiseEvent("ASR_enable", "0")
+                self.memory.raiseEvent("DialogueVesponse", '[STOPFOLLOWING]')
+                set_condition(self.memory, "stopfollowing", "true")
             elif '[WHATSTHETIME]' in submessage:
                 now = datetime.datetime.now()
                 reply = "It's " + str(now.hour) + " " + str(now.minute)
                 print "[" + self.inst.__class__.__name__ + "] Robot says: " + reply
                 self.memory.raiseEvent("Veply", reply)
             elif '[STOP]' in submessage:
+                self.memory.raiseEvent("DialogueVesponse", "Action stopped")
                 self.memory.raiseEvent("ASR_enable", "0")
+            elif '[STOPASR]' in submessage:
+                set_condition(self.memory, "stopfollowing", "false")
+                self.memory.raiseEvent("DialogueVesponse", "Action stopped")
+                self.memory.raiseEvent("ASR_enable", "0")
+            elif '[WHEREIS]' in submessage:
+                data = submessage.replace('[WHEREIS]', '')
+                reply = "The " + data + " is somewhere!"
+                self.memory.raiseEvent("DialogueVesponse", submessage)
+                self.memory.raiseEvent("Veply", reply)
+            elif '[HOWMANY]' in submessage:
+                data = submessage.replace('[HOWMANY]', '')
+                splitted = data.split("#")
+                reply = "There are multiple " + splitted[0] + " in the " + splitted[1]
+                self.memory.raiseEvent("DialogueVesponse", submessage)
+                self.memory.raiseEvent("Veply", reply)
+            elif '[CROWD]' in submessage:
+                data = submessage.replace('[CROWD]', '')
+                reply = "I don't know how many people there are"
+                self.memory.raiseEvent("DialogueVesponse", submessage)
+                self.memory.raiseEvent("Veply", reply)
+            elif '[CHILDREN]' in submessage:
+                data = submessage.replace('[CHILDREN]', '')
+                reply = "I don't know how many children there are"
+                self.memory.raiseEvent("DialogueVesponse", submessage)
+                self.memory.raiseEvent("Veply", reply)
+            elif '[MALE]' in submessage:
+                data = submessage.replace('[MALE]', '')
+                reply = "I don't know how many males there are"
+                self.memory.raiseEvent("DialogueVesponse", submessage)
+                self.memory.raiseEvent("Veply", reply)
+            elif '[FEMALE]' in submessage:
+                data = submessage.replace('[FEMALE]', '')
+                reply = "I don't know how many females there are"
+                self.memory.raiseEvent("DialogueVesponse", submessage)
+                self.memory.raiseEvent("Veply", reply)
+            elif '[WAVING]' in submessage:
+                data = submessage.replace('[WAVING]', '')
+                reply = "I don't know how many people are waving arms"
+                self.memory.raiseEvent("DialogueVesponse", submessage)
+                self.memory.raiseEvent("Veply", reply)
+            elif '[RISING]' in submessage:
+                data = submessage.replace('[RISING]', '')
+                reply = "I don't know how many people are rising arms"
+                self.memory.raiseEvent("DialogueVesponse", submessage)
+                self.memory.raiseEvent("Veply", reply)
+            elif '[STANDING]' in submessage:
+                data = submessage.replace('[STANDING]', '')
+                reply = "I don't know how many people are standing"
+                self.memory.raiseEvent("DialogueVesponse", submessage)
+                self.memory.raiseEvent("Veply", reply)
+            elif '[SITTING]' in submessage:
+                data = submessage.replace('[SITTING]', '')
+                reply = "I don't know how many people are sitting"
+                self.memory.raiseEvent("DialogueVesponse", submessage)
+                self.memory.raiseEvent("Veply", reply)
+            elif '[LYING]' in submessage:
+                data = submessage.replace('[LYING]', '')
+                reply = "I don't know how many people are lying"
+                self.memory.raiseEvent("DialogueVesponse", submessage)
+                self.memory.raiseEvent("Veply", reply)
+            elif '[HOWOLD]' in submessage:
+                data = submessage.replace('[HOWOLD]', '')
+                reply = "You are older than me, I guess..."
+                self.memory.raiseEvent("DialogueVesponse", submessage)
+                self.memory.raiseEvent("Veply", reply)
+            elif '[GENDER]' in submessage:
+                data = submessage.replace('[GENDER]', '')
+                reply = "Man? Woman? I couldn't tell.."
+                self.memory.raiseEvent("DialogueVesponse", submessage)
+                self.memory.raiseEvent("Veply", reply)
             else:
                 print submessage
 

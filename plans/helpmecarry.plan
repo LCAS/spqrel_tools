@@ -10,19 +10,20 @@ waitfor_personhere;
 say_hello;
 
 #dialoguestart_startfollow;
-waitfor_screentouched; #waitfor_startfollow;
+#waitfor_screentouched; #waitfor_startfollow;
 #dialoguestop_startfollow;
 
 say_lookatme;
 #trackface_learnface;
 say_readytofollow;
 
+dialogue_following; #new from andrea
+
 
 #### 2 - START THE FOLLOWING PHASE
 
-#dialoguestart_stopfollowing;
-followuntil_screentouched; ! *if* not_persondetected *do* say_comehere; waitfor_personhere; say_readytofollow; restart_action !
-#dialoguestop_stopfollowing;
+asrenable; #new from andrea
+followuntil_stopfollowing; #new from andrea
 
 say_carhere;
 #memorize_car;

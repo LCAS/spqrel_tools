@@ -1,84 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aiml version="1.0">
 
-<category>
-	<pattern>TAKEORDER *</pattern>
-	<template>
-		<think>
-			<set name="topic">TAKEORDER</set>
-		</think>
-		<srai>RESET</srai>
-		<srai><star/></srai>
-	</template>
-</category>
+    <category>
+        <pattern>TAKEORDER *</pattern>
+        <template>
+            <think>
+                <set name="topic">TAKEORDER</set>
+            </think>
+            <srai>RESET</srai>
+            <srai>
+                <star/>
+            </srai>
+        </template>
+    </category>
 
-<category>
-	<pattern>ALTDRINK *</pattern>
-	<template>
-		<think>
-			<set name="topic">ALTDRINK</set>
-		</think>
-		<srai><star/></srai>
-	</template>
-</category>
+    <category>
+        <pattern>ALTDRINK *</pattern>
+        <template>
+            <think>
+                <set name="topic">ALTDRINK</set>
+            </think>
+            <srai>
+                <star/>
+            </srai>
+        </template>
+    </category>
 
-<category>
-	<pattern>UNKNOWNAVAILABLE *</pattern>
-	<template>
-		<think>
-			<set name="topic">UNKNOWNAVAILABLE</set>
-		</think>
-		<srai><star/></srai>
-	</template>
-</category>
+    <category>
+        <pattern>UNKNOWNAVAILABLE *</pattern>
+        <template>
+            <think>
+                <set name="topic">UNKNOWNAVAILABLE</set>
+            </think>
+            <srai>
+                <star/>
+            </srai>
+        </template>
+    </category>
 
-<category>
-	<pattern>FOLLOW *</pattern>
-	<template>
-		<think>
-			<set name="topic">FOLLOW</set>
-		</think>
-		<srai><star/></srai>
-	</template>
-</category>
+    <category>
+        <pattern>FOLLOWING *</pattern>
+        <template>
+            <think>
+                <set name="topic">FOLLOWING</set>
+            </think>
+            <srai>
+                <star/>
+            </srai>
+        </template>
+    </category>
 
-<category>
-	<pattern>LOOKFORHELP *</pattern>
-	<template>
-		<think>
-			<set name="topic">LOOKFORHELP</set>
-		</think>
-		<srai><star/></srai>
-	</template>
-</category>
+    <category>
+        <pattern>FIVEQUESTIONS *</pattern>
+        <template>
+            <think>
+                <set name="topic">FIVEQUESTIONS</set>
+            </think>
+            <srai>
+                <star/>
+            </srai>
+        </template>
+    </category>
 
-<category>
-	<pattern>WHATTIME *</pattern>
-	<template>
-		<think>
-			<set name="topic">WHATTIME</set>
-		</think>
-		<srai><star/></srai>
-	</template>
-</category>
+    <category>
+        <pattern>MUTEQUESTION *</pattern>
+        <template>
+            <think>
+                <set name="topic">MUTEQUESTION</set>
+            </think>
+            <srai>
+                <star/>
+            </srai>
+        </template>
+    </category>
 
-<category>
-	<pattern>GUIDE *</pattern>
-	<template>
-		<think>
-			<set name="topic">GUIDE</set>
-		</think>
-		<srai>RESET</srai>
-		<srai><star/></srai>
-	</template>
-</category>
+    <category>
+        <pattern>LOOKFORHELP *</pattern>
+        <template>
+            <think>
+                <set name="topic">LOOKFORHELP</set>
+            </think>
+            <srai>
+                <star/>
+            </srai>
+        </template>
+    </category>
 
-<category>
-	<pattern>REPEAT</pattern>
-	<template>
-		[SAY]
-		<that/>
-	</template>
-</category>
+    <category>
+        <pattern>WHATTIME *</pattern>
+        <template>
+            <think>
+                <set name="topic">WHATTIME</set>
+            </think>
+            <srai>
+                <star/>
+            </srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>GUIDE *</pattern>
+        <template>
+            <think>
+                <set name="topic">GUIDE</set>
+            </think>
+            <srai>RESET</srai>
+            <srai>
+                <star/>
+            </srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>LASTRESPONSE START</pattern>
+        <template>
+            <get name="lastresponse"/>
+        </template>
+    </category>
+
+    <category>
+        <pattern>LASTRESPONSE STOP</pattern>
+        <template>
+            <think>
+                <set name="topic"></set>
+            </think>
+            [STOP]
+        </template>
+    </category>
+
+    <category>
+        <pattern>REPEAT</pattern>
+        <template>
+            [SAY]
+            <that/>
+        </template>
+    </category>
 
 </aiml>

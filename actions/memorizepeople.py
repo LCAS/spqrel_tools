@@ -9,9 +9,9 @@
 Memorize people
 ==================
 
-Writes in ALMemory 'Actions/memorizepeople/PeopleList/' array with peoplelist 
+Writes in ALMemory 'Actions/MemorizePeople/PeopleList/' array with peoplelist 
 
-Writes in 'Actions/memorizepeople/Person/IDNUMBER' for each person detected the json data
+Writes in 'Actions/MemorizePeople/Person/IDNUMBER' for each person detected the json data
 
 IDNUMBER for now is the same as the personid providede by PeopleDetected
 
@@ -37,8 +37,8 @@ import json
 from naoqi import ALProxy
 
 from utils import point2world
-import conditions
-from conditions import set_condition
+#import conditions
+#from conditions import set_condition
 
 
 
@@ -62,7 +62,7 @@ def update_data(currentuser):
         if currentuser['person_naoqiid']==people_list[i]:
             
             try:
-                mem_person=memory_service.getData('Actions/memorizepeople/'+people_list[i])
+                mem_person=memory_service.getData('Actions/MemorizePeople/'+people_list[i])
                 json_person=json.loads(mem_person)
             except:
                 break
@@ -81,7 +81,7 @@ def update_data(currentuser):
                 
             ## Write data in ALMemory
             str_person=json.dumps(json_person)
-            memory_service.insertData('Actions/memorizepeople/Person/'+str(currentuser['personid']), str_person)
+            memory_service.insertData('Actions/MemorizePeople/Person/'+str(currentuser['personid']), str_person)
             
     ## ADD new person    
     if b_new is True:
@@ -90,16 +90,19 @@ def update_data(currentuser):
         
         ## Write data in ALMemory
         str_person=json.dumps(currentuser)
-        memory_service.insertData('Actions/memorizepeople/Person/'+str(currentuser['personid']), currentuser)
+        memory_service.insertData('Actions/MemorizePeople/Person/'+str(currentuser['personid']), currentuser)
         
-    memory_service.insertData('Actions/memorizepeople/PeopleList/', people_list)
+    memory_service.insertData('Actions/MemorizePeople/PeopleList/', people_list)
 
 def rhMonitorThread (memory_service):
     t = threading.currentThread()
-    print "memorizepeople thread started"
+    print "MemorizePeople thread started"
 
+    # DElete old list
     global people_list
     people_list=[]
+
+    memory_service.insertData("PeoplePerception/PeopleList",people_list) 
     
     while getattr(t, "do_run", True):
         
@@ -173,7 +176,7 @@ def rhMonitorThread (memory_service):
                 shirtcolor={'name': shirtcolorName, 'hsv':shirtcolorHSV}
                 personinfo={'height': round(height,2), 'shirtcolor': shirtcolor,'posture':posture}
                 
-                
+
                 w_px, w_py = point2world(memory_service,[PositionInRobotFrame[0],PositionInRobotFrame[1]])
                 poseinworld={'x':w_px,'y': w_py}
                 
@@ -182,10 +185,20 @@ def rhMonitorThread (memory_service):
                 
             except:
                 print 'Person info error '
+
+
+            try:
+                current_node=memory_service.getData('TopologicalNav/CurrentNode')
+                closest_node=memory_service.getData('TopologicalNav/ClosestNode')
+                
+            except:
+                print 'topological localization error '
+                current_node=None
+                closest_node=None
                 
             face['faceinfo']=facecharacteristics
         
-            posetopological={'current_node':'TODO','closest_node':'TODO'}
+            posetopological={'current_node':current_node,'closest_node':closest_node}
             lastlocation= {'world':poseinworld , 'topological':posetopological}
             
             user={'personid': personid ,'person_naoqiid': personid,'info': personinfo, 'lastlocation':lastlocation, 'face_naoqi': face,'face_ms_api': {}}

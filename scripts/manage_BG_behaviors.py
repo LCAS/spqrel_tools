@@ -22,11 +22,17 @@ def start_behaviors():
 #    zonesdetection = ALProxy("ALEngagementZones")
 #    sittingdetection = ALProxy("ALSittingPeopleDetection")
 
-    facedetectionProxy = ALProxy("ALFaceDetection",PEPPER_IP,PEPPER_PORT)
-    peopledetectionProxy = ALProxy("ALPeoplePerception",PEPPER_IP,PEPPER_PORT)
+    facedetectionProxy = ALProxy("ALFaceDetection",os.getenv('PEPPER_IP'),9559)
+    facecharacteristicsProxy = ALProxy("ALFaceCharacteristics",os.getenv('PEPPER_IP'),9559)
+    peopledetectionProxy = ALProxy("ALPeoplePerception",os.getenv('PEPPER_IP'),9559)
+    peoplesittingProxy = ALProxy("ALSittingPeopleDetection",os.getenv('PEPPER_IP'),9559)
+
 
     facedetectionProxy.subscribe("Face_Behavior", 500, 0.0)
+    facecharacteristicsProxy.subscribe("Char_Behavior", 500, 0.0)
     peopledetectionProxy.subscribe("People_Behavior", 500, 0.0)
+    peoplesittingProxy.subscribe("Sitting_Behavior", 500, 0.0)
+
 
 
 
@@ -37,11 +43,15 @@ def quit_behaviors():
     print "==================================="
 
     facedetectionProxy = ALProxy("ALFaceDetection",PEPPER_IP,PEPPER_PORT)
+    facecharacteristicsProxy = ALProxy("ALFaceCharacteristics",PEPPER_IP,PEPPER_PORT)    
     peopledetectionProxy = ALProxy("ALPeoplePerception",PEPPER_IP,PEPPER_PORT)
-
+    peoplesittingProxy = ALProxy("ALSittingPeopleDetection",PEPPER_IP,PEPPER_PORT)
+    
+    
     facedetectionProxy.unsubscribe("Face_Behavior")
+    facecharacteristicsProxy.unsubscribe("Char_Behavior")    
     peopledetectionProxy.unsubscribe("People_Behavior")
-
+    peoplesittingProxy.unsubscribe("Sitting_Behavior")
 
 
 

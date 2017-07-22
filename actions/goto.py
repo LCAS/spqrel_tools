@@ -3,6 +3,7 @@ import argparse
 import sys
 import time
 import threading
+import math
 
 import action_base
 from action_base import *
@@ -30,9 +31,11 @@ def coords(params):
     elif (params=='test2'):
         return [15,2]
     elif (params=='exit'):
-        return [8.4, -4.8]
+        return [12.5, 9.8]
     elif (params=='entrance'):
-        return [6.0, -5.1]
+        return [13.6, 9.8]
+    elif (params=='person'):
+        return [15.6, 9.8]
     elif (params=='rips'):
         return [1.1, -2.0]
     elif (params=='car'):
@@ -52,7 +55,13 @@ def plannerstatus_cb(value):
         goal_reached = True
     elif (value=='PathNotFound'):
         mem_key_execstatus = "NAOqiPlanner/ExecutionStatus"
-        v = memory_service.getData(mem_key_execstatus)
+        try:
+            #v = memory_service.getData(mem_key_execstatus)
+            v = [9,9]
+            print "NAOqiPlanner/ExecutionStatus = ",v
+        except:
+            return
+
         print "Goto:: distance and angle to goal: ", v
         distToGoal = v[0]
         angleToGoal = v[1]

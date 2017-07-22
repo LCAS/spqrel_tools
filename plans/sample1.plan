@@ -1,17 +1,18 @@
 waitfor_screentouched|5; # wait for screen touched with timeout of 5 seconds
 
-posture_Stand; # stand up
-
 LABEL_START;
-#headpose_0_-3;
 
-lookfor_personhere; ! *if* screentouched *do* GOTO_LABEL_END ! 
+waitfor_personhere; ! *if* screentouched *do* skip_action ! 
 
-# < personhere? GOTO_LABEL_END : (not personhere)? GOTO_LABEL_START >;
 
-turn_^Actions/personhere/PersonAngleTurn;
+< personhere? say_hello : (not personhere)? GOTO_LABEL_START >;
 
-dialogue_takeorder;
+GOTO_LABEL_END;
+
+
+#turn_^Actions/personhere/PersonAngleTurn;
+
+#dialogue_takeorder;
 
 #waitfor_dooropen;
 #waitfor_screentouched;
@@ -19,10 +20,16 @@ dialogue_takeorder;
 #goto_entrance;
 #say_hello;
 
-
-say_greetperson;
-
 LABEL_END;
-#posture_Rest;
+
+#say_greetperson;
+wait_1;
+
+
+
+say_end;
+
+
+
 
 

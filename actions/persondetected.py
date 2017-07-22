@@ -20,7 +20,7 @@ from conditions import set_condition
 def rhMonitorThread (memory_service):
     global last_personid
     t = threading.currentThread()
-    print "personhere thread started"
+    print "persondetected thread started"
     personid = 0
     while getattr(t, "do_run", True):
         plist = memory_service.getData("PeoplePerception/PeopleList")
@@ -63,7 +63,7 @@ def init(session):
 
 def quit():
     global monitorThread
-    print "Person here quit"
+    print "Person detected quit"
     monitorThread.do_run = False 
 
 

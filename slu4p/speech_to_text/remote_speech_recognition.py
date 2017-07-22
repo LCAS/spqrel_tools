@@ -2,6 +2,7 @@ import argparse
 import signal
 from naoqi import ALProxy, ALBroker, ALModule
 from google_client import *
+from audio_recorder import *
 from event_abstract import *
 from os.path import expanduser
 
@@ -29,11 +30,11 @@ class RemoteSpeechRecognition(EventAbstractClass):
 
         self.nuance_asr = ALProxy("ALSpeechRecognition")
 
-        self.audio_recorder = ALProxy("ALAudioRecorder")
-
         self.google_asr = GoogleClient(google_language, google_keys)
 
         self.memory_proxy = ALProxy("ALMemory")
+
+        self.audio_recorder = pyaudio.PyAudio()
 
         self.configure(
             vocabulary=vocabulary,
@@ -118,7 +119,7 @@ class RemoteSpeechRecognition(EventAbstractClass):
         self.nuance_asr.pause(False)
         self.audio_recorder.stopMicrophonesRecording()
         self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
-        self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+        self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", self.RATE, self.CHANNELS)
 
     def text_done_callback(self, *args, **kwargs):
         try:
@@ -129,7 +130,7 @@ class RemoteSpeechRecognition(EventAbstractClass):
                 else:
                     self.audio_recorder.stopMicrophonesRecording()
                     self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
-                    self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+                    self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", self.RATE, self.CHANNELS)
                     self.nuance_asr.pause(False)
         except Exception as e:
             print e.message
@@ -155,7 +156,7 @@ class RemoteSpeechRecognition(EventAbstractClass):
                 self.is_enabled = True
                 self.audio_recorder.stopMicrophonesRecording()
                 self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
-                self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+                self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", self.RATE, self.CHANNELS)
                 self.subscribe(
                     event=SpeechRecognition.WR_EVENT,
                     callback=self.word_recognized_callback
@@ -173,7 +174,7 @@ class RemoteSpeechRecognition(EventAbstractClass):
             except:
                 print "No such file: " + self.AUDIO_FILE + ".wav"
             self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
-            self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+            self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", self.RATE, self.CHANNELS)
 
     def _spin(self, *args):
         while not self.__shutdown_requested:

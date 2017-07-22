@@ -2,15 +2,21 @@
 from libtmux import Server
 from json import load
 from logging import error, warn, info, debug, basicConfig, INFO, WARN
-from pprint import pformat
+from pprint import pformat, pprint
 from time import sleep
 import signal
 import os
+from os import path
 import argparse
 from psutil import Process, wait_procs
+import sys
 
 from datetime import datetime
 basicConfig(level=INFO)
+
+sys.path.append(os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '..'))
+)
 
 
 class TMux:
@@ -87,14 +93,6 @@ class TMux:
         pane.cmd("send-keys", "", "C-c")
         pane.send_keys('# tmux-controller sent Ctrl-C at %s' % datestr,
                        enter=True, suppress_history=True)
-
-    def is_running(self, window_name):
-        winconf, window = self.find_window(window_name)
-        if '_running' in winconf:
-            return winconf['_running']
-        else:
-            return False
-
 
     def launch_window(self, window_name, enter=True):
         info('launch %s' % window_name)
@@ -188,6 +186,63 @@ class TMux:
         pids = self._get_children_pids_window(window)
         return len(pids) > 0
 
+    def _server(self):
+        from ui import webnsock
+        import web
+
+        tmux_self = self
+
+        class TMuxWebServer(webnsock.ControlServer):
+
+            def __init__(self):
+
+                webnsock.ControlServer.__init__(self)
+
+                TEMPLATE_DIR = path.realpath(
+                    path.join(
+                        path.dirname(__file__),
+                        'www'
+                    )
+                )
+                print TEMPLATE_DIR, __file__
+
+                os.chdir(TEMPLATE_DIR)
+
+                render = web.template.render(TEMPLATE_DIR,
+                                             base='base', globals=globals())
+
+                class Index(self.page):
+                    path = '/'
+
+                    def GET(self):
+                        return render.index(tmux_self.config)
+
+        class TMuxWSProtocol(webnsock.JsonWSProtocol):
+
+            def __init__(self):
+                super(TMuxWSProtocol, self).__init__()
+
+            def on_button(self, payload):
+                info('button pressed: \n%s' % pformat(payload))
+                self.sendJSON({'method': 'ping'})
+                self.sendJSON({
+                    'method': 'modal_dlg',
+                    'id': 'modal_dlg'},
+                    lambda p: pprint(p))
+                return {'button_outcome': True}
+
+        self.webserver = webnsock.Webserver(TMuxWebServer(), port=9999)
+        self.backend = webnsock.WSBackend(TMuxWSProtocol)
+
+        signal.signal(
+            signal.SIGINT,
+            lambda s, f: webnsock.signal_handler(
+                self.webserver, self.backend, s, f))
+        self.webserver.start()
+        self.backend.talker(port=9998)
+
+
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -220,6 +275,7 @@ if __name__ == "__main__":
     parser_kill.add_argument("--window", '-w', type=str,
                              default="",
                              help="Window to be killed. Default: ALL")
+    parser_server = subparsers.add_parser('server', help='run web server')
     parser_pids = subparsers.add_parser('pids', help='pids of processes')
     parser_pids.add_argument(
         "--window", '-w', type=str,
@@ -268,12 +324,15 @@ if __name__ == "__main__":
             tmux.kill_window(args.window)
     elif args.cmd == 'running':
         print tmux.is_running(args.window)
+    elif args.cmd == 'server':
+        tmux._server()
     elif args.cmd == 'pids':
         if args.window == '':
             print(pformat(tmux.get_children_pids_all_windows()))
         else:
             print(pformat(tmux.get_children_pids_window(args.window)))
-
+    else:
+        error('unknown command %s', args.cmd)
 
     # windows_to_launch = [
     #     'htop', 'navigation', 'speech', 'ui', 'pnp', 'dataset'

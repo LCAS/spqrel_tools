@@ -101,9 +101,9 @@ class SpeechRecognition(EventAbstractClass):
         """
         Convert Wave file into Flac file
         """
-        if os.path.exists(self.FLAC_COMM + self.AUDIO_FILE + '.wav'):
+        if os.path.exists(self.AUDIO_FILE + '.wav'):
             print "exist"
-            if os.path.getsize(self.FLAC_COMM + self.AUDIO_FILE + '.wav') > 0:
+            if os.path.getsize(self.AUDIO_FILE + '.wav') > 0:
                 print "more than 0"
                 os.system(self.FLAC_COMM + self.AUDIO_FILE + '.wav')
                 f = open(self.AUDIO_FILE + '.flac', 'rb')

@@ -1,11 +1,5 @@
-yes
-no
-hi
-hello
 how are you
-hi there
 how are you doing
-hi pepper
 take the order
 what day is today
 what is your name

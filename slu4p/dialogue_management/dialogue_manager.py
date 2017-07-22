@@ -177,6 +177,7 @@ class DialogueManager(EventAbstractClass):
             elif '[STOP]' in submessage:
                 self.memory.raiseEvent("DialogueVesponse", "Action stopped")
                 self.memory.raiseEvent("ASR_enable", "0")
+                set_condition(self.memory, "stopfollowing", "false")
             elif '[STOPASR]' in submessage:
                 set_condition(self.memory, "stopfollowing", "false")
                 self.memory.raiseEvent("DialogueVesponse", "Action stopped")

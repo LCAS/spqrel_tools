@@ -6,7 +6,7 @@ from event_abstract import *
 from os.path import expanduser
 
 
-class SpeechRecognition(EventAbstractClass):
+class RemoteSpeechRecognition(EventAbstractClass):
     WR_EVENT = "WordRecognized"
     TD_EVENT = "ALTextToSpeech/TextDone"
     ASR_ENABLE = "ASR_enable"
@@ -45,21 +45,21 @@ class SpeechRecognition(EventAbstractClass):
 
     def start(self, *args, **kwargs):
         self.subscribe(
-            event=SpeechRecognition.TD_EVENT,
+            event=RemoteSpeechRecognition.TD_EVENT,
             callback=self.text_done_callback
         )
 
         self.subscribe(
-            event=SpeechRecognition.ASR_ENABLE,
+            event=RemoteSpeechRecognition.ASR_ENABLE,
             callback=self.enable_callback
         )
 
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
-            SpeechRecognition.WR_EVENT)
+            RemoteSpeechRecognition.WR_EVENT)
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
-            SpeechRecognition.TD_EVENT)
+            RemoteSpeechRecognition.TD_EVENT)
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
-            SpeechRecognition.ASR_ENABLE)
+            RemoteSpeechRecognition.ASR_ENABLE)
 
         self.is_enabled = False
 
@@ -76,9 +76,9 @@ class SpeechRecognition(EventAbstractClass):
         self._spin()
 
         if self.is_enabled == True:
-            self.unsubscribe(SpeechRecognition.WR_EVENT)
-        self.unsubscribe(SpeechRecognition.TD_EVENT)
-        self.unsubscribe(SpeechRecognition.ASR_ENABLE)
+            self.unsubscribe(RemoteSpeechRecognition.WR_EVENT)
+        self.unsubscribe(RemoteSpeechRecognition.TD_EVENT)
+        self.unsubscribe(RemoteSpeechRecognition.ASR_ENABLE)
         self.broker.shutdown()
 
     def stop(self):

@@ -84,7 +84,7 @@ def onFaceDetection(facevalue):
                 print '  ID:',faceExtraInfo[0],', score= ',round(faceExtraInfo[1],3),', label= ',faceExtraInfo[2]
                 
                 pose={'alpha': round(faceShapeInfo[1],2), 'beta': round(faceShapeInfo[2],2), 'width':round(faceShapeInfo[3],2), 'height': round(faceShapeInfo[4],2)}
-                face={'timestamp':currentimestamp,'faceid': faceExtraInfo[0], 'user': faceExtraInfo[2], 'confidence':round(faceExtraInfo[1],3), 'pose': pose, 'camerapose' :cameraPose_InRobotFrame}
+                face={'timestamp':currentimestamp,'faceid': faceExtraInfo[0], 'user': faceExtraInfo[2], 'confidence':round(faceExtraInfo[1],3), 'pose': pose, 'camerapose_robot' :cameraPose_InRobotFrame,'camerapose_torso' :cameraPose_InTorsoFrame}
                 json_face=dumps(face)
                 print 'json_face:: ',json_face
 

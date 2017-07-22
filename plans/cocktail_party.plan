@@ -3,15 +3,20 @@ waitfor_dooropen;
 goto_entrance;
 #goto_partyroom;  # TODO set location of party room
 
+
 # order_n (n=1,2,3,4) is a data structure containing information about an order
 # including: name of person, drink ordered, features of person, person location, ...
 
 # first order
 lookfor_persondetected|60;  # timeout in seconds
+
 < persondetected? goto_person :
   (not persondetected)? say_comehere >;
-waitfor_personhere; ! *if* timeout_waitfor_personhere_60 *do* say_comehere; restart_action !
+
+waitfor_personhere; ! *if* timeout_waitfor_60 *do* say_comehere; restart_action !
+
 dialogue_takeorder;
+
 
 # look for another person ???
 # goto another waypoint
@@ -22,7 +27,7 @@ wait_10;  # wait that previous persondetected is forgot
 lookfor_persondetected|60;  # timeout in seconds
 < persondetected? goto_person :
   (not persondetected)? say_comehere >;
-waitfor_personhere; ! *if* timeout_waitfor_personhere_120 *do* GOTO_LABEL_NEXT_PERSON !
+waitfor_personhere; ! *if* timeout_waitfor_120 *do* GOTO_LABEL_NEXT_PERSON !
 dialogue_takeorder;
 
 # look for another person ???
@@ -32,7 +37,7 @@ turn_90_REL;
 LABEL_NEXT_PERSON;
 
 # third order (sitting person not calling)
-#lookfor_sittingperson|60;   # TODO missing condition sittingperson
+#lookfor_sittingperson|10;   # TODO missing condition sittingperson
 #< persondetected? 
 #    goto_person;
 #    dialogue_takeorder;
@@ -89,7 +94,11 @@ goto_bar;
 say_order4;
 say_goodbye;
 
+
 # exit the arena
 goto_entrance;
 goto_exit;
+
+
+
 

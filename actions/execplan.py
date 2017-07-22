@@ -100,10 +100,10 @@ def actionThread_exec (params):
         while (getattr(t, "do_run", True) and val==0): 
             time.sleep(2)
             try:
-                actpl = memory_service.getData("PNP_active_places")
+                actpl = memory_service.getData("PNP/ActivePlaces")
             except:
                 actpl = ""
-            print "    [DEBUG] active places: ",actpl
+            #print "    [DEBUG] active places: ",actpl
             if ("goal" in actpl):
                 val = 1
             

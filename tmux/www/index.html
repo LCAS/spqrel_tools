@@ -1,0 +1,26 @@
+$def with (config)
+$var title: Dashboard
+$var jsfiles: static/js/main.js
+
+<script>
+document.onready = function() {
+ init();
+}
+</script>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">TMuLE</h3>
+                    </div>
+                    
+                    <div class="panel-body">
+                        $config
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,3 +2,4 @@ trollius
 autobahn
 libtmux
 requests
+web.py

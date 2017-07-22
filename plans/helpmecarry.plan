@@ -19,12 +19,12 @@ dialogue_following; #new from andrea
 
 asrenable; #new from andrea
 followuntil_stopfollowing; 
-# LI this does not work ! *if* (not persondetected) *do* say_comehere; restart_action !
+# LI this does not work because persondetected is too noisy
+# ! *if* (not persondetected) *do* say_comehere; restart_action !
 asrenable_off; #new from andrea
 
 say_carhere;
 #saveposition_car;
-
 vsay_whatnow;
 #dialogue_lookforhelp; #understand the location to go "helplocation"
 

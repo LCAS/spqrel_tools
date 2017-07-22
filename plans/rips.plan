@@ -2,7 +2,7 @@
 waitfor_dooropen;
 vsay_starting;
 goto_entrance;
-goto_rips;
+goto_rips; ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
 
 # 
 vsay_inspectme; # TODO_ANDREA say something like "I'm ready for the inspection."
@@ -11,7 +11,7 @@ waitfor_screentouched;  # replace with push a specific button on the GUI
 
 # exit the arena
 vsay_farewell;
-goto_entrance;
+goto_entrance; ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
 goto_exit;
 
 

@@ -1,0 +1,24 @@
+# run this with an empty map
+
+lookfor_persondetected;  # timeout in seconds
+
+< persondetected? 
+    vsay_persondetected; 
+    goto_person ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
+>;
+
+dialogue_takeorder;
+
+goto_start;
+
+vsay_order_1;  # repeat the order to the barman
+
+vsay_cannotgrasp; # continue rule on manipulation
+
+goto_person;
+
+vsay_getorder; # say to the person about his/her order
+
+goto_start;
+
+

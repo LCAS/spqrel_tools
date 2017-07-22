@@ -30,13 +30,11 @@ def coords(params):
     elif (params=='test2'):
         return [15,2]
     elif (params=='exit'):
-        return [8.4, -4.8 ]
+        return [8.4, -4.8]
     elif (params=='entrance'):
-        return [6.0, -5.1 ]
-    elif (params=='tv'):
-        return [2.2, -5.6]
+        return [6.0, -5.1]
     elif (params=='rips'):
-        return [1.1, -2.0 ]
+        return [1.1, -2.0]
     elif (params=='car'):
         car_x,car_y = memory_service.getData("car/coordinates")
         return [car_x,car_y]

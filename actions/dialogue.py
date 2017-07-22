@@ -35,7 +35,7 @@ def actionThread_exec (params):
     dialogue_response = False
     # action init
     while (getattr(t, "do_run", True) and not dialogue_response): 
-        print "Action "+actionName+" "+params+" exec..."
+        #print "Action "+actionName+" "+params+" exec..."
         # action exec	
         # action exec
         time.sleep(0.5)

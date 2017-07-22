@@ -3,29 +3,23 @@
 #goto_exit;
 #turn_130_ABS;
 
-headpose_0_-3;
-say_hello;
+headpose_0_-4;
+#say_hello;
 
 waitfor_personhere;
-say_hello;
+vsay_hello;
+vsay_starting;
 
-#dialoguestart_startfollow;
-waitfor_screentouched; #waitfor_startfollow;
-#dialoguestop_startfollow;
+dialogue_following; #new from andrea
 
-#dialogue_following; #new from andrea
-
-say_lookatme;
 #trackface_learnface;
-say_readytofollow;
-
-#dialogue_following; #new from andrea
 
 
 #### 2 - START THE FOLLOWING PHASE
 
 asrenable; #new from andrea
-followuntil_screentouched; ! *if* (not persondetected) *do* say_comehere; restart_action !
+followuntil_stopfollowing; ! *if* (not persondetected) *do* say_comehere; restart_action !
+asrenable_off; #new from andrea
 
 say_carhere;
 #saveposition_car;

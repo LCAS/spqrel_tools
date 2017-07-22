@@ -2,10 +2,11 @@
 waitfor_dooropen;
 vsay_starting;
 goto_entrance;
-goto_ripslocation;
+goto_rips;
 
 # 
-vsay_inspectme;
+vsay_inspectme; # TODO_ANDREA say something like "I'm ready for the inspection."
+
 waitfor_screentouched;  # replace with push a specific button on the GUI
 
 # exit the arena

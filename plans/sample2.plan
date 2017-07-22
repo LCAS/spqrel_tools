@@ -1,10 +1,21 @@
-waitfor_dooropen; *if*  (not screentouched)   *do* skip_action
-#say_starting; 
+#waitfor_dooropen; *if*  (not screentouched)   *do* skip_action
 
+headpose_0_-4;
 
-#dialogue_follow;
-#wait_10;
-#waitfor_stopfollowing;
+waitfor_personhere;
 
+vsay_starting; 
+
+dialogue_following;
+
+asrenable;
+
+followuntil_stopfollowing;
+
+asrenable_off;
+
+vsay_farewell;
+
+headpose_0_-4;
 
 

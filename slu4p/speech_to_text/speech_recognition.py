@@ -102,7 +102,9 @@ class SpeechRecognition(EventAbstractClass):
         Convert Wave file into Flac file
         """
         if os.path.exists(self.FLAC_COMM + self.AUDIO_FILE + '.wav'):
+            print "exist"
             if os.path.getsize(self.FLAC_COMM + self.AUDIO_FILE + '.wav') > 0:
+                print "more than 0"
                 os.system(self.FLAC_COMM + self.AUDIO_FILE + '.wav')
                 f = open(self.AUDIO_FILE + '.flac', 'rb')
                 flac_cont = f.read()
@@ -113,6 +115,10 @@ class SpeechRecognition(EventAbstractClass):
                 results['NuanceASR'] = [args[1][0].lower()]
                 print "[" + self.inst.__class__.__name__ + "] " + str(results)
                 self.memory.raiseEvent("VordRecognized", results)
+            else:
+                print "equals to 0"
+        else:
+            print "do not exist"
         self.timeout = 0
         self.nuance_asr.pause(False)
         self.audio_recorder.stopMicrophonesRecording()

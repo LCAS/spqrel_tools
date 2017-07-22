@@ -6,13 +6,14 @@
 
         <category>
             <pattern>START</pattern>
-            <template>[SAY] I'm ready to follow you!</template>
+            <template>[SAY] Tell me when you are ready to go!</template>
         </category>
 
         <category>
             <pattern>*</pattern>
             <template>
                 <srai>SAY FOLLOWME</srai>
+                |[STOP]
             </template>
         </category>
 

@@ -18,7 +18,8 @@ dialogue_following; #new from andrea
 #### 2 - START THE FOLLOWING PHASE
 
 asrenable; #new from andrea
-followuntil_stopfollowing; ! *if* (not persondetected) *do* say_comehere; restart_action !
+followuntil_stopfollowing; 
+# LI this does not work ! *if* (not persondetected) *do* say_comehere; restart_action !
 asrenable_off; #new from andrea
 
 say_carhere;
@@ -51,4 +52,8 @@ waitfor_personbehind;
 #say_arrivedcar
 #dialogue_arrivedcar;
 
-say_goodbye;
+
+vsay_farewell;
+
+
+

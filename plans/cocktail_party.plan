@@ -1,39 +1,46 @@
 # enter and goto room
 waitfor_dooropen;
-enter_maindoor_in;
-goto_partyroom;
+goto_entrance;
+#goto_partyroom;  # TODO set location of party room
 
 # order_n (n=1,2,3,4) is a data structure containing information about an order
 # including: name of person, drink ordered, features of person, person location, ...
 
 # first order
-lookfor_personhere|30;  # timeout in seconds
-< persondetected? approach_person :
+lookfor_persondetected|60;  # timeout in seconds
+< persondetected? goto_person :
   (not persondetected)? say_comehere >;
-waitfor_personhere; ! *if* timeout_waitfor_personhere_30 *do* say_comehere; restart_action !
+waitfor_personhere; ! *if* timeout_waitfor_personhere_60 *do* say_comehere; restart_action !
 dialogue_takeorder;
 
+# look for another person ???
+# goto another waypoint
+turn_90_REL;
 
 # second order
-lookfor_personhere;
-< persondetected? approach_person :
+lookfor_persondetected|60;  # timeout in seconds
+< persondetected? goto_person :
   (not persondetected)? say_comehere >;
-waitfor_personhere;
+waitfor_personhere; ! *if* timeout_waitfor_personhere_120 *do* GOTO_LABEL_NEXT_PERSON !
 dialogue_takeorder;
-#waitfor_order2;
+
+# look for another person ???
+
+turn_90_REL;
+
+LABEL_NEXT_PERSON;
 
 # third order (sitting person not calling)
-lookfor_sittingperson;
-< persondetected? 
-    approach_person;
-    waitfor_personhere;
-    dialogue_takeorder;
-    #waitfor_order3 
-    : 
-  (not persondetected)? 
->;
+#lookfor_sittingperson|60;   # TODO missing condition sittingperson
+#< persondetected? 
+#    goto_person;
+#    dialogue_takeorder;
+#>;
 
-goto_bar;
+LABEL_BAR;
+
+goto_exit;
+
 
 # check valid orders received in previous phase
 
@@ -81,6 +88,6 @@ say_order4;
 say_goodbye;
 
 # exit the arena
-goto_hall;
-enter_maindoor_out;
+goto_entrance;
+goto_exit;
 

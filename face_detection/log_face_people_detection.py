@@ -286,7 +286,7 @@ def rhMonitorThread (memory_service):
                 height =memory_service.getData( "PeoplePerception/Person/" +str(idperson)+"/RealHeight")
                 shirtcolor =memory_service.getData( "PeoplePerception/Person/" +str(idperson)+"/ShirtColor")
                 shirtcolorHSV =memory_service.getData( "PeoplePerception/Person/" +str(idperson)+"/ShirtColorHSV")
-                PositionInRobotFrame =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/PositionInRobotFrame")
+                PositionInRobotFrame =memory_service.getData( "PeoplePerception/Person/" +str(idperson)+"/PositionInRobotFrame")
                 print '0'
                 personinfo={'height': round(height,2), 'shirtcolor': shirtcolor, 'shirtcolorHSV':shirtcolorHSV} 
                 poseinrobotframe={}

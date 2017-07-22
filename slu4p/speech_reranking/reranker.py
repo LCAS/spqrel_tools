@@ -124,7 +124,7 @@ class ReRanker(EventAbstractClass):
                 for trans in transcriptions[asr]:
                     for noun in self.drinks_dictionary:
                         if noun in trans:
-                            transcriptions[asr][trans] = transcriptions[asr][trans] * float(self.drink_cost)
+                            transcriptions[asr][trans] = transcriptions[asr][trans] * float(self.drinks_cost)
                 transcriptions[asr] = normalize(transcriptions[asr])
         return transcriptions
 

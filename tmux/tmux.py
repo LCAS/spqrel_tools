@@ -224,12 +224,28 @@ class TMux:
 
             def on_button(self, payload):
                 info('button pressed: \n%s' % pformat(payload))
-                self.sendJSON({'method': 'ping'})
-                self.sendJSON({
-                    'method': 'modal_dlg',
-                    'id': 'modal_dlg'},
-                    lambda p: pprint(p))
-                return {'button_outcome': True}
+                window_name = payload['id']
+                cmd = payload['cmd']
+                if cmd == 'launch':
+                    tmux_self.launch_window(window_name)
+                elif cmd == 'stop':
+                    tmux_self.stop_window(window_name)
+                sleep(1)
+                self.sendJSON(self.on_status())
+
+            def on_status(self, payload=None):
+                info('status-requested: ')
+
+                res = {
+                    'windows': {},
+                    'method': 'update_status'
+                }
+                for w in tmux_self.config['windows']:
+                    res['windows'][w['name']] = tmux_self.is_running(w['name'])
+
+                return res
+
+                #return {'button_outcome': True}
 
         self.webserver = webnsock.Webserver(TMuxWebServer(), port=9999)
         self.backend = webnsock.WSBackend(TMuxWSProtocol)

@@ -4,20 +4,70 @@ $var jsfiles: static/js/main.js
 
 <script>
 document.onready = function() {
- init();
+    init();
 }
+
+function check() {
+    console.log("check");
+
+    send({
+      'method': 'status'
+    });
+}
+
+function _update_status(payload) {
+    console.log('update_status');
+    //console.log(payload);
+    for (w in payload['windows']) {
+        if (payload['windows'][w]) {
+            $$('#'+w).css('background-color', '#bfb');
+        }
+        else {
+            $$('#'+w).css('background-color', '#fbb');            
+        }
+    }
+}
+
+
 </script>
 <div class="section">
     <div class="container">
+        <div class="jumbotron">
+            <h1>TMuLE</h1> 
+            <p>The TMux Launch Engine.</p> 
+         </div>
+
         <div class="row">
             <div class="col-md-12">
+                <div class="btn-group" role="group">'
+                    <button type="button" class="btn-lg btn-primary" 
+                            onclick="check();">Check</button>
+                </div>
+
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">TMuLE</h3>
+                        <h3 class="panel-title">Windows</h3>
                     </div>
-                    
                     <div class="panel-body">
-                        $config
+                        $for w in config["windows"]:
+                          <!-- <div class=""> -->
+                            <div id="$w['name']" style="background-color: #ccc;"class="btn-group" role="group">
+                                <H3>$w['name']</H3>
+                                <button type="button" class="btn btn-success" 
+                                        onclick="send({
+                                            'method':'button', 
+                                            'id': '$w["name"]',
+                                            'cmd': 'launch'
+                                            });">Launch</button>
+                                <button type="button" class="btn btn-danger" 
+                                        onclick="send({
+                                            'method':'button', 
+                                            'id': '$w["name"]',
+                                            'cmd': 'stop'
+                                            });">Stop</button>
+                                <p>&nbsp;<p/>
+                            </div>
+                          <!-- </div> -->
                     </div>
                 </div>
             </div>

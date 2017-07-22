@@ -101,17 +101,18 @@ class SpeechRecognition(EventAbstractClass):
         """
         Convert Wave file into Flac file
         """
-        if os.path.getsize(self.FLAC_COMM + self.AUDIO_FILE + '.wav') > 0:
-            os.system(self.FLAC_COMM + self.AUDIO_FILE + '.wav')
-            f = open(self.AUDIO_FILE + '.flac', 'rb')
-            flac_cont = f.read()
-            f.close()
+        if os.path.exists(self.FLAC_COMM + self.AUDIO_FILE + '.wav'):
+            if os.path.getsize(self.FLAC_COMM + self.AUDIO_FILE + '.wav') > 0:
+                os.system(self.FLAC_COMM + self.AUDIO_FILE + '.wav')
+                f = open(self.AUDIO_FILE + '.flac', 'rb')
+                flac_cont = f.read()
+                f.close()
 
-            results = {}
-            results['GoogleASR'] = [r.encode('ascii', 'ignore').lower() for r in self.google_asr.recognize_data(flac_cont)]
-            results['NuanceASR'] = [args[1][0].lower()]
-            print "[" + self.inst.__class__.__name__ + "] " + str(results)
-            self.memory.raiseEvent("VordRecognized", results)
+                results = {}
+                results['GoogleASR'] = [r.encode('ascii', 'ignore').lower() for r in self.google_asr.recognize_data(flac_cont)]
+                results['NuanceASR'] = [args[1][0].lower()]
+                print "[" + self.inst.__class__.__name__ + "] " + str(results)
+                self.memory.raiseEvent("VordRecognized", results)
         self.timeout = 0
         self.nuance_asr.pause(False)
         self.audio_recorder.stopMicrophonesRecording()

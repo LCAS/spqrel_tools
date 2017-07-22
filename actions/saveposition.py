@@ -9,7 +9,7 @@ import action_base
 from action_base import *
 
 
-actionName = "say"
+actionName = "saveposition"
 
 def actionThread_exec (params):
     t = threading.currentThread()

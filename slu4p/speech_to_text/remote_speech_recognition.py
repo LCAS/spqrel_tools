@@ -2,11 +2,12 @@ import argparse
 import signal
 from naoqi import ALProxy, ALBroker, ALModule
 from google_client import *
+from audio_recorder import *
 from event_abstract import *
 from os.path import expanduser
 
 
-class SpeechRecognition(EventAbstractClass):
+class RemoteSpeechRecognition(EventAbstractClass):
     WR_EVENT = "WordRecognized"
     TD_EVENT = "ALTextToSpeech/TextDone"
     ASR_ENABLE = "ASR_enable"
@@ -29,11 +30,11 @@ class SpeechRecognition(EventAbstractClass):
 
         self.nuance_asr = ALProxy("ALSpeechRecognition")
 
-        self.audio_recorder = ALProxy("ALAudioRecorder")
-
         self.google_asr = GoogleClient(google_language, google_keys)
 
         self.memory_proxy = ALProxy("ALMemory")
+
+        self.audio_recorder = pyaudio.PyAudio()
 
         self.configure(
             vocabulary=vocabulary,
@@ -45,21 +46,21 @@ class SpeechRecognition(EventAbstractClass):
 
     def start(self, *args, **kwargs):
         self.subscribe(
-            event=SpeechRecognition.TD_EVENT,
+            event=RemoteSpeechRecognition.TD_EVENT,
             callback=self.text_done_callback
         )
 
         self.subscribe(
-            event=SpeechRecognition.ASR_ENABLE,
+            event=RemoteSpeechRecognition.ASR_ENABLE,
             callback=self.enable_callback
         )
 
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
-            SpeechRecognition.WR_EVENT)
+            RemoteSpeechRecognition.WR_EVENT)
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
-            SpeechRecognition.TD_EVENT)
+            RemoteSpeechRecognition.TD_EVENT)
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
-            SpeechRecognition.ASR_ENABLE)
+            RemoteSpeechRecognition.ASR_ENABLE)
 
         self.is_enabled = False
 
@@ -76,9 +77,9 @@ class SpeechRecognition(EventAbstractClass):
         self._spin()
 
         if self.is_enabled == True:
-            self.unsubscribe(SpeechRecognition.WR_EVENT)
-        self.unsubscribe(SpeechRecognition.TD_EVENT)
-        self.unsubscribe(SpeechRecognition.ASR_ENABLE)
+            self.unsubscribe(RemoteSpeechRecognition.WR_EVENT)
+        self.unsubscribe(RemoteSpeechRecognition.TD_EVENT)
+        self.unsubscribe(RemoteSpeechRecognition.ASR_ENABLE)
         self.broker.shutdown()
 
     def stop(self):
@@ -118,7 +119,7 @@ class SpeechRecognition(EventAbstractClass):
         self.nuance_asr.pause(False)
         self.audio_recorder.stopMicrophonesRecording()
         self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
-        self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+        self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", self.RATE, self.CHANNELS)
 
     def text_done_callback(self, *args, **kwargs):
         try:
@@ -129,7 +130,7 @@ class SpeechRecognition(EventAbstractClass):
                 else:
                     self.audio_recorder.stopMicrophonesRecording()
                     self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
-                    self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+                    self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", self.RATE, self.CHANNELS)
                     self.nuance_asr.pause(False)
         except Exception as e:
             print e.message
@@ -155,7 +156,7 @@ class SpeechRecognition(EventAbstractClass):
                 self.is_enabled = True
                 self.audio_recorder.stopMicrophonesRecording()
                 self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
-                self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+                self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", self.RATE, self.CHANNELS)
                 self.subscribe(
                     event=SpeechRecognition.WR_EVENT,
                     callback=self.word_recognized_callback
@@ -173,7 +174,7 @@ class SpeechRecognition(EventAbstractClass):
             except:
                 print "No such file: " + self.AUDIO_FILE + ".wav"
             self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
-            self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+            self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", self.RATE, self.CHANNELS)
 
     def _spin(self, *args):
         while not self.__shutdown_requested:

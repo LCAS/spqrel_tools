@@ -21,19 +21,19 @@ except ImportError:
 
 basicConfig(level=INFO)
 
-TEMPLATE_DIR = path.realpath(
-    path.join(
-        path.dirname(__file__),
-        'www'
-    )
-)
+# TEMPLATE_DIR = path.realpath(
+#     path.join(
+#         path.dirname(__file__),
+#         'www'
+#     )
+# )
 
 
-html_config = {
-    'websocket_suffix': ':9090',
-}
+# html_config = {
+#     'websocket_suffix': ':9090',
+# }
 
-render = web.template.render(TEMPLATE_DIR, base='base', globals=globals())
+#render = web.template.render(TEMPLATE_DIR, base='base', globals=globals())
 
 #chdir(TEMPLATE_DIR)
 
@@ -131,12 +131,12 @@ class WSBackend(object):
     def stop(self):
         self.is_running = False
 
-    def talker(self):
-        factory = WebSocketServerFactory(u"ws://0.0.0.0:8128")
+    def talker(self, port=8128):
+        factory = WebSocketServerFactory(u"ws://0.0.0.0:%d" % port)
         factory.protocol = self.protocol
 
         self.loop = asyncio.get_event_loop()
-        coro = self.loop.create_server(factory, '0.0.0.0', 8128)
+        coro = self.loop.create_server(factory, '0.0.0.0', port)
         server = self.loop.run_until_complete(coro)
         asyncio.async(self.wait_until_shutdown(self.loop))
 
@@ -155,11 +155,11 @@ class ControlServer(web.auto_application):
 
         web.auto_application.__init__(self)
 
-        class Index(self.page):
-            path = '/'
+        # class Index(self.page):
+        #     path = '/'
 
-            def GET(self):
-                return render.index()
+        #     def GET(self):
+        #         return render.index()
 
     def run(self, port=8027, *middleware):
         info('webserver running.')
@@ -176,9 +176,8 @@ class Webserver(Thread):
         super(Webserver, self).__init__()
 
     def run(self):
-        port = 8127
         info("Webserver started.")
-        self.app.run(port=port)
+        self.app.run(port=self.port)
         info("Webserver stopped.")
 
     def stop(self):

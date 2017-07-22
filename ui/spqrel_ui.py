@@ -3,10 +3,6 @@
 import os
 import sys
 
-sys.path.append(os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..'))
-)
-
 print sys.path
 
 import threading
@@ -15,7 +11,6 @@ import web
 from signal import signal, SIGINT
 from logging import error, warn, info, debug, basicConfig, INFO
 from pprint import pformat, pprint
-from tmux.tmux import TMux
 import qi
 from os import path
 import argparse
@@ -81,7 +76,7 @@ class SPQReLUIServer(webnsock.ControlServer):
             def GET(self):
                 return render.tmux()
 
-        class tmux(self.page):
+        class blockly(self.page):
             path = '/blockly'
 
             def GET(self):

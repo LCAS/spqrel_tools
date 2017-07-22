@@ -16,6 +16,7 @@ dialogue_takeorder;
 # look for another person ???
 # goto another waypoint
 turn_90_REL;
+wait_10;  # wait that previous persondetected is forgot
 
 # second order
 lookfor_persondetected|60;  # timeout in seconds
@@ -39,8 +40,9 @@ LABEL_NEXT_PERSON;
 
 LABEL_BAR;
 
-goto_exit;
+goto_bar;
 
+# FROM HERE IT MUST BE COMPLETED AND TESTED
 
 # check valid orders received in previous phase
 

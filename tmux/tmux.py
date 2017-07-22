@@ -157,6 +157,11 @@ if __name__ == "__main__":
     parser_stop.add_argument("--window", '-w', type=str,
                              default="",
                              help="Window to be stopped. Default: ALL")
+    parser_relaunch = subparsers.add_parser('relaunch',
+                                            help='relaunch windows(s)')
+    parser_relaunch.add_argument("--window", '-w', type=str,
+                                 default="",
+                                 help="Window to be relaunched. Default: ALL")
     parser_kill = subparsers.add_parser('kill', help='kill window(s)')
     parser_kill.add_argument("--window", '-w', type=str,
                              default="",
@@ -165,8 +170,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     tmux = TMux(configfile=args.config)
-    #info(pformat(tmux.list_windows()))
-    
+
     if (args.init):
         tmux.init()
 
@@ -185,6 +189,15 @@ if __name__ == "__main__":
             tmux.stop_all_windows()
         else:
             tmux.stop_window(args.window)
+    elif args.cmd == 'relaunch':
+        if args.window == '':
+            tmux.stop_all_windows()
+            sleep(1)
+            tmux.launch_all_windows()
+        else:
+            tmux.stop_window(args.window)
+            sleep(1)
+            tmux.launch_window(args.window)
     elif args.cmd == 'kill':
         if args.window == '':
             tmux.terminate()

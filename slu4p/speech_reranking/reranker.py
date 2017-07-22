@@ -169,7 +169,7 @@ def main():
                         help="Alpha parameter for the additive smoothing of the prior distribution")
     parser.add_argument("-n", "--noun-cost", type=float, default=.1,
                         help="Cost for the noun posterior distribution")
-    parser.add_argument("-v", "--verb-cost", type=float, default=.7,
+    parser.add_argument("-v", "--verb-cost", type=float, default=.1,
                         help="Cost for the verb posterior distribution")
     parser.add_argument("-d", "--drinks-cost", type=float, default=.1,
                         help="Cost for the drinks posterior distribution")

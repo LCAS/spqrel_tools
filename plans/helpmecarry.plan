@@ -3,7 +3,7 @@
 #goto_exit;
 #turn_130_ABS;
 
-headpose_0_-4;
+headpose_0_-30;
 #say_hello;
 
 waitfor_personhere;
@@ -32,7 +32,7 @@ vsay_whatnow;
 #### 3 - LOOK FOR HELP
 
 say_lookforhelp;
-headpose_0_-1;
+headpose_0_-20;
 
 #goto_helplocation; ! *if* personhere *do* dialogue_whattime; restart_action !
 
@@ -54,6 +54,5 @@ waitfor_personbehind;
 
 
 vsay_farewell;
-
 
 

@@ -1,6 +1,6 @@
 #waitfor_dooropen; *if*  (not screentouched)   *do* skip_action
 
-headpose_0_-4;
+headpose_0_-30;
 
 waitfor_personhere;
 
@@ -16,6 +16,5 @@ asrenable_off;
 
 vsay_farewell;
 
-headpose_0_-4;
-
+headpose_0_-30;
 

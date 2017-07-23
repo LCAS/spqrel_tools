@@ -3,6 +3,7 @@ import argparse
 import sys
 import time
 import threading
+import math
 
 import action_base
 from action_base import *
@@ -11,6 +12,7 @@ jointsNames = ["HeadYaw", "HeadPitch"]
 
 actionName = "headpose"
 
+# yaw, pitch in radians
 def moveHead(motion_service, yaw, pitch, headtime):
     # we move head to center
     #print "Moving head to ", yaw, pitch
@@ -22,9 +24,9 @@ def moveHead(motion_service, yaw, pitch, headtime):
 
 ### BIG WARNING ###
 #
-# Parameters for this action must be integer and are given in decimals
+# Parameters for this action must be integer degrees
 #
-# Example: headpose_-5_3 -> yaw = -0.5, pitch = 0.3
+# Example: headpose_-15_30 -> yaw = -15 deg, pitch = 30 deg
 #
 
 def actionThread_exec (params):
@@ -47,8 +49,8 @@ def actionThread_exec (params):
     pitch = 0
     try:
         if (len(v)==2):
-            yaw = float(v[0])/10.0
-            pitch = float(v[1])/10.0
+            yaw = float(v[0])/180.0*math.pi
+            pitch = float(v[1])/180.0*math.pi
     except:
         print "headpose: ERROR in values ",v[0]," ",v[1]," - (using 0,0)"
     headtime = 1.0

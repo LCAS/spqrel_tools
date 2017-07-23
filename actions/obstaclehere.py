@@ -123,9 +123,9 @@ def rhMonitorThread (memory_service):
 #       print "Laser center: ", laserValues[42],laserValues[44],laserValues[46] # X values of central beams
         # TODO
         if (laserValues[42]>2 and laserValues[44]>2 and laserValues[46]>2):
-            v = 'true'
-        else:
             v = 'false'
+        else:
+            v = 'true'
         set_condition(memory_service,'obstaclehere',v)
         time.sleep(1)
     print "obstaclehere thread quit"

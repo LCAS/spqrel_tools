@@ -40,7 +40,7 @@ Setting condition example:
 
 SPQReL actions implemented
 
-asrenable.py        enables ASR,         param 'off' to disable
+asrenable.py        enables ASR (off to disable)     param: [on|off]  default:on
 dialogue.py         executes a dialogue blocking     param: name of dialogue
 dialoguestart.py    starts a dialogue non-blocking   param: name of dialogue
 dialoguestop.py     stops a previously started dialogue
@@ -67,7 +67,7 @@ screentouched.py    condition: true if screen is touched
 soundtrack.py       ???
 speechbtn.py        ???
 trackface.py        ???
-turn.py             turns the robot     params: <angle_DEG>_<REL|ABS>
+turn.py             turns the robot     params: <angle_DEG>_[<REL|ABS>] REL default
 vsay.py             say with Andrea tool    param: label of what to say
 waitfor.py          waits until condition   param: termination condition
 wait.py             waits n seconds         param: seconds to wait

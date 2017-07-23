@@ -24,7 +24,6 @@ from time import sleep
 
 
 class ALSubscriber():
-    EVENT_NAME = "Veply"
 
     def on_event(self, data):
         info('on_event: %s' % pformat(data))
@@ -105,11 +104,20 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
         global memory_service
         self.memory_service = memory_service
 
-        self.answeroptions = ALSubscriber(memory_service, "AnswerOptions",
-                         lambda actstr: self.sendJSON({
-                             'method': 'show_buttons',
-                             'buttons': self._answer_options_parse(actstr)
-                         }))
+        self.answeroptions = ALSubscriber(
+            memory_service, "AnswerOptions",
+            lambda actstr: self.sendJSON({
+                'method': 'show_buttons',
+                'buttons': self._answer_options_parse(actstr)
+            }))
+
+        self.als_notification = ALSubscriber(
+            memory_service, "notificationAdded",
+            lambda d: self.sendJSON({
+                'method': 'update_html',
+                'id': 'notificationAdded',
+                'html': d
+            }))
 
         # all the ones that are just HTML updates
         als_names = [
@@ -117,19 +125,20 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
             "PNP/CurrentPlan",
             "Veply",
             "BatteryChargeChanged",
-            "NAOqiPlanner/Goal"
+            "NAOqiPlanner/Goal",
         ]
 
         self.als = {}
         for a in als_names:
             clean_name = a.replace('/', '_').replace(' ', '_')
             try:
-                self.als[clean_name] = ALSubscriber(memory_service, a,
-                                 lambda d,id=clean_name: self.sendJSON({
-                                     'method': 'update_html',
-                                     'id': id,
-                                     'html': d
-                                 }))
+                self.als[clean_name] = ALSubscriber(
+                    memory_service, a,
+                    lambda d, id=clean_name: self.sendJSON({
+                        'method': 'update_html',
+                        'id': id,
+                        'html': d
+                    }))
             except Exception as e:
                 error(str(e))
 

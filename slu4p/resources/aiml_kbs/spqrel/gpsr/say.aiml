@@ -154,7 +154,7 @@
     </category>
 
     <category>
-        <pattern>FOLLOWME</pattern>
+        <pattern>FOLLOWYOU</pattern>
         <template>
             <random>
                 <li>Okay!</li>
@@ -165,6 +165,20 @@
             <random>
                 <li>I'm following you.</li>
                 <li>I'm chasing you.</li>
+            </random>
+            Please go ahead!
+            |[STOP]
+        </template>
+    </category>
+
+    <category>
+        <pattern>FOLLOWME</pattern>
+        <template>
+            Okay!
+            <random>
+                <li>Now, please follow me.</li>
+                <li>Follow me.</li>
+                <li>Follow me.</li>
             </random>
             Please go ahead!
             |[STOP]

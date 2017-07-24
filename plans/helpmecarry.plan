@@ -23,26 +23,26 @@ followuntil_stopfollowing;
 # ! *if* (not persondetected) *do* say_comehere; restart_action !
 asrenable_off; #new from andrea
 
-say_carhere;
+#vsay_carhere; #this is not required as the robot says something when it detects the stopfollowing
 #saveposition_car;
-vsay_whatnow;
+#vsay_whatnow; #this is triggered by the following dialogue (dialogue_lookforhelp)
 #dialogue_lookforhelp; #understand the location to go "helplocation"
 
 
 #### 3 - LOOK FOR HELP
 
-say_lookforhelp;
+dialogue_lookforhelp;
 headpose_0_-20;
 
 #goto_helplocation; ! *if* personhere *do* dialogue_whattime; restart_action !
 
 lookfor_persondetected; ! *if* timeout_lookfor_20 *do* say_comehere; restart_action !
-#dialogue_guide;
+#dialogue_guide; # we could use this action to acquire the name of the guy. At the end of this action, vsay_followme is automatically triggered
 
 
 #### 4 - COMING BACK TO THE CAR
 
-say_followme;
+vsay_followme;
 waitfor_personbehind;
 
 #goto_car; ! *if* (not personbehind) *do*  turn_180; vsay_gotocar ; turn_180 ; waitfor_personbehind; restart_action ;

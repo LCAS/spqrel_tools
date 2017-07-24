@@ -12,7 +12,7 @@
         <category>
             <pattern>*</pattern>
             <template>
-                <srai>SAY FOLLOWME</srai>
+                <srai>SAY FOLLOWYOU</srai>
                 |[STOP]
             </template>
         </category>

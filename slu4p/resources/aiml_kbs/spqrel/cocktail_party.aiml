@@ -316,10 +316,10 @@
         </category>
 
         <category>
-            <pattern>* MAYTE *</pattern>
+            <pattern>* MARIA *</pattern>
             <template>
                 <think>
-                    <set name="Customer">mayte</set>
+                    <set name="Customer">maria</set>
                     <set name="topic">TAKEORDER</set>
                 </think>
                 <srai>START</srai>
@@ -327,10 +327,10 @@
         </category>
 
         <category>
-            <pattern>* MAYTE</pattern>
+            <pattern>* MARIA</pattern>
             <template>
                 <think>
-                    <set name="Customer">mayte</set>
+                    <set name="Customer">maria</set>
                     <set name="topic">TAKEORDER</set>
                 </think>
                 <srai>START</srai>
@@ -338,10 +338,10 @@
         </category>
 
         <category>
-            <pattern>MAYTE *</pattern>
+            <pattern>MARIA *</pattern>
             <template>
                 <think>
-                    <set name="Customer">mayte</set>
+                    <set name="Customer">maria</set>
                     <set name="topic">TAKEORDER</set>
                 </think>
                 <srai>START</srai>
@@ -349,10 +349,10 @@
         </category>
 
         <category>
-            <pattern>MAYTE</pattern>
+            <pattern>MARIA</pattern>
             <template>
                 <think>
-                    <set name="Customer">mayte</set>
+                    <set name="Customer">maria</set>
                     <set name="topic">TAKEORDER</set>
                 </think>
                 <srai>START</srai>

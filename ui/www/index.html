@@ -1,3 +1,4 @@
+$def with (plans)
 $var title: Dashboard
 $var jsfiles: static/js/main.js
 
@@ -30,14 +31,8 @@ document.onready = function() {
 	                        <h3 class="panel-title">Quick Replies</h3>
 	                    </div>
 	                    <div class="panel-body">
-                        <div id="dialog-buttons">
-                        </div>
-                        <button id="testbtn" onclick="send({
-                            'method':'button', 
-                            'id': 'testbtn',
-                            'text': $$('#testbtn').text()
-                            });" 
-                            class="btn btn-default col-md-12 btn-lg btn-danger">Test</button>
+                            <div id="dialog-buttons">
+                            </div>
 	                    </div>
 	                </div>
 	            </div>
@@ -50,7 +45,7 @@ document.onready = function() {
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Robot Status</h3>
@@ -58,6 +53,10 @@ document.onready = function() {
                     <div class="panel-body">
                         <table class="table table-condensed table-striped">
                             <tbody>
+                                <tr>
+                                    <td class="col-md-3">last notification:</td>
+                                    <td class="col-md-9"><p id="notificationAdded">-</p></td>
+                                </tr>
                                 <tr>
                                     <td class="col-md-3">Current Plan:</td>
                                     <td class="col-md-9"><p id="PNP_CurrentPlan">-</p></td>
@@ -80,6 +79,31 @@ document.onready = function() {
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Plans</h3>
+                    </div>
+                    <div class="panel-body">
+                            $for p in plans:
+                                <div class="btn-group" role="group">
+                                        <button id="$p" 
+                                                onclick="send({
+                                                    'method':'plan_start_button', 
+                                                    'plan': '$p',
+                                                });" 
+                                                class=" btn-lg btn-primary">$p</button><p>&nbsp;</p>
+                                </div>
+                        <p>&nbsp;</p>        
+                        <button id="$p" 
+                            onclick="send({
+                                'method':'plan_start_button', 
+                                'plan': 'stop',
+                            });" 
+                            class=" btn-lg btn-danger">STOP!</button>
                     </div>
                 </div>
             </div>

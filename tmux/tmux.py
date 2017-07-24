@@ -22,20 +22,11 @@ sys.path.append(os.path.abspath(
 class TMux:
 
     def __init__(self, session_name="spqrel", configfile=None):
-        self.server = Server()
-        if self.server.has_session(session_name):
-            self.session = self.server.find_where({
-                "session_name": session_name
-            })
-
-            info('found running session %s on server' % session_name)
-        else:
-            info('starting new session %s on server' % session_name)
-            self.session = self.server.new_session(session_name=session_name)
         if configfile:
             self.load_config(configfile)
         else:
             self.config = None
+        self.session_name = session_name
 
     def _on_terminate(self, proc):
         info("process {} terminated with exit code {}"
@@ -61,6 +52,19 @@ class TMux:
         if not self.config:
             error('config file not loaded; call "load_config" first!')
         else:
+            self.server = Server()
+            if self.server.has_session(self.session_name):
+                self.session = self.server.find_where({
+                    "session_name": self.session_name
+                })
+
+                info('found running session %s on server' % self.session_name)
+            else:
+                info('starting new session %s on server' % self.session_name)
+                self.session = self.server.new_session(
+                    session_name=self.session_name
+                )
+
             for win in self.config['windows']:
                 window = self.session.find_where({
                     "window_name": win['name']
@@ -224,12 +228,39 @@ class TMux:
 
             def on_button(self, payload):
                 info('button pressed: \n%s' % pformat(payload))
-                self.sendJSON({'method': 'ping'})
-                self.sendJSON({
-                    'method': 'modal_dlg',
-                    'id': 'modal_dlg'},
-                    lambda p: pprint(p))
-                return {'button_outcome': True}
+                window_name = payload['id']
+                cmd = payload['cmd']
+                if cmd == 'launch':
+                    if window_name == '':
+                        tmux_self.launch_all_windows()
+                    else:
+                        tmux_self.launch_window(window_name)
+                elif cmd == 'stop':
+                    if window_name == '':
+                        tmux_self.stop_all_windows()
+                    else:
+                        tmux_self.stop_window(window_name)
+                elif cmd == 'terminate':
+                        tmux_self.kill_all_windows()
+                        sleep(1)
+                        tmux_self.init()
+
+                sleep(1)
+                self.sendJSON(self.on_status())
+
+            def on_status(self, payload=None):
+                info('status-requested: ')
+
+                res = {
+                    'windows': {},
+                    'method': 'update_status'
+                }
+                for w in tmux_self.config['windows']:
+                    res['windows'][w['name']] = tmux_self.is_running(w['name'])
+
+                return res
+
+                #return {'button_outcome': True}
 
         self.webserver = webnsock.Webserver(TMuxWebServer(), port=9999)
         self.backend = webnsock.WSBackend(TMuxWSProtocol)

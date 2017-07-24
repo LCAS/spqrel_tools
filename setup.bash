@@ -40,6 +40,7 @@ export PATH=$PATH:$SPQREL_HOME/bin:$PNPGEN_BIN
 
 export PYTHONPATH=${PYTHONPATH}:$SPQREL_HOME/slu4p:$SPQREL_HOME/worktree/PetriNetPlans/PNPnaoqi/actions
 export SLU4R_ROOT=$SPQREL_HOME/slu4p
+export PLAN_DIR=$SPQREL_HOME/plans
 
 # Pepper's IP
 export PEPPER_IP="${PEPPER_IP:-localhost}"

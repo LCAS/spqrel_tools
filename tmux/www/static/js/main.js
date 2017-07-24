@@ -45,6 +45,8 @@ function init() {
 
   socket.onopen = function () {
     console.log("Connected!");
+    check();
+
   };
 
   socket.onmessage = function (e) {
@@ -62,6 +64,9 @@ function init() {
           send(result);
         }
       } else if ("_response_to" in payload) {
+        if ('id' in payload) {
+          console.log('got response for id='+payload['id']);
+        }
         console.log('got a response to message ' + payload['_response_to']);
       } else {
         console.log("don't know what to do with message " + e.data);
@@ -77,7 +82,7 @@ function init() {
   };
 
   socket.onclose = function (e) {
-    socket = null;
+    clearInterval(check_interval); 
     console.log("Connection closed. Reason: " + e.reason);
   };
 

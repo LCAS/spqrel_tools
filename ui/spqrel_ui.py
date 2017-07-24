@@ -2,21 +2,15 @@
 
 import os
 import sys
-
-print sys.path
-
-import threading
 import webnsock
 import web
+from subprocess import check_output
 from signal import signal, SIGINT
 from logging import error, warn, info, debug, basicConfig, INFO
 from pprint import pformat, pprint
 import qi
 from os import path
 import argparse
-
-import action_base
-from action_base import *
 
 from time import sleep
 
@@ -46,7 +40,11 @@ class ALSubscriber():
 
 class SPQReLUIServer(webnsock.ControlServer):
 
+    __plan_dir = os.path.realpath(os.getenv("PLAN_DIR", default=os.getcwd()))
+
     def __init__(self):
+
+
 
         webnsock.ControlServer.__init__(self)
 
@@ -63,11 +61,14 @@ class SPQReLUIServer(webnsock.ControlServer):
         render = web.template.render(TEMPLATE_DIR,
                                      base='base', globals=globals())
 
+        serv_self = self
+
         class Index(self.page):
             path = '/'
 
             def GET(self):
-                return render.index()
+                plans = serv_self.find_plans()
+                return render.index(plans.keys())
 
         class tmux(self.page):
             path = '/tmux'
@@ -81,6 +82,13 @@ class SPQReLUIServer(webnsock.ControlServer):
             def GET(self):
                 return render.blockly()
 
+    def find_plans(self):
+        files = os.listdir(self.__plan_dir)
+        plans = {}
+        for f in files:
+            if f.endswith('.plan'):
+                plans[f.replace('.plan', '')] = f
+        return plans
 
 
 class SQPReLProtocol(webnsock.JsonWSProtocol):
@@ -99,6 +107,8 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
     #         info('got a response to %s' % payload['_response_to'])
     #     else:
     #         warn("don't know what to do with message %s" % pformat(payload))
+
+    __plan_dir = os.path.realpath(os.getenv("PLAN_DIR", default=os.getcwd()))
 
     def __init__(self):
         global memory_service
@@ -144,6 +154,30 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
 
         super(SQPReLProtocol, self).__init__()
 
+    def _translate_plan(self, plan_name):
+        try:
+            print "translate plan in %s" % self.__plan_dir
+            print check_output(
+                ['pnpgen_translator',
+                 'inline', plan_name + '.plan'],
+                cwd=self.__plan_dir
+            )
+            print "translated plan"
+        except Exception as e:
+            print "failed translating plan: %s" % str(e)
+
+    def _start_plan(self, plan_name):
+        try:
+            print "start plan in %s" % self.__plan_dir
+            print check_output(
+                ['./run_plan.py',
+                 '--plan', plan_name],
+                cwd=self.__plan_dir
+            )
+            print "started plan"
+        except Exception as e:
+            print "failed starting plan: %s" % str(e)
+
     def _answer_options_parse(self, inp, skip=1):
         inp = inp.replace('+', ' ')
         return inp.split('_')[skip:]
@@ -156,14 +190,16 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
         info('dialog button pressed: \n%s' % pformat(payload))
         self.memory_service.raiseEvent('TabletAnswer', payload['text'])
 
-    def on_button(self, payload):
-        info('button pressed: \n%s' % pformat(payload))
-        self.sendJSON({'method': 'ping'})
-        self.sendJSON({
-            'method': 'modal_dlg',
-            'id': 'modal_dlg'},
-            lambda p: pprint(p))
-        return {'button_outcome': True}
+    def on_plan_start_button(self, payload):
+        info('plans_start_button pressed: \n%s' % pformat(payload))
+        self._translate_plan(payload['plan'])
+        self._start_plan(payload['plan'])
+        # self.sendJSON({'method': 'ping'})
+        # self.sendJSON({
+        #     'method': 'modal_dlg',
+        #     'id': 'modal_dlg'},
+        #     lambda p: pprint(p))
+        return
 
 
 def qi_init():

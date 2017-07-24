@@ -88,21 +88,22 @@ document.onready = function() {
                         <h3 class="panel-title">Plans</h3>
                     </div>
                     <div class="panel-body">
-                        <div class="btn-group" role="group">
                             $for p in plans:
-                                <button id="$p" 
-                                        onclick="send({
-                                            'method':'plan_start_button', 
-                                            'plan': '$p',
-                                        });" 
-                                        class="btn btn-primary">$p</button>
-                        </div>
+                                <div class="btn-group" role="group">
+                                        <button id="$p" 
+                                                onclick="send({
+                                                    'method':'plan_start_button', 
+                                                    'plan': '$p',
+                                                });" 
+                                                class=" btn-lg btn-primary">$p</button><p>&nbsp;</p>
+                                </div>
+                        <p>&nbsp;</p>        
                         <button id="$p" 
                             onclick="send({
                                 'method':'plan_start_button', 
                                 'plan': 'stop',
                             });" 
-                            class="btn btn-danger">STOP!</button>
+                            class=" btn-lg btn-danger">STOP!</button>
                     </div>
                 </div>
             </div>

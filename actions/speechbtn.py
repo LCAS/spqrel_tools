@@ -1,7 +1,7 @@
 import threading
 
 import action_base
-
+from time import sleep
 
 actionName = "speechbtn"
 
@@ -20,6 +20,7 @@ def actionThread_exec(params):
 
     print "Action " + actionName + " " + params + " terminated"
     # action end
+    sleep(.5)
     memory_service.raiseEvent("PNP_action_result_" + actionName, "success")
 
 

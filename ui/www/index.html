@@ -54,16 +54,20 @@ document.onready = function() {
                         <table class="table table-condensed table-striped">
                             <tbody>
                                 <tr>
-                                    <td class="col-md-3">last notification:</td>
-                                    <td class="col-md-9"><p id="notificationAdded">-</p></td>
-                                </tr>
-                                <tr>
                                     <td class="col-md-3">Current Plan:</td>
                                     <td class="col-md-9"><p id="PNP_CurrentPlan">-</p></td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-3">Current Action:</td>
                                     <td class="col-md-9"><p id="PNP_CurrentAction">-</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">Current Node:</td>
+                                    <td class="col-md-9"><p id="TopologicalNav_CurrentNode">XXX</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">Closest Node:</td>
+                                    <td class="col-md-9"><p id="TopologicalNav_ClosestNode">XXX</p></td>
                                 </tr>
 <!--                                 <tr>
                                     <td class="col-md-3">Current PNP Places:</td>
@@ -75,7 +79,15 @@ document.onready = function() {
                                 </tr>
                                 <tr>
                                     <td class="col-md-3">Current Navgoal:</td>
-                                    <td class="col-md-9"><p id="NAOqiPlanner_Goal">XXX</p></td>
+                                    <td class="col-md-9"><p id="TopologicalNav_Goal">XXX</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">Current Nav Status:</td>
+                                    <td class="col-md-9"><p id="TopologicalNav_Status">XXX</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">last notification:</td>
+                                    <td class="col-md-9"><p id="notificationAdded">-</p></td>
                                 </tr>
                             </tbody>
                         </table>

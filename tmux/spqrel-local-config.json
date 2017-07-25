@@ -16,9 +16,9 @@
     {
       "name": "navigation",
       "panes": [
-        "cd $SPQREL_HOME/bin; ./pepper_localizer --map $MAP --initial_pose_x 0 --initial_pose_y 0 --initial_pose_theta 0",
-        "sleep 5; cd $SPQREL_HOME/bin; ./pepper_planner --map $MAP",
-        "sleep 5; cd $SPQREL_HOME/worktree/spqrel_navigation/src/topological_navigation/scripts/; ./topological_navigation.py --tmap $TMAP"
+        "#cd $SPQREL_HOME/bin; ./pepper_localizer --map $MAP --initial_pose_x 0 --initial_pose_y 0 --initial_pose_theta 0",
+        "#sleep 5; cd $SPQREL_HOME/bin; ./pepper_planner --map $MAP",
+        "sleep 5; cd $SPQREL_HOME/worktree/spqrel_navigation/src/topological_navigation/scripts/; ./topological_navigation.py --fake --tmap $TMAP"
       ]
     },
     {

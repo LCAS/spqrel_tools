@@ -131,6 +131,10 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
 
         # all the ones that are just HTML updates
         als_names = [
+            "TopologicalNav/Goal",
+            "TopologicalNav/CurrentNode",
+            "TopologicalNav/ClosestNode",
+            "TopologicalNav/Status",
             "PNP/CurrentAction",
             "PNP/CurrentPlan",
             "Veply",

@@ -1,50 +1,41 @@
-'''
-Memorize face
-==================
+#! /usr/bin/env python
+# -*- encoding: UTF-8 -*-
 
-Wait for 1 face detection with minimum size
-
-If in that moment there is not Peopledetection take the idperson from  ALMemory 'Actions/personhere/PersonID'
-
-Update  'Actions/MemorizePeople/Person/IDNUMBER' 
-
-
-PARAMS:
-
-memorizeface_inmemory_Profile<1> Read memorykey 'Humans/Profile<1|2|3>
-
-memorizaface_name_<nameuser>
-
-'''
-
-
+# DOCUMENTATION
+#http://doc.aldebaran.com/2-5/naoqi/peopleperception/alpeopleperception-api.html#PeoplePerception
+#http://doc.aldebaran.com/2-5/naoqi/peopleperception/alfacedetection.html
 
 import qi
 import argparse
 import sys
+import os
 import time
 import threading
 import json
 
-import action_base
-from action_base import *
+from naoqi import ALProxy
 
-import conditions
-from conditions import set_condition
-
-
+#from utils import point2world
+#import conditions
+#from conditions import set_condition
 
 
 
 ##PARAMS
-#confidenceThreshold=0.4 #default =0.4
+confidenceThreshold=0.4 #default =0.4
 min_size={'w':0.10 ,'h':0.10}
 
-actionName = "memorizeface"
+def writeJson(path,data):
+    
+    
+    if not os.path.exists(path):
+        os.makedirs(path)
+        
+    jsonData=json.dumps(data,indent=2 )
 
-
-
-global msface_naoqi_enabled
+    fh = open(path+'userlearned.json',"w")
+    fh.write(jsonData)
+    fh.close()
 
 def onFaceDetection(facevalues):
     
@@ -101,7 +92,7 @@ def onPeopleDetection(values):
 
 
     shirtcolor={'name': '', 'hsv':[]}
-    personinfo={'height': 0.0, 'shirtcolor': {} }
+    personinfo={'height': 0.0, 'shirtcolor': {} ,'posture':''}
     poseinworld={'x':0.0,'y': 0.0} 
     try:
 #                angles =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/AnglesYawPitch")
@@ -110,99 +101,109 @@ def onPeopleDetection(values):
         shirtcolorName =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ShirtColor")
         shirtcolorHSV =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ShirtColorHSV")
         PositionInRobotFrame =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/PositionInRobotFrame")
-
+       
         posture='unknow'
         if issitting==0:
             posture='standing'
         elif issitting==1:
-            posture='sitting'       
+            posture='sitting'  
 
         # Write data in json format
 
         shirtcolor={'name': shirtcolorName, 'hsv':shirtcolorHSV}
         personinfo={'height': round(height,2), 'shirtcolor': shirtcolor,'posture':posture}
-        face['faceinfo']=facecharacteristics
         
-        w_px, w_py = point2world(memory_service,[PositionInRobotFrame[0],PositionInRobotFrame[1]])
+        
+        #w_px, w_py = point2world(memory_service,[PositionInRobotFrame[0],PositionInRobotFrame[1]])
+        w_px=0.0
+        w_py=0.0
         poseinworld={'x':w_px,'y': w_py}
                 
         
     except:
         print 'Person info error '
 
-    face['faceinfo']=facecharacteristics      
+        try:
+            current_node=memory_service.getData('TopologicalNav/CurrentNode')
+            closest_node=memory_service.getData('TopologicalNav/ClosestNode')
+            
+        except:
+            print 'topological localization error '
+            current_node=None
+            closest_node=None
+            
+        face['faceinfo']=facecharacteristics
+    
+        posetopological={'current_node':current_node,'closest_node':closest_node}
     posetopological={'current_node':'TODO','closest_node':'TODO'}
     lastlocation= {'world':poseinworld , 'topological':posetopological}
     
-    user={'personid': personid ,'person_naoqiid': personid,'info': personinfo, 'lastlocation':lastlocation, 'face_naoqi': face,'face_ms_api': {}}
+    user={'personid': personid ,'person_naoqiid': personid,'info': personinfo, 'lastlocation':lastlocation, 'face_naoqi': face ,'face_ms_api': {}}
     
    
     return user
     
-def updateMemorizePeople(currentuser):
+def updateMemorizePeople(json_person):
+
 
 
 
     try:
-        mem_list=memory_service.getData('Actions/MemorizePeople/PeopleList')
-        people_list=json.loads(mem_list)
+        people_list=memory_service.getData('Actions/MemorizePeople/PeopleList/')
         
-        for i in range(len(people_list)):
-            
-            if currentuser['person_naoqiid']==people_list[i]['person_naoqiid']:
-    
-                back_person=people_list[i]
-                
-
-                if json_person['info']['height'] is not '':
-                    back_person['info']['height']=currentuser['info']['height']
-                    
-                if json_person['info']['posture'] is not '':
-                    back_person['info']['posture']=currentuser['info']['posture']
-                
-                back_person['face_naoqi']['name']=currentuser['face_naoqi']['name']
-            
-                # Update only if confidence is higher 
-                if currentuser['face_naoqi']['faceinfo']['age']['conf'] >back_person['face_naoqi']['faceinfo']['age']['conf']:
-                    back_person['face_naoqi']['faceinfo']['age']=currentuser['face_naoqi']['faceinfo']['age']
-    
-                if currentuser['face_naoqi']['faceinfo']['gender']['conf'] >back_person['face_naoqi']['faceinfo']['gender']['conf']:
-                    back_person['face_naoqi']['faceinfo']['gender']=currentuser['face_naoqi']['faceinfo']['gender']
-
-        
-            ## Write data in ALMemory
-            people_list[i]=back_person
-            str_person=json.dumps(people_list)
-            memory_service.insertData('Actions/memorizepeople/Personlist', str_person) 
     except:
         people_list=[]
+
+    if json_person['personid'] in people_list:
         
-def actionThread_exec (params):
+            str_back_person=memory_service.getData('Actions/MemorizePeople/Person/'+str(json_person['personid']))
+            back_person=json.loads(str_back_person)
+            
+            if json_person['info']['height'] is not '':
+                back_person['info']['height']=json_person['info']['height']
+                
+            if json_person['info']['posture'] is not '':
+                back_person['info']['posture']=json_person['info']['posture']
+            
+            back_person['face_naoqi']['name']=json_person['face_naoqi']['name']
+            
+            # Update only if confidence is higher 
+            if json_person['face_naoqi']['faceinfo']['age']['conf'] >back_person['face_naoqi']['faceinfo']['age']['conf']:
+                back_person['face_naoqi']['faceinfo']['age']=currentuser['face_naoqi']['faceinfo']['age']
+
+            if json_person['face_naoqi']['faceinfo']['gender']['conf'] >back_person['face_naoqi']['faceinfo']['gender']['conf']:
+                back_person['face_naoqi']['faceinfo']['gender']=currentuser['face_naoqi']['faceinfo']['gender']
+
+            ## Write data in ALMemory
+            str_person=json.dumps(back_person)
+            memory_service.insertData('Actions/MemorizePeople/Person/'+str(back_person['personid']), str_person)
+        
+    else:  #new
+
+        ## Write data in ALMemory
+        str_person=json.dumps(json_person)
+        memory_service.insertData('Actions/MemorizePeople/Person/'+str(json_person['personid']), str_person)
+                
+        people_list.append(json_person['personid'])
+        memory_service.insertData('Actions/MemorizePeople/PeopleList/', people_list)
+        
+
+def actionThread_exec (session,mem_serv):
 
     global face_char_service
     
     t = threading.currentThread()
-    memory_service = getattr(t, "mem_serv", None)
-    faces_service = getattr(t, "session", None).service("ALFaceDetection")
+    #memory_service = mem_serv
+
+    faces_service = session.service("ALFaceDetection")
     faces_service.setRecognitionEnabled(True)
-    face_char_service = getattr(t, "session", None).service("ALFaceCharacteristics")
-    print "Action "+actionName+" started with params "+params
-    
-    ##memorizeface_inmemory_Profile<1> Read memorykey 'Humans/Profile<1|2|3>
-    nameuser=''
-    personhere=None
-    if params:
-        parse_params=params.split('_')
-        if parse_params[0]=='inmemory':
-            try:
-                userprofile=json.loadsmemory_service.getData('Humans/'+str(parse_params[1]))
-                nameuser=userprofile['Name']
-                personhere=userprofile['PersonID']
-            except:
-                print 'Humans/'+str(parse_params[1])+' not found ' 
-        elif parse_params[0]=='name':
-            nameuser=str(parse_params[1])
-            
+    learnedlist = faces_service.getLearnedFacesList()
+    print 'learnedlist=',learnedlist
+    face_char_service = session.service("ALFaceCharacteristics")
+    print "Action  started with params "
+
+    nameuser='Roberto'
+
     ## START MICROSOFT API 
     global msface_naoqi_enabled
     msface_naoqi_enabled='false'
@@ -212,7 +213,8 @@ def actionThread_exec (params):
         if msface_naoqi_enabled== 'true':    
             memory_service.raiseEvent('Actions/FaceRecognition/Command','camera_start')
     except:
-        print 'Data not found Actions/FaceRecognition/Enabled'   
+        print 'Data not found Actions/FaceRecognition/Enabled'
+        
     # action init
     while (getattr(t, "do_run", True) ): 
         
@@ -239,7 +241,7 @@ def actionThread_exec (params):
                         print 'Trying to relearn face ',nameuser
                         learned=faces_service.reLearnFace(nameuser)
                         
-                        print 'Face learned =',learned                    
+                        print 'Face learned =',learned
                     face_naoqi['name']=nameuser
                     
                     
@@ -247,7 +249,7 @@ def actionThread_exec (params):
                     
                     ## ADD FACE MICROSOFT API 
                     if msface_naoqi_enabled== 'true': 
-                        #memory_service.inserData("Actions/FaceRecognition/Recognition",'')
+                        memory_service.inserData("Actions/FaceRecognition/Recognition",'')
                         memory_service.raiseEvent('Actions/FaceRecognition/Command','addface_'+nameuser)
                         
                         learned=False
@@ -272,13 +274,8 @@ def actionThread_exec (params):
 
                         person=None
                         personid=None
-                        
-                            
-                        if personhere is not None:
-                            
-                            personid=personhere
-                            
-                        elif len(peoplevisible) is 1:
+
+                        if len(peoplevisible) is 1:
                             
                             personid=peoplevisible
                                                     
@@ -296,6 +293,7 @@ def actionThread_exec (params):
                             person=onPeopleDetection(personid)
                             if person is not None:
                                 person['face_ms_api']=face_ms_api
+                                person['face_naoqi']['name']=face_naoqi['name']
                                 updateMemorizePeople(person)
 
                                 print 'EXIT TRUE'
@@ -305,7 +303,7 @@ def actionThread_exec (params):
                             if msface_naoqi_enabled== 'true': 
                                 memory_service.raiseEvent('Actions/FaceRecognition/Command','camera_stop')
                                 
-                            memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+                            
                             
                         else:
                             
@@ -327,26 +325,56 @@ def actionThread_exec (params):
 
 
 
-
 def init(session):
-    print actionName+" init"
-    action_base.init(session, actionName, actionThread_exec)
-
     
+
+    print "Learn Person init"
+
+
+
 
 def quit():
-    print actionName+" quit"
-    actionThread_exec.do_run = False
-    
+    global monitorThread
+    print "Learn person quit"
+    monitorThread.do_run = False 
+
+
+
+def main():
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--pip", type=str, default=os.environ['PEPPER_IP'],
+                        help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
+    parser.add_argument("--pport", type=int, default=9559,
+                        help="Naoqi port number")
+    args = parser.parse_args()
+    pip = args.pip
+    pport = args.pport
+
+    #Starting application
+    try:
+        connection_url = "tcp://" + pip + ":" + str(pport)
+        print "Connecting to ",    connection_url
+        app = qi.Application(["PersonHere", "--qi-url=" + connection_url ])
+    except RuntimeError:
+        print ("Can't connect to Naoqi at ip \"" + pip + "\" on port " + str(pport) +".\n"
+               "Please check your script arguments. Run with -h option for help.")
+        sys.exit(1)
+
+    app.start()
+    session = app.session
+    init(session)
+
+    print "Creating the thread"
+    global memory_service
+    memory_service  = session.service("ALMemory")
+    #create a thead that monitors directly the signal
+    monitorThread = threading.Thread(target = actionThread_exec, args = (session, memory_service))
+    monitorThread.start()
+
+
+    app.run()    
 
 
 if __name__ == "__main__":
-
-    app = action_base.initApp(actionName)
-        
-    init(app.session)
-
-    #Program stays at this point until we stop it
-    app.run()
-
-    quit()
+    main()

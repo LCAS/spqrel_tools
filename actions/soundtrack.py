@@ -27,17 +27,53 @@ def actionThread_exec (params):
 
     # action init
    
-    tracker_service = session.service("ALTracker")
-    tracker_service.setMode("Move")
-    tracker_service.registerTarget("Sound",[1,0.1])
-    tracker_service.track("Sound")
-
+    #tracker_service = session.service("ALTracker")
+    #tracker_service.setMode("Move")
+    #tracker_service.registerTarget("Sound",[1,0.1])
+    #tracker_service.track("Sound")
+    
+    confidence_threshold = 0.4
     val = False
     # action init
 
     while (getattr(t, "do_run", True) and (not val)): 
         #print "Action "+actionName+" "+params+" exec..."
-        # action exex
+        # action exec
+        sound_value =  memory_service.getData("ALSoundLocalization/SoundLocated")
+        confidence = sound_value[1][2]
+        print "confidence = ",confidence
+        if confidence > confidence_threshold:
+            sound_azimuth = sound_value[1][0]
+            sound_elevation = sound_value[1][1]
+            x = math.sin(sound_elevation) * math.cos(sound_azimuth)
+            y = math.sin(sound_elevation) * math.sin(sound_azimuth)
+            z = math.cos(sound_elevation)
+            head_pitch = sound_value[2][4]
+            head_yaw = sound_value[2][5]
+            azimuth = sound_azimuth + head_yaw
+            elevation = sound_elevation + head_pitch
+            turn = 0
+            if azimuth > self.HEAD_YAW_MAX:
+                turn = azimuth
+                azimuth = 0.
+            if azimuth < self.HEAD_YAW_MIN:
+                turn = azimuth
+                azimuth = 0.
+            if elevation > self.HEAD_PITCH_MAX:
+                elevation = self.HEAD_PITCH_MAX
+            if elevation < self.HEAD_PITCH_MIN:
+                elevation = self.HEAD_PITCH_MIN
+            target_angles = [azimuth, 0]  # [azimuth, elevation]
+            #print "Current Head Yaw: ", head_yaw, "Current Head Pitch", head_pitch
+            #print "Sound Detected Azimuth: ", sound_azimuth, "Sound Detected Elevation: ", sound_elevation
+            #print "Sound Detected Coordinate: ", [x, y, z]
+            #print "Target Head Yaw: ", azimuth, "Target Head Pitch: ", elevation
+            #print "Turn: ", turn
+            #print "------------------------------------------------------------------"
+            motion.angleInterpolationWithSpeed(self.NAMES, target_angles, self.MAX_SPEED_FRACTION)
+            if math.fabs(turn) > 0.01:
+                motion.moveTo(0, 0, turn)
+
         try:
             val = get_condition(memory_service, params)
         except:
@@ -47,8 +83,8 @@ def actionThread_exec (params):
 		
     print "Action "+actionName+" "+params+" terminated"
     # action end
-    tracker_service.stopTracker()
-    tracker_service.unregisterAllTargets()
+    #tracker_service.stopTracker()
+    #tracker_service.unregisterAllTargets()
     # action end
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
 

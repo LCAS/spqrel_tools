@@ -1,10 +1,9 @@
 
 # TEST
 
-lookfor_memorizepeople|30;  # timeout in seconds
+lookfor_memorizepeople|10;  # timeout in seconds
 waitfor_personhere; ! *if* timeout_waitfor_30 *do* say_comehere; restart_action !
 
 dialogue_takeorder;
 memorizeface_inmemory_Profile1;
-say_comehere;
 say_greetperson;

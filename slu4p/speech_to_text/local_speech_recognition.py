@@ -7,7 +7,7 @@ from os.path import expanduser
 
 
 class SpeechRecognition(EventAbstractClass):
-    WR_EVENT = "SpeechDetected"
+    WR_EVENT = "WordRecognized"
     TD_EVENT = "ALTextToSpeech/TextDone"
     ASR_ENABLE = "ASR_enable"
     FLAC_COMM = 'flac -8 -f '
@@ -98,28 +98,27 @@ class SpeechRecognition(EventAbstractClass):
         self.nuance_asr.pause(False)
 
     def word_recognized_callback(self, *args, **kwargs):
-        if args[1] == 1:
-            self.audio_recorder.stopMicrophonesRecording()
-            self.nuance_asr.pause(True)
-            """
-            Convert Wave file into Flac file
-            """
-            if os.path.exists(self.AUDIO_FILE + '.wav'):
-                if os.path.getsize(self.AUDIO_FILE + '.wav') > 0:
-                    os.system(self.FLAC_COMM + self.AUDIO_FILE + '.wav')
-                    f = open(self.AUDIO_FILE + '.flac', 'rb')
-                    flac_cont = f.read()
-                    f.close()
-                    results = {}
-                    results['GoogleASR'] = [r.encode('ascii', 'ignore').lower() for r in self.google_asr.recognize_data(flac_cont)]
-                    results['NuanceASR'] = [self.memory_proxy.getData("WordRecognized")]
-                    print "[" + self.inst.__class__.__name__ + "] " + str(results)
-                    self.memory.raiseEvent("LocalVordRecognized", results)
-            self.timeout = 0
-            self.nuance_asr.pause(False)
-            self.audio_recorder.stopMicrophonesRecording()
-            self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
-            self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+        self.audio_recorder.stopMicrophonesRecording()
+        self.nuance_asr.pause(True)
+        """
+        Convert Wave file into Flac file
+        """
+        if os.path.exists(self.AUDIO_FILE + '.wav'):
+            if os.path.getsize(self.AUDIO_FILE + '.wav') > 0:
+                os.system(self.FLAC_COMM + self.AUDIO_FILE + '.wav')
+                f = open(self.AUDIO_FILE + '.flac', 'rb')
+                flac_cont = f.read()
+                f.close()
+                results = {}
+                results['GoogleASR'] = [r.encode('ascii', 'ignore').lower() for r in self.google_asr.recognize_data(flac_cont)]
+                results['NuanceASR'] = [args[1]]
+                print "[" + self.inst.__class__.__name__ + "] " + str(results)
+                self.memory.raiseEvent("LocalVordRecognized", results)
+        self.timeout = 0
+        self.nuance_asr.pause(False)
+        self.audio_recorder.stopMicrophonesRecording()
+        self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
+        self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
 
     def text_done_callback(self, *args, **kwargs):
         try:

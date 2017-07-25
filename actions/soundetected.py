@@ -18,7 +18,7 @@ import conditions
 from conditions import set_condition
 
 def rhMonitorThread (memory_service):
-    global last_personid
+
     t = threading.currentThread()
     print "sounddetected thread started"
 
@@ -35,7 +35,9 @@ def rhMonitorThread (memory_service):
         try:
             sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
             confidence = sound_value[1][2]
-            if confidence > 0.5:
+
+            if confidence > 0.25:
+                v = 'true'
                 print "sound detected"
                 sound_azimuth = sound_value[1][0]
                 sound_elevation = sound_value[1][1]
@@ -59,7 +61,6 @@ def rhMonitorThread (memory_service):
                 motion_service.angleInterpolationWithSpeed(NAMES, target_angles, MAX_SPEED_FRACTION)
                 if math.fabs(turn) > 0.01:
                     motion_service.moveTo(0, 0, turn)
-                v = 'true'
             
         except:
             v = 'false'

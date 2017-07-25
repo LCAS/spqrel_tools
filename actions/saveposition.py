@@ -14,10 +14,10 @@ actionName = "saveposition"
 def actionThread_exec (params):
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
-    tts_service = getattr(t, "session", None).service("ALTextToSpeech")
     print "Action "+actionName+" started with params "+params
     # action init
     count = 1
+    car_x, car_y , car_t = memory_service.getData('NAOqiLocalizer/RobotPose')
     position_name = params
     # action init
     while (getattr(t, "do_run", True) and count>0): 
@@ -26,9 +26,7 @@ def actionThread_exec (params):
         count = count - 1
         print "saved" + position_name
         
-        # LI commented beacause it returns an error
-        # memory_service.insertData(position_name+"/coordinates",[car_x,car_y]) 
-
+        memory_service.insertData(position_name+"/coordinates",[car_x,car_y]) 
 
         # action exec
         time.sleep(0.1)

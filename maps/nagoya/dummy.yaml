@@ -2,5 +2,5 @@ free_thresh: 0.196
 image: dummy.pgm
 negate: 0
 occupied_thresh: 0.65
-origin: [-12.099999999999994, -20.75, 0.0]
-resolution: 0.05
+origin: [0.0,0.0, 0.0]
+resolution: 0.01

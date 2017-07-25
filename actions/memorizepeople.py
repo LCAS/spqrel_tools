@@ -9,15 +9,8 @@
 Memorize people
 ==================
 
-Writes in ALMemory 'Actions/MemorizePeople/PeopleList/' array with peoplelist 
+Writes in ALMemory 'Actions/MemorizePeople/PeopleList/' json string with all features 
 
-Writes in 'Actions/MemorizePeople/Person/IDNUMBER' for each person detected the json data
-
-IDNUMBER for now is the same as the personid providede by PeopleDetected
-
-TODO
------
-How and when remove all this data???
 
 '''
 
@@ -34,8 +27,8 @@ import json
 from naoqi import ALProxy
 
 from utils import point2world
-import conditions
-from conditions import set_condition
+#import conditions
+#from conditions import set_condition
 
 
 
@@ -47,7 +40,7 @@ global people_list
 
 def update_data(currentuser):
     
-
+  global people_list
     
     b_new=True
     
@@ -56,14 +49,12 @@ def update_data(currentuser):
     
     for i in range(len(people_list)):
         
-        if currentuser['person_naoqiid']==people_list[i]:
+        if currentuser['person_naoqiid']==people_list[i]['person_naoqiid']:
             
-            try:
-                mem_person=memory_service.getData('Actions/MemorizePeople/'+people_list[i])
-                json_person=json.loads(mem_person)
-            except:
-                break
+            json_person=people_list[i]
             
+#            mem_person=memory_service.getData('Actions/memorizepeople/'+people_list[i])
+#            json_person=json.loads(mem_person)
             b_new=False
             
             json_person['info']['height']=currentuser['info']['height']
@@ -76,20 +67,23 @@ def update_data(currentuser):
             if currentuser['face_naoqi']['faceinfo']['gender']['conf'] >json_person['face_naoqi']['faceinfo']['gender']['conf']:
                 json_person['face_naoqi']['faceinfo']['gender']=currentuser['face_naoqi']['faceinfo']['gender']
                 
-            ## Write data in ALMemory
-            str_person=json.dumps(json_person)
-            memory_service.insertData('Actions/MemorizePeople/Person/'+str(currentuser['personid']), str_person)
-            
+
+
+            people_list[i]=json_person
+            str_person=json.dumps(people_list)
+            memory_service.insertData('Actions/memorizepeople/Personlist', str_person)    
+        
     ## ADD new person    
     if b_new is True:
         
         people_list.append(currentuser)
+
+        str_person=json.dumps(people_list)
+        memory_service.insertData('Actions/memorizepeople/Personlist', str_person)            
+
         
-        ## Write data in ALMemory
-        str_person=json.dumps(currentuser)
-        memory_service.insertData('Actions/MemorizePeople/Person/'+str(currentuser['personid']), currentuser)
-        
-    memory_service.insertData('Actions/MemorizePeople/PeopleList/', people_list)
+    memory_service.insertData('Actions/memorizepeople/PeopleList/', people_list)
+
 
 def rhMonitorThread (memory_service):
     t = threading.currentThread()
@@ -121,8 +115,8 @@ def rhMonitorThread (memory_service):
             try:
                 
                 #try:
-                res_char=face_char_service.analyzeFaceCharacteristics(personid)
-                print 'res_char',res_char
+#                res_char=face_char_service.analyzeFaceCharacteristics(personid)
+#                print 'res_char',res_char
                 
                 #lookingat =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/LookingAtRobotScore")
                 #gazedirection =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/GazeDirection")
@@ -150,7 +144,7 @@ def rhMonitorThread (memory_service):
 
 
             shirtcolor={'name': '', 'hsv':[]}
-            personinfo={'height': 0.0, 'shirtcolor': {} }
+            personinfo={'height': 0.0, 'shirtcolor': shirtcolor,'posture':'' }
             poseinworld={'x':0.0,'y': 0.0} 
             
             try:
@@ -203,11 +197,7 @@ def rhMonitorThread (memory_service):
             
             update_data(user)        
             
-            
-            
-        
-        
-        
+
         time.sleep(0.5)
     print "Memorizepeople thread quit"
 

@@ -46,8 +46,8 @@ clean: cookies/configure-$(TOOLCHAIN)
 	done
 	rm -rf cookies
 
-BINS:=$(shell find $(QIBUILDS_BUILD_DIRS) -type f  | xargs -r file | grep "LSB executable" | cut -f1 -d: | grep -v CMakeFiles)
-LIBS:=$(shell find $(QIBUILDS_BUILD_DIRS) -type f -a -name "*.so" | xargs -r file | grep "LSB shared object" | cut -f1 -d: | grep -v CMakeFiles)
+BINS:=$(shell find $(QIBUILDS_BUILD_DIRS) -type f  | xargs -r file | grep -G "LSB *executable" | cut -f1 -d: | grep -v CMakeFiles)
+LIBS:=$(shell find $(QIBUILDS_BUILD_DIRS) -type f -a -name "*.so" | xargs -r file | grep -G "LSB *shared object" | cut -f1 -d: | grep -v CMakeFiles)
 
 bins: build $(BINS) $(LIBS)
 	@echo $(QIBUILDS_BUILD_DIRS)

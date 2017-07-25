@@ -164,6 +164,7 @@ class DialogueManager(EventAbstractClass):
             elif '[LOOKFORDATA]' in submessage:
                 data = submessage.replace('[LOOKFORDATA]', '').strip()
                 self.location['location'] = data
+                self.memory.insertData("helplocation", data)
                 self.memory.raiseEvent("DialogueVesponse", json.dumps(self.location))
             elif '[STOPFOLLOWING]' in submessage:
                 self.memory.raiseEvent("ASR_enable", "0")

@@ -420,40 +420,40 @@
         </category>
 
         <category>
-            <pattern>* MAYTE *</pattern>
+            <pattern>* MARIA *</pattern>
             <template>
                 <think>
-                    <set name="Operator">mayte</set>
+                    <set name="Operator">maria</set>
                 </think>
                 <srai>START</srai>
             </template>
         </category>
 
         <category>
-            <pattern>* MAYTE</pattern>
+            <pattern>* MARIA</pattern>
             <template>
                 <think>
-                    <set name="Operator">mayte</set>
+                    <set name="Operator">maria</set>
                 </think>
                 <srai>START</srai>
             </template>
         </category>
 
         <category>
-            <pattern>MAYTE *</pattern>
+            <pattern>MARIA *</pattern>
             <template>
                 <think>
-                    <set name="Operator">mayte</set>
+                    <set name="Operator">maria</set>
                 </think>
                 <srai>START</srai>
             </template>
         </category>
 
         <category>
-            <pattern>MAYTE</pattern>
+            <pattern>MARIA</pattern>
             <template>
                 <think>
-                    <set name="Operator">mayte</set>
+                    <set name="Operator">maria</set>
                 </think>
                 <srai>START</srai>
             </template>
@@ -540,6 +540,86 @@
         </category>
 
         <category>
+            <pattern>* SERGI *</pattern>
+            <template>
+                <think>
+                    <set name="Operator">sergi</set>
+                </think>
+                <srai>START</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* SERGI</pattern>
+            <template>
+                <think>
+                    <set name="Operator">sergi</set>
+                </think>
+                <srai>START</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>SERGI *</pattern>
+            <template>
+                <think>
+                    <set name="Operator">sergi</set>
+                </think>
+                <srai>START</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>SERGI</pattern>
+            <template>
+                <think>
+                    <set name="Operator">sergi</set>
+                </think>
+                <srai>START</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* ROBERTO *</pattern>
+            <template>
+                <think>
+                    <set name="Operator">roberto</set>
+                </think>
+                <srai>START</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* ROBERTO</pattern>
+            <template>
+                <think>
+                    <set name="Operator">roberto</set>
+                </think>
+                <srai>START</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>ROBERTO *</pattern>
+            <template>
+                <think>
+                    <set name="Operator">roberto</set>
+                </think>
+                <srai>START</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>ROBERTO</pattern>
+            <template>
+                <think>
+                    <set name="Operator">roberto</set>
+                </think>
+                <srai>START</srai>
+            </template>
+        </category>
+
+        <category>
             <pattern>NAMEACQUIRED</pattern>
             <template>
                 [SAY]
@@ -553,6 +633,7 @@
                     <li>Could you please follow me?</li>
                     <li>Can you follow me?</li>
                 </random>
+                Place yourself behind me to start!
                 <think>
                     <set name="topic"></set>
                 </think>

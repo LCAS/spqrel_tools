@@ -82,8 +82,8 @@ def actionThread_exec (params):
 		
     print "Action "+actionName+" "+params+" terminated"
     # action end
-    tracker_service.stopTracker()
-    tracker_service.unregisterAllTargets()
+    #tracker_service.stopTracker()
+    #tracker_service.unregisterAllTargets()
     # action end
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
 

@@ -78,7 +78,7 @@ def actionThread_exec (params):
             #print "Target Head Yaw: ", azimuth, "Target Head Pitch: ", elevation
             #print "Turn: ", turn
             #print "------------------------------------------------------------------"
-            motion.angleInterpolationWithSpeed(self.NAMES, target_angles, self.MAX_SPEED_FRACTION)
+            motion.angleInterpolationWithSpeed(NAMES, target_angles, MAX_SPEED_FRACTION)
             if math.fabs(turn) > 0.01:
                 motion.moveTo(0, 0, turn)
 

@@ -11,6 +11,7 @@ class AudioRecorder(object):
         self.channels = channels
         self.rate = rate
         self.frames_per_buffer = frames_per_buffer
+        self.recordingFile = None
 
     def open(self, fname, mode='wb'):
         return RecordingFile(fname, mode, self.channels, self.rate,
@@ -21,7 +22,10 @@ class AudioRecorder(object):
         self.recordingFile.start_recording()
 
     def stopMicrophonesRecording(self):
-        self.recordingFile.stop_recording()
+        try:
+            self.recordingFile.stop_recording()
+        except Exception as e:
+            print 'Already stopped'
 
 class RecordingFile(object):
     def __init__(self, fname, mode, channels,

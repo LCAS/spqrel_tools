@@ -15,7 +15,7 @@ class RemoteSpeechRecognition(EventAbstractClass):
     CHANNELS = [0, 0, 1, 0]
     timeout = 0
 
-    def __init__(self, ip, port, language, word_spotting, audio, visual, vocabulary_file, google_keys, asr_logging):
+    def __init__(self, ip, port, language, sensitivity, word_spotting, audio, visual, vocabulary_file, google_keys, asr_logging):
         super(self.__class__, self).__init__(self, ip, port)
 
         self.__shutdown_requested = False
@@ -37,6 +37,7 @@ class RemoteSpeechRecognition(EventAbstractClass):
         self.audio_recorder = AudioRecorder(channels=2)
 
         self.configure(
+            sensitivity=sensitivity,
             vocabulary=vocabulary,
             nuance_language=nuance_language,
             word_spotting=word_spotting,
@@ -88,8 +89,9 @@ class RemoteSpeechRecognition(EventAbstractClass):
         self.__shutdown_requested = True
         print '[' + self.inst.__class__.__name__ + '] Good-bye'
 
-    def configure(self, word_spotting, nuance_language, audio, visual, vocabulary):
+    def configure(self, sensitivity, word_spotting, nuance_language, audio, visual, vocabulary):
         self.nuance_asr.pause(True)
+        self.nuance_asr.setParameter("Sensitivity", sensitivity)
         self.nuance_asr.setVocabulary(vocabulary, word_spotting)
         self.nuance_asr.setLanguage(nuance_language)
         self.nuance_asr.setAudioExpression(audio)
@@ -113,7 +115,7 @@ class RemoteSpeechRecognition(EventAbstractClass):
                 results['GoogleASR'] = [r.encode('ascii', 'ignore').lower() for r in self.google_asr.recognize_data(flac_cont)]
                 results['NuanceASR'] = [args[1][0].lower()]
                 print "[" + self.inst.__class__.__name__ + "] " + str(results)
-                self.memory.raiseEvent("VordRecognized", results)
+                self.memory.raiseEvent("RemoteVordRecognized", results)
         self.timeout = 0
         self.nuance_asr.pause(False)
         self.audio_recorder.stopMicrophonesRecording()
@@ -139,7 +141,7 @@ class RemoteSpeechRecognition(EventAbstractClass):
             if self.is_enabled:
                 self.is_enabled = False
                 self.audio_recorder.stopMicrophonesRecording()
-                self.unsubscribe(SpeechRecognition.WR_EVENT)
+                self.unsubscribe(RemoteSpeechRecognition.WR_EVENT)
                 print "[" + self.inst.__class__.__name__ + "] ASR disabled"
             else:
                 print "[" + self.inst.__class__.__name__ + "] ASR already disabled"
@@ -157,7 +159,7 @@ class RemoteSpeechRecognition(EventAbstractClass):
                 self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
                 self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav")
                 self.subscribe(
-                    event=SpeechRecognition.WR_EVENT,
+                    event=RemoteSpeechRecognition.WR_EVENT,
                     callback=self.word_recognized_callback
                 )
                 print "[" + self.inst.__class__.__name__ + "] ASR enabled"
@@ -201,6 +203,8 @@ def main():
                         help="Robot port number")
     parser.add_argument("-l", "--lang", type=str, default="en",
                         help="Use one of the supported languages (only English at the moment)")
+    parser.add_argument("-s", "--sensitivity", type=float, default=0.7,
+                        help="Sets the sensitivity of the speech recognizer")
     parser.add_argument("--word-spotting", action="store_true",
                         help="Run in word spotting mode")
     parser.add_argument("--no-audio", action="store_true",
@@ -215,10 +219,11 @@ def main():
                         help="Logs the audio files")
     args = parser.parse_args()
 
-    sr = SpeechRecognition(
+    sr = RemoteSpeechRecognition(
         ip=args.pip,
         port=args.pport,
         language=args.lang,
+        sensitivity=args.sensitivity,
         word_spotting=args.word_spotting,
         audio=not args.no_audio,
         visual=not args.no_visual,

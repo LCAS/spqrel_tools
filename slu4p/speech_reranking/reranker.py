@@ -6,9 +6,11 @@ from event_abstract import *
 
 class ReRanker(EventAbstractClass):
     PATH = ''
-    EVENT_NAME = "VordRecognized"
+    LOCAL_EVENT_NAME = "LocalVordRecognized"
+    REMOTE_EVENT_NAME = "RemoteVordRecognized"
 
-    def __init__(self, ip, port, alpha, noun_cost, verb_cost, drinks_cost, persons_cost, grammar_cost, nuance_cost, noun_dictionary,
+    def __init__(self, ip, port, alpha, noun_cost, verb_cost, drinks_cost, persons_cost, grammar_cost, nuance_cost,
+                 noun_dictionary,
                  verb_dictionary, drinks_dictionary, persons_dictionary, nuance_grammar):
         super(self.__class__, self).__init__(self, ip, port)
         self.alpha = alpha
@@ -28,18 +30,27 @@ class ReRanker(EventAbstractClass):
 
     def start(self, *args, **kwargs):
         self.subscribe(
-            event=ReRanker.EVENT_NAME,
-            callback=self.callback
+            event=ReRanker.LOCAL_EVENT_NAME,
+            callback=self.local_callback
         )
 
-        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(ReRanker.EVENT_NAME)
+        self.subscribe(
+            event=ReRanker.REMOTE_EVENT_NAME,
+            callback=self.remote_callback
+        )
+
+        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
+            ReRanker.LOCAL_EVENT_NAME)
+        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
+            ReRanker.REMOTE_EVENT_NAME)
 
         self._spin()
 
-        self.unsubscribe(ReRanker.EVENT_NAME)
+        self.unsubscribe(ReRanker.LOCAL_EVENT_NAME)
+        self.unsubscribe(ReRanker.REMOTE_EVENT_NAME)
         self.broker.shutdown()
 
-    def callback(self, *args, **kwargs):
+    def local_callback(self, *args, **kwargs):
         print "[" + self.inst.__class__.__name__ + "] ReRanking.."
         temp = args[1]
         transcriptions = list_to_dict(temp)
@@ -48,6 +59,16 @@ class ReRanker(EventAbstractClass):
             self.memory.raiseEvent("ASR_transcription", pick_best(transcriptions))
             print "[" + self.inst.__class__.__name__ + "] " + str(transcriptions)
         self.memory.raiseEvent("VRanked", transcriptions)
+
+    def remote_callback(self, *args, **kwargs):
+        print "[" + self.inst.__class__.__name__ + "] ReRanking.."
+        temp = args[1]
+        transcriptions = list_to_dict(temp)
+        if 'GoogleASR' in transcriptions:
+            transcriptions = self.__re_rank(transcriptions)
+            self.memory.raiseEvent("ASR_transcription", pick_best(transcriptions))
+            print "[" + self.inst.__class__.__name__ + "] " + str(transcriptions)
+            # self.memory.raiseEvent("VRanked", transcriptions)
 
     def stop(self):
         self.__shutdown_requested = True
@@ -95,7 +116,7 @@ class ReRanker(EventAbstractClass):
             if len(transcriptions[asr]) > 1:
                 for trans in transcriptions[asr]:
                     transcriptions[asr][trans] = (float(transcriptions[asr][trans]) + float(self.alpha)) / (
-                    float(m) + float(self.alpha * n))
+                        float(m) + float(self.alpha * n))
         return transcriptions
 
     def __compute_noun_posterior(self, transcriptions):

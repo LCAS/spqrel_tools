@@ -270,7 +270,7 @@
                     <li>What is your name?</li>
                     <li>What's your name?</li>
                 </random>
-                |[OPTIONS]Andrea!_Marc'_Maria_Roberto_Sergi_Luca
+                |[OPTIONS]Andrea_Marc_Maria_Roberto_Sergi_Luca
             </template>
         </category>
 

@@ -6,7 +6,7 @@
 
         <category>
             <pattern>START</pattern>
-            <template>[SAY] Tell me when you are ready to go!|[OPTIONS]I'm+ready!_</template>
+            <template>[SAY] Tell me when you are ready to go!|[OPTIONS]I'm ready!_Stop following me!</template>
         </category>
 
         <category>
@@ -127,6 +127,9 @@
             <pattern>START</pattern>
             <template>
                 <srai>SAY WHATWEDONOW</srai>
+                |[OPTIONS]Look for someone in the kitchen_Look for someone in the corridor_Look for someone
+                in the living room_Look for someone in the dining room_Look for someone in the bedroom_Look for someone
+                in the toilet
             </template>
         </category>
 
@@ -311,7 +314,7 @@
 
         <category>
             <pattern>START</pattern>
-            <template></template>
+            <template>[OPTIONS]What's the time?</template>
         </category>
 
         <category>
@@ -376,6 +379,7 @@
                     <li>What's your name?</li>
                     <li>Can I ask your name?</li>
                 </random>
+                |[OPTIONS]Andrea_Marc_Maria_Roberto_Sergi_Luca
             </template>
         </category>
 

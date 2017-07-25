@@ -34,6 +34,14 @@ def actionThread_exec (params):
     
     confidence_threshold = 0.4
     val = False
+
+    HEAD_PITCH_MAX = 0.6371 * 0.75
+    HEAD_PITCH_MIN = -0.7068 * 0.75
+    HEAD_YAW_MAX = 2.0857 * 0.75
+    HEAD_YAW_MIN = -2.0857 * 0.75
+    MAX_SPEED_FRACTION = 0.2
+    NAMES = ["HeadYaw", "HeadPitch"]
+
     # action init
 
     while (getattr(t, "do_run", True) and (not val)): 
@@ -53,16 +61,16 @@ def actionThread_exec (params):
             azimuth = sound_azimuth + head_yaw
             elevation = sound_elevation + head_pitch
             turn = 0
-            if azimuth > self.HEAD_YAW_MAX:
+            if azimuth > HEAD_YAW_MAX:
                 turn = azimuth
                 azimuth = 0.
-            if azimuth < self.HEAD_YAW_MIN:
+            if azimuth < HEAD_YAW_MIN:
                 turn = azimuth
                 azimuth = 0.
-            if elevation > self.HEAD_PITCH_MAX:
-                elevation = self.HEAD_PITCH_MAX
-            if elevation < self.HEAD_PITCH_MIN:
-                elevation = self.HEAD_PITCH_MIN
+            if elevation > HEAD_PITCH_MAX:
+                elevation = HEAD_PITCH_MAX
+            if elevation < HEAD_PITCH_MIN:
+                elevation = HEAD_PITCH_MIN
             target_angles = [azimuth, 0]  # [azimuth, elevation]
             #print "Current Head Yaw: ", head_yaw, "Current Head Pitch", head_pitch
             #print "Sound Detected Azimuth: ", sound_azimuth, "Sound Detected Elevation: ", sound_elevation

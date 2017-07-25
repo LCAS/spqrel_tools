@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <aiml version="1.0">
 
-    <category>
+    <!--<category>
         <pattern>* HELLO *</pattern>
         <template>
             <srai>GREETINGS</srai>
@@ -55,7 +55,7 @@
         <template>
             <srai>GREETINGS</srai>
         </template>
-    </category>
+    </category>-->
 
     <category>
         <pattern>GREETINGS</pattern>

@@ -435,8 +435,8 @@
       edge_id: living1_corridor2
       node: corridor2
     - action: NAOqiPlanner/Goal
-      edge_id: living1_WayPoint17
-      node: WayPoint17
+      edge_id: living1_sofacorner
+      node: sofacorner
     name: living1
     pointset: NA
     pose:
@@ -589,8 +589,8 @@
       edge_id: sofaside_backdoorin
       node: backdoorin
     - action: NAOqiPlanner/Goal
-      edge_id: sofaside_WayPoint17
-      node: WayPoint17
+      edge_id: sofaside_sofacorner
+      node: sofacorner
     name: sofaside
     pointset: NA
     pose:
@@ -623,12 +623,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint17_living1
+      edge_id: sofacorner_living1
       node: living1
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint17_sofaside
+      edge_id: sofacorner_sofaside
       node: sofaside
-    name: WayPoint17
+    name: sofacorner
     pointset: NA
     pose:
       orientation:

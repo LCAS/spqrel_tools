@@ -105,17 +105,17 @@ class SpeechRecognition(EventAbstractClass):
         """
         if os.path.exists(self.AUDIO_FILE + '.wav'):
             if os.path.getsize(self.AUDIO_FILE + '.wav') > 0:
-                print "more than 0"
+                self.nuance_asr.pause(True)
                 os.system(self.FLAC_COMM + self.AUDIO_FILE + '.wav')
                 f = open(self.AUDIO_FILE + '.flac', 'rb')
                 flac_cont = f.read()
                 f.close()
-
                 results = {}
                 results['GoogleASR'] = [r.encode('ascii', 'ignore').lower() for r in self.google_asr.recognize_data(flac_cont)]
                 results['NuanceASR'] = [args[1][0].lower()]
                 print "[" + self.inst.__class__.__name__ + "] " + str(results)
                 self.memory.raiseEvent("LocalVordRecognized", results)
+                self.nuance_asr.pause(False)
         self.timeout = 0
         self.nuance_asr.pause(False)
         self.audio_recorder.stopMicrophonesRecording()

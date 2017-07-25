@@ -51,6 +51,7 @@ def actionThread_exec (params):
         confidence = sound_value[1][2]
         print "confidence = ",confidence
         if confidence > confidence_threshold:
+            print "sound detected"
             sound_azimuth = sound_value[1][0]
             sound_elevation = sound_value[1][1]
             x = math.sin(sound_elevation) * math.cos(sound_azimuth)

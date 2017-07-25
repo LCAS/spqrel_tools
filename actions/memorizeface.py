@@ -195,7 +195,7 @@ def actionThread_exec (params):
         parse_params=params.split('_')
         if parse_params[0]=='inmemory':
             try:
-                userprofile=json.loadsmemory_service.getData('Humans/'+str(parse_params[1])))
+                userprofile=json.loadsmemory_service.getData('Humans/'+str(parse_params[1]))
                 nameuser=userprofile['Name']
                 personhere=userprofile['PersonID']
             except:

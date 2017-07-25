@@ -20,7 +20,7 @@ from conditions import set_condition
 def rhMonitorThread (memory_service):
     global last_personid
     t = threading.currentThread()
-    print "persondetected thread started"
+    print "personlost thread started"
     personid = 0
     count = 0
     while getattr(t, "do_run", True):
@@ -29,7 +29,7 @@ def rhMonitorThread (memory_service):
         try:
             if (len(plist)==0):
                 count += 1
-                if (count >= 10):
+                if (count >= 10): #5 seconds without seeing anyone
                     v = 'true'
                     count = 0
         except:
@@ -67,7 +67,7 @@ def init(session):
 
 def quit():
     global monitorThread
-    print "Person detected quit"
+    print "Person lost quit"
     monitorThread.do_run = False 
 
 

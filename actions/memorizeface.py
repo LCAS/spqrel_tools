@@ -174,16 +174,6 @@ def updateMemorizePeople(currentuser):
             people_list[i]=back_person
             str_person=json.dumps(people_list)
             memory_service.insertData('Actions/memorizepeople/Personlist', str_person) 
-        
-    else:  #new
-
-        ## Write data in ALMemory
-        str_person=json.dumps(json_person)
-        memory_service.insertData('Actions/MemorizePeople/Person/'+str(json_person['personid']), str_person)
-                
-        people_list.append(json_person['personid'])
-        memory_service.insertData('Actions/MemorizePeople/PeopleList/', people_list)                
-
     except:
         people_list=[]
         
@@ -205,7 +195,7 @@ def actionThread_exec (params):
         parse_params=params.split('_')
         if parse_params[0]=='inmemory':
             try:
-                userprofile=json.loadsmemory_service.getData('Humans/'+str(parse_params[1])))
+                userprofile=json.loadsmemory_service.getData('Humans/'+str(parse_params[1]))
                 nameuser=userprofile['Name']
                 personhere=userprofile['PersonID']
             except:

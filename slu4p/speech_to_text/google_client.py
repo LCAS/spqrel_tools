@@ -6,7 +6,7 @@ import slu_utils
 
 
 class GoogleClient:
-    timeout = 5
+    timeout = 10
     url = ''
     headers = {"Content-Type": "audio/x-flac; rate=44100"}
 

@@ -28,9 +28,16 @@ class ALSubscriber():
         self.handler = handler
         try:
             self.veply_sub = self.memory_service.subscriber(subscriber)
+            hist = self.memory_service.getEventHistory(subscriber)
+            if len(hist) > 0:
+                try:
+                    print "get from hist: %s" % str(hist[-1][0])
+                    self.on_event(hist[-1][0])
+                except Exception:
+                    pass
             self.veply_sub.signal.connect(self.on_event)
             info('subscribed to %s' % subscriber)
-        except RuntimeError:
+        except Exception:
             warn("Cannot sign up to %s" %  subscriber)
 
         #self.breathing = ALProxy("ALMotion")
@@ -81,6 +88,12 @@ class SPQReLUIServer(webnsock.ControlServer):
             def GET(self):
                 return render.blockly(serv_self._ip)
 
+        class spqrel(self.page):
+            path = '/spqrel'
+
+            def GET(self):
+                return render.spqrel()
+
     def find_plans(self):
         files = os.listdir(self.__plan_dir)
         plans = {}
@@ -112,6 +125,10 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
     def __init__(self):
         global memory_service
         self.memory_service = memory_service
+        super(SQPReLProtocol, self).__init__()
+
+    def onOpen(self):
+        info("Client opened")
 
         self.answeroptions = ALSubscriber(
             memory_service, "AnswerOptions",
@@ -154,8 +171,6 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
                     }))
             except Exception as e:
                 error(str(e))
-
-        super(SQPReLProtocol, self).__init__()
 
     def _translate_plan(self, plan_name):
         try:

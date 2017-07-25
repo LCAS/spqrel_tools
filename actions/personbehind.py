@@ -1,9 +1,6 @@
 #! /usr/bin/env python
 # -*- encoding: UTF-8 -*-
 
-# DOCUMENTATION
-# http://doc.aldebaran.com/2-5/naoqi/peopleperception/alengagementzones-api.html#alengagementzones-api
-
 import qi
 import argparse
 import sys

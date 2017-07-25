@@ -35,31 +35,31 @@ def rhMonitorThread (memory_service):
         try:
             sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
             confidence = sound_value[1][2]
-        if confidence > 0.5:
-            print "sound detected"
-            sound_azimuth = sound_value[1][0]
-            sound_elevation = sound_value[1][1]
-            head_pitch = sound_value[2][4]
-            head_yaw = sound_value[2][5]
-            azimuth = sound_azimuth + head_yaw
-            elevation = sound_elevation + head_pitch
-            turn = 0
-            if azimuth > HEAD_YAW_MAX:
-                turn = azimuth
-                azimuth = 0.
-            if azimuth < HEAD_YAW_MIN:
-                turn = azimuth
-                azimuth = 0.
-            if elevation > HEAD_PITCH_MAX:
-                elevation = HEAD_PITCH_MAX
-            if elevation < HEAD_PITCH_MIN:
-                elevation = HEAD_PITCH_MIN
-            target_angles = [azimuth, 0]
+            if confidence > 0.5:
+                print "sound detected"
+                sound_azimuth = sound_value[1][0]
+                sound_elevation = sound_value[1][1]
+                head_pitch = sound_value[2][4]
+                head_yaw = sound_value[2][5]
+                azimuth = sound_azimuth + head_yaw
+                elevation = sound_elevation + head_pitch
+                turn = 0
+                if azimuth > HEAD_YAW_MAX:
+                    turn = azimuth
+                    azimuth = 0.
+                if azimuth < HEAD_YAW_MIN:
+                    turn = azimuth
+                    azimuth = 0.
+                if elevation > HEAD_PITCH_MAX:
+                    elevation = HEAD_PITCH_MAX
+                if elevation < HEAD_PITCH_MIN:
+                    elevation = HEAD_PITCH_MIN
+                target_angles = [azimuth, 0]
 
-            motion_service.angleInterpolationWithSpeed(NAMES, target_angles, MAX_SPEED_FRACTION)
-            if math.fabs(turn) > 0.01:
-                motion_service.moveTo(0, 0, turn)
-            v = 'true'
+                motion_service.angleInterpolationWithSpeed(NAMES, target_angles, MAX_SPEED_FRACTION)
+                if math.fabs(turn) > 0.01:
+                    motion_service.moveTo(0, 0, turn)
+                v = 'true'
             
         except:
             v = 'false'

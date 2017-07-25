@@ -47,7 +47,7 @@ def init(session):
     speechbtn.init(session)
     navigateto.init(session)
     memorizepeople.init(session)
-    memorizeface.init(session)
+    #memorizeface.init(session)
 
 def quit():
     screentouched.quit()
@@ -76,8 +76,9 @@ def quit():
     soundtrack.quit()
     speechbtn.quit()
     navigateto.quit()
-    memorizeface.quit()
     memorizepeople.quit()
+    #memorizeface.quit()
+    
 
 
 def main():

@@ -23,12 +23,14 @@
                             <set name="topic">ASKNAME</set>
                         </think>
                         <srai>AskName</srai>
+                        |[OPTIONS]Maria_Roberto_Other+name
                     </li>
                     <li name="Drink" value="TOFILL">
                         <think>
                             <set name="topic">ASKDRINK</set>
                         </think>
                         <srai>AskDrink</srai>
+                        |[OPTIONS]Whisky_Coke_Beer+lager
                     </li>
                     <li>
                         <srai>COCKTAILDONE</srai>

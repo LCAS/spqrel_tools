@@ -166,6 +166,9 @@ class DialogueManager(EventAbstractClass):
                 self.location['location'] = data
                 self.memory.insertData("helplocation", data)
                 self.memory.raiseEvent("DialogueVesponse", json.dumps(self.location))
+            elif '[OPTIONS]' in submessage:
+                data = submessage.replace('[OPTIONS]', '').strip()
+                self.memory.raiseEvent('AnswerOptions', 'speechbtn_' + data)
             elif '[STOPFOLLOWING]' in submessage:
                 self.memory.raiseEvent("ASR_enable", "0")
                 self.memory.raiseEvent("DialogueVesponse", '[STOPFOLLOWING]')

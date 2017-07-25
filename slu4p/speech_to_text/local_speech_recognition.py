@@ -7,6 +7,7 @@ from os.path import expanduser
 
 
 class SpeechRecognition(EventAbstractClass):
+    SD_EVENT = "SpeechDetected"
     WR_EVENT = "WordRecognized"
     TD_EVENT = "ALTextToSpeech/TextDone"
     ASR_ENABLE = "ASR_enable"
@@ -56,6 +57,8 @@ class SpeechRecognition(EventAbstractClass):
         )
 
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
+            SpeechRecognition.SD_EVENT)
+        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             SpeechRecognition.WR_EVENT)
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             SpeechRecognition.TD_EVENT)
@@ -76,7 +79,8 @@ class SpeechRecognition(EventAbstractClass):
 
         self._spin()
 
-        if self.is_enabled == True:
+        if self.is_enabled:
+            self.unsubscribe(SpeechRecognition.SD_EVENT)
             self.unsubscribe(SpeechRecognition.WR_EVENT)
         self.unsubscribe(SpeechRecognition.TD_EVENT)
         self.unsubscribe(SpeechRecognition.ASR_ENABLE)
@@ -96,6 +100,36 @@ class SpeechRecognition(EventAbstractClass):
         self.nuance_asr.setAudioExpression(audio)
         self.nuance_asr.setVisualExpression(visual)
         self.nuance_asr.pause(False)
+
+    def speech_detected_callback(self, *args, **kwargs):
+        if args[1] == 1:
+            self.audio_recorder.stopMicrophonesRecording()
+            self.nuance_asr.pause(True)
+            """
+            Convert Wave file into Flac file
+            """
+            if os.path.exists(self.AUDIO_FILE + '.wav'):
+                if os.path.getsize(self.AUDIO_FILE + '.wav') > 0:
+                    os.system(self.FLAC_COMM + self.AUDIO_FILE + '.wav')
+                    f = open(self.AUDIO_FILE + '.flac', 'rb')
+                    flac_cont = f.read()
+                    f.close()
+                    results = {}
+                    results['GoogleASR'] = [r.encode('ascii', 'ignore').lower() for r in
+                                            self.google_asr.recognize_data(flac_cont)]
+                    results['NuanceASR'] = []
+                    try:
+                        nuance_transcription = self.memory_proxy.getData("WordRecognized")
+                        results['NuanceASR'] = [nuance_transcription]
+                    except Exception as e:
+                        pass
+                    print "[" + self.inst.__class__.__name__ + "] " + str(results)
+                    self.memory.raiseEvent("LocalVordRecognized", results)
+            self.timeout = 0
+            self.nuance_asr.pause(False)
+            self.audio_recorder.stopMicrophonesRecording()
+            self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
+            self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
 
     def word_recognized_callback(self, *args, **kwargs):
         self.audio_recorder.stopMicrophonesRecording()
@@ -139,6 +173,7 @@ class SpeechRecognition(EventAbstractClass):
             if self.is_enabled:
                 self.is_enabled = False
                 self.audio_recorder.stopMicrophonesRecording()
+                self.unsubscribe(SpeechRecognition.SD_EVENT)
                 self.unsubscribe(SpeechRecognition.WR_EVENT)
                 print "[" + self.inst.__class__.__name__ + "] ASR disabled"
             else:
@@ -156,6 +191,10 @@ class SpeechRecognition(EventAbstractClass):
                 self.audio_recorder.stopMicrophonesRecording()
                 self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
                 self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+                self.subscribe(
+                    event=SpeechRecognition.SD_EVENT,
+                    callback=self.speech_detected_callback
+                )
                 self.subscribe(
                     event=SpeechRecognition.WR_EVENT,
                     callback=self.word_recognized_callback

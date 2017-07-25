@@ -17,6 +17,8 @@ waitfor_personhere; ! *if* timeout_waitfor_60 *do* say_comehere; restart_action 
 
 dialogue_takeorder;
 
+#acquire_perceptual_information # TODO this is just a placeholder. the idea is to acquire the information here
+
 
 # look for another person ???
 # goto another waypoint

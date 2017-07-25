@@ -86,7 +86,8 @@ class SPQReLUIServer(webnsock.ControlServer):
             path = '/blockly'
 
             def GET(self):
-                return render.blockly(serv_self._ip)
+                ip = web.ctx.host.split(':')[0]
+                return render.blockly(ip)
 
         class spqrel(self.page):
             path = '/spqrel'

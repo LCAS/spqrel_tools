@@ -45,7 +45,7 @@ def init(session):
     saveposition.init(session)
     soundtrack.init(session)
     speechbtn.init(session)
-
+    navigateto.init(session)
 
 def quit():
     screentouched.quit()
@@ -73,6 +73,7 @@ def quit():
     saveposition.quit()
     soundtrack.quit()
     speechbtn.quit()
+    navigateto.quit()
 
 
 def main():

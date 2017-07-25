@@ -11,7 +11,7 @@ import conditions
 from conditions import set_condition
 
 
-actionName = "navigate_to"
+actionName = "navigateto"
 
 
 goal_reached = False

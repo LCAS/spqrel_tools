@@ -23,14 +23,12 @@
                             <set name="topic">ASKNAME</set>
                         </think>
                         <srai>AskName</srai>
-                        |[OPTIONS]Maria_Roberto_Other+name
                     </li>
                     <li name="Drink" value="TOFILL">
                         <think>
                             <set name="topic">ASKDRINK</set>
                         </think>
                         <srai>AskDrink</srai>
-                        |[OPTIONS]Whisky_Coke_Beer+lager
                     </li>
                     <li>
                         <srai>COCKTAILDONE</srai>
@@ -113,9 +111,10 @@
                         <star index="2"/>
                         for<star index="1"/>?
                     </li>
-                    <li>Is there the<star index="2"/>?
+                    <li>Is there the <star index="2"/>?
                     </li>
                 </random>
+                |[OPTIONS]Yes_No
             </template>
         </category>
 
@@ -221,11 +220,12 @@
                 [SAY]
                 <random>
                     <li>What do you have, instead?</li>
-                    <li>What can I bring to<star index="1"/>, instead?
+                    <li>What can I bring to <star index="1"/>, instead?
                     </li>
-                    <li>Do you have something else I can bring to<star index="1"/>, instead?
+                    <li>Do you have something else I can bring to <star index="1"/>, instead?
                     </li>
                 </random>
+                |[OPTIONS]beer+wine+whisky_water+coke+beer
             </template>
         </category>
 
@@ -270,6 +270,7 @@
                     <li>What is your name?</li>
                     <li>What's your name?</li>
                 </random>
+                |[OPTIONS]Andrea!_Marc'_Maria_Roberto_Sergi_Luca
             </template>
         </category>
 
@@ -471,6 +472,7 @@
                     <li>What do you want to drink?</li>
                     <li>Which drink do you want?</li>
                 </random>
+                |[OPTIONS]beer_coke_vodka_whisky_water_wine
             </template>
         </category>
 

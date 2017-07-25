@@ -6,7 +6,7 @@
 
         <category>
             <pattern>START</pattern>
-            <template>[SAY] Tell me when you are ready to go!</template>
+            <template>[SAY] Tell me when you are ready to go!|[OPTIONS]I'm+ready!_</template>
         </category>
 
         <category>

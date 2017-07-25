@@ -1,5 +1,5 @@
 {
-  "init_cmd": "source ~/spqrel/spqrel_launch/worktree/spqrel_tools/setup-dev.bash /opt/naoqi; source ~/spqrel/spqrel_launch/setup.bash",
+  "init_cmd": "export PEPPER_IP=localhost; source ~/spqrel/spqrel_launch/worktree/spqrel_tools/setup-dev.bash /opt/naoqi; source ~/spqrel/spqrel_launch/setup.bash",
   "windows": [
     {
       "name": "bash",

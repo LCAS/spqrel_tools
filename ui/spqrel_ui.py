@@ -41,10 +41,9 @@ class ALSubscriber():
 class SPQReLUIServer(webnsock.ControlServer):
 
     __plan_dir = os.path.realpath(os.getenv("PLAN_DIR", default=os.getcwd()))
+    _ip = os.getenv("PEPPER_IP", default="127.0.0.1")
 
     def __init__(self):
-
-
 
         webnsock.ControlServer.__init__(self)
 
@@ -80,7 +79,7 @@ class SPQReLUIServer(webnsock.ControlServer):
             path = '/blockly'
 
             def GET(self):
-                return render.blockly()
+                return render.blockly(serv_self._ip)
 
     def find_plans(self):
         files = os.listdir(self.__plan_dir)
@@ -236,6 +235,7 @@ def qi_init():
 if __name__ == "__main__":
     session = qi_init()
 
+    ip = os.getenv("PEPPER_IP", default="127.0.0.1")
     webserver = webnsock.Webserver(SPQReLUIServer())
     backend = webnsock.WSBackend(SQPReLProtocol)
     signal(SIGINT,
@@ -251,7 +251,7 @@ if __name__ == "__main__":
 
     if tablet_service:
         sleep(5)
-	ip = os.getenv("PEPPER_IP", default="127.0.0.1")
+        ip = os.getenv("PEPPER_IP", default="127.0.0.1")
         tablet_service.showWebview('http://%s:8127/' % ip)
 
     backend.talker()

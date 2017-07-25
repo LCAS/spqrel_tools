@@ -45,6 +45,12 @@ export PLAN_DIR=$SPQREL_HOME/plans
 # Pepper's IP
 export PEPPER_IP="${PEPPER_IP:-localhost}"
 
+export MAP="${MAP:-$SPQREL_HOME/maps/nagoya/dummy.yaml}"
+export TMAP="${TMAP:-$SPQREL_HOME/maps/nagoya/dummy.tpg}"
+
+
+
+
 alias shutdown-tmux="tmux list-panes -s -F \"#{pane_pid} #{pane_current_command}\" | grep -v tmux | awk \"{print \\\$1}\" | xargs kill"
 alias kill-tmux="tmux list-panes -s -F \"#{pane_pid} #{pane_current_command}\" | grep -v tmux | awk \"{print \\\$1}\" | xargs kill -9"
 

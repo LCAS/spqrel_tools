@@ -13,6 +13,7 @@ from conditions import set_condition
 class DialogueManager(EventAbstractClass):
     PATH = ''
     RANKED_EVENT = "VRanked"
+    TABLET_ANSWER_EVENT = "TabletAnswer"
     DIALOGUE_REQUEST_EVENT = "DialogueVequest"
     cocktail_data = {}
     location = {}
@@ -40,16 +41,23 @@ class DialogueManager(EventAbstractClass):
             event=DialogueManager.DIALOGUE_REQUEST_EVENT,
             callback=self.request_callback
         )
+        self.subscribe(
+            event=DialogueManager.TABLET_ANSWER_EVENT,
+            callback=self.tablet_callback
+        )
 
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             DialogueManager.RANKED_EVENT)
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             DialogueManager.DIALOGUE_REQUEST_EVENT)
+        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
+            DialogueManager.TABLET_ANSWER_EVENT)
 
         self._spin()
 
         self.unsubscribe(DialogueManager.RANKED_EVENT)
         self.unsubscribe(DialogueManager.DIALOGUE_REQUEST_EVENT)
+        self.unsubscribe(DialogueManager.TABLET_ANSWER_EVENT)
         self.broker.shutdown()
 
     def ranked_callback(self, *args, **kwargs):
@@ -103,6 +111,12 @@ class DialogueManager(EventAbstractClass):
         if 'fivequestions' == splitted[0]:
             to_send = splitted[0] + ' ' + splitted[2]
         reply = self.kernel.respond(to_send)
+        self.do_something(reply)
+
+    def tablet_callback(self, *args, **kwargs):
+        best_transcription = args[1]
+        print "[" + self.inst.__class__.__name__ + "] User says: " + best_transcription
+        reply = self.kernel.respond(best_transcription)
         self.do_something(reply)
 
     def _spin(self, *args):

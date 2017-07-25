@@ -50,6 +50,21 @@
     </category>
 
     <category>
+        <pattern>PERSONDETECTED</pattern>
+        <template>
+            <random>
+                <li>I saw you!</li>
+                <li>There you are!</li>
+                <li>Oh, you are there!</li>
+            </random>
+            <random>
+                <li>I'm getting there!</li>
+                <li>Wait for me!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
         <pattern>COMEHERE CUSTOMER *</pattern>
         <template>
             <random>

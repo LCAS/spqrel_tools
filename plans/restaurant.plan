@@ -3,7 +3,7 @@
 lookfor_persondetected;  # timeout in seconds
 
 < persondetected? 
-    vsay_persondetected; 
+    vsay_persondetected;
     goto_person ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
 >;
 

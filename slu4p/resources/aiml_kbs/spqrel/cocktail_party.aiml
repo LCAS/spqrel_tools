@@ -23,12 +23,14 @@
                             <set name="topic">ASKNAME</set>
                         </think>
                         <srai>AskName</srai>
+                        |[OPTIONS]Maria_Roberto_Other+name
                     </li>
                     <li name="Drink" value="TOFILL">
                         <think>
                             <set name="topic">ASKDRINK</set>
                         </think>
                         <srai>AskDrink</srai>
+                        |[OPTIONS]Whisky_Coke_Beer+lager
                     </li>
                     <li>
                         <srai>COCKTAILDONE</srai>
@@ -50,18 +52,18 @@
             <template>
                 [SAY]
                 <random>
-                    <li><get name="Customer"/>, thanks for your order. I'm going to bring you a<get name="Drink"/>!
+                    <li><get name="Customer"/>, thanks for your order. I'm going to bring you a <get name="Drink"/>!
                     </li>
-                    <li>Perfect<get name="Customer"/>! Your
+                    <li>Perfect <get name="Customer"/>! Your
                         <get name="Drink"/>
                         is coming soon!
                     </li>
                     <li>A
                         <get name="Drink"/>
-                        for<get name="Customer"/>! This is my new mission!
+                        for <get name="Customer"/>! This is my new mission!
                     </li>
-                    <li>Just a<get name="Drink"/>? I think you can do better,<get name="Customer"/>! However, I'll bring
-                        you a<get name="Drink"/>...
+                    <li>Just a <get name="Drink"/>? I think you can do better, <get name="Customer"/>! However, I'll bring
+                        you a <get name="Drink"/>...
                     </li>
                 </random>
                 <srai>TAKEORDERDATA</srai>
@@ -456,13 +458,13 @@
             <template>
                 [SAY]
                 <random>
-                    <li>Hey<get name="Customer"/>!
+                    <li>Hey <get name="Customer"/>!
                     </li>
-                    <li>Hi<get name="Customer"/>!
+                    <li>Hi <get name="Customer"/>!
                     </li>
-                    <li>Hello<get name="Customer"/>!
+                    <li>Hello <get name="Customer"/>!
                     </li>
-                    <li>Hi there,<get name="Customer"/>!
+                    <li>Hi there, <get name="Customer"/>!
                     </li>
                 </random>
                 <random>

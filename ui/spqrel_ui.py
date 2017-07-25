@@ -247,7 +247,8 @@ if __name__ == "__main__":
 
     if tablet_service:
         sleep(5)
-        tablet_service.showWebview('http://localhost:8127/')
+	ip = os.getenv("PEPPER_IP", default="127.0.0.1")
+        tablet_service.showWebview('http://%s:8127/' % ip)
 
     backend.talker()
 

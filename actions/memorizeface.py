@@ -4,15 +4,16 @@ Memorize face
 
 Wait for 1 face detection with minimum size
 
-I in that moment there is not Peopledetection take the idperson from  ALMemory 'Actions/personhere/PersonID'
+If in that moment there is not Peopledetection take the idperson from  ALMemory 'Actions/personhere/PersonID'
 
 Update  'Actions/MemorizePeople/Person/IDNUMBER' 
 
 
-TODO
------
-Where is the name ??? Parameter or memory??
+PARAMS:
 
+memorizeface_inmemory_Profile<1> Read memorykey 'Humans/Profile<1|2|3>
+
+memorizaface_name_<nameuser>
 
 '''
 
@@ -138,40 +139,41 @@ def onPeopleDetection(values):
    
     return user
     
-def updateMemorizePeople(person):
+def updateMemorizePeople(currentuser):
 
 
 
     try:
-        people_list=memory_service.getData('Actions/MemorizePeople/PeopleList/')
+        mem_list=memory_service.getData('Actions/MemorizePeople/PeopleList')
+        people_list=json.loads(mem_list)
         
-    except:
-        people_list=[]
-
-    if json_person['personid'] in people_list:
-        
-            str_back_person=memory_service.getData('Actions/MemorizePeople/Person/'+str(json_person['personid']))
-            back_person=json.loads(str_back_person)
+        for i in range(len(people_list)):
             
-            if json_person['info']['height'] is not '':
-                back_person['info']['height']=json_person['info']['height']
+            if currentuser['person_naoqiid']==people_list[i]['person_naoqiid']:
+    
+                back_person=people_list[i]
                 
-            if json_person['info']['posture'] is not '':
-                back_person['info']['posture']=json_person['info']['posture']
-            
-            back_person['face_naoqi']['name']=json_person['face_naoqi']['name']
-            
-            # Update only if confidence is higher 
-            if json_person['face_naoqi']['faceinfo']['age']['conf'] >back_person['face_naoqi']['faceinfo']['age']['conf']:
-                back_person['face_naoqi']['faceinfo']['age']=currentuser['face_naoqi']['faceinfo']['age']
 
-            if json_person['face_naoqi']['faceinfo']['gender']['conf'] >back_person['face_naoqi']['faceinfo']['gender']['conf']:
-                back_person['face_naoqi']['faceinfo']['gender']=currentuser['face_naoqi']['faceinfo']['gender']
+                if json_person['info']['height'] is not '':
+                    back_person['info']['height']=currentuser['info']['height']
+                    
+                if json_person['info']['posture'] is not '':
+                    back_person['info']['posture']=currentuser['info']['posture']
+                
+                back_person['face_naoqi']['name']=currentuser['face_naoqi']['name']
+            
+                # Update only if confidence is higher 
+                if currentuser['face_naoqi']['faceinfo']['age']['conf'] >back_person['face_naoqi']['faceinfo']['age']['conf']:
+                    back_person['face_naoqi']['faceinfo']['age']=currentuser['face_naoqi']['faceinfo']['age']
+    
+                if currentuser['face_naoqi']['faceinfo']['gender']['conf'] >back_person['face_naoqi']['faceinfo']['gender']['conf']:
+                    back_person['face_naoqi']['faceinfo']['gender']=currentuser['face_naoqi']['faceinfo']['gender']
 
         
             ## Write data in ALMemory
-            str_person=json.dumps(back_person)
-            memory_service.insertData('Actions/MemorizePeople/Person/'+str(back_person['personid']), str_person)
+            people_list[i]=back_person
+            str_person=json.dumps(people_list)
+            memory_service.insertData('Actions/memorizepeople/Personlist', str_person) 
         
     else:  #new
 
@@ -182,6 +184,9 @@ def updateMemorizePeople(person):
         people_list.append(json_person['personid'])
         memory_service.insertData('Actions/MemorizePeople/PeopleList/', people_list)                
 
+    except:
+        people_list=[]
+        
 def actionThread_exec (params):
 
     global face_char_service
@@ -192,9 +197,22 @@ def actionThread_exec (params):
     faces_service.setRecognitionEnabled(True)
     face_char_service = getattr(t, "session", None).service("ALFaceCharacteristics")
     print "Action "+actionName+" started with params "+params
-
-    nameuser=params
-
+    
+    ##memorizeface_inmemory_Profile<1> Read memorykey 'Humans/Profile<1|2|3>
+    nameuser=''
+    personhere=None
+    if params:
+        parse_params=params.split('_')
+        if parse_params[0]=='inmemory':
+            try:
+                userprofile=json.loadsmemory_service.getData('Humans/'+str(parse_params[1])))
+                nameuser=userprofile['Name']
+                personhere=userprofile['PersonID']
+            except:
+                print 'Humans/'+str(parse_params[1])+' not found ' 
+        elif parse_params[0]=='name':
+            nameuser=str(parse_params[1])
+            
     ## START MICROSOFT API 
     global msface_naoqi_enabled
     msface_naoqi_enabled='false'
@@ -264,8 +282,13 @@ def actionThread_exec (params):
 
                         person=None
                         personid=None
-
-                        if len(peoplevisible) is 1:
+                        
+                            
+                        if personhere is not None:
+                            
+                            personid=personhere
+                            
+                        elif len(peoplevisible) is 1:
                             
                             personid=peoplevisible
                                                     

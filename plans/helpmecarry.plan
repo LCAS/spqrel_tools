@@ -37,12 +37,12 @@ headpose_0_-20;
 #goto_helplocation; ! *if* personhere *do* dialogue_whattime; restart_action !
 
 lookfor_persondetected; ! *if* timeout_lookfor_20 *do* say_comehere; restart_action !
-#dialogue_guide; # we could use this action to acquire the name of the guy. At the end of this action, vsay_followme is automatically triggered
+dialogue_guide; # we could use this action to acquire the name of the guy. At the end of this action, vsay_followme is automatically triggered
 
 
 #### 4 - COMING BACK TO THE CAR
 
-vsay_followme;
+#vsay_followme;
 waitfor_personbehind;
 
 #goto_car; ! *if* (not personbehind) *do*  turn_180; vsay_gotocar ; turn_180 ; waitfor_personbehind; restart_action ;
@@ -50,7 +50,7 @@ waitfor_personbehind;
 ## gotocar: "hey dont get distracted, please follow me again to the car, place yourself behind me to continue"
 
 #say_arrivedcar
-#dialogue_arrivedcar;
+dialogue_arrivedcar;
 
 
 vsay_farewell;

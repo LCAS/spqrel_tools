@@ -1,5 +1,5 @@
 {
-  "DISABLED_init_cmd": "source ~/spqrel/spqrel_launch/worktree/spqrel_tools/setup-dev.bash /opt/naoqi; source ~/spqrel/spqrel_launch/setup.bash",
+  "init_cmd": "export MAP=/home/nao/spqrel_launch/maps/nagoya/nagoya_gmapping.yaml",
   "windows": [
     {
       "name": "bash",

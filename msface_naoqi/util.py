@@ -9,7 +9,7 @@ import time
 
 import requests
 
-import ms_face_api as CF
+import face_api_naoqi as CF
 
 _BASE_URL = 'https://westus.api.cognitive.microsoft.com/face/v1.0/'
 TIME_SLEEP = 1

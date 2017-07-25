@@ -76,7 +76,7 @@ class SpeechRecognition(EventAbstractClass):
 
         self._spin()
 
-        if self.is_enabled == True:
+        if self.is_enabled:
             self.unsubscribe(SpeechRecognition.WR_EVENT)
         self.unsubscribe(SpeechRecognition.TD_EVENT)
         self.unsubscribe(SpeechRecognition.ASR_ENABLE)

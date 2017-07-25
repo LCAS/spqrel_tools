@@ -110,12 +110,12 @@ class RemoteSpeechRecognition(EventAbstractClass):
                 f = open(self.AUDIO_FILE + '.flac', 'rb')
                 flac_cont = f.read()
                 f.close()
-
                 results = {}
                 results['GoogleASR'] = [r.encode('ascii', 'ignore').lower() for r in self.google_asr.recognize_data(flac_cont)]
                 results['NuanceASR'] = [args[1][0].lower()]
                 print "[" + self.inst.__class__.__name__ + "] " + str(results)
                 self.memory.raiseEvent("RemoteVordRecognized", results)
+
         self.timeout = 0
         self.nuance_asr.pause(False)
         self.audio_recorder.stopMicrophonesRecording()
@@ -137,6 +137,7 @@ class RemoteSpeechRecognition(EventAbstractClass):
             print e.message
 
     def enable_callback(self, *args, **kwargs):
+        print 'ok'
         if args[1] == "0":
             if self.is_enabled:
                 self.is_enabled = False

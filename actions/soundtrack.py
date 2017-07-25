@@ -78,9 +78,9 @@ def actionThread_exec (params):
             #print "Target Head Yaw: ", azimuth, "Target Head Pitch: ", elevation
             #print "Turn: ", turn
             #print "------------------------------------------------------------------"
-            motion.angleInterpolationWithSpeed(NAMES, target_angles, MAX_SPEED_FRACTION)
+            motion_service.angleInterpolationWithSpeed(NAMES, target_angles, MAX_SPEED_FRACTION)
             if math.fabs(turn) > 0.01:
-                motion.moveTo(0, 0, turn)
+                motion_service.moveTo(0, 0, turn)
 
         try:
             val = get_condition(memory_service, params)

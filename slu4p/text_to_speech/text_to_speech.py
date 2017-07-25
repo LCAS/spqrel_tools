@@ -12,13 +12,14 @@ class TextToSpeech(EventAbstractClass):
         super(self.__class__, self).__init__(self, ip, port)
         self.__shutdown_requested = False
         signal.signal(signal.SIGINT, self.signal_handler)
-        self.tts = ALProxy("ALTextToSpeech")
+        self.tts = ALProxy("ALAnimatedSpeech")
         self.tts.setParameter("speed", speed)
         self.tts.setParameter("pitchShift", pitch)
-
-        #self.breathing = ALProxy("ALMotion")
-        #self.breathing.setBreathEnabled('Arms', True)
-        #self.configuration = {"bodyLanguageMode": body_language_mode}
+        self.body_language_mode = body_language_mode
+        if self.body_language_mode != "disabled":
+            self.breathing = ALProxy("ALMotion")
+            self.breathing.setBreathEnabled('Arms', True)
+            self.configuration = {"bodyLanguageMode": self.body_language_mode}
 
     def start(self, *args, **kwargs):
         self.subscribe(
@@ -34,16 +35,16 @@ class TextToSpeech(EventAbstractClass):
         self.broker.shutdown()
 
     def callback(self, *args, **kwargs):
-        self.tts.say(args[1])
-
-        #self.tts.say(args[1], self.configuration)
+        #self.tts.say(args[1])
+        self.tts.say(args[1], self.configuration)
 
     def _spin(self, *args):
         while not self.__shutdown_requested:
             for f in args:
                 f()
             time.sleep(.1)
-        #self.breathing.setBreathEnabled("Arms", False)
+        if self.body_language_mode != "disabled":
+            self.breathing.setBreathEnabled("Arms", False)
 
     def signal_handler(self, signal, frame):
         print "[" + self.inst.__class__.__name__ + "] Caught Ctrl+C, stopping."

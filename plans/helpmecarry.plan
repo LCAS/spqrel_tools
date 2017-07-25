@@ -6,7 +6,7 @@
 headpose_0_-30;
 #say_hello;
 
-waitfor_personhere;
+waitfor_personhere; 
 vsay_hello;
 vsay_starting;
 

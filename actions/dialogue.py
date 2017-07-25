@@ -46,9 +46,13 @@ def actionThread_exec (params):
     
     if (params=='takeorder' and dialogue_response):
         pinfo = memory_service.getData('DialogueVesponse')
-        orderID = orderID+1
-        memkey = "Humans/Profile"+str(orderID)
-        memory_service.insertData(memkey, pinfo)
+        try:
+            json.loads(pinfo)
+            orderID = orderID+1
+            memkey = "Humans/Profile"+str(orderID)
+            memory_service.insertData(memkey, pinfo)
+        except:
+            print "Not a valid JSON file"
 
     # TODO acb. disconnect...
     # action end

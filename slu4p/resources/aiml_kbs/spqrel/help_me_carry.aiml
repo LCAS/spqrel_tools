@@ -379,249 +379,809 @@
                     <li>What's your name?</li>
                     <li>Can I ask your name?</li>
                 </random>
-                |[OPTIONS]Andrea_Marc_Maria_Roberto_Sergi_Luca
+                |[OPTIONS]noah_emma_olivia_liam_sophia_mason_ava_jacob_isabella_william_mia_ethan_abigail_james_emily_alexander_charlotte_michael_harper_benjamin
             </template>
         </category>
 
-        <category>
-            <pattern>* ANDREA *</pattern>
-            <template>
-                <think>
-                    <set name="Operator">andrea</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>* NOAH *</pattern>
+		<template>
+			<think>
+				<set name="Operator">noah</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>* ANDREA</pattern>
-            <template>
-                <think>
-                    <set name="Operator">andrea</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>NOAH *</pattern>
+		<template>
+			<think>
+				<set name="Operator">noah</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>ANDREA *</pattern>
-            <template>
-                <think>
-                    <set name="Operator">andrea</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>* NOAH</pattern>
+		<template>
+			<think>
+				<set name="Operator">noah</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>ANDREA</pattern>
-            <template>
-                <think>
-                    <set name="Operator">andrea</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>NOAH</pattern>
+		<template>
+			<think>
+				<set name="Operator">noah</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>* MARIA *</pattern>
-            <template>
-                <think>
-                    <set name="Operator">maria</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>* EMMA *</pattern>
+		<template>
+			<think>
+				<set name="Operator">emma</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>* MARIA</pattern>
-            <template>
-                <think>
-                    <set name="Operator">maria</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>EMMA *</pattern>
+		<template>
+			<think>
+				<set name="Operator">emma</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>MARIA *</pattern>
-            <template>
-                <think>
-                    <set name="Operator">maria</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>* EMMA</pattern>
+		<template>
+			<think>
+				<set name="Operator">emma</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>MARIA</pattern>
-            <template>
-                <think>
-                    <set name="Operator">maria</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>EMMA</pattern>
+		<template>
+			<think>
+				<set name="Operator">emma</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>* LUCA *</pattern>
-            <template>
-                <think>
-                    <set name="Operator">luca</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>* OLIVIA *</pattern>
+		<template>
+			<think>
+				<set name="Operator">olivia</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>LUCA *</pattern>
-            <template>
-                <think>
-                    <set name="Operator">luca</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>OLIVIA *</pattern>
+		<template>
+			<think>
+				<set name="Operator">olivia</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>* LUCA</pattern>
-            <template>
-                <think>
-                    <set name="Operator">luca</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>* OLIVIA</pattern>
+		<template>
+			<think>
+				<set name="Operator">olivia</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>LUCA</pattern>
-            <template>
-                <think>
-                    <set name="Operator">luca</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>OLIVIA</pattern>
+		<template>
+			<think>
+				<set name="Operator">olivia</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>* MARC *</pattern>
-            <template>
-                <think>
-                    <set name="Operator">marc</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>* LIAM *</pattern>
+		<template>
+			<think>
+				<set name="Operator">liam</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>* MARC</pattern>
-            <template>
-                <think>
-                    <set name="Operator">marc</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>LIAM *</pattern>
+		<template>
+			<think>
+				<set name="Operator">liam</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>MARC *</pattern>
-            <template>
-                <think>
-                    <set name="Operator">marc</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>* LIAM</pattern>
+		<template>
+			<think>
+				<set name="Operator">liam</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>MARC</pattern>
-            <template>
-                <think>
-                    <set name="Operator">marc</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>LIAM</pattern>
+		<template>
+			<think>
+				<set name="Operator">liam</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>* SERGI *</pattern>
-            <template>
-                <think>
-                    <set name="Operator">sergi</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>* SOPHIA *</pattern>
+		<template>
+			<think>
+				<set name="Operator">sophia</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>* SERGI</pattern>
-            <template>
-                <think>
-                    <set name="Operator">sergi</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>SOPHIA *</pattern>
+		<template>
+			<think>
+				<set name="Operator">sophia</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>SERGI *</pattern>
-            <template>
-                <think>
-                    <set name="Operator">sergi</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>* SOPHIA</pattern>
+		<template>
+			<think>
+				<set name="Operator">sophia</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>SERGI</pattern>
-            <template>
-                <think>
-                    <set name="Operator">sergi</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>SOPHIA</pattern>
+		<template>
+			<think>
+				<set name="Operator">sophia</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>* ROBERTO *</pattern>
-            <template>
-                <think>
-                    <set name="Operator">roberto</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>* MASON *</pattern>
+		<template>
+			<think>
+				<set name="Operator">mason</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>* ROBERTO</pattern>
-            <template>
-                <think>
-                    <set name="Operator">roberto</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>MASON *</pattern>
+		<template>
+			<think>
+				<set name="Operator">mason</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>ROBERTO *</pattern>
-            <template>
-                <think>
-                    <set name="Operator">roberto</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>* MASON</pattern>
+		<template>
+			<think>
+				<set name="Operator">mason</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
-        <category>
-            <pattern>ROBERTO</pattern>
-            <template>
-                <think>
-                    <set name="Operator">roberto</set>
-                </think>
-                <srai>START</srai>
-            </template>
-        </category>
+	<category>
+		<pattern>MASON</pattern>
+		<template>
+			<think>
+				<set name="Operator">mason</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* AVA *</pattern>
+		<template>
+			<think>
+				<set name="Operator">ava</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>AVA *</pattern>
+		<template>
+			<think>
+				<set name="Operator">ava</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* AVA</pattern>
+		<template>
+			<think>
+				<set name="Operator">ava</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>AVA</pattern>
+		<template>
+			<think>
+				<set name="Operator">ava</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* JACOB *</pattern>
+		<template>
+			<think>
+				<set name="Operator">jacob</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>JACOB *</pattern>
+		<template>
+			<think>
+				<set name="Operator">jacob</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* JACOB</pattern>
+		<template>
+			<think>
+				<set name="Operator">jacob</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>JACOB</pattern>
+		<template>
+			<think>
+				<set name="Operator">jacob</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* ISABELLA *</pattern>
+		<template>
+			<think>
+				<set name="Operator">isabella</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>ISABELLA *</pattern>
+		<template>
+			<think>
+				<set name="Operator">isabella</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* ISABELLA</pattern>
+		<template>
+			<think>
+				<set name="Operator">isabella</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>ISABELLA</pattern>
+		<template>
+			<think>
+				<set name="Operator">isabella</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* WILLIAM *</pattern>
+		<template>
+			<think>
+				<set name="Operator">william</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>WILLIAM *</pattern>
+		<template>
+			<think>
+				<set name="Operator">william</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* WILLIAM</pattern>
+		<template>
+			<think>
+				<set name="Operator">william</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>WILLIAM</pattern>
+		<template>
+			<think>
+				<set name="Operator">william</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* MIA *</pattern>
+		<template>
+			<think>
+				<set name="Operator">mia</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>MIA *</pattern>
+		<template>
+			<think>
+				<set name="Operator">mia</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* MIA</pattern>
+		<template>
+			<think>
+				<set name="Operator">mia</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>MIA</pattern>
+		<template>
+			<think>
+				<set name="Operator">mia</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* ETHAN *</pattern>
+		<template>
+			<think>
+				<set name="Operator">ethan</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>ETHAN *</pattern>
+		<template>
+			<think>
+				<set name="Operator">ethan</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* ETHAN</pattern>
+		<template>
+			<think>
+				<set name="Operator">ethan</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>ETHAN</pattern>
+		<template>
+			<think>
+				<set name="Operator">ethan</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* ABIGAIL *</pattern>
+		<template>
+			<think>
+				<set name="Operator">abigail</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>ABIGAIL *</pattern>
+		<template>
+			<think>
+				<set name="Operator">abigail</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* ABIGAIL</pattern>
+		<template>
+			<think>
+				<set name="Operator">abigail</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>ABIGAIL</pattern>
+		<template>
+			<think>
+				<set name="Operator">abigail</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* JAMES *</pattern>
+		<template>
+			<think>
+				<set name="Operator">james</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>JAMES *</pattern>
+		<template>
+			<think>
+				<set name="Operator">james</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* JAMES</pattern>
+		<template>
+			<think>
+				<set name="Operator">james</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>JAMES</pattern>
+		<template>
+			<think>
+				<set name="Operator">james</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* EMILY *</pattern>
+		<template>
+			<think>
+				<set name="Operator">emily</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>EMILY *</pattern>
+		<template>
+			<think>
+				<set name="Operator">emily</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* EMILY</pattern>
+		<template>
+			<think>
+				<set name="Operator">emily</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>EMILY</pattern>
+		<template>
+			<think>
+				<set name="Operator">emily</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* ALEXANDER *</pattern>
+		<template>
+			<think>
+				<set name="Operator">alexander</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>ALEXANDER *</pattern>
+		<template>
+			<think>
+				<set name="Operator">alexander</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* ALEXANDER</pattern>
+		<template>
+			<think>
+				<set name="Operator">alexander</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>ALEXANDER</pattern>
+		<template>
+			<think>
+				<set name="Operator">alexander</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* CHARLOTTE *</pattern>
+		<template>
+			<think>
+				<set name="Operator">charlotte</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>CHARLOTTE *</pattern>
+		<template>
+			<think>
+				<set name="Operator">charlotte</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* CHARLOTTE</pattern>
+		<template>
+			<think>
+				<set name="Operator">charlotte</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>CHARLOTTE</pattern>
+		<template>
+			<think>
+				<set name="Operator">charlotte</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* MICHAEL *</pattern>
+		<template>
+			<think>
+				<set name="Operator">michael</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>MICHAEL *</pattern>
+		<template>
+			<think>
+				<set name="Operator">michael</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* MICHAEL</pattern>
+		<template>
+			<think>
+				<set name="Operator">michael</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>MICHAEL</pattern>
+		<template>
+			<think>
+				<set name="Operator">michael</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* HARPER *</pattern>
+		<template>
+			<think>
+				<set name="Operator">harper</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>HARPER *</pattern>
+		<template>
+			<think>
+				<set name="Operator">harper</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* HARPER</pattern>
+		<template>
+			<think>
+				<set name="Operator">harper</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>HARPER</pattern>
+		<template>
+			<think>
+				<set name="Operator">harper</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* BENJAMIN *</pattern>
+		<template>
+			<think>
+				<set name="Operator">benjamin</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>BENJAMIN *</pattern>
+		<template>
+			<think>
+				<set name="Operator">benjamin</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* BENJAMIN</pattern>
+		<template>
+			<think>
+				<set name="Operator">benjamin</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>BENJAMIN</pattern>
+		<template>
+			<think>
+				<set name="Operator">benjamin</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
 
         <category>
             <pattern>NAMEACQUIRED</pattern>

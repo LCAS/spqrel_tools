@@ -1,5 +1,5 @@
 {
-  "init_cmd": "export PEPPER_IP=localhost; source ~/spqrel/spqrel_launch/worktree/spqrel_tools/setup-dev.bash /opt/naoqi; source ~/spqrel/spqrel_launch/setup.bash",
+  "init_cmd": "export PEPPER_IP=localhost; export TMAP=~/spqrel/spqrel_launch/worktree/spqrel_tools/maps/nagoya/nagoya_gmapping.tpg; export MAP=~/spqrel/spqrel_launch/worktree/spqrel_tools/maps/nagoya/nagoya_gmapping.yaml; source ~/spqrel/spqrel_launch/worktree/spqrel_tools/setup-dev.bash /opt/naoqi; source ~/spqrel/spqrel_launch/setup.bash",
   "windows": [
     {
       "name": "bash",

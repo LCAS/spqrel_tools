@@ -1,5 +1,5 @@
 {
-  "init_cmd": "export MAP=/home/nao/spqrel_launch/maps/nagoya/nagoya_gmapping.yaml",
+  "init_cmd": "export MAP=/home/nao/spqrel_launch/maps/nagoya/nagoya_gmapping.yaml; export TMAP=/home/nao/spqrel_launch/maps/nagoya/nagoya_gmapping.tpg",
   "windows": [
     {
       "name": "bash",

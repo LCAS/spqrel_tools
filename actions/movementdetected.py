@@ -22,7 +22,7 @@ def rhMonitorThread (memory_service):
 
     # PARAMETERS
     n_times = 12 #lenght of the array
-    waving_delta = 5 #in seconds
+    waving_delta = 6 #in seconds
 
     i = 0
     for i in range(0, n_times):

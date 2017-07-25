@@ -78,6 +78,7 @@ def init(session):
     #Starting services
     memory_service  = session.service("ALMemory")
     sound_service = session.service("ALSoundLocalization")
+    motion_service = session.service("ALMotion")
 
     print "Creating the thread"
 

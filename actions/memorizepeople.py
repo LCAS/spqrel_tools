@@ -27,8 +27,8 @@ import json
 from naoqi import ALProxy
 
 from utils import point2world
-import conditions
-from conditions import set_condition
+#import conditions
+#from conditions import set_condition
 
 
 
@@ -37,14 +37,19 @@ from conditions import set_condition
 
 global people_list
 
-
 def update_data(currentuser):
-    
-  global people_list
     
     b_new=True
     
+    try:
+        mem_list=memory_service.getData('Actions/MemorizePeople/PeopleList')
+        people_list=json.loads(mem_list)
+        
+    except:
+        
+        people_list=[]
     
+        
     # update some info for old detections
     
     for i in range(len(people_list)):
@@ -67,23 +72,22 @@ def update_data(currentuser):
             if currentuser['face_naoqi']['faceinfo']['gender']['conf'] >json_person['face_naoqi']['faceinfo']['gender']['conf']:
                 json_person['face_naoqi']['faceinfo']['gender']=currentuser['face_naoqi']['faceinfo']['gender']
                 
-
+#            ## Write data in ALMemory
+#            str_person=json.dumps(json_person)
+#            memory_service.insertData('Actions/memorizepeople/Person/'+currentuser['personid'], str_person)
 
             people_list[i]=json_person
-            str_person=json.dumps(people_list)
-            memory_service.insertData('Actions/memorizepeople/Personlist', str_person)    
+   
         
     ## ADD new person    
     if b_new is True:
         
         people_list.append(currentuser)
 
-        str_person=json.dumps(people_list)
-        memory_service.insertData('Actions/memorizepeople/Personlist', str_person)            
-
         
-    memory_service.insertData('Actions/memorizepeople/PeopleList/', people_list)
-
+        
+    str_person=json.dumps(people_list)
+    memory_service.insertData('Actions/memorizepeople/Personlist', str_person) 
 
 def rhMonitorThread (memory_service):
     t = threading.currentThread()

@@ -22,12 +22,16 @@ def rhMonitorThread (memory_service):
     t = threading.currentThread()
     print "persondetected thread started"
     personid = 0
+    count = 0
     while getattr(t, "do_run", True):
         plist = memory_service.getData("PeoplePerception/PeopleList")
         v = 'false'
         try:
-            if (len(plist)>0):
-                v = 'true'
+            if (len(plist)==0):
+                count += 1
+                if (count >= 10):
+                    v = 'true'
+                    count = 0
         except:
             v = 'false'
 

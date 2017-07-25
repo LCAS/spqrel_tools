@@ -53,15 +53,15 @@ headpose.py         moves the head          param: yaw, pitch [degrees]
 lookfor.py          continuously move the head left and right until condition   param: termination condition
 memorizeface.py     ???
 memorizepeople.py   ???
-movementdetected.py ???
+movementdetected.py condition: 
 navigate_to.py      ???
 obstaclehere.py     condition: true if laser detects obstance in front
-personbehind.py     ???
-persondetected.py   ???
-personhere.py       ???
-personsitting.py    ???
+personbehind.py     condition: true when person something is behind the robot within a distance of 0.9m
+persondetected.py   condition: true when People list is bigger than 1 
+personhere.py       condition: true when a person is in front of the robot within a distance of 1.5m
+personsitting.py    condition: true when a person is found sittin (threshold now at 1.4m heigh)
 posture.py          sets the posture    param: Stand, Crouch, WakeUp, Rest
-saveposition.py     ???
+saveposition.py     saves the current position of the robot - param: name given to the position
 say.py              say with ALTextToSpeech    param: label of what to say
 screentouched.py    condition: true if screen is touched
 soundtrack.py       ???

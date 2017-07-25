@@ -60,7 +60,7 @@ class ImageWidget():
         
         self.opencvframe=None
         # Show opencv image
-        self.showvideo=True
+        self.showvideo=False
         
         self.output_path='./data/'+datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')+'/'
         # Define the codec and create VideoWriter object

@@ -32,20 +32,20 @@ def rhMonitorThread (memory_service,motion_service):
                 #print "confidence: ", sound_value[1][2]
                 confidence = sound_value[1][2]
                 if (confidence > 0.3):
-                    print "sound detected!!!!!!!"
+                    #print "sound detected!!!!!!!"
                     v = 'true'
                     sound_azimuth = sound_value[1][0]
                     head_yaw = sound_value[2][5]
                     turn = sound_azimuth + head_yaw
-                    #motion_service.moveTo(0, 0, turn)
-
+                    
         except:
-        #    print "exception in sound"
             v = 'false'
 
         set_condition(memory_service,'sounddetected',v)
+        time.sleep(0.25)
 
-        time.sleep(0.5)
+    motion_service.moveTo(0, 0, turn)
+
     print "sounddetected thread quit"
 
 def init(session):

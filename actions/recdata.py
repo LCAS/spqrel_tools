@@ -10,7 +10,7 @@ from action_base import *
 
 actionName = "recdata"
 
-logkey = 'NAOqiBag/Rec'
+logkey = 'NAOqibag/Rec'
 
 def actionThread_exec (params):
     t = threading.currentThread()

@@ -45,12 +45,15 @@ wait_15;
 
 # 5
 
+vsay_weready;
 dialogue_mutequestion;
 
 < sounddetected? turn_^AngleSound
 >
 dialogue_lastresponse;
 
+wait_5;
+vsay_weready;
 dialogue_mutequestion;
 
 < sounddetected? turn_^AngleSound
@@ -58,18 +61,24 @@ dialogue_mutequestion;
 
 dialogue_lastresponse;
 
+wait_5;
+vsay_weready;
 dialogue_mutequestion;
 
 < sounddetected? turn_^AngleSound
 >
 dialogue_lastresponse;
 
+wait_5;
+vsay_weready;
 dialogue_mutequestion;
 
 < sounddetected? turn_^AngleSound
 >
 dialogue_lastresponse;
 
+wait_5;
+vsay_weready;
 dialogue_mutequestion;
 
 < sounddetected? turn_^AngleSound

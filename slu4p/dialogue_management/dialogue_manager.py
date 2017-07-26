@@ -212,9 +212,9 @@ class DialogueManager(EventAbstractClass):
                 data = submessage.replace('[WHEREIS]', '').strip().replace(" ", "+")
                 try:
                     location = str(self.memory.getData('/location_mapping/' + data)).replace("+", " ")
-                    reply = "The " + data + " is in the " + location
+                    reply = "The " + data.replace("+", " ") + " is in the " + location
                 except Exception as e:
-                    reply = "The " + data + " is somewhere!"
+                    reply = "The " + data.replace("+", " ") + " is somewhere!"
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
             elif '[HOWMANY]' in submessage:

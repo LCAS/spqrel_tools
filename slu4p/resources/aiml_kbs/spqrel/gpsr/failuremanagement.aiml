@@ -19,17 +19,17 @@
                 <li name="firstmisunderstanding" value="TRUE">
                     <srai>GIVEUP</srai>
                     <think>
-                        <set name="topic"></set>
                         <set name="firstmisunderstanding">FALSE</set>
+                        <set name="topic"></set>
                     </think>
                 </li>
                 <li>
                     <srai>REQUESTREPEAT</srai>
+                    <think>
+                        <set name="firstmisunderstanding">TRUE</set>
+                    </think>
                 </li>
             </condition>
-            <think>
-                <set name="firstmisunderstanding">TRUE</set>
-            </think>
         </template>
     </category>
 

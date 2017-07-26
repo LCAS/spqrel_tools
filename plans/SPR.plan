@@ -11,7 +11,8 @@ turn_180;
 
 # 3
 
-lookfor_SPRinfocollected|60; # timeout
+lookfor_memorizepeople|30; # timeout
+peoplesummary_SPRgame;
 
 vsay_SPRinfocollected;
 
@@ -20,6 +21,9 @@ vsay_playwithme;
 # 4
 
 wait_10;
+
+waitfor_personhere;
+peoplesummary_Person;
 
 dialogue_fivequestions_1;
 dialogue_fivequestions_2;

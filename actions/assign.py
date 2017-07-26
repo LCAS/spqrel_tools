@@ -22,6 +22,7 @@ def actionThread_exec (params):
         memory_service.insertData(vp[0],vp[1])
     except:
         print "ERROR in Assign parameters"
+    # action init
 
     time.sleep(1.0)
 		

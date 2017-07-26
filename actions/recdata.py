@@ -19,10 +19,10 @@ def actionThread_exec (params):
     print "Action "+actionName+" "+params+" started"
     # action init
     if (params=='off'):
-        memory_service.raiseEvent(logkey,'0')
+        memory_service.raiseEvent(logkey,0)
         print "  -- Recording data disabled --"
     else:
-        memory_service.raiseEvent(logkey,'1')
+        memory_service.raiseEvent(logkey,1)
         print "  -- Recording data enabled --"
     # action init
     

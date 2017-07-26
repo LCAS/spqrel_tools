@@ -30,7 +30,8 @@ def rhMonitorThread (memory_service,motion_service):
             sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
             if len(sound_value)>1:
                 #print "confidence: ", sound_value[1][2]
-                if (confidence > 0.5):
+                confidence = sound_value[1][2]
+                if (confidence > 0.3):
                     print "sound detected!!!!!!!"
                     v = 'true'
                     sound_azimuth = sound_value[1][0]

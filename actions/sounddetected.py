@@ -32,7 +32,7 @@ def rhMonitorThread (memory_service):
 
     while getattr(t, "do_run", True):
         v = 'false'
-        print "testing sound"
+        #print "testing sound"
         try:
             sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
             confidence = sound_value[1][2]
@@ -64,6 +64,7 @@ def rhMonitorThread (memory_service):
                     motion_service.moveTo(0, 0, turn)
             
         except:
+            print "exception in sound"
             v = 'false'
 
         set_condition(memory_service,'sounddetected',v)

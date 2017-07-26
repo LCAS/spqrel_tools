@@ -28,12 +28,12 @@ def actionThread_exec (params):
 
     mod = "REL"
     target_angle = 0
+    if '_' not in val:
+        val = val + '_' + mod
     v = val.split('_')
 
-    if (len(v)==1):
-        target_angle = int(v[0])
-    elif (len(v)==2):
-        target_angle = int(v[0])
+    target_angle = int(v[0])
+    if (len(v)==2):
         mod = v[1]
 
     if (mod=='ABS'):

@@ -36,15 +36,13 @@ def rhMonitorThread (memory_service,motion_service):
                     v = 'true'
                     sound_azimuth = sound_value[1][0]
                     head_yaw = sound_value[2][5]
-                    turn = sound_azimuth + head_yaw
-                    
+                    turn_angle = sound_azimuth + head_yaw
+                    memory_service.insertData('/AngleSound',turn_angle)               
         except:
             v = 'false'
 
         set_condition(memory_service,'sounddetected',v)
         time.sleep(0.25)
-    print "turn:", turn
-    motion_service.moveTo(0, 0, turn)
 
     print "sounddetected thread quit"
 

@@ -2,7 +2,7 @@
 waitfor_dooropen;
 vsay_starting;
 wait_2;
-enter_2_0_0_5; 
+enter_30_0_0_3_true; 
 navigateto_corridor1;  ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
 
 # 

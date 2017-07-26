@@ -37,7 +37,7 @@ def rhMonitorThread (memory_service,motion_service):
                     sound_azimuth = sound_value[1][0]
                     head_yaw = sound_value[2][5]
                     turn_angle = sound_azimuth + head_yaw
-                    memory_service.insertData('/AngleSound',turn_angle)               
+                    memory_service.insertData('AngleSound',turn_angle)               
         except:
             v = 'false'
 

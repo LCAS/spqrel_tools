@@ -31,11 +31,12 @@ def rhMonitorThread (memory_service,motion_service):
             if len(sound_value)>1:
                 #print "confidence: ", sound_value[1][2]
                 if (confidence > 0.5):
+                    print "sound detected!!!!!!!"
                     v = 'true'
                     sound_azimuth = sound_value[1][0]
                     head_yaw = sound_value[2][5]
                     turn = sound_azimuth + head_yaw
-                    motion_service.moveTo(0, 0, turn)
+                    #motion_service.moveTo(0, 0, turn)
 
         except:
         #    print "exception in sound"

@@ -26,10 +26,12 @@ vsay_playwithme;
 vsay_weready;
 
 dialogue_fivequestions_1;
-#dialogue_fivequestions_2;
-#dialogue_fivequestions_3;
-#dialogue_fivequestions_4;
-#dialogue_fivequestions_5;
+dialogue_fivequestions_2;
+dialogue_fivequestions_3;
+dialogue_fivequestions_4;
+dialogue_fivequestions_5;
+
+vsay_playblindman;
 
 # 5
 

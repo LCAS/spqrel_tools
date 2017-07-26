@@ -286,6 +286,15 @@
         </template>
     </category>
 
+    <category>
+        <pattern>PLAYBLINDMAN</pattern>
+        <template>
+            <random>
+                <li>Let's play the blind man's bluff game!</li>
+            </random>
+            I'll wait for ten seconds..
+        </template>
+    </category>
 
     <category>
         <pattern>WHATNOW</pattern>

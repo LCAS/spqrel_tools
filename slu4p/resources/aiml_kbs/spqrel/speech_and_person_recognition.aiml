@@ -85,6 +85,70 @@
         </category>
 
         <category>
+            <pattern>* WHAT IS THE *</pattern>
+            <template>
+                [WHEREIS]
+                <star index="2"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHAT IS THE *</pattern>
+            <template>
+                [WHEREIS]
+                <star/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WHAT IS *</pattern>
+            <template>
+                [WHEREIS]
+                <star index="2"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHAT IS *</pattern>
+            <template>
+                [WHEREIS]
+                <star/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WHAT ARE THE *</pattern>
+            <template>
+                [WHEREIS]
+                <star index="2"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHAT ARE THE *</pattern>
+            <template>
+                [WHEREIS]
+                <star/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WHAT ARE *</pattern>
+            <template>
+                [WHEREIS]
+                <star index="2"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHAT ARE *</pattern>
+            <template>
+                [WHEREIS]
+                <star/>
+            </template>
+        </category>
+
+        <category>
             <pattern>* MALE *</pattern>
             <template>
                 [MALE]

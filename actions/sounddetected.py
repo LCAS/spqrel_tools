@@ -35,7 +35,8 @@ def rhMonitorThread (memory_service):
         #print "testing sound"
         try:
             sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
-            print "condidence: ", sound_value[1][2]
+            if len(sound_value)>1:
+                print "condidence: ", sound_value[1][2]
         
         except:
             print "exception in sound"

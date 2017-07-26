@@ -247,7 +247,7 @@ def actionThread_exec (params):
             
             if countdt>Timeoutangle:
                 
-                motion_service.moveTo(0.0, 0.0, theta)
+                motion_service.moveTo(0.0, 0.0, currentangle)
                 currentangle+=Step_turn_angle
                 
 

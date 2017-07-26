@@ -2,6 +2,8 @@
 
 # 1
 
+headpose_0_-20;
+
 vsay_playriddles;
 
 # 2
@@ -85,3 +87,4 @@ dialogue_mutequestion;
 >
 dialogue_lastresponse;
 
+vsay_farewell;

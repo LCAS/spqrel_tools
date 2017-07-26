@@ -56,49 +56,53 @@ def update_data(currentuser):
         mem_list=memory_service.getData('Actions/MemorizePeople/PeopleList')
         people_list=json.loads(mem_list)
         
-    except:
-        
-        people_list=[]
-    
-        
-    # update some info for old detections
-    
-    for i in range(len(people_list)):
-        
-        if currentuser['person_naoqiid']==people_list[i]['person_naoqiid']:
-            
-            json_person=people_list[i]
-            
-#            mem_person=memory_service.getData('Actions/memorizepeople/'+people_list[i])
-#            json_person=json.loads(mem_person)
-            b_new=False
-            
-            json_person['info']['height']=currentuser['info']['height']
-            json_person['info']['posture']=currentuser['info']['posture']
-            
-            # Update only if confidence is higher 
-            if currentuser['face_naoqi']['faceinfo']['age']['conf'] >json_person['face_naoqi']['faceinfo']['age']['conf']:
-                json_person['face_naoqi']['faceinfo']['age']=currentuser['face_naoqi']['faceinfo']['age']
 
-            if currentuser['face_naoqi']['faceinfo']['gender']['conf'] >json_person['face_naoqi']['faceinfo']['gender']['conf']:
-                json_person['face_naoqi']['faceinfo']['gender']=currentuser['face_naoqi']['faceinfo']['gender']
+    
+        if len(people_list)>1:
+            # update some info for old detections
+            
+            for i in range(len(people_list)):
                 
-#            ## Write data in ALMemory
-#            str_person=json.dumps(json_person)
-#            memory_service.insertData('Actions/memorizepeople/Person/'+currentuser['personid'], str_person)
-
-            people_list[i]=json_person
-   
+                if currentuser['person_naoqiid']==people_list[i]['person_naoqiid']:
+                    
+                    json_person=people_list[i]
+                    
+        #            mem_person=memory_service.getData('Actions/MemorizePeople/'+people_list[i])
+        #            json_person=json.loads(mem_person)
+                    b_new=False
+                    
+                    json_person['info']['height']=currentuser['info']['height']
+                    json_person['info']['posture']=currentuser['info']['posture']
+                    
+                    # Update only if confidence is higher 
+                    if currentuser['face_naoqi']['faceinfo']['age']['conf'] >json_person['face_naoqi']['faceinfo']['age']['conf']:
+                        json_person['face_naoqi']['faceinfo']['age']=currentuser['face_naoqi']['faceinfo']['age']
         
+                    if currentuser['face_naoqi']['faceinfo']['gender']['conf'] >json_person['face_naoqi']['faceinfo']['gender']['conf']:
+                        json_person['face_naoqi']['faceinfo']['gender']=currentuser['face_naoqi']['faceinfo']['gender']
+                        
+        #            ## Write data in ALMemory
+        #            str_person=json.dumps(json_person)
+        #            memory_service.insertData('Actions/MemorizePeople/Person/'+currentuser['personid'], str_person)
+        
+                    people_list[i]=json_person
+                    
+    except:
+        pass
+   
     ## ADD new person    
     if b_new is True:
-        
+
+        people_list=[]
+    
         people_list.append(currentuser)
 
-        
-        
+
     str_person=json.dumps(people_list)
-    memory_service.insertData('Actions/Memorizepeople/Peoplelist', str_person) 
+    
+    memory_service.insertData('Actions/MemorizePeople/Peoplelist', str_person) 
+
+
 
 def actionThread_exec (params):
 
@@ -117,7 +121,7 @@ def actionThread_exec (params):
     people_list=[]
 
     b_completed=False
-    memory_service.insertData("PeoplePerception/PeopleList",people_list) 
+    memory_service.insertData('Actions/Memorizepeople/Peoplelist',people_list) 
     
     while (getattr(t, "do_run", True) and b_completed==False):
         

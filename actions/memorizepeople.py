@@ -255,7 +255,8 @@ def actionThread_exec (params):
             else:
                 countdt+=1
 
-            if currentangle>Max_turn_angle:
+            if currentangle > Max_turn_angle:
+                print 'stop currentangle=',currentangle
                 actionThread_exec.do_run = False
                 
             try:

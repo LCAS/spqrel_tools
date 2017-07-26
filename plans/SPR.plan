@@ -15,17 +15,17 @@ turn_180;
 
 # 3
 
-#memorizepeople;
-#peoplesummary_SPRgame;
+memorizepeople;
+peoplesummary_SPRgame;
 
-#vsay_SPRinfocollected; # TODO
+vsay_SPRinfocollected;
 
 vsay_playwithme;
 
 # 4
 
-#waitfor_personhere;
-#peoplesummary_Person;
+waitfor_personhere;
+peoplesummary_Person;
 
 vsay_weready;
 dialogue_fivequestions_1;

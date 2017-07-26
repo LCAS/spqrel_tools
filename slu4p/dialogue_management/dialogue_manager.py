@@ -80,6 +80,15 @@ class DialogueManager(EventAbstractClass):
         if 'stop' in splitted:
             print 'Found stop'
             self.memory.raiseEvent("ASR_enable", "0")
+        if 'SPRinfocollected' in splitted[1]:
+            try:
+                crowd_info = json.loads(self.memory.getData('Humans/Peoplesummary'))
+                total = crowd_info['total']
+                males = crowd_info['num_males']
+                females = crowd_info['num_females']
+                to_send = "say SPRinfocollected total " + total + " males " + males + " females " + females
+            except:
+                to_send = "say SPRinfocollected donotknow"
         if 'order' == splitted[1] or 'confirmdrink' == splitted[1] or 'confirmnotavailable' == splitted[1] or 'unknownavailable' == splitted[1]:
             try:
                 self.current_user_id = splitted[2]

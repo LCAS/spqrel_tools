@@ -204,6 +204,26 @@
     </category>
 
     <category>
+        <pattern>SPRINFOCOLLECTED TOTAL * MALES * FEMALES *</pattern>
+        <template>
+            Scan completed!
+            <random>
+                <li>There are <star index="1"/> persons in the room, <star index="2"/> are males and <star index="3"/> are females!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>SPRINFOCOLLECTED DONOTKNOW</pattern>
+        <template>
+            Scan completed!
+            <random>
+                <li>I'm sorry, but I wasn't able to detect you!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
         <pattern>FOLLOWYOU</pattern>
         <template>
             <random>

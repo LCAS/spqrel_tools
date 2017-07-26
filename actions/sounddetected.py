@@ -64,8 +64,7 @@ def rhMonitorThread (memory_service):
             #        motion_service.moveTo(0, 0, turn)
             
         except Exception as e:
-            print e.__doc__
-            print e.message
+            print e
             v = 'false'
 
         set_condition(memory_service,'sounddetected',v)

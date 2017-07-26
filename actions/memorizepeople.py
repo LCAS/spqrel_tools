@@ -11,7 +11,7 @@ Memorize people
 
 Writes in ALMemory 'Actions/MemorizePeople/PeopleList/' json string with all features 
 
-
+params== 'Crowd'
 '''
 
 
@@ -23,8 +23,13 @@ import os
 import time
 import threading
 import json
+import math
 
 from naoqi import ALProxy
+
+
+import action_base
+from action_base import *
 
 from utils import point2world
 import conditions
@@ -32,10 +37,14 @@ from conditions import set_condition
 
 
 
-
-
-
 global people_list
+
+
+Step_turn_angle= math.pi/5
+Max_turn_angle= math.pi
+
+currentangle=0
+Timeoutangle=5
 
 def update_data(currentuser):
     
@@ -89,19 +98,28 @@ def update_data(currentuser):
     str_person=json.dumps(people_list)
     memory_service.insertData('Actions/Memorizepeople/Peoplelist', str_person) 
 
-def rhMonitorThread (memory_service):
+def actionThread_exec (params):
+
+    #global face_char_service
+    
     t = threading.currentThread()
-    print "MemorizePeople thread started"
+    memory_service = getattr(t, "mem_serv", None)
+    faces_service = getattr(t, "session", None).service("ALFaceDetection")
+    faces_service.setRecognitionEnabled(True)
+    motion_service  = getattr(t, "session", None).service("ALMotion")
+    #face_char_service = getattr(t, "session", None).service("ALFaceCharacteristics")
+    print "Action "+actionName+" started with params "+params
 
     # DElete old list
     global people_list
     people_list=[]
 
+    
     memory_service.insertData("PeoplePerception/PeopleList",people_list) 
     
     while getattr(t, "do_run", True):
         
-        
+        motion_service
         naoqi_people_list =  memory_service.getData("PeoplePerception/PeopleList")
                                 
         person=None
@@ -205,7 +223,7 @@ def rhMonitorThread (memory_service):
                 closest_node=memory_service.getData('TopologicalNav/ClosestNode')
                 
             except:
-                print 'topological localization error '
+                #print 'topological localization error '
                 current_node=None
                 closest_node=None
                 
@@ -220,8 +238,47 @@ def rhMonitorThread (memory_service):
             update_data(user)        
             
 
-        time.sleep(0.5)
-    print "Memorizepeople thread quit"
+
+        if params== 'Crowd':
+            
+            
+            if countdt>Timeoutangle:
+                
+                motion_service.moveTo(0.0, 0.0, theta)
+                currentangle+=Step_turn_angle
+                
+
+                countdt = 0
+            else:
+                countdt+=1
+
+            if currentangle>Max_turn_angle:
+                actionThread_exec.do_run = False
+                
+            try:
+                mem_list=memory_service.getData('Actions/MemorizePeople/PeopleList')
+                people_list=json.loads(mem_list)
+                
+                b_completed=True
+                
+                for p in people_list:
+                    if p['face_naoqi']['faceinfo']['gender']['conf']<0.6:
+                        b_completed=False
+                        
+                if b_completed is True and len(people_list)>3:
+                    actionThread_exec.do_run = False
+                        
+        
+            except:
+                pass
+            
+            
+                
+            
+        time.sleep(0.3)
+        
+    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+    print "Action "+actionName+" "+params+" terminated"
 
 
 
@@ -251,43 +308,25 @@ def init(session):
 
 
 
-def quit():
-    global monitorThread
-    print "Memorizepeople quit"
-    monitorThread.do_run = False 
+def init(session):
+    print actionName+" init"
+    action_base.init(session, actionName, actionThread_exec)
+
     
 
-    ###
-    ##  End sessions????
-
-
-def main():
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--pip", type=str, default=os.environ['PEPPER_IP'],
-                        help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
-    parser.add_argument("--pport", type=int, default=9559,
-                        help="Naoqi port number")
-    args = parser.parse_args()
-    pip = args.pip
-    pport = args.pport
-
-    #Starting application
-    try:
-        connection_url = "tcp://" + pip + ":" + str(pport)
-        print "Connecting to ",    connection_url
-        app = qi.Application(["PersonHere", "--qi-url=" + connection_url ])
-    except RuntimeError:
-        print ("Can't connect to Naoqi at ip \"" + pip + "\" on port " + str(pport) +".\n"
-               "Please check your script arguments. Run with -h option for help.")
-        sys.exit(1)
-
-    app.start()
-    session = app.session
-    init(session)
-
-    app.run()    
+def quit():
+    print actionName+" quit"
+    actionThread_exec.do_run = False
+    
 
 
 if __name__ == "__main__":
-    main()
+
+    app = action_base.initApp(actionName)
+        
+    init(app.session)
+
+    #Program stays at this point until we stop it
+    app.run()
+
+    quit()

@@ -87,7 +87,7 @@ def update_data(currentuser):
         
         
     str_person=json.dumps(people_list)
-    memory_service.insertData('Actions/memorizepeople/Personlist', str_person) 
+    memory_service.insertData('Actions/Memorizepeople/Personlist', str_person) 
 
 def rhMonitorThread (memory_service):
     t = threading.currentThread()
@@ -160,17 +160,33 @@ def rhMonitorThread (memory_service):
                 shirtcolorHSV =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ShirtColorHSV")
                 PositionInRobotFrame =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/PositionInRobotFrame")
                 issitting=memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/IsSitting") #0 is standing,1 sitting,2 is unknown.
-#                    
+                
+                iswaving=memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/IsWaving")
+                iswavingcenter=memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/IsWavingCenter")
+                iswavingleft=memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/IsWavingLeft")
+                iswavingright=memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/IsWavingRight")
+                
+
+                
+
 #
                 posture='unknow'
                 if issitting==0:
                     posture='standing'
                 elif issitting==1:
                     posture='sitting'
+                    
+                wavingmode='none'
+                if iswavingcenter==1:
+                    wavingmode='center'
+                if iswavingcenter==1:
+                    iswavingleft='left'
+                if iswavingcenter==1:
+                    iswavingright='right'
                 # Write data in json format
 
                 shirtcolor={'name': shirtcolorName, 'hsv':shirtcolorHSV}
-                personinfo={'height': round(height,2), 'shirtcolor': shirtcolor,'posture':posture}
+                personinfo={'height': round(height,2), 'shirtcolor': shirtcolor,'posture':posture,'waving': wavingmode}
                 
 
                 w_px, w_py = point2world(memory_service,[PositionInRobotFrame[0],PositionInRobotFrame[1]])

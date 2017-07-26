@@ -20,7 +20,7 @@ from conditions import set_condition
 def rhMonitorThread (memory_service):
 
     t = threading.currentThread()
-    print "sounddetected thread started"
+    print "sound detected thread started"
 
     HEAD_PITCH_MAX = 0.6371 * 0.75
     HEAD_PITCH_MIN = -0.7068 * 0.75
@@ -33,16 +33,16 @@ def rhMonitorThread (memory_service):
     while getattr(t, "do_run", True):
         v = 'false'
         #print "testing sound"
-        #try:
-        #    sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
-        #    if len(sound_value)>1:
-        #        print "condidence: ", sound_value[1][2]
-        
-        #except:
+        try:
+            sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
+            if len(sound_value)>1:
+                print "condidence: ", sound_value[1][2]
+                v = 'true '
+        except:
         #    print "exception in sound"
-        #    v = 'false'
+            v = 'false'
 
-        #set_condition(memory_service,'sounddetected',v)
+        set_condition(memory_service,'sounddetected',v)
 
         time.sleep(0.5)
     print "sounddetected thread quit"

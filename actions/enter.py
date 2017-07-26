@@ -39,11 +39,12 @@ def actionThread_exec (params):
     while (getattr(t, "do_run", True) and count>0): 
         print "Action "+actionName+" "+params+" exec..."
         # action exec
-        motion_service.moveTo(float(x),float(y),float(t),float(time_))
-        count -= 1		
+        motion_service.move(float(x),float(y),float(t))
         # action exec
-        time.sleep(0.1)
+        time.sleep(time_)
+        count = 0		
         
+    motion_service.stopMove()
     print "Action "+actionName+" "+params+" terminated"
     # action end
 

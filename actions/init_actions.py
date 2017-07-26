@@ -18,6 +18,7 @@ import dooropen, obstaclehere, screentouched
 import say, vsay, wait, waitfor, goto, turn, lookfor, dialogue, dialoguestart, dialoguestop, asrenable
 import posture, personhere, headpose, followuntil, movementdetected, webpage, personbehind, persondetected, speechbtn
 import execplan, saveposition, soundtrack, navigateto, memorizepeople, memorizeface, sounddetected, continuebtn, enter, recdata, assign
+import personlost
 
 def init(session):
     screentouched.init(session)
@@ -53,6 +54,7 @@ def init(session):
     enter.init(session)
     recdata.init(session)
     assign.init(session)
+    personlost.init(session)
 
 
 def quit():
@@ -89,6 +91,7 @@ def quit():
     continuebtn.quit()
     recdata.quit()
     assign.quit()
+    personlost.quit()
 
 
 def main():

@@ -17,7 +17,7 @@ def actionThread_exec (params):
     t = threading.currentThread()
     
     memory_service = getattr(t, "mem_serv", None)
-    motion_service = getattr(t, "session", None).service("AlMotion")
+    motion_service = getattr(t, "session", None).service("ALMotion")
 
 
     print "Action "+actionName+" started with params "+params

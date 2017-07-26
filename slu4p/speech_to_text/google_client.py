@@ -38,6 +38,7 @@ class GoogleClient:
             print "[" + self.__class__.__name__ + "] [RECOGNIZE]ERROR! Google APIs are temporary unavailable. Returning empty list.."
             return []
         except requests.exceptions.RequestException as e:
+            print response
             print "[" + self.__class__.__name__ + "] [RECOGNIZE]ERROR! Unable to reach Google. Returning empty list.."
             return []
 
@@ -63,6 +64,7 @@ class GoogleClient:
             print "[" + self.__class__.__name__ + "] [RECOGNIZE]ERROR! Google APIs are temporary unavailable. Returning empty list.."
             return []
         except requests.exceptions.RequestException as e:
+            print response
             print "[" + self.__class__.__name__ + "] [RECOGNIZE]ERROR! Unable to reach Google. Returning empty list.."
             return []
 

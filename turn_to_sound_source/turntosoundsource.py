@@ -47,7 +47,7 @@ class TurnToSoundsource:
         confidence = value[1][2]
         # print confidence
 
-        if confidence > 0.7:
+        if confidence > 0.5:
             sound_azimuth = value[1][0]
             sound_elevation = value[1][1]
             x = math.sin(sound_elevation) * math.cos(sound_azimuth)
@@ -83,7 +83,7 @@ class TurnToSoundsource:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--pip", type=str, default=os.environ['PEPPER_IP'],
+    parser.add_argument("--pip", type=str, default='192.168.127.16',
                         help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
     parser.add_argument("--pport", type=int, default=9559,
                         help="Naoqi port number")

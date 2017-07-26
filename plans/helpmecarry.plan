@@ -18,9 +18,10 @@ dialogue_following; #new from andrea
 #### 2 - START THE FOLLOWING PHASE
 
 asrenable; #new from andrea
-followuntil_stopfollowing; 
+followuntil_stopfollowing; ! *if* (personlost) *do* say_comehere; restart_action !
+asrenable_off;
 # LI this does not work because persondetected is too noisy
-# ! *if* (personlost) *do* say_comehere; restart_action !
+# ! *if* (not persondetected) *do* say_comehere; restart_action !
 asrenable_off; #new from andrea
 
 #vsay_carhere; #this is not required as the robot says something when it detects the stopfollowing

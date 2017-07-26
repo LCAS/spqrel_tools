@@ -178,8 +178,11 @@ class DialogueManager(EventAbstractClass):
             elif '[LOOKFORDATA]' in submessage:
                 data = submessage.replace('[LOOKFORDATA]', '').strip()
                 self.location['location'] = data
+                try:
+                    location = str(self.memory.getData('/location_mapping/' + data)).replace("+", " ")
+                except Exception as e:
+                    reply = "The " + data + " is somewhere!"
 
-                #TODO access the symbol/location mapping
 
                 self.memory.insertData("SLU/location", data)
                 self.memory.raiseEvent("DialogueVesponse", json.dumps(self.location))
@@ -206,28 +209,33 @@ class DialogueManager(EventAbstractClass):
                 self.memory.raiseEvent("DialogueVesponse", "Action stopped")
                 self.memory.raiseEvent("ASR_enable", "0")
             elif '[WHEREIS]' in submessage:
-                data = submessage.replace('[WHEREIS]', '')
-
-                # TODO access the symbol/location mapping
-
-                reply = "The " + data + " is somewhere!"
+                data = submessage.replace('[WHEREIS]', '').replace(" ", "+")
+                try:
+                    location = str(self.memory.getData('/location_mapping/' + data)).replace("+", " ")
+                    reply = "The " + data + " is in the " + location
+                except Exception as e:
+                    reply = "The " + data + " is somewhere!"
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
             elif '[HOWMANY]' in submessage:
                 data = submessage.replace('[HOWMANY]', '')
                 splitted = data.split("#")
-
-                # TODO access the perceptual information
-
                 reply = "There are multiple " + splitted[0] + " in the " + splitted[1]
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
             elif '[CROWD]' in submessage:
                 data = submessage.replace('[CROWD]', '')
-
-                # TODO access the perceptual information
-
-                reply = "I don't know how many people there are"
+                try:
+                    crowd_info = json.loads(self.memory.getData('Humans/Peoplesummary'))
+                    total = crowd_info['total']
+                    num_males = crowd_info['num_males']
+                    num_females = crowd_info['num_females']
+                    if total == 0:
+                        reply = "I don't know how many people there are"
+                    else:
+                        reply = "I may be wrong, but I see " + total + " people: " + num_males + " are males and " + num_females + " are females."
+                except Exception as e:
+                    reply = "I don't know how many people there are"
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
             elif '[CHILDREN]' in submessage:
@@ -237,18 +245,32 @@ class DialogueManager(EventAbstractClass):
                 self.memory.raiseEvent("Veply", reply)
             elif '[MALE]' in submessage:
                 data = submessage.replace('[MALE]', '')
-
-                # TODO access the perceptual information
-
-                reply = "I don't know how many males there are"
+                try:
+                    crowd_info = json.loads(self.memory.getData('Humans/Peoplesummary'))
+                    total = crowd_info['total']
+                    num_males = crowd_info['num_males']
+                    num_females = crowd_info['num_females']
+                    if total == 0:
+                        reply = "I don't know how many males there are"
+                    else:
+                        reply = "I may be wrong, but I see " + total + " people: " + num_males + " are males and " + num_females + " are females."
+                except Exception as e:
+                    reply = "I don't know how many males there are"
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
             elif '[FEMALE]' in submessage:
                 data = submessage.replace('[FEMALE]', '')
-
-                # TODO access the perceptual information
-
-                reply = "I don't know how many females there are"
+                try:
+                    crowd_info = json.loads(self.memory.getData('Humans/Peoplesummary'))
+                    total = crowd_info['total']
+                    num_males = crowd_info['num_males']
+                    num_females = crowd_info['num_females']
+                    if total == 0:
+                        reply = "I don't know how many females there are"
+                    else:
+                        reply = "I may be wrong, but I see " + total + " people: " + num_males + " are males and " + num_females + " are females."
+                except Exception as e:
+                    reply = "I don't know how many females there are"
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
             elif '[WAVING]' in submessage:
@@ -263,10 +285,15 @@ class DialogueManager(EventAbstractClass):
                 self.memory.raiseEvent("Veply", reply)
             elif '[STANDING]' in submessage:
                 data = submessage.replace('[STANDING]', '')
-
-                # TODO access the perceptual information
-
-                reply = "I don't know how many people are standing"
+                try:
+                    crowd_info = json.loads(self.memory.getData('Humans/Peoplesummary'))
+                    total = crowd_info['total']
+                    if total == 0:
+                        reply = "I don't know how many people are standing"
+                    else:
+                        reply = "I see " + total + " people that are standing."
+                except Exception as e:
+                    reply = "I don't know how many people are standing"
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
             elif '[SITTING]' in submessage:
@@ -281,12 +308,20 @@ class DialogueManager(EventAbstractClass):
                 self.memory.raiseEvent("Veply", reply)
             elif '[HOWOLD]' in submessage:
                 data = submessage.replace('[HOWOLD]', '')
-                reply = "You are older than me, I guess..."
+                try:
+                    person_info = json.loads(self.memory.getData('Humans/Peoplesummary'))
+                    age = person_info['Age']
+                    if total == 0:
+                        reply = "You are older than me, I guess..."
+                    else:
+                        reply = "I may be wrong, but you could be " + age + " years old. Don't you?"
+                except Exception as e:
+                    reply = "You are older than me, I guess..."
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
             elif '[GENDER]' in submessage:
                 data = submessage.replace('[GENDER]', '')
-                reply = "Man? Woman? I couldn't tell, sorry! I'm still "
+                reply = "Man? Woman? I couldn't tell, sorry!"
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
             else:

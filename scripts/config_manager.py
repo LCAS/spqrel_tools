@@ -58,7 +58,7 @@ if __name__ == '__main__':
                         help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
     parser.add_argument("--pport", type=int, default=9559,
                         help="Naoqi port number")
-    parser.add_argument("--file", type=str, default="config.yaml",
+    parser.add_argument("--file", type=str, default="spqrel-config.yaml",
                         help="path to config file")
     args = parser.parse_args()
     pip = args.pip

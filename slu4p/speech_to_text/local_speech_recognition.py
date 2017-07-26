@@ -10,7 +10,7 @@ class SpeechRecognition(EventAbstractClass):
     WR_EVENT = "WordRecognized"
     TD_EVENT = "ALTextToSpeech/TextDone"
     ASR_ENABLE = "ASR_enable"
-    FLAC_COMM = 'flac -8 -f '
+    FLAC_COMM = 'flac -f '
     CHANNELS = [0, 0, 1, 0]
     timeout = 0
 
@@ -111,7 +111,7 @@ class SpeechRecognition(EventAbstractClass):
                 f.close()
                 results = {}
                 results['GoogleASR'] = [r.encode('ascii', 'ignore').lower() for r in self.google_asr.recognize_data(flac_cont)]
-                results['NuanceASR'] = [args[1]]
+                results['NuanceASR'] = [args[1][0].lower()]
                 print "[" + self.inst.__class__.__name__ + "] " + str(results)
                 self.memory.raiseEvent("LocalVordRecognized", results)
         self.timeout = 0
@@ -201,7 +201,7 @@ def main():
                         help="Robot port number")
     parser.add_argument("-l", "--lang", type=str, default="en",
                         help="Use one of the supported languages (only English at the moment)")
-    parser.add_argument("-s", "--sensitivity", type=float, default=0.7,
+    parser.add_argument("-s", "--sensitivity", type=float, default=0.8,
                         help="Sets the sensitivity of the speech recognizer")
     parser.add_argument("--word-spotting", action="store_true",
                         help="Run in word spotting mode")

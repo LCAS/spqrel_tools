@@ -6,7 +6,7 @@ import slu_utils
 
 
 class GoogleClient:
-    timeout = 10
+    timeout = 20
     url = ''
     headers = {"Content-Type": "audio/x-flac; rate=44100"}
 
@@ -34,9 +34,11 @@ class GoogleClient:
                             transcriptions.append(result["transcript"].lower())
             return transcriptions
         except ValueError as ve:
+            print ve.message
             print "[" + self.__class__.__name__ + "] [RECOGNIZE]ERROR! Google APIs are temporary unavailable. Returning empty list.."
             return []
         except requests.exceptions.RequestException as e:
+            print e.message
             print "[" + self.__class__.__name__ + "] [RECOGNIZE]ERROR! Unable to reach Google. Returning empty list.."
             return []
 
@@ -58,9 +60,11 @@ class GoogleClient:
                             transcriptions.append(result["transcript"].lower())
             return transcriptions
         except ValueError as ve:
+            print ve.message
             print "[" + self.__class__.__name__ + "] [RECOGNIZE]ERROR! Google APIs are temporary unavailable. Returning empty list.."
             return []
         except requests.exceptions.RequestException as e:
+            print e.message
             print "[" + self.__class__.__name__ + "] [RECOGNIZE]ERROR! Unable to reach Google. Returning empty list.."
             return []
 

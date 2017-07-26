@@ -31,16 +31,6 @@ def actionThread_exec (params):
     #tracker_service.setMode("Move")
     #tracker_service.registerTarget("Sound",[1,0.1])
     #tracker_service.track("Sound")
-    
-    confidence_threshold = 0.4
-    val = False
-
-    HEAD_PITCH_MAX = 0.6371 * 0.75
-    HEAD_PITCH_MIN = -0.7068 * 0.75
-    HEAD_YAW_MAX = 2.0857 * 0.75
-    HEAD_YAW_MIN = -2.0857 * 0.75
-    MAX_SPEED_FRACTION = 0.2
-    NAMES = ["HeadYaw", "HeadPitch"]
 
     # action init
 
@@ -52,36 +42,6 @@ def actionThread_exec (params):
         print "confidence = ",confidence
         if confidence > confidence_threshold:
             print "sound detected"
-            sound_azimuth = sound_value[1][0]
-            sound_elevation = sound_value[1][1]
-            x = math.sin(sound_elevation) * math.cos(sound_azimuth)
-            y = math.sin(sound_elevation) * math.sin(sound_azimuth)
-            z = math.cos(sound_elevation)
-            head_pitch = sound_value[2][4]
-            head_yaw = sound_value[2][5]
-            azimuth = sound_azimuth + head_yaw
-            elevation = sound_elevation + head_pitch
-            turn = 0
-            if azimuth > HEAD_YAW_MAX:
-                turn = azimuth
-                azimuth = 0.
-            if azimuth < HEAD_YAW_MIN:
-                turn = azimuth
-                azimuth = 0.
-            if elevation > HEAD_PITCH_MAX:
-                elevation = HEAD_PITCH_MAX
-            if elevation < HEAD_PITCH_MIN:
-                elevation = HEAD_PITCH_MIN
-            target_angles = [azimuth, 0]  # [azimuth, elevation]
-            #print "Current Head Yaw: ", head_yaw, "Current Head Pitch", head_pitch
-            #print "Sound Detected Azimuth: ", sound_azimuth, "Sound Detected Elevation: ", sound_elevation
-            #print "Sound Detected Coordinate: ", [x, y, z]
-            #print "Target Head Yaw: ", azimuth, "Target Head Pitch: ", elevation
-            #print "Turn: ", turn
-            #print "------------------------------------------------------------------"
-            motion_service.angleInterpolationWithSpeed(NAMES, target_angles, MAX_SPEED_FRACTION)
-            if math.fabs(turn) > 0.01:
-                motion_service.moveTo(0, 0, turn)
 
         try:
             val = get_condition(memory_service, params)

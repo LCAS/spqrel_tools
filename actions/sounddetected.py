@@ -17,10 +17,11 @@ from naoqi import ALProxy
 import conditions
 from conditions import set_condition
 
-def rhMonitorThread (memory_service):
+def rhMonitorThread (memory_service,motion_service):
 
     t = threading.currentThread()
     print "sound detected thread started"
+
 
     while getattr(t, "do_run", True):
         v = 'false'
@@ -28,8 +29,14 @@ def rhMonitorThread (memory_service):
         try:
             sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
             if len(sound_value)>1:
-                #print "condidence: ", sound_value[1][2]
-                v = 'true '
+                #print "confidence: ", sound_value[1][2]
+                if (confidence > 0.5):
+                    v = 'true'
+                    sound_azimuth = sound_value[1][0]
+                    head_yaw = sound_value[2][5]
+                    turn = sound_azimuth + head_yaw
+                    motion_service.moveTo(0, 0, turn)
+
         except:
         #    print "exception in sound"
             v = 'false'
@@ -55,7 +62,7 @@ def init(session):
     print "Creating the thread"
 
     #create a thead that monitors directly the signal
-    monitorThread = threading.Thread(target = rhMonitorThread, args = (memory_service,))
+    monitorThread = threading.Thread(target = rhMonitorThread, args = (memory_service,motion_service))
     monitorThread.start()
 
 

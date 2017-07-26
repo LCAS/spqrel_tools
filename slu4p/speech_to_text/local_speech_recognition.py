@@ -111,7 +111,7 @@ class SpeechRecognition(EventAbstractClass):
                 f.close()
                 results = {}
                 results['GoogleASR'] = [r.encode('ascii', 'ignore').lower() for r in self.google_asr.recognize_data(flac_cont)]
-                results['NuanceASR'] = [args[1]]
+                results['NuanceASR'] = [args[1][0].lower()]
                 print "[" + self.inst.__class__.__name__ + "] " + str(results)
                 self.memory.raiseEvent("LocalVordRecognized", results)
         self.timeout = 0

@@ -38,6 +38,12 @@ def coords(params):
         return [15.6, 9.8]
     elif (params=='rips'):
         return [1.1, -2.0]
+    elif (params=='corridor2'):
+        return [6.0, 2.95]
+    elif (params=='backdoorin'):
+        return [11.5, 1.6]
+    elif (params=='backdoorout'):
+        return [12.65, 0.4]
     elif (params=='car'):
         car_x,car_y,car_t = memory_service.getData("car/coordinates")
         return [car_x,car_y]

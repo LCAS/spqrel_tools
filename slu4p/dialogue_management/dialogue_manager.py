@@ -178,8 +178,11 @@ class DialogueManager(EventAbstractClass):
             elif '[LOOKFORDATA]' in submessage:
                 data = submessage.replace('[LOOKFORDATA]', '').strip()
                 self.location['location'] = data
+                try:
+                    location = str(self.memory.getData('/location_mapping/' + data)).replace("+", " ")
+                except Exception as e:
+                    reply = "The " + data + " is somewhere!"
 
-                #TODO access the symbol/location mapping
 
                 self.memory.insertData("SLU/location", data)
                 self.memory.raiseEvent("DialogueVesponse", json.dumps(self.location))
@@ -206,19 +209,17 @@ class DialogueManager(EventAbstractClass):
                 self.memory.raiseEvent("DialogueVesponse", "Action stopped")
                 self.memory.raiseEvent("ASR_enable", "0")
             elif '[WHEREIS]' in submessage:
-                data = submessage.replace('[WHEREIS]', '')
-
-                # TODO access the symbol/location mapping
-
-                reply = "The " + data + " is somewhere!"
+                data = submessage.replace('[WHEREIS]', '').replace(" ", "+")
+                try:
+                    location = str(self.memory.getData('/location_mapping/' + data)).replace("+", " ")
+                    reply = "The " + data + " is in the " + location
+                except Exception as e:
+                    reply = "The " + data + " is somewhere!"
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
             elif '[HOWMANY]' in submessage:
                 data = submessage.replace('[HOWMANY]', '')
                 splitted = data.split("#")
-
-                # TODO access the symbol/location mapping
-
                 reply = "There are multiple " + splitted[0] + " in the " + splitted[1]
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)

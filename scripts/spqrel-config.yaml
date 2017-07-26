@@ -16,10 +16,65 @@ _config_example:
 
 
 location_mapping:
+  entrance: hall
+  bedroom: bed
+  kitchen: kitchendoor
+  livingroom: backdoorin
+  balcony: living2
+  corridor: corridor2
   desk: sofafront
   left+rack: backdoorin
-  kitchen: kitchendoor
+  right+rack: backdoorin
+  sideboard: kitchenshelf
+  kitchen+table: kitchendoor
+  little+desk: bed
+  teepee: deb
+  bed: bed
+  entrance+shelf: hall
+  kitchen+shelf: kitchendoor
+  bookcase: sofacorridor
+  sofa: sofafront
+  coffee+table: sofafront
+  tv: sofafront
+  bistro+table: living4
+  left+planks: living1
+  right+planks: living4
+  balcony+shelf: living4
+  kitchen+counter: kitchencorner
+  fridge: kitchencorner
+  kitchen+rack: kitchendoor
+  snacks: kitchen+rack
   drinks: fridge
+  fruit: bistro+table
+  container: left+rack
+  cleaning+stuff: right+rack
+  cutlery: sideboard
+  food: kitchen+shelf
+  plate: left+rack
+  shampoo: right+rack
+  green tea: fridge
+  aquarius: fridge
+  cold+brew: fridge
+  coke: fridge
+  soup container: left+rack
+  hair spray: right+rack
+  bowl: left+rack
+  asience: right+rack
+  moisturizer: right+rack
+  chewing gum: kitchen+rack
+  fries: kitchen+rack
+  candy: kitchen+rack
+  jelly: kitchen+rack
+  cup+star: kitchen+rack
+  chopsticks: sideboard
+  fork: sideboard
+  spoon: sideboard
+  radish: kitchen+shelf
+  onion: kitchen+shelf
+  corn: kitchen+shelf
+  bread: kitchen+shelf
+  apple: bistro+table
+  orange: bistro+table
 SPR:
   orientation: 135
   place: sofafront

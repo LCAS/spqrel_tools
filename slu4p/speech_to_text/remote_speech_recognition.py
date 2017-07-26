@@ -115,7 +115,6 @@ class RemoteSpeechRecognition(EventAbstractClass):
                 results['NuanceASR'] = [args[1][0].lower()]
                 print "[" + self.inst.__class__.__name__ + "] " + str(results)
                 self.memory.raiseEvent("RemoteVordRecognized", results)
-
         self.timeout = 0
         self.nuance_asr.pause(False)
         self.audio_recorder.stopMicrophonesRecording()

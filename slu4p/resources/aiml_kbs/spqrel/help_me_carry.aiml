@@ -134,6 +134,62 @@
         </category>
 
         <category>
+            <pattern>* LIVING ROOM *</pattern>
+            <template>
+                [LOOKFORDATA]livingroom
+            </template>
+        </category>
+
+        <category>
+            <pattern>* LIVING ROOM</pattern>
+            <template>
+                [LOOKFORDATA]livingroom
+            </template>
+        </category>
+
+        <category>
+            <pattern>LIVING ROOM *</pattern>
+            <template>
+                [LOOKFORDATA]livingroom
+            </template>
+        </category>
+
+        <category>
+            <pattern>LIVING ROOM</pattern>
+            <template>
+                [LOOKFORDATA]livingroom
+            </template>
+        </category>
+
+        <category>
+            <pattern>* LIVINGROOM *</pattern>
+            <template>
+                [LOOKFORDATA]livingroom
+            </template>
+        </category>
+
+        <category>
+            <pattern>* LIVINGROOM</pattern>
+            <template>
+                [LOOKFORDATA]livingroom
+            </template>
+        </category>
+
+        <category>
+            <pattern>LIVINGROOM *</pattern>
+            <template>
+                [LOOKFORDATA]livingroom
+            </template>
+        </category>
+
+        <category>
+            <pattern>LIVINGROOM</pattern>
+            <template>
+                [LOOKFORDATA]livingroom
+            </template>
+        </category>
+
+        <category>
             <pattern>* KITCHEN *</pattern>
             <template>
                 [LOOKFORDATA]kitchen
@@ -158,90 +214,6 @@
             <pattern>KITCHEN</pattern>
             <template>
                 [LOOKFORDATA]kitchen
-            </template>
-        </category>
-
-        <category>
-            <pattern>* CORRIDOR *</pattern>
-            <template>
-                [LOOKFORDATA]corridor
-            </template>
-        </category>
-
-        <category>
-            <pattern>* CORRIDOR</pattern>
-            <template>
-                [LOOKFORDATA]corridor
-            </template>
-        </category>
-
-        <category>
-            <pattern>CORRIDOR *</pattern>
-            <template>
-                [LOOKFORDATA]corridor
-            </template>
-        </category>
-
-        <category>
-            <pattern>CORRIDOR</pattern>
-            <template>
-                [LOOKFORDATA]corridor
-            </template>
-        </category>
-
-        <category>
-            <pattern>* LIVING ROOM *</pattern>
-            <template>
-                [LOOKFORDATA]living room
-            </template>
-        </category>
-
-        <category>
-            <pattern>* LIVING ROOM</pattern>
-            <template>
-                [LOOKFORDATA]living room
-            </template>
-        </category>
-
-        <category>
-            <pattern>LIVING ROOM *</pattern>
-            <template>
-                [LOOKFORDATA]living room
-            </template>
-        </category>
-
-        <category>
-            <pattern>LIVING ROOM</pattern>
-            <template>
-                [LOOKFORDATA]living room
-            </template>
-        </category>
-
-        <category>
-            <pattern>* DINING ROOM *</pattern>
-            <template>
-                [LOOKFORDATA]dining room
-            </template>
-        </category>
-
-        <category>
-            <pattern>* DINING ROOM</pattern>
-            <template>
-                [LOOKFORDATA]dining room
-            </template>
-        </category>
-
-        <category>
-            <pattern>DINING ROOM *</pattern>
-            <template>
-                [LOOKFORDATA]dining room
-            </template>
-        </category>
-
-        <category>
-            <pattern>DINING ROOM</pattern>
-            <template>
-                [LOOKFORDATA]dining room
             </template>
         </category>
 
@@ -274,30 +246,114 @@
         </category>
 
         <category>
-            <pattern>* TOILET *</pattern>
-            <template>
-                [LOOKFORDATA]toilet
-            </template>
-        </category>
-
-        <category>
-            <pattern>* TOILET</pattern>
+            <pattern>* BED ROOM *</pattern>
             <template>
                 [LOOKFORDATA]bedroom
             </template>
         </category>
 
         <category>
-            <pattern>TOILET *</pattern>
+            <pattern>* BED ROOM</pattern>
             <template>
                 [LOOKFORDATA]bedroom
             </template>
         </category>
 
         <category>
-            <pattern>TOILET</pattern>
+            <pattern>BED ROOM *</pattern>
             <template>
                 [LOOKFORDATA]bedroom
+            </template>
+        </category>
+
+        <category>
+            <pattern>BED ROOM</pattern>
+            <template>
+                [LOOKFORDATA]bedroom
+            </template>
+        </category>
+
+        <category>
+            <pattern>* ENTRANCE *</pattern>
+            <template>
+                [LOOKFORDATA]entrance
+            </template>
+        </category>
+
+        <category>
+            <pattern>* ENTRANCE</pattern>
+            <template>
+                [LOOKFORDATA]entrance
+            </template>
+        </category>
+
+        <category>
+            <pattern>ENTRANCE *</pattern>
+            <template>
+                [LOOKFORDATA]entrance
+            </template>
+        </category>
+
+        <category>
+            <pattern>ENTRANCE</pattern>
+            <template>
+                [LOOKFORDATA]entrance
+            </template>
+        </category>
+
+        <category>
+            <pattern>* CORRIDOR *</pattern>
+            <template>
+                [LOOKFORDATA]corridor
+            </template>
+        </category>
+
+        <category>
+            <pattern>* CORRIDOR</pattern>
+            <template>
+                [LOOKFORDATA]corridor
+            </template>
+        </category>
+
+        <category>
+            <pattern>CORRIDOR *</pattern>
+            <template>
+                [LOOKFORDATA]corridor
+            </template>
+        </category>
+
+        <category>
+            <pattern>CORRIDOR</pattern>
+            <template>
+                [LOOKFORDATA]corridor
+            </template>
+        </category>
+
+        <category>
+            <pattern>* BALCONY *</pattern>
+            <template>
+                [LOOKFORDATA]balcony
+            </template>
+        </category>
+
+        <category>
+            <pattern>* BALCONY</pattern>
+            <template>
+                [LOOKFORDATA]balcony
+            </template>
+        </category>
+
+        <category>
+            <pattern>BALCONY *</pattern>
+            <template>
+                [LOOKFORDATA]balcony
+            </template>
+        </category>
+
+        <category>
+            <pattern>BALCONY</pattern>
+            <template>
+                [LOOKFORDATA]balcony
             </template>
         </category>
 

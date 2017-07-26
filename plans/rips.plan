@@ -1,17 +1,17 @@
 # enter the arena and goto RIPS location
 waitfor_dooropen;
 vsay_starting;
-goto_entrance;
-goto_rips; ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
+moveto_1.5_0_0; 
+navigateto_corridor1;  ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
 
 # 
 vsay_inspectme;
 
-waitfor_screentouched;  # replace with push a specific button on the GUI
+waitfor_continue; 
 
 # exit the arena
 vsay_farewell;
-goto_entrance; ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
-goto_exit;
+navigateto_backdoorin; ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
+navigateto_backdoorout;
 
 

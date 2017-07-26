@@ -14,6 +14,8 @@ import argparse
 
 from time import sleep
 
+from conditions import set_condition
+
 #from event_abstract import EventAbstractClass
 
 
@@ -138,6 +140,14 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
                 'buttons': self._answer_options_parse(actstr)
             }))
 
+        self.answeroptions = ALSubscriber(
+            memory_service, "ContinueButton",
+            lambda actstr: self.sendJSON({
+                'method': 'show_continue_button',
+                'options': self._answer_options_parse(actstr)
+            }))
+
+
         self.als_notification = ALSubscriber(
             memory_service, "notificationAdded",
             lambda d: self.sendJSON({
@@ -151,12 +161,12 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
             "TopologicalNav/Goal",
             "TopologicalNav/CurrentNode",
             "TopologicalNav/ClosestNode",
-            "TopologicalNav/Status",
+            "NAOqiPlanner/Status",
+            "NAOqiPlanner/Goal",
             "PNP/CurrentAction",
             "PNP/CurrentPlan",
             "Veply",
-            "BatteryChargeChanged",
-            "NAOqiPlanner/Goal",
+            "BatteryChargeChanged"
         ]
 
         self.als = {}
@@ -204,6 +214,12 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
     def on_ping(self, payload):
         info('ping!')
         return {'result': True}
+
+    def on_continue_button(self, payload):
+        info('CONTINUE!')
+        set_condition(self.memory_service, 'continue', 'true')
+        sleep(1)
+        set_condition(self.memory_service, 'continue', 'false')
 
     def on_dialog_button(self, payload):
         info('dialog button pressed: \n%s' % pformat(payload))

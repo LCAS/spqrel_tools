@@ -41,6 +41,7 @@ Setting condition example:
 SPQReL actions implemented
 
 asrenable.py        enables ASR (off to disable)     param: [on|off]  default:on
+continuebtn 				continuebtn_show shows the continue button, continuebtn_hide hide is
 dialogue.py         executes a dialogue blocking     param: name of dialogue
 dialoguestart.py    starts a dialogue non-blocking   param: name of dialogue
 dialoguestop.py     stops a previously started dialogue

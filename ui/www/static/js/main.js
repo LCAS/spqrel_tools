@@ -64,6 +64,19 @@ function _show_buttons(json) {
 
 }
 
+function _show_continue_button(json) {
+  console.log('show continue button');
+  //var data = JSON.parse(json);
+  var opt = json["options"]; 
+  console.log(opt);
+
+  if (opt.length > 0 && opt[0] == 'show') {
+      $('#continue_panel').show();
+  } else {
+      $('#continue_panel').hide();
+  }
+}
+
 
 
 function _modal_dlg(payload) {

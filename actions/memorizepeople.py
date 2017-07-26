@@ -35,6 +35,9 @@ from utils import point2world
 import conditions
 from conditions import set_condition
 
+
+import headpose
+
 actionName = "memorizepeople"
 
 global people_list
@@ -47,6 +50,10 @@ countdt = 0
 global currentangle
 currentangle=0
 Timeoutangle=5
+
+headYaw = [ 0.9, 0.5, 0.0, -0.5, -0.5, 0.0, 0.5 ]
+headPitch = [ -0.3, -0.3, -0.3, 0.2, 0.2, 0.2 ]
+headtime = 0.8
 
 def update_data(currentuser):
     
@@ -251,36 +258,42 @@ def actionThread_exec (params):
             
             if countdt>Timeoutangle:
                 
-                motion_service.moveTo(0.0, 0.0, currentangle)
-                currentangle+=Step_turn_angle
+#                motion_service.moveTo(0.0, 0.0, currentangle)
+#                currentangle+=Step_turn_angle
                 
-
+                headpose.moveHead(motion_service, headYaw[currentangle], headPitch[currentangle], headtime)
                 countdt = 0
             else:
                 countdt+=1
 
-            if currentangle > Max_turn_angle:
+            if currentangle > 5:
                 print 'stop currentangle=',currentangle
                 
                 b_completed=True
-                
-            try:
-                mem_list=memory_service.getData('Actions/MemorizePeople/PeopleList')
-                people_list=json.loads(mem_list)
-                
-                b_completed=True
-                
-                for p in people_list:
-                    if p['face_naoqi']['faceinfo']['gender']['conf']<0.6:
-                        b_completed=False
-                        
-                if b_completed is True and len(people_list)>3:
-                    b_completed=True
-                        
-        
-            except:
-                pass
-            
+
+#            if currentangle > Max_turn_angle:
+#                print 'stop currentangle=',currentangle
+#                
+#                b_completed=True
+
+     
+#            try:
+#                mem_list=memory_service.getData('Actions/MemorizePeople/PeopleList')
+#                people_list=json.loads(mem_list)
+#                
+#                b_completed=True
+#                
+#                for p in people_list:
+#                    if p['face_naoqi']['faceinfo']['gender']['conf']<0.6:
+#                        b_completed=False
+#                        
+#                if b_completed is True and len(people_list)>3:
+#                    b_completed=True
+#                        
+#        
+#            except:
+#                pass
+#            
             
                 
             

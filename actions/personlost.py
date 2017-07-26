@@ -30,13 +30,15 @@ def rhMonitorThread (memory_service):
         v = 'false'
         try:
             for i in range(0,len(plist)):
-                if (personid = plist[i]):
+                if (personid == plist[i]):
                     match = 1
-            if (match = 0):
+                    memory_service.insertData('personlost',0)
+            if (match == 0):
                 count += 1
                 if (count >= 10): #5 seconds without seeing anyone
                     v = 'true'
                     count = 0
+                    memory_service.insertData('personlost',1)
         except:
             v = 'false'
 

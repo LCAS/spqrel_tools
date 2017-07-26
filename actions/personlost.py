@@ -29,10 +29,16 @@ def rhMonitorThread (memory_service):
         personid = memory_service.getData('Actions/personhere/PersonID')
         v = 'false'
         try:
-            for i in range(0,len(plist)):
-                if (personid == plist[i]):
+            if (len(plist) >= 1):
+                if personid in plist:
                     match = 1
                     memory_service.insertData('personlost',0)
+                else:
+                    match = 0
+
+            else:
+                match = 0 
+                
             if (match == 0):
                 count += 1
                 if (count >= 10): #5 seconds without seeing anyone

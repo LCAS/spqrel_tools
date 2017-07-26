@@ -201,7 +201,7 @@ def main():
                         help="Robot port number")
     parser.add_argument("-l", "--lang", type=str, default="en",
                         help="Use one of the supported languages (only English at the moment)")
-    parser.add_argument("-s", "--sensitivity", type=float, default=0.7,
+    parser.add_argument("-s", "--sensitivity", type=float, default=0.8,
                         help="Sets the sensitivity of the speech recognizer")
     parser.add_argument("--word-spotting", action="store_true",
                         help="Run in word spotting mode")

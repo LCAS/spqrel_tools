@@ -85,6 +85,62 @@
         </category>
 
         <category>
+            <pattern>* MALE *</pattern>
+            <template>
+                [MALE]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MALES *</pattern>
+            <template>
+                [MALE]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MALE</pattern>
+            <template>
+                [MALE]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MALES</pattern>
+            <template>
+                [MALE]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* FEMALE *</pattern>
+            <template>
+                [FEMALE]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* FEMALES *</pattern>
+            <template>
+                [FEMALE]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* FEMALE</pattern>
+            <template>
+                [FEMALE]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* FEMALES</pattern>
+            <template>
+                [FEMALE]
+            </template>
+        </category>
+
+        <category>
             <pattern>* MANY * THERE ARE IN THE *</pattern>
             <template>
                 [HOWMANY]<star index="2"/>#
@@ -142,62 +198,6 @@
             <pattern>* NUMBER * KIDS</pattern>
             <template>
                 [CHILDREN]
-            </template>
-        </category>
-
-        <category>
-            <pattern>* MALE *</pattern>
-            <template>
-                [MALE]
-            </template>
-        </category>
-
-        <category>
-            <pattern>* MALES *</pattern>
-            <template>
-                [MALE]
-            </template>
-        </category>
-
-        <category>
-            <pattern>* MALE</pattern>
-            <template>
-                [MALE]
-            </template>
-        </category>
-
-        <category>
-            <pattern>* MALES</pattern>
-            <template>
-                [MALE]
-            </template>
-        </category>
-
-        <category>
-            <pattern>* FEMALE *</pattern>
-            <template>
-                [FEMALE]
-            </template>
-        </category>
-
-        <category>
-            <pattern>* FEMALES *</pattern>
-            <template>
-                [FEMALE]
-            </template>
-        </category>
-
-        <category>
-            <pattern>* FEMALE</pattern>
-            <template>
-                [FEMALE]
-            </template>
-        </category>
-
-        <category>
-            <pattern>* FEMALES</pattern>
-            <template>
-                [FEMALE]
             </template>
         </category>
 

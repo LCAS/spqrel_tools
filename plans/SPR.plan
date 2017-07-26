@@ -11,25 +11,25 @@ turn_180;
 
 # 3
 
-memorizepeople;
-peoplesummary_SPRgame;
+#memorizepeople;
+#peoplesummary_SPRgame;
 
-vsay_SPRinfocollected; # TODO
+#vsay_SPRinfocollected; # TODO
 
 vsay_playwithme;
 
 # 4
 
-wait_10;
+#waitfor_personhere;
+#peoplesummary_Person;
 
-waitfor_personhere;
-peoplesummary_Person;
+vsay_weready;
 
 dialogue_fivequestions_1;
-dialogue_fivequestions_2;
-dialogue_fivequestions_3;
-dialogue_fivequestions_4;
-dialogue_fivequestions_5;
+#dialogue_fivequestions_2;
+#dialogue_fivequestions_3;
+#dialogue_fivequestions_4;
+#dialogue_fivequestions_5;
 
 # 5
 

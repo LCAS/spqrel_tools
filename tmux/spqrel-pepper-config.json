@@ -8,9 +8,9 @@
       ]
     },
     {
-      "name": "htop",
+      "name": "init",
       "panes": [
-        "htop"
+        "cd $SPQREL_HOME/scripts; python postureinit.py"
       ]
     },
     {

@@ -29,19 +29,26 @@ def actionThread_exec (params):
     y = values[1]
     t = values[2]
     time_ = values[3]
+    without_collision_avoidance = values[4].lower() == 'true'
 
     #print "x: ",x
     #print "y: ",y
     #print "t: ",t
     # action init
     count = 1
-
+    
     while (getattr(t, "do_run", True) and count>0): 
         print "Action "+actionName+" "+params+" cm/s exec..."
         # action exec
+        if without_collision_avoidance:
+            print 'CAREFUL NOW!'
+            motion_service.setExternalCollisionProtectionEnabled('Move', False)
+	    time.sleep(1)
         motion_service.move(float(x)/100.0,float(y)/100.0,float(t)/100.0)
         # action exec
-        time.sleep(time_)
+        time.sleep(float(time_))
+	print 'done'
+        motion_service.setExternalCollisionProtectionEnabled('Move', True)
         count = 0		
         
     motion_service.stopMove()

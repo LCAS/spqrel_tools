@@ -2,8 +2,8 @@
 waitfor_dooropen;
 vsay_starting;
 wait_2;
-enter_30_0_0_3_true; 
-navigateto_corridor1;  ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
+enter_30_0_0_4_true; 
+goto_corridor2;  #! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
 
 # 
 vsay_inspectme;
@@ -13,7 +13,7 @@ waitfor_continue;
 
 # exit the arena
 vsay_farewell;
-navigateto_backdoorin; ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
-navigateto_backdoorout;
+goto_backdoorin; #! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
+goto_backdoorout;
 
 

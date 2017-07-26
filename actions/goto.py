@@ -72,7 +72,7 @@ def plannerstatus_cb(value):
         distToGoal = v[0]
         angleToGoal = v[1]
         
-        if (math.abs(angleToGoal)<0.1 and distToGoal<3.0):
+        if (math.fabs(angleToGoal)<0.1 and distToGoal<3.0):
             dist = int(distToGoal * 10) / 10.0
             tts_service.say("I cannot reach the goal, but I know that it is quite close in front of me. Can you please push me ahead for about "+str(dist)+" meters?")
 

@@ -35,8 +35,6 @@ vsay_playblindman;
 
 # 5
 
-start_sounddetected;
-
 dialogue_mutequestion;
 
 < sounddetected? turn_^AngleSound

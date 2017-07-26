@@ -215,7 +215,7 @@ class DialogueManager(EventAbstractClass):
                     reply = "The " + data + " is in the " + location
                 except Exception as e:
                     reply = "The " + data + " is somewhere!"
-                self.memory.raiseEvent("DialogueVesponse", "STOP")
+                self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
             elif '[HOWMANY]' in submessage:
                 data = submessage.replace('[HOWMANY]', '')

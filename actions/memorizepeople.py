@@ -116,10 +116,10 @@ def actionThread_exec (params):
     global people_list
     people_list=[]
 
-    
+    b_completed=False
     memory_service.insertData("PeoplePerception/PeopleList",people_list) 
     
-    while getattr(t, "do_run", True):
+    while (getattr(t, "do_run", True) and b_completed==False):
         
         motion_service
         naoqi_people_list =  memory_service.getData("PeoplePerception/PeopleList")
@@ -257,7 +257,8 @@ def actionThread_exec (params):
 
             if currentangle > Max_turn_angle:
                 print 'stop currentangle=',currentangle
-                actionThread_exec.do_run = False
+                
+                b_completed=True
                 
             try:
                 mem_list=memory_service.getData('Actions/MemorizePeople/PeopleList')
@@ -270,7 +271,7 @@ def actionThread_exec (params):
                         b_completed=False
                         
                 if b_completed is True and len(people_list)>3:
-                    actionThread_exec.do_run = False
+                    b_completed=True
                         
         
             except:

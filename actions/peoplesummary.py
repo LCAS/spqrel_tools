@@ -66,7 +66,7 @@ def actionThread_exec (params):
             print people_list
             
         except: 
-            print 'Actions/Memorizepeople/Peoplelist memory key not found '   
+            print 'Actions/MemorizePeople/Peoplelist memory key not found '   
 
    
         if command=='Partydescription':
@@ -143,6 +143,8 @@ def actionThread_exec (params):
             result={'total':num_total,'num_males':num_males,'num_females':num_females }
             str_result=json.dumps(result)    
             memory_service.insertData('Humans/Peoplesummary',str_result)
+            
+            b_completed=True
                     
         if command=='Person':
             name=''

@@ -27,8 +27,8 @@ import json
 from naoqi import ALProxy
 
 from utils import point2world
-#import conditions
-#from conditions import set_condition
+import conditions
+from conditions import set_condition
 
 
 

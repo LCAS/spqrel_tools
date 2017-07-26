@@ -33,13 +33,13 @@ def actionThread_exec (params):
     print "y: ",y
     print "t: ",t
     # action init
-    count = 0
+    count = 1
 
     while (getattr(t, "do_run", True) and count>0): 
         print "Action "+actionName+" "+params+" exec..."
         # action exec
         motion_service.moveto(x,y,t)
-        count += 1		
+        count -= 1		
         # action exec
         time.sleep(0.1)
         

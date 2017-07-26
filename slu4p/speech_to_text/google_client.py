@@ -31,7 +31,7 @@ class GoogleClient:
                     for obj in alternatives:
                         results = obj["alternative"]
                         for result in results:
-                            transcriptions.append(result["transcript"])
+                            transcriptions.append(result["transcript"].lower())
             return transcriptions
         except ValueError as ve:
             print "[" + self.__class__.__name__ + "] [RECOGNIZE]ERROR! Google APIs are temporary unavailable. Returning empty list.."
@@ -55,7 +55,7 @@ class GoogleClient:
                     for obj in alternatives:
                         results = obj["alternative"]
                         for result in results:
-                            transcriptions.append(result["transcript"])
+                            transcriptions.append(result["transcript"].lower())
             return transcriptions
         except ValueError as ve:
             print "[" + self.__class__.__name__ + "] [RECOGNIZE]ERROR! Google APIs are temporary unavailable. Returning empty list.."

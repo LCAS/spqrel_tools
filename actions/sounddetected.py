@@ -35,7 +35,7 @@ def rhMonitorThread (memory_service):
         try:
             sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
             confidence = sound_value[1][2]
-
+            print "condifdence ", confidence
             if confidence > 0.25:
                 v = 'true'
                 print "sound detected"

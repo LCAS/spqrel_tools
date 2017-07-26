@@ -20,7 +20,7 @@ dialogue_following; #new from andrea
 asrenable; #new from andrea
 followuntil_stopfollowing; 
 # LI this does not work because persondetected is too noisy
-# ! *if* (not persondetected) *do* say_comehere; restart_action !
+# ! *if* (personlost) *do* say_comehere; restart_action !
 asrenable_off; #new from andrea
 
 #vsay_carhere; #this is not required as the robot says something when it detects the stopfollowing

@@ -1,7 +1,7 @@
 def lines_to_list(_file):
     with open(_file) as f:
         _list = f.readlines()
-    return [x.strip() for x in _list]
+    return [x.strip().lower() for x in _list]
 
 
 def normalize(sublist):

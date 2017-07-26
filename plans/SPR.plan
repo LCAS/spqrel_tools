@@ -24,11 +24,14 @@ vsay_playwithme;
 #peoplesummary_Person;
 
 vsay_weready;
-
 dialogue_fivequestions_1;
+vsay_weready;
 dialogue_fivequestions_2;
+vsay_weready;
 dialogue_fivequestions_3;
+vsay_weready;
 dialogue_fivequestions_4;
+vsay_weready;
 dialogue_fivequestions_5;
 
 vsay_playblindman;

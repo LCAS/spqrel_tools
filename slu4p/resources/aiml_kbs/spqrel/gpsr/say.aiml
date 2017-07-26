@@ -280,8 +280,8 @@
         <pattern>WEREADY</pattern>
         <template>
             <random>
-                <li>I'm ready!</li>
-                <li>C'mon, let's make the first question!</li>
+                <li>I'm ready! Next question!</li>
+                <li>C'mon, next question!</li>
             </random>
         </template>
     </category>

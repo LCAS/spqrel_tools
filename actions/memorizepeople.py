@@ -35,7 +35,7 @@ from utils import point2world
 import conditions
 from conditions import set_condition
 
-
+actionName = "memorizepeople"
 
 global people_list
 

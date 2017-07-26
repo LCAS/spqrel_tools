@@ -35,8 +35,7 @@ def start_behaviors():
     peopledetectionProxy.subscribe("People_Behavior", 500, 0.0)
     peoplesittingProxy.subscribe("Sitting_Behavior", 500, 0.0)
     soundlocalizationProxy.subscribe("Sound_Behavior", 500, 0.0)
-    motionProxy.subscribe("Motion_Behavior", 500, 0.0)
-
+    #motionProxy.subscribe("Motion_Behavior", 500, 0.0)
 
 
 
@@ -60,7 +59,7 @@ def quit_behaviors():
     peopledetectionProxy.unsubscribe("People_Behavior")
     peoplesittingProxy.unsubscribe("Sitting_Behavior")
     soundlocalizationProxy.unsubscribe("Sound_Behavior")
-    motionProxy.unsubscribe("Motion_Behavior")
+    #motionProxy.unsubscribe("Motion_Behavior")
 
 
 if __name__ == "__main__":

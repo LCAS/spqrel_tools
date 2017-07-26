@@ -22,14 +22,6 @@ def rhMonitorThread (memory_service):
     t = threading.currentThread()
     print "sound detected thread started"
 
-    HEAD_PITCH_MAX = 0.6371 * 0.75
-    HEAD_PITCH_MIN = -0.7068 * 0.75
-    HEAD_YAW_MAX = 2.0857 * 0.75
-    HEAD_YAW_MIN = -2.0857 * 0.75
-    MAX_SPEED_FRACTION = 0.2
-    NAMES = ["HeadYaw", "HeadPitch"]
-
-
     while getattr(t, "do_run", True):
         v = 'false'
         #print "testing sound"

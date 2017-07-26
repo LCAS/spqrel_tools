@@ -42,7 +42,7 @@ tmux send-keys "cd $SPQREL_PREFIX/bin; ./pepper_planner --map $MAP " C-m
 tmux select-window -t $SESSION:3
 tmux split-window -v
 tmux select-pane -t 0
-tmux send-keys "cd $SPQREL_PREFIX/slu4p; python speech_to_text/local_speech_recognition.py -v resources/nuance_grammar.txt -k resources/google_keys.txt" C-m
+tmux send-keys "cd $SPQREL_PREFIX/slu4p; python speech_to_text/local_speech_recognition.py -v resources/nuance_grammar.txt -k resources/google_keys.txt -s 0.5" C-m
 tmux split-window -h
 tmux select-pane -t 1
 tmux send-keys "sleep 3;cd $SPQREL_PREFIX/slu4p; python speech_reranking/reranker.py --noun-dictionary resources/noun_dictionary.txt --verb-dictionary resources/verb_dictionary.txt --nuance-grammar resources/nuance_grammar.txt" C-m

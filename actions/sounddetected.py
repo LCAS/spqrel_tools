@@ -43,7 +43,7 @@ def rhMonitorThread (memory_service,motion_service):
 
         set_condition(memory_service,'sounddetected',v)
         time.sleep(0.25)
-
+    print "turn:", turn
     motion_service.moveTo(0, 0, turn)
 
     print "sounddetected thread quit"

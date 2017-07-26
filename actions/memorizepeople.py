@@ -42,6 +42,7 @@ global people_list
 
 Step_turn_angle= math.pi/5
 Max_turn_angle= math.pi
+global countdt
 countdt = 0
 currentangle=0
 Timeoutangle=5
@@ -238,9 +239,9 @@ def actionThread_exec (params):
             update_data(user)        
             
 
-        
+
         if params== 'Crowd':
-            
+            global countdt
             
             if countdt>Timeoutangle:
                 

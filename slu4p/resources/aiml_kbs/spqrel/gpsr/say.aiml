@@ -51,6 +51,17 @@
     </category>
 
     <category>
+        <pattern>DOOROPEN</pattern>
+        <template>
+            <random>
+                <li>Could you open the door, please?</li>
+                <li>I'm waiting! Could you open the door?</li>
+                <li>I'm ready! Please open the door!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
         <pattern>OBSTACLE</pattern>
         <template>
             <random>

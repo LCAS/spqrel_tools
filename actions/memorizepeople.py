@@ -49,7 +49,7 @@ global countdt
 countdt = 0
 global currentangle
 currentangle=0
-Timeoutangle=5
+Timeoutangle=10
 
 headYaw = [ 0.9, 0.5, 0.0, -0.5, -0.5, 0.0, 0.5,0.9, 0.0 ]
 headPitch = [ -0.3, -0.3, -0.3, -0.3, 0.0, 0.0, 0.0 ,0.0, -0.1 ]

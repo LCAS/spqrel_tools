@@ -142,7 +142,8 @@ def rhMonitorThread (memory_service):
                 #expression={'neutral':round(propexpression[0],2),'happy':round(propexpression[1],2),'surprised':round(propexpression[2],2),'angry':round(propexpression[3],2),'sad':round(propexpression[4],2)}
                 
             except:
-                print 'FaceCharacteristics error '
+                #print 'FaceCharacteristics error '
+                pass
 #                    
             facecharacteristics={'age':age, 'gender':gender,'smile':smile, 'expression':{}}
 
@@ -179,7 +180,8 @@ def rhMonitorThread (memory_service):
                 
                 
             except:
-                print 'Person info error '
+                #print 'Person info error '
+                pass
 
 
             try:

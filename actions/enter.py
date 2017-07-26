@@ -6,6 +6,8 @@ import threading
 
 import action_base
 from action_base import *
+import conditions
+from conditions import get_condition
 
 
 actionName = "enter"
@@ -15,7 +17,7 @@ def actionThread_exec (params):
     t = threading.currentThread()
     
     memory_service = getattr(t, "mem_serv", None)
-    motion_service = session.service("ALMotion")
+    motion_service = getattr(y, "session", None).service("AlMotion")
 
     print "Action "+actionName+" started with params "+params
     

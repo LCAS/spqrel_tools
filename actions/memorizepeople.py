@@ -95,12 +95,11 @@ def update_data(currentuser):
                     people_list[i]=json_person
                     
     except:
+        people_list=[]
         pass
    
     ## ADD new person    
     if b_new is True:
-
-        people_list=[]
     
         people_list.append(currentuser)
 

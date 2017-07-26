@@ -33,16 +33,16 @@ def rhMonitorThread (memory_service):
     while getattr(t, "do_run", True):
         v = 'false'
         #print "testing sound"
-        try:
-            sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
-            if len(sound_value)>1:
-                print "condidence: ", sound_value[1][2]
+        #try:
+        #    sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
+        #    if len(sound_value)>1:
+        #        print "condidence: ", sound_value[1][2]
         
-        except:
-            print "exception in sound"
-            v = 'false'
+        #except:
+        #    print "exception in sound"
+        #    v = 'false'
 
-        set_condition(memory_service,'sounddetected',v)
+        #set_condition(memory_service,'sounddetected',v)
 
         time.sleep(0.5)
     print "sounddetected thread quit"

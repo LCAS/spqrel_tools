@@ -55,10 +55,11 @@ def actionThread_exec (params):
     
     command=params
 
-        
-    while getattr(t, "do_run", True):
+    b_completed=False
+    
+    while (getattr(t, "do_run", True) and b_completed==False):
         try:
-            mem_list=memory_service.getData('Actions/Memorizepeople/Peoplelist')
+            mem_list=memory_service.getData('Actions/MemorizePeople/Peoplelist')
             people_list=json.loads(mem_list)
 
             print 'len',len(people_list)
@@ -123,18 +124,17 @@ def actionThread_exec (params):
                     print 'Humans/Profile'+str(numberprofile)+' not found '  
                     
 
-        if command=='SPRgame':
+        if command=='Crowd':
             
             num_males=0
             num_females=0
-            num_total=len(list_features)
-            for p in list_features:
+            num_total=len(people_list)
+            for p in people_list:
                 
-                if p.gender =='male':
+                if p['face_naoqi']['faceinfo']['gender']['val'] =='male':
                     num_males +=1
-                elif p.gender =='female':
+                elif p['face_naoqi']['faceinfo']['gender']['val'] =='female':
                     num_females +=1
-            
             print '*****'
             print 'TOTAL PERSONS :', num_total
             print 'TOTAL MALES :', num_males
@@ -157,7 +157,7 @@ def actionThread_exec (params):
                 print 'memory Actions/personhere/PersonID not available'
             
             try:
-                mem_list=memory_service.getData('Actions/Memorizepeople/Peoplelist')
+                mem_list=memory_service.getData('Actions/MemorizePeople/Peoplelist')
                 people_list=json.loads(mem_list)
     
                 print 'len',len(people_list)
@@ -175,7 +175,7 @@ def actionThread_exec (params):
                         
                 
             except: 
-                print 'Actions/Memorizepeople/Peoplelist memory key not found '   
+                print 'Actions/MemorizePeople/Peoplelist memory key not found '   
                 
                 try:
                     shirtcolorName =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ShirtColor")
@@ -194,7 +194,7 @@ def actionThread_exec (params):
             str_result=json.dumps(result)                           
             memory_service.insertData('Humans/Peoplesummary',str_result)
                       
-        monitorThread.do_run = False                    
+        b_completed=False                   
                     
 
     # action end

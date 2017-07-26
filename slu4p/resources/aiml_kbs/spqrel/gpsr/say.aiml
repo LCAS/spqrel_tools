@@ -38,6 +38,29 @@
     </category>
 
     <category>
+        <pattern>INSPECTME</pattern>
+        <template>
+            <random>
+                <li>I'm ready for the inspection!</li>
+                <li>C'mon, try me!</li>
+                <li>I'm ready to start the inspection!</li>
+                <li>I'm ready! Inspect me!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>OBSTACLE</pattern>
+        <template>
+            <random>
+                <li>Ops! I see an obstacle in front of me!</li>
+                <li>I can't go on! There's an obstacle!</li>
+                <li>I'm sorry, but I can't proceed. There's an obstacle!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
         <pattern>COMEHERE</pattern>
         <template>
             <random>

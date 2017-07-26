@@ -5,7 +5,7 @@ goto_entrance;
 goto_rips; ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
 
 # 
-vsay_inspectme; # TODO_ANDREA say something like "I'm ready for the inspection."
+vsay_inspectme;
 
 waitfor_screentouched;  # replace with push a specific button on the GUI
 

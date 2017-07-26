@@ -178,7 +178,10 @@ class DialogueManager(EventAbstractClass):
             elif '[LOOKFORDATA]' in submessage:
                 data = submessage.replace('[LOOKFORDATA]', '').strip()
                 self.location['location'] = data
-                self.memory.insertData("helplocation", data)
+
+                #TODO access the symbol/location mapping
+
+                self.memory.insertData("SLU/location", data)
                 self.memory.raiseEvent("DialogueVesponse", json.dumps(self.location))
             elif '[OPTIONS]' in submessage:
                 data = submessage.replace('[OPTIONS]', '').strip()
@@ -204,17 +207,26 @@ class DialogueManager(EventAbstractClass):
                 self.memory.raiseEvent("ASR_enable", "0")
             elif '[WHEREIS]' in submessage:
                 data = submessage.replace('[WHEREIS]', '')
+
+                # TODO access the symbol/location mapping
+
                 reply = "The " + data + " is somewhere!"
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
             elif '[HOWMANY]' in submessage:
                 data = submessage.replace('[HOWMANY]', '')
                 splitted = data.split("#")
+
+                # TODO access the perceptual information
+
                 reply = "There are multiple " + splitted[0] + " in the " + splitted[1]
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
             elif '[CROWD]' in submessage:
                 data = submessage.replace('[CROWD]', '')
+
+                # TODO access the perceptual information
+
                 reply = "I don't know how many people there are"
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
@@ -225,11 +237,17 @@ class DialogueManager(EventAbstractClass):
                 self.memory.raiseEvent("Veply", reply)
             elif '[MALE]' in submessage:
                 data = submessage.replace('[MALE]', '')
+
+                # TODO access the perceptual information
+
                 reply = "I don't know how many males there are"
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
             elif '[FEMALE]' in submessage:
                 data = submessage.replace('[FEMALE]', '')
+
+                # TODO access the perceptual information
+
                 reply = "I don't know how many females there are"
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
@@ -245,6 +263,9 @@ class DialogueManager(EventAbstractClass):
                 self.memory.raiseEvent("Veply", reply)
             elif '[STANDING]' in submessage:
                 data = submessage.replace('[STANDING]', '')
+
+                # TODO access the perceptual information
+
                 reply = "I don't know how many people are standing"
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
@@ -265,7 +286,7 @@ class DialogueManager(EventAbstractClass):
                 self.memory.raiseEvent("Veply", reply)
             elif '[GENDER]' in submessage:
                 data = submessage.replace('[GENDER]', '')
-                reply = "Man? Woman? I couldn't tell.."
+                reply = "Man? Woman? I couldn't tell, sorry! I'm still "
                 self.memory.raiseEvent("DialogueVesponse", submessage)
                 self.memory.raiseEvent("Veply", reply)
             else:

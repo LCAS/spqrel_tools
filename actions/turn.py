@@ -27,7 +27,7 @@ def actionThread_exec (params):
         val = memory_service.getData(params[1:])
 
     mod = "REL"
-    target_angle = 0
+    #target_angle = 0
     if '_' not in val:
         val = val + '_' + mod
     v = val.split('_')

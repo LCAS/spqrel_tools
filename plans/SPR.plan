@@ -25,14 +25,19 @@ vsay_playwithme;
 
 vsay_weready;
 dialogue_fivequestions_1;
+wait_5;
 vsay_weready;
 dialogue_fivequestions_2;
+wait_5;
 vsay_weready;
 dialogue_fivequestions_3;
+wait_5;
 vsay_weready;
 dialogue_fivequestions_4;
+wait_5;
 vsay_weready;
 dialogue_fivequestions_5;
+wait_5;
 
 vsay_playblindman;
 

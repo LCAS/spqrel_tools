@@ -35,36 +35,10 @@ def rhMonitorThread (memory_service):
         #print "testing sound"
         try:
             sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
-            confidence = sound_value[1][2]
-            #print "confidence: ", confidence
-            if confidence > 0.25:
-            #    v = 'true'
-                print "sound detected"
-            #   sound_azimuth = sound_value[1][0]
-            #    sound_elevation = sound_value[1][1]
-            #    head_pitch = sound_value[2][4]
-            #    head_yaw = sound_value[2][5]
-            #    azimuth = sound_azimuth + head_yaw
-            #    elevation = sound_elevation + head_pitch
-            #    turn = 0
-            #    if azimuth > HEAD_YAW_MAX:
-            #        turn = azimuth
-            #        azimuth = 0.
-            #    if azimuth < HEAD_YAW_MIN:
-            #        turn = azimuth
-            #        azimuth = 0.
-            #    if elevation > HEAD_PITCH_MAX:
-            #        elevation = HEAD_PITCH_MAX
-            #    if elevation < HEAD_PITCH_MIN:
-            #        elevation = HEAD_PITCH_MIN
-            #    target_angles = [azimuth, 0]
-
-            #    motion_service.angleInterpolationWithSpeed(NAMES, target_angles, MAX_SPEED_FRACTION)
-            #    if math.fabs(turn) > 0.01:
-            #        motion_service.moveTo(0, 0, turn)
-            
-        except Exception as e:
-            print e
+            print "sound ok"
+        
+        except:
+            print "exception in sound"
             v = 'false'
 
         set_condition(memory_service,'sounddetected',v)

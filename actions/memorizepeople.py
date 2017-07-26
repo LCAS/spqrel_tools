@@ -51,8 +51,8 @@ global currentangle
 currentangle=0
 Timeoutangle=5
 
-headYaw = [ 0.9, 0.5, 0.0, -0.5, -0.5, 0.0, 0.5,0.9 ]
-headPitch = [ -0.3, -0.3, -0.3, -0.3, 0.0, 0.0, 0.0 ,0.0]
+headYaw = [ 0.9, 0.5, 0.0, -0.5, -0.5, 0.0, 0.5,0.9, 0.0 ]
+headPitch = [ -0.3, -0.3, -0.3, -0.3, 0.0, 0.0, 0.0 ,0.0, -0.1 ]
 headtime = 0.8
 
 def update_data(currentuser):
@@ -267,7 +267,7 @@ def actionThread_exec (params):
             else:
                 countdt+=1
 
-            if currentangle > len(headYaw):
+            if currentangle > len(headYaw)-1:
                 print 'stop currentangle=',currentangle
                 
                 b_completed=True

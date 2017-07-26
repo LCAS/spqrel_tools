@@ -10,25 +10,28 @@ from action_base import *
 
 actionName = "enter"
 
-def coords(params):
-    if (params=='maindoor_in'):
-        return [2,2]
-    elif (params=='maindoor_out'):
-        return [1,1]
-    return [0,0]
 
 def actionThread_exec (params):
     t = threading.currentThread()
+    
     memory_service = getattr(t, "mem_serv", None)
+    motion_service = session.service("ALMotion")
+
     print "Action "+actionName+" started with params "+params
+    
     # action init
-    count = 10
     print "  -- Enter: "+params
+    values = params.split('_')
+    x = values[0]
+    y = values[1]
+    t = values[2]
     # action init
+
     while (getattr(t, "do_run", True) and count>0): 
         print "Action "+actionName+" "+params+" exec..."
         # action exec
-        count = count - 1		
+        motion_service.moveto(x,y,t)
+        count += 1		
         # action exec
         time.sleep(0.1)
         

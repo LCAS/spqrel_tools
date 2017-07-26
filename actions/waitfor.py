@@ -16,6 +16,7 @@ actionName = "waitfor"
 def actionThread_exec (params):
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
+
     print "Action "+actionName+" started with params "+params
 
     # action init

@@ -41,6 +41,8 @@ wait_5;
 
 vsay_playblindman;
 
+wait_15;
+
 # 5
 
 dialogue_mutequestion;

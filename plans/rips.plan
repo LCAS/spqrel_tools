@@ -7,6 +7,7 @@ navigateto_corridor1;  ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obsta
 # 
 vsay_inspectme;
 
+continuebtn_show;
 waitfor_continue; 
 
 # exit the arena

@@ -10,6 +10,24 @@ document.onready = function() {
  init();
 }
 </script>
+<div class="section" id="continue_panel">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="panel">
+                    <div class="btn-groupd" role="group">
+                            <button id="continue" 
+                                    onclick="send({
+                                        'method':'continue_button' 
+                                    });" 
+                                    class="btn btn-block btn-lg btn-warning" hidden>Continue (press only if asked!)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
 <div class="section">
     <div class="container">
         <div class="row">
@@ -42,24 +60,6 @@ document.onready = function() {
         </div>
     </div>
 </div>
-<div class="section" id="continue_panel">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-
-                <div class="panel">
-                    <div class="btn-groupd" role="group">
-                            <button id="continue" 
-                                    onclick="send({
-                                        'method':'continue_button' 
-                                    });" 
-                                    class="btn btn-block btn-lg btn-warning">Continue (press only if asked!)</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> 
 
 
 <div class="section">

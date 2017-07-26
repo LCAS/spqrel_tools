@@ -30,7 +30,7 @@ def readKeysFile(keys_file, memory_service):
             keys_list.append(key)
 
 
-def onEvent(pip, pport, value):
+def onEventCamera(pip, pport, value):
     global camera_enabled
     global camera_frame_rate
     print "value: ", value 
@@ -42,6 +42,20 @@ def onEvent(pip, pport, value):
         #create a thead that monitors directly the signal
         camMonitorThread = threading.Thread(target = cameraMonitorThread, args = (pip, pport, camera_frame_rate))
         camMonitorThread.start()        
+
+def manageRecord(memory_service, rate, output_file, value):
+    global keylogThread
+    global keylog_enabled
+    print "value: ", value 
+    
+    if (value):
+        keylog_enabled = True
+        #create a thead that monitors directly the signal
+        keylogThread = threading.Thread(target = rhMonitorThread, args = (memory_service,rate,output_file))
+        keylogThread.start()
+    else:
+        keylog_enabled = False
+        keylogThread.do_run = False
 
 def cameraMonitorThread (pip, pport, rate):
     global camera_enabled
@@ -77,6 +91,8 @@ def cameraMonitorThread (pip, pport, rate):
 
 
 def rhMonitorThread (memory_service, rate, output_file):
+    print 'Starting recording data @%.2fHz'%rate
+
     t = threading.currentThread()
     output_file.write(str(keys_list))
     output_file.write('\n')
@@ -95,6 +111,9 @@ def main():
     global camera_enabled
     global current_log_dir
     global camera_frame_rate
+    global keylogThread
+    global keylog_enabled
+
     camera_enabled = 0
     camera_frame_rate = 0
     
@@ -107,6 +126,7 @@ def main():
                         help="Logging rate in Hz")
     parser.add_argument("--keys", type=str, required=True, help="File contaning list of keys to register")
     parser.add_argument("--path", type=str, default=os.getcwd(), help="Path of folder that will contain the logs")
+    parser.add_argument("--pause", type=bool, default=False, help="Pause the start of the logging")
     parser.add_argument("--o", type=str, default="keys.log" ,
                         help="Output file registered values")    
     
@@ -118,6 +138,7 @@ def main():
     keys_filename = args.keys
     output_filename = args.o
     log_path = args.path
+    pause = args.pause
 
     #Starting application
     try:
@@ -151,24 +172,35 @@ def main():
     print keys_list
 
     
-    #create a thead that monitors directly the signal
-    monitorThread = threading.Thread(target = rhMonitorThread, args = (memory_service,rate,output_file))
-    monitorThread.start()
+    #subscribe to event to enable log recording
+    subscriber_record = memory_service.subscriber("NAOqibag/Rec")
+    idEvent_record = subscriber_record.signal.connect(functools.partial(manageRecord, memory_service, rate, output_file))
+    if pause:
+        keylog_enabled = False
+    else:
+        #start recording 
+        manageRecord(memory_service, rate, output_file, 1)
+        keylog_enabled = True
 
-    #subscribe to any change on any touch sensor
-    subscriber = memory_service.subscriber("NAOqibag/EnableCamera")
-    idEvent = subscriber.signal.connect(functools.partial(onEvent, pip, pport))
+    #subscribe to event to enable camera recording
+    subscriber_camera = memory_service.subscriber("NAOqibag/EnableCamera")
+    idEvent_camera = subscriber_camera.signal.connect(functools.partial(onEventCamera, pip, pport))
+
 
     #Program stays at this point until we stop it
     app.run()
 
-    subscriber.signal.disconnect(idEvent)
-    monitorThread.do_run = False
+    subscriber_camera.signal.disconnect(idEvent_camera)
+    
+    if keylog_enabled:
+        keylogThread.do_run = False
+
     if camera_enabled:
         camera_enabled = 0
         #we give time a cycle of the camera thread to finish
         time.sleep(1/camera_frame_rate)
-        
+    
+    subscriber_record.signal.disconnect(idEvent_record)
         
     print "Finished"
 

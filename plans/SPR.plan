@@ -11,10 +11,10 @@ turn_180;
 
 # 3
 
-lookfor_memorizepeople|30; # timeout
+memorizepeople;
 peoplesummary_SPRgame;
 
-vsay_SPRinfocollected;
+vsay_SPRinfocollected; # TODO
 
 vsay_playwithme;
 
@@ -37,31 +37,32 @@ start_sounddetected;
 
 dialogue_mutequestion;
 
-< (sounddetected)? turn_...
+< sounddetected? turn_^AngleSound
 >
 dialogue_lastresponse;
 
 dialogue_mutequestion;
 
-< (sounddetected)? turn_...
+< sounddetected? turn_^AngleSound
+>
+
+dialogue_lastresponse;
+
+dialogue_mutequestion;
+
+< sounddetected? turn_^AngleSound
 >
 dialogue_lastresponse;
 
 dialogue_mutequestion;
 
-< (sounddetected)? turn_...
+< sounddetected? turn_^AngleSound
 >
 dialogue_lastresponse;
 
 dialogue_mutequestion;
 
-< (sounddetected)? turn_...
->
-dialogue_lastresponse;
-
-dialogue_mutequestion;
-
-< (sounddetected)? turn_...
+< sounddetected? turn_^AngleSound
 >
 dialogue_lastresponse;
 

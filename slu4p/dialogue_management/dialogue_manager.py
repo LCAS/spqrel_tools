@@ -209,7 +209,7 @@ class DialogueManager(EventAbstractClass):
                 self.memory.raiseEvent("DialogueVesponse", "Action stopped")
                 self.memory.raiseEvent("ASR_enable", "0")
             elif '[WHEREIS]' in submessage:
-                data = submessage.replace('[WHEREIS]', '').replace(" ", "+")
+                data = submessage.replace('[WHEREIS]', '').strip().replace(" ", "+")
                 try:
                     location = str(self.memory.getData('/location_mapping/' + data)).replace("+", " ")
                     reply = "The " + data + " is in the " + location

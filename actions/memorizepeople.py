@@ -38,7 +38,7 @@ from conditions import set_condition
 actionName = "memorizepeople"
 
 global people_list
-
+global memory_service
 
 Step_turn_angle= math.pi/5
 Max_turn_angle= math.pi
@@ -103,7 +103,7 @@ def update_data(currentuser):
 def actionThread_exec (params):
 
     #global face_char_service
-    
+    global memory_service
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
     faces_service = getattr(t, "session", None).service("ALFaceDetection")
@@ -285,29 +285,6 @@ def actionThread_exec (params):
 
 
 
-def init(session):
-    global memory_service
-    global monitorThread
-
-    print "Memorizepeople init"
-
-    try:
-        #Starting services
-        memory_service  = session.service("ALMemory")
-            
-    #    people_service = session.service("ALPeoplePerception")
-        face_char_service = session.service("ALFaceCharacteristics")
-        sitting_service = session.service("ALSittingPeopleDetection")
-    
-    except:
-        pass
-    
-
-    print "Creating the thread"
-
-    #create a thead that monitors directly the signal
-    monitorThread = threading.Thread(target = rhMonitorThread, args = (memory_service,))
-    monitorThread.start()
 
 
 

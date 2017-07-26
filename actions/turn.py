@@ -54,7 +54,10 @@ def actionThread_exec (params):
     y = 0.0
     
     print "Turn to ", target_angle
+    motion_service.setExternalCollisionProtectionEnabled('Move', False)
+    time.sleep(1)
     motion_service.moveTo(x, y, theta) #blocking function
+    motion_service.setExternalCollisionProtectionEnabled('Move', True)
     
     print "Action "+actionName+" "+params+" terminated"
     # action end

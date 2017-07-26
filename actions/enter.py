@@ -41,7 +41,6 @@ def actionThread_exec (params):
         print "Action "+actionName+" "+params+" cm/s exec..."
         # action exec
         if without_collision_avoidance:
-            print 'CAREFUL NOW!'
             motion_service.setExternalCollisionProtectionEnabled('Move', False)
 	    time.sleep(1)
         motion_service.move(float(x)/100.0,float(y)/100.0,float(t)/100.0)

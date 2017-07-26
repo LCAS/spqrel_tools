@@ -44,11 +44,13 @@ def init(session):
     global monitorThread
 
     print "Sound detected init"
-
-    #Starting services
-    memory_service  = session.service("ALMemory")
-    sound_service = session.service("ALSoundLocalization")
-    motion_service = session.service("ALMotion")
+    try:
+        #Starting services
+        memory_service  = session.service("ALMemory")
+        sound_service = session.service("ALSoundLocalization")
+        motion_service = session.service("ALMotion")
+    except:
+        pass
 
     print "Creating the thread"
 

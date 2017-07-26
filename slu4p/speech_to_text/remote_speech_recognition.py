@@ -11,7 +11,7 @@ class RemoteSpeechRecognition(EventAbstractClass):
     WR_EVENT = "WordRecognized"
     TD_EVENT = "ALTextToSpeech/TextDone"
     ASR_ENABLE = "ASR_enable"
-    FLAC_COMM = 'flac -8 -f '
+    FLAC_COMM = 'flac -f '
     CHANNELS = [0, 0, 1, 0]
     timeout = 0
 

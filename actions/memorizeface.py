@@ -175,7 +175,7 @@ def updateMemorizePeople(currentuser):
             ## Write data in ALMemory
             people_list[i]=back_person
             str_person=json.dumps(people_list)
-            memory_service.insertData('Actions/Memorizepeople/Personlist', str_person) 
+            memory_service.insertData('Actions/memorizepeople/Peoplelist', str_person) 
             
 
     except:

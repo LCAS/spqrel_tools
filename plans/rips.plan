@@ -1,7 +1,8 @@
 # enter the arena and goto RIPS location
 waitfor_dooropen;
 vsay_starting;
-moveto_1.5_0_0; 
+wait_2;
+enter_2_0_0_5; 
 navigateto_corridor1;  ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
 
 # 

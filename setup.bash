@@ -31,6 +31,8 @@ fi
 # default home is $HOME/spqrel
 export SPQREL_HOME=`real_path "${SPQREL_HOME:-$HOME/spqrel}"`
 
+export SPQREL_CONFIG=$SPQREL_HOME/worktree/spqrel_tools/scripts/spqrel-config.yaml
+
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SPQREL_HOME/lib
 
 # find pnpgen binaries

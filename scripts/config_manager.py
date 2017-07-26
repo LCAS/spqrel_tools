@@ -1,50 +1,52 @@
 #!/usr/bin/env python
-import sys
 import yaml
-import json
+from json import dumps, loads
 from naoqi import *
 import argparse
 
 
-
 class config_manager(object):
-    
+
     def __init__(self, pip, pport, filename):
         self.memProxy = ALProxy("ALMemory", pip, pport)
 
         try:
-            data = self.load_config(filename) 
-            print data
+            data = self.load_config(filename)
         except Exception, e:
             print "error"
             print e
             exit(1)
-    
+
         if type(data) is list:
-            print "list"
             for i in data:
                 self.decode_dict(i, '/')
         else:
-            print "not list"
             self.decode_dict(data, '/')
 
-    
-    def load_config(self,filename):
-        print "loading " + filename
+    def load_config(self, filename):
         with open(filename, 'r') as f:
             return yaml.load(f)
-    
+
     def decode_dict(self, data, cstr):
         for i in data.keys():
-            cstr=cstr + i
             if type(data[i]) is not dict:
-                 print "inserting:", cstr, data[i]
-                 self.memProxy.insertData(cstr, data[i])
+                if i.lower().startswith("$json:"):
+                    key = i.split(':')[1]
+                    self.memProxy.insertData(cstr + key, dumps(data[i]))
+                else:
+                    if type(data[i]) is str:
+                        self.memProxy.insertData(cstr + i, str(data[i]))
+                    elif type(data[i]) is int:
+                        self.memProxy.insertData(cstr + i, int(data[i]))
+                    elif type(data[i]) is float:
+                        self.memProxy.insertData(cstr + i, float(data[i]))
+                    elif type(data[i]) is list:
+                        self.memProxy.insertData(cstr + i, list(data[i]))
+                    else:
+                        self.memProxy.insertData(cstr + i, dumps(data[i]))
             else:
-                cstr=cstr + '/'
-                self.decode_dict(data[i], cstr)
-    
-    
+                self.decode_dict(data[i], cstr + i + '/')
+
 
 if __name__ == '__main__':
     """

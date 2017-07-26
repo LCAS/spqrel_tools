@@ -38,7 +38,7 @@ from conditions import set_condition
 actionName = "memorizepeople"
 
 global people_list
-
+global memory_service
 
 Step_turn_angle= math.pi/5
 Max_turn_angle= math.pi
@@ -56,54 +56,58 @@ def update_data(currentuser):
         mem_list=memory_service.getData('Actions/MemorizePeople/PeopleList')
         people_list=json.loads(mem_list)
         
-    except:
-        
-        people_list=[]
-    
-        
-    # update some info for old detections
-    
-    for i in range(len(people_list)):
-        
-        if currentuser['person_naoqiid']==people_list[i]['person_naoqiid']:
-            
-            json_person=people_list[i]
-            
-#            mem_person=memory_service.getData('Actions/memorizepeople/'+people_list[i])
-#            json_person=json.loads(mem_person)
-            b_new=False
-            
-            json_person['info']['height']=currentuser['info']['height']
-            json_person['info']['posture']=currentuser['info']['posture']
-            
-            # Update only if confidence is higher 
-            if currentuser['face_naoqi']['faceinfo']['age']['conf'] >json_person['face_naoqi']['faceinfo']['age']['conf']:
-                json_person['face_naoqi']['faceinfo']['age']=currentuser['face_naoqi']['faceinfo']['age']
 
-            if currentuser['face_naoqi']['faceinfo']['gender']['conf'] >json_person['face_naoqi']['faceinfo']['gender']['conf']:
-                json_person['face_naoqi']['faceinfo']['gender']=currentuser['face_naoqi']['faceinfo']['gender']
+    
+        if len(people_list)>1:
+            # update some info for old detections
+            
+            for i in range(len(people_list)):
                 
-#            ## Write data in ALMemory
-#            str_person=json.dumps(json_person)
-#            memory_service.insertData('Actions/memorizepeople/Person/'+currentuser['personid'], str_person)
-
-            people_list[i]=json_person
-   
+                if currentuser['person_naoqiid']==people_list[i]['person_naoqiid']:
+                    
+                    json_person=people_list[i]
+                    
+        #            mem_person=memory_service.getData('Actions/MemorizePeople/'+people_list[i])
+        #            json_person=json.loads(mem_person)
+                    b_new=False
+                    
+                    json_person['info']['height']=currentuser['info']['height']
+                    json_person['info']['posture']=currentuser['info']['posture']
+                    
+                    # Update only if confidence is higher 
+                    if currentuser['face_naoqi']['faceinfo']['age']['conf'] >json_person['face_naoqi']['faceinfo']['age']['conf']:
+                        json_person['face_naoqi']['faceinfo']['age']=currentuser['face_naoqi']['faceinfo']['age']
         
+                    if currentuser['face_naoqi']['faceinfo']['gender']['conf'] >json_person['face_naoqi']['faceinfo']['gender']['conf']:
+                        json_person['face_naoqi']['faceinfo']['gender']=currentuser['face_naoqi']['faceinfo']['gender']
+                        
+        #            ## Write data in ALMemory
+        #            str_person=json.dumps(json_person)
+        #            memory_service.insertData('Actions/MemorizePeople/Person/'+currentuser['personid'], str_person)
+        
+                    people_list[i]=json_person
+                    
+    except:
+        pass
+   
     ## ADD new person    
     if b_new is True:
-        
+
+        people_list=[]
+    
         people_list.append(currentuser)
 
-        
-        
+
     str_person=json.dumps(people_list)
-    memory_service.insertData('Actions/Memorizepeople/Peoplelist', str_person) 
+    
+    memory_service.insertData('Actions/MemorizePeople/Peoplelist', str_person) 
+
+
 
 def actionThread_exec (params):
 
     #global face_char_service
-    
+    global memory_service
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
     faces_service = getattr(t, "session", None).service("ALFaceDetection")
@@ -116,10 +120,10 @@ def actionThread_exec (params):
     global people_list
     people_list=[]
 
+    b_completed=False
+    memory_service.insertData('Actions/Memorizepeople/Peoplelist',people_list) 
     
-    memory_service.insertData("PeoplePerception/PeopleList",people_list) 
-    
-    while getattr(t, "do_run", True):
+    while (getattr(t, "do_run", True) and b_completed==False):
         
         motion_service
         naoqi_people_list =  memory_service.getData("PeoplePerception/PeopleList")
@@ -162,7 +166,7 @@ def actionThread_exec (params):
                 #expression={'neutral':round(propexpression[0],2),'happy':round(propexpression[1],2),'surprised':round(propexpression[2],2),'angry':round(propexpression[3],2),'sad':round(propexpression[4],2)}
                 
             except:
-                #print 'FaceCharacteristics error '
+                print 'FaceCharacteristics error '
                 pass
 #                    
             facecharacteristics={'age':age, 'gender':gender,'smile':smile, 'expression':{}}
@@ -216,7 +220,7 @@ def actionThread_exec (params):
                 
                 
             except:
-                #print 'Person info error '
+                print 'Person info error '
                 pass
 
 
@@ -247,7 +251,7 @@ def actionThread_exec (params):
             
             if countdt>Timeoutangle:
                 
-                motion_service.moveTo(0.0, 0.0, theta)
+                motion_service.moveTo(0.0, 0.0, currentangle)
                 currentangle+=Step_turn_angle
                 
 
@@ -255,8 +259,10 @@ def actionThread_exec (params):
             else:
                 countdt+=1
 
-            if currentangle>Max_turn_angle:
-                actionThread_exec.do_run = False
+            if currentangle > Max_turn_angle:
+                print 'stop currentangle=',currentangle
+                
+                b_completed=True
                 
             try:
                 mem_list=memory_service.getData('Actions/MemorizePeople/PeopleList')
@@ -269,7 +275,7 @@ def actionThread_exec (params):
                         b_completed=False
                         
                 if b_completed is True and len(people_list)>3:
-                    actionThread_exec.do_run = False
+                    b_completed=True
                         
         
             except:
@@ -285,29 +291,6 @@ def actionThread_exec (params):
 
 
 
-def init(session):
-    global memory_service
-    global monitorThread
-
-    print "Memorizepeople init"
-
-    try:
-        #Starting services
-        memory_service  = session.service("ALMemory")
-            
-    #    people_service = session.service("ALPeoplePerception")
-        face_char_service = session.service("ALFaceCharacteristics")
-        sitting_service = session.service("ALSittingPeopleDetection")
-    
-    except:
-        pass
-    
-
-    print "Creating the thread"
-
-    #create a thead that monitors directly the signal
-    monitorThread = threading.Thread(target = rhMonitorThread, args = (memory_service,))
-    monitorThread.start()
 
 
 

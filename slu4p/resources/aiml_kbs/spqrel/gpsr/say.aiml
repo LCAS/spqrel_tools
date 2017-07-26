@@ -42,7 +42,7 @@
         <template>
             <random>
                 <li>I'm ready for the inspection!</li>
-                <li>C'mon, try me!</li>
+                <li>Come on, try me!</li>
                 <li>I'm ready to start the inspection!</li>
                 <li>I'm ready! Inspect me!</li>
             </random>
@@ -256,11 +256,13 @@
     <category>
         <pattern>PLAYRIDDLES</pattern>
         <template>
+            Hello everybody! Welcome to the SPR test.
             <random>
                 <li>I want to play riddles!</li>
                 <li>I'd like to play riddles!</li>
                 <li>Let's play riddles!</li>
             </random>
+            I'll wait for ten seconds!
         </template>
     </category>
 
@@ -280,8 +282,8 @@
         <pattern>WEREADY</pattern>
         <template>
             <random>
-                <li>I'm ready!</li>
-                <li>C'mon, let's make the first question!</li>
+                <li>I'm ready! What is you question?</li>
+                <li>Come on, go ahead with you question!</li>
             </random>
         </template>
     </category>

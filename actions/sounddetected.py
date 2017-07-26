@@ -31,13 +31,13 @@ def rhMonitorThread (memory_service,motion_service):
             if len(sound_value)>1:
                 #print "confidence: ", sound_value[1][2]
                 confidence = sound_value[1][2]
-                if (confidence > 0.3):
-                    #print "sound detected!!!!!!!"
-                    v = 'true'
-                    sound_azimuth = sound_value[1][0]
-                    head_yaw = sound_value[2][5]
-                    turn_angle = sound_azimuth + head_yaw
-                    memory_service.insertData('AngleSound',turn_angle)               
+                #if (confidence > 0.3):
+                v = 'true'
+                sound_azimuth = sound_value[1][0]
+                head_yaw = sound_value[2][5]
+                turn_angle = sound_azimuth + head_yaw
+                turn_angle = int(turn_angle / math.pi * 180)
+                memory_service.insertData('AngleSound', str(turn_angle) + "_REL")
         except:
             v = 'false'
 
@@ -54,15 +54,16 @@ def init(session):
     try:
         #Starting services
         memory_service  = session.service("ALMemory")
-        sound_service = session.service("ALSoundLocalization")
         motion_service = session.service("ALMotion")
+        sound_service = session.service("ALSoundLocalization")
     except:
+        print "Error connecting to services"
         pass
 
     print "Creating the thread"
 
     #create a thead that monitors directly the signal
-    monitorThread = threading.Thread(target = rhMonitorThread, args = (memory_service,motion_service))
+    monitorThread = threading.Thread(target = rhMonitorThread, args = (memory_service,motion_service,))
     monitorThread.start()
 
 
@@ -103,3 +104,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

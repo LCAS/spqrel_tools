@@ -17,7 +17,7 @@ from action_base import *
 import dooropen, obstaclehere, screentouched
 import say, vsay, wait, waitfor, goto, turn, lookfor, dialogue, dialoguestart, dialoguestop, asrenable
 import posture, personhere, headpose, followuntil, movementdetected, webpage, personbehind, persondetected, speechbtn
-import execplan, saveposition, soundtrack, navigateto, memorizepeople, memorizeface, sounddetected, continuebtn, enter
+import execplan, saveposition, soundtrack, navigateto, memorizepeople, memorizeface, sounddetected, continuebtn, enter, recdata, assign
 
 def init(session):
     screentouched.init(session)
@@ -51,6 +51,9 @@ def init(session):
     sounddetected.init(session)
     continuebtn.init(session)
     enter.init(session)
+    recdata.init(session)
+    assign.init(session)
+
 
 def quit():
     screentouched.quit()
@@ -83,8 +86,9 @@ def quit():
     #memorizeface.quit()
     sounddetected.quit()
     enter.quit()
-    continuebtn.quit(session)
-    
+    continuebtn.quit()
+    recdata.quit()
+    assign.quit()
 
 
 def main():

@@ -41,7 +41,8 @@ Setting condition example:
 SPQReL actions implemented
 
 asrenable.py        enables ASR (off to disable)     param: [on|off]  default:on
-continuebtn 				continuebtn_show shows the continue button, continuebtn_hide hide is
+assign.py           assign a value to a key     params: <key>_<value>
+continuebtn.py 		continuebtn_show shows the continue button, continuebtn_hide hide it
 dialogue.py         executes a dialogue blocking     param: name of dialogue
 dialoguestart.py    starts a dialogue non-blocking   param: name of dialogue
 dialoguestop.py     stops a previously started dialogue
@@ -55,13 +56,14 @@ lookfor.py          continuously move the head left and right until condition   
 memorizeface.py     ???
 memorizepeople.py   ???
 movementdetected.py condition: true when a continous movement (around 3-4 sec) is detected 
-navigate_to.py      ???
+navigateto.py      ???
 obstaclehere.py     condition: true if laser detects obstance in front
 personbehind.py     condition: true when person something is behind the robot within a distance of 0.9m
 persondetected.py   condition: true when People list is bigger than 1 
 personhere.py       condition: true when a person is in front of the robot within a distance of 1.5m
 personsitting.py    condition: true when a person is found sittin (threshold now at 1.4m heigh)
 posture.py          sets the posture    param: Stand, Crouch, WakeUp, Rest
+recdata.py          enable/disable data recording     param: on|off
 saveposition.py     saves the current position of the robot - param: name given to the position
 say.py              say with ALTextToSpeech    param: label of what to say
 screentouched.py    condition: true if screen is touched

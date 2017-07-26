@@ -14,7 +14,7 @@ dialogue_response = False
 
 def response_cb(value):
     global dialogue_response
-    print value
+    print 'Dialogue: ' + value
     dialogue_response = True
 
 

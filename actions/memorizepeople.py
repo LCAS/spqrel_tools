@@ -120,7 +120,7 @@ def actionThread_exec (params):
     faces_service = getattr(t, "session", None).service("ALFaceDetection")
     faces_service.setRecognitionEnabled(True)
     motion_service  = getattr(t, "session", None).service("ALMotion")
-    #face_char_service = getattr(t, "session", None).service("ALFaceCharacteristics")
+    face_char_service = getattr(t, "session", None).service("ALFaceCharacteristics")
     print "Action "+actionName+" started with params "+params
 
     # DElete old list

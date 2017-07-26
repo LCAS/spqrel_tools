@@ -15,7 +15,7 @@ from action_base import *
 # actionname.quit() in quit function
 
 import dooropen, obstaclehere, screentouched
-import say, vsay, wait, waitfor, goto, turn, lookfor, dialogue, dialoguestart, dialoguestop, asrenable
+import say, vsay, wait, waitfor, goto, turn, lookfor, dialogue, dialoguestart, dialoguestop, asrenable, recdata
 import posture, personhere, headpose, followuntil, movementdetected, webpage, personbehind, persondetected, speechbtn
 import execplan, saveposition, soundtrack, navigateto, memorizepeople, memorizeface, sounddetected, continuebtn, enter
 
@@ -51,6 +51,8 @@ def init(session):
     sounddetected.init(session)
     continuebtn.init(session)
     enter.init(session)
+    recdata.init(session)
+
 
 def quit():
     screentouched.quit()
@@ -84,7 +86,7 @@ def quit():
     sounddetected.quit()
     enter.quit()
     continuebtn.quit(session)
-    
+    recdata.quit()
 
 
 def main():

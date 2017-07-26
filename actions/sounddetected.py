@@ -54,15 +54,16 @@ def init(session):
     try:
         #Starting services
         memory_service  = session.service("ALMemory")
-        sound_service = session.service("ALSoundLocalization")
         motion_service = session.service("ALMotion")
+        sound_service = session.service("ALSoundLocalization")
     except:
+        print "Error connecting to services"
         pass
 
     print "Creating the thread"
 
     #create a thead that monitors directly the signal
-    monitorThread = threading.Thread(target = rhMonitorThread, args = (memory_service,motion_service))
+    monitorThread = threading.Thread(target = rhMonitorThread, args = (memory_service,motion_service,))
     monitorThread.start()
 
 
@@ -103,3 +104,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

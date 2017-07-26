@@ -8,8 +8,9 @@ import action_base
 from action_base import *
 
 
-actionName = "asrenable"
-asrkey = 'ASR_enable'
+actionName = "recdata"
+
+logkey = 'NAOqiBag/Rec'
 
 def actionThread_exec (params):
     t = threading.currentThread()
@@ -18,11 +19,14 @@ def actionThread_exec (params):
     print "Action "+actionName+" "+params+" started"
     # action init
     if (params=='off'):
-        memory_service.raiseEvent(asrkey,'0')
+        memory_service.raiseEvent(logkey,'0')
+        print "  -- Recording data disabled --"
     else:
-        memory_service.raiseEvent(asrkey,'1')
+        memory_service.raiseEvent(logkey,'1')
+        print "  -- Recording data enabled --"
     # action init
     
+
     time.sleep(1.0)
 
     print "Action "+actionName+" "+params+" terminated"
@@ -31,9 +35,11 @@ def actionThread_exec (params):
 
 
 def init(session):
+    global orderID
     print actionName+" init"
     action_base.init(session, actionName, actionThread_exec)
     session.service("ALMemory").declareEvent('DialogueVequest')
+
 
 
 def quit():

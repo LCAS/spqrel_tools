@@ -1,5 +1,7 @@
 # SPR
 
+recdata_on; # starts data recording
+
 # 1
 
 headpose_0_-20;
@@ -88,3 +90,6 @@ dialogue_mutequestion;
 dialogue_lastresponse;
 
 vsay_farewell;
+
+recdata_off; # ends data recording
+

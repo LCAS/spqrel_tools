@@ -263,6 +263,7 @@ def actionThread_exec (params):
                 
                 headpose.moveHead(motion_service, headYaw[currentangle], headPitch[currentangle], headtime)
                 countdt = 0
+                currentangle+=1
             else:
                 countdt+=1
 

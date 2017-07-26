@@ -150,7 +150,7 @@ def actionThread_exec (params):
             try:
                 
                 #try:
-                res_char=face_char_service.analyzeFaceCharacteristics(personid)
+                #res_char=face_char_service.analyzeFaceCharacteristics(personid)
                 #print 'res_char',res_char
                 
                 #lookingat =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/LookingAtRobotScore")

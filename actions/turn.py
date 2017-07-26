@@ -50,8 +50,8 @@ def actionThread_exec (params):
         theta = target_angle/180.0*math.pi
 
     #Turn 90deg to the left
-    x = 0.0
-    y = 0.0
+    x = 0.01
+    y = 0.01
     
     print "Turn to ", target_angle
     motion_service.setExternalCollisionProtectionEnabled('Move', False)

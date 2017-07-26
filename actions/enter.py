@@ -8,6 +8,7 @@ import action_base
 from action_base import *
 import conditions
 from conditions import get_condition
+import math
 
 
 actionName = "enter"
@@ -43,7 +44,7 @@ def actionThread_exec (params):
         if without_collision_avoidance:
             motion_service.setExternalCollisionProtectionEnabled('Move', False)
 	    time.sleep(1)
-        motion_service.move(float(x)/100.0,float(y)/100.0,float(t)/100.0)
+        motion_service.move(float(x)/100.0,float(y)/100.0,float(t) / 180 * math.pi)
         # action exec
         time.sleep(float(time_))
 	print 'done'

@@ -110,7 +110,7 @@ def rhMonitorThread (memory_service):
 #        print '#################'
         for personid in naoqi_people_list:
             
-            print 'personid= ',personid
+            #print 'personid= ',personid
 #            print '__________'
             face={'name':'','faceinfo':{}}
             age={'val':0.0,'conf':0.0}

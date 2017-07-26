@@ -33,6 +33,7 @@ def actionThread_exec (params):
     print "y: ",y
     print "t: ",t
     # action init
+    count = 0
 
     while (getattr(t, "do_run", True) and count>0): 
         print "Action "+actionName+" "+params+" exec..."

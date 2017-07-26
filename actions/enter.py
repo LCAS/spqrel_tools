@@ -25,6 +25,10 @@ def actionThread_exec (params):
     x = values[0]
     y = values[1]
     t = values[2]
+
+    print "x: " x
+    print "y: " y
+    print "t: " t
     # action init
 
     while (getattr(t, "do_run", True) and count>0): 

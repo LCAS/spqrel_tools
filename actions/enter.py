@@ -38,7 +38,7 @@ def actionThread_exec (params):
     while (getattr(t, "do_run", True) and count>0): 
         print "Action "+actionName+" "+params+" exec..."
         # action exec
-        motion_service.moveTo(x,y,t)
+        motion_service.moveTo(float(x),float(y),float(t))
         count -= 1		
         # action exec
         time.sleep(0.1)

@@ -363,67 +363,112 @@
         </category>
 
         <category>
-            <pattern>WHAT CITY ARE WE IN</pattern>
+            <pattern>* CITY *</pattern>
             <template>[SAY]We are in Nagoya!</template>
         </category>
 
         <category>
-            <pattern>WHAT IS THE NAME OF YOUR TEAM</pattern>
+            <pattern>* NAME * YOUR TEAM</pattern>
             <template>[SAY]The name of my team is SPQReL</template>
         </category>
 
         <category>
-            <pattern>HOW MANY TEAMS PARTICIPATE IN ROBOCUP AT HOME THIS YEAR</pattern>
-            <template>[SAY]There are 31 teams this year</template>
-        </category>
-
-        <category>
-            <pattern>WHO WON THE POPULAR VOTE IN THE US ELECTION</pattern>
-            <template>[SAY]Hillary Clinton</template>
-        </category>
-
-        <category>
-            <pattern>WHAT IS THE HIGHEST MOUNTAIN IN JAPAN</pattern>
-            <template>[SAY]The highest mountain is Mount Fuji</template>
-        </category>
-
-        <category>
-            <pattern>NAME THE TWO ROBOCUP AT HOME STANDARD PLATFORMS</pattern>
-            <template>[SAY]The Pepper and HSR</template>
-        </category>
-
-        <category>
-            <pattern>WHAT DOES DSPL STAND FOR</pattern>
-            <template>[SAY]Stands for Domestic Standard Platform League.</template>
-        </category>
-
-        <category>
-            <pattern>WHAT DOES SSPL STAND FOR</pattern>
-            <template>[SAY]Stands for Social Standard Platform League.</template>
-        </category>
-
-        <category>
-            <pattern>WHO DID ALPHABET SELL BOSTON DYNAMICS TO</pattern>
-            <template>[SAY]To SoftBank.</template>
-        </category>
-
-        <category>
-            <pattern>NAGOYA HAS ONE OF THE LARGEST TRAIN STATIONS IN THE WORLD - HOW LARGE IS IT</pattern>
-            <template>[SAY]Over four hundreds ten thousands square metres.</template>
-        </category>
-
-        <category>
-            <pattern>WHERE IS YOUR TEAM LOCATED</pattern>
+            <pattern>* YOUR TEAM LOCATED</pattern>
             <template>[SAY]Our team is located in Rome (Italy) and Lincoln (UK)</template>
         </category>
 
         <category>
-            <pattern>WHO CREATED STAR WARS</pattern>
+            <pattern>* PARTICIPATE * ROBOCUP AT HOME *</pattern>
+            <template>[SAY]There are 31 teams this year</template>
+        </category>
+
+        <category>
+            <pattern>* POPULAR VOTE *</pattern>
+            <template>[SAY]Hillary Clinton</template>
+        </category>
+
+        <category>
+            <pattern>* US ELECTION</pattern>
+            <template>[SAY]Hillary Clinton</template>
+        </category>
+
+        <category>
+            <pattern>* MOUNTAIN *</pattern>
+            <template>[SAY]The highest mountain is Mount Fuji</template>
+        </category>
+
+        <category>
+            <pattern>* JAPAN</pattern>
+            <template>[SAY]The highest mountain is Mount Fuji</template>
+        </category>
+
+        <category>
+            <pattern>* STANDARD PLATFORMS</pattern>
+            <template>[SAY]The Pepper and HSR</template>
+        </category>
+
+        <category>
+            <pattern>* STANDARD PLATFORM</pattern>
+            <template>[SAY]The Pepper and HSR</template>
+        </category>
+
+        <category>
+            <pattern>* DSPL *</pattern>
+            <template>[SAY]Stands for Domestic Standard Platform League.</template>
+        </category>
+
+        <category>
+            <pattern>* SSPL *</pattern>
+            <template>[SAY]Stands for Social Standard Platform League.</template>
+        </category>
+
+        <category>
+            <pattern>* ALPHABET *</pattern>
+            <template>[SAY]To SoftBank.</template>
+        </category>
+
+        <category>
+            <pattern>* BOSTON *</pattern>
+            <template>[SAY]To SoftBank.</template>
+        </category>
+
+        <category>
+            <pattern>* DYNAMICS *</pattern>
+            <template>[SAY]To SoftBank.</template>
+        </category>
+
+        <category>
+            <pattern>NAGOYA *</pattern>
+            <template>[SAY]Over four hundreds ten thousands square metres.</template>
+        </category>
+
+        <category>
+            <pattern>* TRAIN STATIONS *</pattern>
+            <template>[SAY]Over four hundreds ten thousands square metres.</template>
+        </category>
+
+        <category>
+            <pattern>* WORLD *</pattern>
+            <template>[SAY]Over four hundreds ten thousands square metres.</template>
+        </category>
+
+        <category>
+            <pattern>* HOW LARGE *</pattern>
+            <template>[SAY]Over four hundreds ten thousands square metres.</template>
+        </category>
+
+        <category>
+            <pattern>* STAR WARS</pattern>
             <template>[SAY]George Lucas</template>
         </category>
 
         <category>
-            <pattern>WHO LIVES IN A PINEAPPLE UNDER THE SEA</pattern>
+            <pattern>* UNDER THE SEA</pattern>
+            <template>[SAY]Sponge Bob Squarepants!</template>
+        </category>
+
+        <category>
+            <pattern>* PINEAPPLE *</pattern>
             <template>[SAY]Sponge Bob Squarepants!</template>
         </category>
 

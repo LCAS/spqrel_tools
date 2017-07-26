@@ -11,7 +11,7 @@ Memorize people
 
 Writes in ALMemory 'Actions/MemorizePeople/PeopleList/' json string with all features 
 
-params== 'Crowd'
+params== 'SPRgame'
 '''
 
 
@@ -151,7 +151,7 @@ def actionThread_exec (params):
                 
                 #try:
                 res_char=face_char_service.analyzeFaceCharacteristics(personid)
-                print 'res_char',res_char
+                #print 'res_char',res_char
                 
                 #lookingat =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/LookingAtRobotScore")
                 #gazedirection =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/GazeDirection")
@@ -252,7 +252,7 @@ def actionThread_exec (params):
             
 
 
-        if params== 'Crowd':
+        if params== 'SPRgame':
             global countdt
             global currentangle
             

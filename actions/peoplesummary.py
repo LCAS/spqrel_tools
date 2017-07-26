@@ -124,7 +124,7 @@ def actionThread_exec (params):
                     print 'Humans/Profile'+str(numberprofile)+' not found '  
                     
 
-        if command=='Crowd':
+        if command=='SPRgame':
             
             num_males=0
             num_females=0
@@ -194,7 +194,7 @@ def actionThread_exec (params):
             str_result=json.dumps(result)                           
             memory_service.insertData('Humans/Peoplesummary',str_result)
                       
-        b_completed=False                   
+        b_completed=True                   
                     
 
     # action end

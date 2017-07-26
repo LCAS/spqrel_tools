@@ -87,7 +87,7 @@ def update_data(currentuser):
         
         
     str_person=json.dumps(people_list)
-    memory_service.insertData('Actions/Memorizepeople/Personlist', str_person) 
+    memory_service.insertData('Actions/Memorizepeople/Peoplelist', str_person) 
 
 def rhMonitorThread (memory_service):
     t = threading.currentThread()
@@ -231,14 +231,16 @@ def init(session):
 
     print "Memorizepeople init"
 
-    #Starting services
-    memory_service  = session.service("ALMemory")
-        
-#    people_service = session.service("ALPeoplePerception")
-    face_char_service = session.service("ALFaceCharacteristics")
-    sitting_service = session.service("ALSittingPeopleDetection")
+    try:
+        #Starting services
+        memory_service  = session.service("ALMemory")
+            
+    #    people_service = session.service("ALPeoplePerception")
+        face_char_service = session.service("ALFaceCharacteristics")
+        sitting_service = session.service("ALSittingPeopleDetection")
     
-
+    except:
+        pass
     
 
     print "Creating the thread"

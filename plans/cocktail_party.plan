@@ -32,12 +32,12 @@ turn_20;
 wait_5;
 
 #ORDER 3
-lookfor_sittingperson|10;
-approach_^personsitting/id
-dialogue_takeorder;
-vsay_memorizeperson;
-memorizeface_inmemory_Profile3;
-vsay_thanks;
+#lookfor_sittingperson|10;
+#approach_^personsitting/id|10;
+#dialogue_takeorder;
+#vsay_memorizeperson;
+#memorizeface_inmemory_Profile3;
+#vsay_thanks;
 
 #PLACING ORDERS
 navigateto_sofaside; #TODO check toponav
@@ -45,21 +45,21 @@ turn_45_ABS|10;
 #TODO: person description
 dialogue_unknownavailable_1;
 dialogue_unknownavailable_2;
-dialogue_unknownavailable_3;
+#dialogue_unknownavailable_3;
 
 navigateto_living1;  # TODO check location of party room toponav
 turn_90_ABS|10;
 
 
-#vsay_callpersonunavailable; 
-#waitfor_personhere;
-#dialogue_providealternatives;
+vsay_callpersonunavailable; 
+waitfor_personhere;
+dialogue_providealternatives;
 
-#navigateto_bar;
-#vsay_confirmalternativedrink;
+navigateto_bar;
+vsay_confirmalternativedrink;
 
-#navigateto_hall;
-#navigateto_start;
+navigateto_hall;
+navigateto_start;
 
 
 

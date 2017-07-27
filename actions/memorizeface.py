@@ -227,7 +227,7 @@ def actionThread_exec (params):
     tracker_service.track(targetName)
     # set mode
     mode = "Head"
-    trackerProxy.setMode(mode)
+    tracker_service.setMode(mode)
     
     ##memorizeface_inmemory_Profile<1> Read memorykey 'Humans/Profile<1|2|3>
     nameuser=''

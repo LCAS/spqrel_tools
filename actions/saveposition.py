@@ -18,6 +18,7 @@ def actionThread_exec (params):
     # action init
     count = 1
     car_x, car_y , car_t = memory_service.getData('NAOqiLocalizer/RobotPose')
+    last_node = memory_service.getData('TopologicalNav/LastNode')
     position_name = params
     # action init
     while (getattr(t, "do_run", True) and count>0): 
@@ -26,7 +27,8 @@ def actionThread_exec (params):
         count = count - 1
         print "saved" + position_name
         
-        memory_service.insertData(position_name+"/coordinates",[car_x,car_y]) 
+        memory_service.insertData(position_name+"/coordinates",str(car_x)+"_"+str(car_y))
+        memory_service.insertData(position_name+"/waypoint", last_node)
 
         # action exec
         time.sleep(0.1)

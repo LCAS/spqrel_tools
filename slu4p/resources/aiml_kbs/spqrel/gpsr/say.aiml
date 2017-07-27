@@ -111,6 +111,17 @@
     </category>
 
     <category>
+        <pattern>CANNOTTAKE</pattern>
+        <template>
+            <random>
+                <li>I'm sorry, but I'm not able to take the object!</li>
+                <li>Sorry, I cannot take the object!</li>
+                <li>It's impossible for me to take the object, sorry!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
         <pattern>COMEHERE CUSTOMER *</pattern>
         <template>
             <random>

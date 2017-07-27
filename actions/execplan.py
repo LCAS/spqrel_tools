@@ -34,6 +34,7 @@ def clean_string(string):
 
 def LU4R_to_plan(lu4r, memory_service):
     interpretations = lu4r.split("#")
+    action = ''
     for interpretation in interpretations:
         interpretation = interpretation.replace(")", "")
         splitted = interpretation.split('(')
@@ -42,7 +43,7 @@ def LU4R_to_plan(lu4r, memory_service):
             arguments_string = splitted[1]
             arguments = arguments_string.split(',')
             if frame == 'MOTION' or frame == 'ARRIVING':
-                action = 'navigateto_'
+                action = action + ' navigateto_'
                 memory_service.raiseEvent("Veply", "I understood that I need to go")
                 for argument in arguments:
                     if 'goal' in argument:
@@ -55,7 +56,7 @@ def LU4R_to_plan(lu4r, memory_service):
                 action = action + ';'
             elif frame == 'COTHEME':
                 # TODO to finish
-                action = 'followuntil_stopfollowing'
+                action = action + 'followuntil_stopfollowing'
                 memory_service.raiseEvent("Veply", "I understood that I need to follow")
                 for argument in arguments:
                     if 'cotheme' in argument:
@@ -65,10 +66,10 @@ def LU4R_to_plan(lu4r, memory_service):
                         memory_service.raiseEvent("Veply", "I understood that I need to follow " + filler + ". I will do it until I receive the stop command.")
                         #action = action + location
                 action = action + ';'
-            elif frame == 'BRINGING':
+            elif frame == 'BRINGING' or frame == 'GIVING':
                 object = ''
                 final_position = ''
-                action = 'navigateto_'
+                action = action + 'navigateto_'
                 memory_service.raiseEvent("Veply", "I understood that I need to bring")
                 for argument in arguments:
                     if 'theme' in argument:
@@ -77,7 +78,7 @@ def LU4R_to_plan(lu4r, memory_service):
                         filler = clean_string(filler)
                         memory_service.raiseEvent("Veply", "I understood that the object is a " + filler)
                         object = memory_service.getData("/location_mapping/" + filler)
-                    if 'beneficiary' in argument:
+                    if ('beneficiary' in argument) or ('recipient' in argument):
                         argument_splitted = argument.split(':')
                         filler = argument_splitted[1].replace('"', '')
                         filler = clean_string(filler)
@@ -96,43 +97,59 @@ def LU4R_to_plan(lu4r, memory_service):
                         argument_splitted = argument.split(':')
                         filler = argument_splitted[1].replace('"', '')
                         filler = clean_string(filler)
-                        memory_service.raiseEvent("Veply", "I understood that the initial position of the object " + filler)
+                        memory_service.raiseEvent("Veply", "I understood that the initial position of the object is " + filler)
                         final_position = memory_service.getData("/location_mapping/" + filler)
                 if len(object) > 0:
                     action = action + object
                     action = action + '; '
-                    action = action + 'vsay_cannot; wait_20;'
+                    action = action + 'vsay_cannottake; wait_20;'
                     if len(final_position) > 0:
                         action = action + 'navigateto_' + final_position + ';'
-
-            elif frame == 'CHANGE_DIRECTION':
-                print 'something'
-            elif frame == 'CHANGE_OPERATIONAL_STATE':
-                print 'something'
-            elif frame == 'CLOSURE':
-                print 'something'
-            elif frame == 'GIVING':
-                print 'something'
+            elif frame == 'TAKING' or frame == 'MANIPULATION':
+                object = ''
+                final_position = ''
+                action = action + 'navigateto_'
+                memory_service.raiseEvent("Veply", "I understood that I need to take")
+                for argument in arguments:
+                    if ('theme' in argument) or ('entity' in argument):
+                        argument_splitted = argument.split(':')
+                        filler = argument_splitted[1].replace('"', '')
+                        filler = clean_string(filler)
+                        memory_service.raiseEvent("Veply", "I understood that the object is a " + filler)
+                        object = memory_service.getData("/location_mapping/" + filler)
+                    if 'goal' in argument:
+                        argument_splitted = argument.split(':')
+                        filler = argument_splitted[1].replace('"', '')
+                        filler = clean_string(filler)
+                        memory_service.raiseEvent("Veply",
+                                                  "I understood that the final position of the object will be the " + filler)
+                        final_position = memory_service.getData("/location_mapping/" + filler)
+                    if 'source' in argument:
+                        argument_splitted = argument.split(':')
+                        filler = argument_splitted[1].replace('"', '')
+                        filler = clean_string(filler)
+                        memory_service.raiseEvent("Veply",
+                                                  "I understood that the initial position of the object is " + filler)
+                if len(object) > 0:
+                    action = action + object
+                    action = action + '; '
+                    action = action + 'vsay_cannottake; wait_20;'
             elif frame == 'INSPECTING':
-                print 'something'
-            elif frame == 'MANIPULATION':
-                print 'something'
-            elif frame == 'PERCEPTION_ACTIVE':
-                print 'something'
-            elif frame == 'PLACING':
-                print 'something'
-            elif frame == 'RELEASING':
-                print 'something'
-            elif frame == 'TAKING':
-                print 'something'
-            elif frame == 'BEING_LOCATED':
                 print 'something'
 
         else:
             print "No arguments"
-
+            if frame == 'MOTION' or frame == 'ARRIVING':
+                memory_service.raiseEvent("Veply", "I understood that I need to go, but I don't know where")
+            elif frame == 'COTHEME':
+                memory_service.raiseEvent("Veply", "I just understood that I need to follow someone")
+            elif frame == 'BRINGING' or frame == 'GIVING':
+                memory_service.raiseEvent("Veply", "I understood that I need to bring, but I didn't get what")
+            elif frame == 'TAKING' or frame == 'MANIPULATION':
+                memory_service.raiseEvent("Veply", "I understood that I need to take, but I don't know what")
+            elif frame == 'INSPECTING':
+                print 'something'
     return action
-    #return "speechbtn_starting;\nwait_5;\nspeechbtn_farewell;"
 
 
 # non-blocking function

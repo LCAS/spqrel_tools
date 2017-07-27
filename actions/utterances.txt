@@ -1,15 +1,24 @@
-Take the noodles from the dining table to the bar
-Go to the office, locate a person, and answer a question
-Look for the soap in the kitchen
+# WORKING
+#Go to the kitchen, go to the bedroom, and go to the kitchen
+#Take the aquarius from the dining table to the kitchen
+
+# WIP
+# go to the kitchen, locate a person, and answer a question
+
+
+# Wrong plans, but ok
+# Look for the fork in the kitchen
+
 Tell me how many tea there are on the bar
-Give to Skyler at the desk the coke from the counter
-Look for the tea in the bathroom
-Pick up the pringles from the bedside and put it on the sideshelf
-Answer a question to Michael at the sink
-Go to the corridor, look for a person, and say your team's affiliation
-Find the beer in the kitchen
-Take the peanuts from the living table and deliver it to Hanna at the bed
-Put the tea on the desk
-Put the noodles on the living shelf
-Find the pringles in the corridor
-Say a joke to Hanna at the dining table
+
+#Give to Skyler at the desk the coke from the counter
+#Look for the tea in the bathroom
+#Pick up the pringles from the bedside and put it on the sideshelf
+#Answer a question to Michael at the sink
+#Go to the corridor, look for a person, and say your team's affiliation
+#Find the beer in the kitchen
+#Take the peanuts from the living table and deliver it to Hanna at the bed
+#Put the tea on the desk
+#Put the noodles on the living shelf
+#Find the pringles in the corridor
+#Say a joke to Hanna at the dining table

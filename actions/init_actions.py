@@ -56,6 +56,7 @@ def init(session):
     assign.init(session)
     personlost.init(session)
     peoplesummary.init(session)
+    reccam.init(session)
 
 def quit():
     screentouched.quit()
@@ -93,7 +94,7 @@ def quit():
     assign.quit()
     personlost.quit()
     peoplesummary.quit()
-
+    reccam.quit()
 
 def main():
     global memory_service

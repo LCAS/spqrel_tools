@@ -15,7 +15,9 @@ turn_180;
 
 # 3
 
+reccam_on;
 memorizepeople_SPRgame;
+reccam_off;
 peoplesummary_SPRgame;
 
 vsay_SPRinfocollected;

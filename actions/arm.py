@@ -8,7 +8,7 @@ import action_base
 from action_base import *
 
 
-actionName = "posture"
+actionName = "arm"
 
 
 def actionThread_exec (params):

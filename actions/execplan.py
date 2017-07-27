@@ -3,6 +3,7 @@ import argparse
 import sys
 import time
 import threading
+import subprocess
 
 import action_base
 from action_base import *
@@ -47,7 +48,12 @@ def doExecPlan(memory_service, lu4r_value):
     cmd = 'cd ../plans; pnpgen_translator inline GPSR_task.plan' # ER ???
     os.system(cmd)
 
-    
+    try:
+        task = subprocess.check_output('cat ../plans/GPSR_task')
+        memory_service.raiseEvent('/gpsr/plan', task)
+    except Exception:
+        pass
+
     print " *** DEBUG *** ASR_enable value = ", memory_service.getData("ASR_enable")
 
     cmd = 'cd ../plans; ./run_plan.py --plan GPSR_task'

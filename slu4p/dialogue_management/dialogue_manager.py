@@ -208,6 +208,7 @@ class DialogueManager(EventAbstractClass):
                 now = datetime.datetime.now()
                 reply = "It's " + str(now.hour) + " " + str(now.minute)
                 print "[" + self.inst.__class__.__name__ + "] Robot says: " + reply
+                self.memory.raiseEvent("DialogueVesponse", '[WHATSTHETIME]')
                 self.memory.raiseEvent("Veply", reply)
             elif '[STOP]' in submessage:
                 self.memory.raiseEvent("DialogueVesponse", "Action stopped")

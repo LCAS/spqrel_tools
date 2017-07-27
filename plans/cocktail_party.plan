@@ -1,11 +1,13 @@
 # enter and goto room
+recdata_on;
+
 headpose_0_-10;
 vsay_dooropen;
 waitfor_dooropen;
 vsay_starting;
 wait_2;
 enter_30_0_0_4_true; 
-navigateto_living1;  # TODO check location of party room toponav
+navigateto_living1;  
 turn_90_ABS|10;
 headpose_0_-20;
 
@@ -15,7 +17,9 @@ waitfor_personhere; ! *if* timeout_waitfor_20 *do* vsay_comehere; restart_action
 
 dialogue_takeorder;
 vsay_memorizeperson;
+reccam_on;
 memorizeface_inmemory_Profile1;
+reccam_off;
 vsay_thanks;
 turn_-20;
 wait_5;
@@ -26,7 +30,9 @@ waitfor_personhere; ! *if* timeout_waitfor_20 *do* vsay_comehere; restart_action
 
 dialogue_takeorder;
 vsay_memorizeperson;
+reccam_on;
 memorizeface_inmemory_Profile2;
+reccam_off;
 vsay_thanks;
 turn_20;
 wait_5;
@@ -36,18 +42,20 @@ wait_5;
 #approach_^personsitting/id|10;
 #dialogue_takeorder;
 #vsay_memorizeperson;
+#reccam_on;
 #memorizeface_inmemory_Profile3;
+#reccam_off;
 #vsay_thanks;
 
 #PLACING ORDERS
-navigateto_sofaside; #TODO check toponav
+navigateto_sofaside; 
 turn_45_ABS|10;
 #TODO: person description
 dialogue_unknownavailable_1;
 dialogue_unknownavailable_2;
 #dialogue_unknownavailable_3;
 
-navigateto_living1;  # TODO check location of party room toponav
+navigateto_living1;  
 turn_90_ABS|10;
 
 

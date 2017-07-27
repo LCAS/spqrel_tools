@@ -136,11 +136,11 @@
         </template>
     </category>
 
-    <category>
+    <!--<category>
         <pattern>*</pattern>
         <template>
             <srai>FAILUREMANAGEMENT</srai>
         </template>
-    </category>
+    </category>-->
 
 </aiml>

@@ -125,7 +125,8 @@ def actionThread_exec (params):
                     
 
         if command=='SPRgame':
-            
+            peoplevalues =  memory_service.getData("PeoplePerception/PeopleDetected")
+            num_total=len(peoplevalues)
             num_males=0
             num_females=0
             num_total=len(people_list)
@@ -148,8 +149,8 @@ def actionThread_exec (params):
                     
         if command=='Person':
             name=''
-            age=''
-            gender=''
+            age=0
+            str_gender=''
             tshircolor=''
             personid=''
             try:
@@ -158,41 +159,23 @@ def actionThread_exec (params):
             except:
                 print 'memory Actions/personhere/PersonID not available'
             
+                
             try:
-                mem_list=memory_service.getData('Actions/MemorizePeople/Peoplelist')
-                people_list=json.loads(mem_list)
-    
-                print 'len',len(people_list)
-                print people_list
+                shirtcolorName =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ShirtColor")
+                propage =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/AgeProperties")
+                propgender =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/GenderProperties")
+                age=round(propage[1],2)
+                if propgender[0] ==0.0:
+                    str_gender='female'
+                elif propgender[0] ==1.0:
+                    str_gender='male'
                 
-                for currentuser in people_list:
-                    if currentuser['person_naoqiid']==personid:
-                        name=currentuser['face_naoqi']['name']
-                        age=currentuser['face_naoqi']['faceinfo']['age']
-                        gender=currentuser['face_naoqi']['faceinfo']['gender']
-                        tshircolor=currentuser['infp']['shirtcolor']['name']
-                        
-                        result={'PersonID':personid,'Name':name,'Age':age, 'Gender': gender, 'TshirtColor':tshircolor}
-                        
-                        
-                
-            except: 
-                print 'Actions/MemorizePeople/Peoplelist memory key not found '   
-                
-                try:
-                    shirtcolorName =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ShirtColor")
-                    propage =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/AgeProperties")
-                    propgender =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/GenderProperties")
-                    if propgender[0] ==0.0:
-                        str_gender='female'
-                    elif propgender[0] ==1.0:
-                        str_gender='male'
-                    result={'PersonID':personid,'Name':'','Age':round(propage[1],2), 'Gender':str_gender,'TshirtColor':shirtcolorName}
 
-                    
-                except:
-                    print 'FaceCharacteristics not found '  
-
+                
+            except:
+                print 'FaceCharacteristics not found ' 
+                
+            result={'PersonID':personid,'Name':'','Age':age, 'Gender':str_gender,'TshirtColor':tshircolor}
             str_result=json.dumps(result)                           
             memory_service.insertData('Humans/Peoplesummary',str_result)
                       

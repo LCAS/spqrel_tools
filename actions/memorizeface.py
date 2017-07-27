@@ -63,83 +63,111 @@ def onFaceDetection(facevalues):
 
 def onPeopleDetection(value):
     
-    personid=values
-    print 'personid= ',personid
-    face={'name':'','faceinfo':{}}
-    age={'val':0.0,'conf':0.0}
-    gender={'val':0.0,'conf':0.0}
-    smile={'val':0.0,'conf':0.0}
-    
-    try:
-        
-        #res_char=face_char_service.analyzeFaceCharacteristics(personid)
-        #print 'res_char',res_char
-        
-        #lookingat =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/LookingAtRobotScore")
-        #gazedirection =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/GazeDirection")
-        propage =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/AgeProperties")
-        propgender =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/GenderProperties")
-        propexpression =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ExpressionProperties")
-        propsmile =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/SmileProperties")
-        
-        
-        if propgender[0] ==0.0:
-            str_gender='female'
-        elif propgender[0] ==1.0:
-            str_gender='male'
-        age={'val':propage[0],'conf':round(propage[1],2)}
-        gender={'val':str_gender,'conf':round(propgender[1],2)}
-        smile={'val':round(propsmile[0],2),'conf':round(propsmile[1],2)}
-        
-        #propexpression  [neutral, happy, surprised, angry or sad].
-        #expression={'neutral':round(propexpression[0],2),'happy':round(propexpression[1],2),'surprised':round(propexpression[2],2),'angry':round(propexpression[3],2),'sad':round(propexpression[4],2)}
-        
-    except:
-        #print 'FaceCharacteristics error '
-        pass
+            face={'name':'','faceinfo':{}}
+            age={'val':0.0,'conf':0.0}
+            gender={'val':0.0,'conf':0.0}
+            smile={'val':0.0,'conf':0.0}
+            try:
+                
+                #try:
+                res_char=face_char_service.analyzeFaceCharacteristics(personid)
+                print 'res_char',res_char
+                
+                #lookingat =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/LookingAtRobotScore")
+                #gazedirection =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/GazeDirection")
+                propage =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/AgeProperties")
+                propgender =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/GenderProperties")
+                propexpression =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ExpressionProperties")
+                propsmile =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/SmileProperties")
+
+                print 'propgender',propgender
+                
+                if propgender[0] ==0.0:
+                    str_gender='female'
+                elif propgender[0] ==1.0:
+                    str_gender='male'
+                age={'val':propage[0],'conf':round(propage[1],2)}
+                gender={'val':str_gender,'conf':round(propgender[1],2)}
+                smile={'val':round(propsmile[0],2),'conf':round(propsmile[1],2)}
+                
+                #propexpression  [neutral, happy, surprised, angry or sad].
+                #expression={'neutral':round(propexpression[0],2),'happy':round(propexpression[1],2),'surprised':round(propexpression[2],2),'angry':round(propexpression[3],2),'sad':round(propexpression[4],2)}
+                
+            except:
+                print 'FaceCharacteristics error '
+                pass
 #                    
-    facecharacteristics={'age':age, 'gender':gender,'smile':smile, 'expression':{}}
+            facecharacteristics={'age':age, 'gender':gender,'smile':smile, 'expression':{}}
 
 
-    shirtcolor={'name': '', 'hsv':[]}
-    personinfo={'height': 0.0, 'shirtcolor': {} }
-    poseinworld={'x':0.0,'y': 0.0} 
-    try:
+            shirtcolor={'name': '', 'hsv':[]}
+            personinfo={'height': 0.0, 'shirtcolor': shirtcolor,'posture':'' }
+            poseinworld={'x':0.0,'y': 0.0} 
+            
+            try:
 #                angles =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/AnglesYawPitch")
 #                distance =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/Distance")
-        height =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/RealHeight")
-        shirtcolorName =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ShirtColor")
-        shirtcolorHSV =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ShirtColorHSV")
-        PositionInRobotFrame =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/PositionInRobotFrame")
-
-        posture='unknow'
-        if issitting==0:
-            posture='standing'
-        elif issitting==1:
-            posture='sitting'       
-
-        # Write data in json format
-
-        shirtcolor={'name': shirtcolorName, 'hsv':shirtcolorHSV}
-        personinfo={'height': round(height,2), 'shirtcolor': shirtcolor,'posture':posture}
-        face['faceinfo']=facecharacteristics
-        
-        w_px, w_py = point2world(memory_service,[PositionInRobotFrame[0],PositionInRobotFrame[1]])
-        poseinworld={'x':w_px,'y': w_py}
+                height =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/RealHeight")
+                shirtcolorName =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ShirtColor")
+                shirtcolorHSV =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ShirtColorHSV")
+                PositionInRobotFrame =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/PositionInRobotFrame")
+                issitting=memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/IsSitting") #0 is standing,1 sitting,2 is unknown.
                 
-        
-    except:
-        #print 'Person info error '
-        pass
+                iswaving=memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/IsWaving")
+                iswavingcenter=memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/IsWavingCenter")
+                iswavingleft=memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/IsWavingLeft")
+                iswavingright=memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/IsWavingRight")
+                
 
-    face['faceinfo']=facecharacteristics      
-    posetopological={'current_node':'TODO','closest_node':'TODO'}
-    lastlocation= {'world':poseinworld , 'topological':posetopological}
-    
-    user={'personid': personid ,'person_naoqiid': personid,'info': personinfo, 'lastlocation':lastlocation, 'face_naoqi': face,'face_ms_api': {}}
-    
-   
-    return user
+                
+
+#
+                posture='unknow'
+                if issitting==0:
+                    posture='standing'
+                elif issitting==1:
+                    posture='sitting'
+                    
+                wavingmode='none'
+                if iswavingcenter==1:
+                    wavingmode='center'
+                if iswavingcenter==1:
+                    iswavingleft='left'
+                if iswavingcenter==1:
+                    iswavingright='right'
+                # Write data in json format
+
+                shirtcolor={'name': shirtcolorName, 'hsv':shirtcolorHSV}
+                personinfo={'height': round(height,2), 'shirtcolor': shirtcolor,'posture':posture,'waving': wavingmode}
+                
+
+                w_px, w_py = point2world(memory_service,[PositionInRobotFrame[0],PositionInRobotFrame[1]])
+                poseinworld={'x':w_px,'y': w_py}
+                
+                
+                
+                
+            except:
+                print 'Person info error '
+                pass
+
+
+            try:
+                current_node=memory_service.getData('TopologicalNav/CurrentNode')
+                closest_node=memory_service.getData('TopologicalNav/ClosestNode')
+                
+            except:
+                #print 'topological localization error '
+                current_node=None
+                closest_node=None
+                
+            face['faceinfo']=facecharacteristics
+        
+            posetopological={'current_node':current_node,'closest_node':closest_node}
+            lastlocation= {'world':poseinworld , 'topological':posetopological}
+            
+            user={'personid': personid ,'person_naoqiid': personid,'info': personinfo, 'lastlocation':lastlocation, 'face_naoqi': face,'face_ms_api': {}}
+            
     
 def updateMemorizePeople(currentuser):
 

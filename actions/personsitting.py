@@ -37,6 +37,7 @@ def rhMonitorThread (memory_service):
                     if (IsSitting == 1):
                         px,py,pz = memory_service.getData("PeoplePerception/Person/"+str(personid)+"/PositionInRobotFrame")
                         memory_service.setData("")
+                        print "person sitting"
                         print "X: " + str(px) + "  Y: " + str(py)
                         w_px, w_py = point2world(memory_service,[px,py])
                         memory_service.insertData("personsitting/coordinates",[w_px,w_py])

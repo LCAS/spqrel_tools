@@ -315,6 +315,9 @@ def actionThread_exec (params):
 
                     if learned is True:
 
+                        tracker_service.stopTracker()
+                        tracker_service.unregisterAllTargets()
+                        
                         person=None
                         personid=None
                         personhere=None

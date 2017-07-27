@@ -115,12 +115,15 @@ class DialogueManager(EventAbstractClass):
                 if self.profile_1['DrinkAvailability'] == 'False':
                     customer = self.profile_1['Name']
                     drink = self.profile_1['Drink']
+                    self.profile_unavailable = self.profile_1
                 if self.profile_2['DrinkAvailability'] == 'False':
                     customer = self.profile_2['Name']
                     drink = self.profile_2['Drink']
+                    self.profile_unavailable = self.profile_2
                 if self.profile_3['DrinkAvailability'] == 'False':
                     customer = self.profile_3['Name']
                     drink = self.profile_3['Drink']
+                    self.profile_unavailable = self.profile_3
             except:
                 pass
             to_send = 'SAY CALLPERSONUNAVAILABLE CUSTOMER ' + customer + ' DRINK ' + drink
@@ -134,6 +137,20 @@ class DialogueManager(EventAbstractClass):
             #Need to define how to get back the names and drink
             name = self.user_profile['Name']
             to_send = splitted[0] + ' customer ' + name + ' ' + splitted[2]
+        if 'providealternatives' == splitted[0]:
+            print 'Found providealternatives'
+            try:
+                name = self.profile_unavailable['Name']
+                drinks = self.profile_unavailable['DrinkAlternatives']
+                alternatives = ''
+                for drink in drinks:
+                    alternatives = drink + ',' + alternatives
+            except:
+                name = 'John'
+                alternatives = 'coke, green tea and aquarius'
+            # Need to define how to get back the names and drink
+            'PROVIDEALTERNATIVES CUSTOMER * ALTERNATIVES * START'
+            to_send = splitted[0] + ' customer ' + name + ' alternatives ' + alternatives + ' ' + splitted[2]
         if 'fivequestions' == splitted[0]:
             to_send = splitted[0] + ' ' + splitted[2]
         reply = self.kernel.respond(to_send)
@@ -181,7 +198,7 @@ class DialogueManager(EventAbstractClass):
                 cocktail_data['PersonID'] = self.person_id
                 cocktail_data['Name'] = customer
                 cocktail_data['Drink'] = drink
-                self.user_profile['DrinkAvailability'] = True
+                cocktail_data['DrinkAvailability'] = True
                 self.memory.raiseEvent("DialogueVesponse", json.dumps(cocktail_data))
             elif '[DRINKSALTERNATIVES]' in submessage:
                 data = submessage.replace('[DRINKSALTERNATIVES]', '').replace(')', '').strip()

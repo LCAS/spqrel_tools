@@ -1,19 +1,26 @@
+recdata_on;
+
 # enter the arena and goto location
+headpose_0_-10;
+vsay_dooropen;
 waitfor_dooropen;
 vsay_starting;
-goto_entrance;
-goto_location; ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
+wait_2;
+enter_30_0_0_4_true; 
+
+navigateto_bedroomentrance; 
+turn_-135_ABS;
 
 # RUN 1
-execplan;
+execplan; ! *if* timeout_execplan_180 *do* skip_action !
 goto_location;
 
 # RUN 2
-execplan;
+execplan; ! *if* timeout_execplan_180 *do* skip_action !
 goto_location;
 
 # RUN 3
-execplan;
+execplan; ! *if* timeout_execplan_180 *do* skip_action !
 goto_location;
 
 
@@ -23,3 +30,4 @@ vsay_farewell;
 goto_entrance; ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
 goto_exit;
 
+recdata_off;

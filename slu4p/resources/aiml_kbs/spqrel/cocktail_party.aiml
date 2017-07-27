@@ -81,17 +81,15 @@
             <pattern>RESET</pattern>
             <template>
                 <think>
-                    <set name="Customer">TOFILL</set>
                     <set name="Drink">TOFILL</set>
                 </think>
             </template>
         </category>
 
         <category>
-            <pattern>START CUSTOMER * ALTERNATIVES *</pattern>
+            <pattern>CUSTOMER * ALTERNATIVES * START</pattern>
             <template>
-
-				Hi <star index="1"/>
+				Hi <star index="1"/>, these are the alternative drinks: <star index="2"/>
                 <condition>
                     <li name="Drink" value="TOFILL">
                         <think>
@@ -143,6 +141,15 @@
                 |[TAKEORDERDATA]<get name="Customer"/>(<get name="Drink"/>)
             </template>
         </category>
+
+		<!--<category>
+            <pattern>STOP</pattern>
+            <template>
+                <set name="topic"></set>
+                [STOP]
+            </template>
+        </category>-->
+
     </topic>
 
 
@@ -1245,6 +1252,7 @@
                     <li>What do you want to drink?</li>
                     <li>Which drink do you want?</li>
                 </random>
+				Please tell me or choose an option on my screen.
                 |[OPTIONS]green tea_aquarius_cold brew_coke
             </template>
         </category>

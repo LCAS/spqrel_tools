@@ -315,9 +315,19 @@ def actionThread_exec (params):
 
                     if learned is True:
 
+                        tracker_service.stopTracker()
+                        tracker_service.unregisterAllTargets()
+                        
                         person=None
                         personid=None
-                        
+                        personhere=None
+
+                        try:
+                            personhere=memory_service.gettData('Actions/personhere/PersonID')
+                            
+                        except:
+                            print 'memory Actions/personhere/PersonID not available'
+                                                    
                             
                         if personhere is not None:
                             
@@ -327,14 +337,8 @@ def actionThread_exec (params):
                             
                             personid=peoplevisible
                                                     
-                        else:
                             
-                            try:
-                                personid=memory_service.gettData('Actions/personhere/PersonID')
-                        
-                            except:
-                                print 'memory Actions/personhere/PersonID not available'
-                        
+   
                         
                         if personid is not None:
                             

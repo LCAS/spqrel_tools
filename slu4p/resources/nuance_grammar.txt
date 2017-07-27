@@ -1,3 +1,5 @@
+yes
+no
 hello
 hi
 noah

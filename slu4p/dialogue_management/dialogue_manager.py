@@ -188,12 +188,12 @@ class DialogueManager(EventAbstractClass):
                 data = submessage.replace('[LOOKFORDATA]', '').strip()
                 self.location['location'] = data
                 try:
-                    location = str(self.memory.getData('/location_mapping/' + data)).replace("+", " ")
+                    data = str(self.memory.getData('/location_mapping/' + data)).replace("+", " ")
                 except Exception as e:
                     reply = "The " + data + " is somewhere!"
 
 
-                self.memory.insertData("SLU/location", data)
+                self.memory.insertData("helplocation", data)
                 self.memory.raiseEvent("DialogueVesponse", json.dumps(self.location))
             elif '[OPTIONS]' in submessage:
                 data = submessage.replace('[OPTIONS]', '').strip()

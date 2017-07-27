@@ -25,6 +25,7 @@ def start_behaviors():
     soundlocalizationProxy = ALProxy("ALSoundLocalization",os.getenv("PEPPER_IP"),9559)
     motionProxy = ALProxy("ALMotion",os.getenv("PEPPER_IP"),9559)
     wavingdetectionProxy = ALProxy("ALWavingDetection",os.getenv("PEPPER_IP"),9559)
+    animationProxy = ALProxy("ALAnimationPlayer",os.getenv("PEPPER_IP"),9559)
 
 
     facedetectionProxy.subscribe("Face_Behavior", 500, 0.0)
@@ -50,6 +51,7 @@ def quit_behaviors():
     soundlocalizationProxy = ALProxy("ALSoundLocalization",PEPPER_IP,PEPPER_PORT)
     motionProxy = ALProxy("ALMotion",PEPPER_IP,PEPPER_PORT)
     wavingdetectionProxy = ALProxy("ALWavingDetection",PEPPER_IP,PEPPER_PORT)
+    animationProxy = ALProxy("ALAnimationPlayer", PEPPER_IP, PEPPER_PORT)
 
     
     

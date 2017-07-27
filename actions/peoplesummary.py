@@ -144,7 +144,7 @@ def actionThread_exec (params):
             
             result={'total':num_total,'num_males':num_males,'num_females':num_females }
             str_result=json.dumps(result)    
-            memory_service.insertData('Humans/Peoplesummary',str_result)
+            memory_service.insertData('Humans/Crowd',str_result)
             
             b_completed=True
                     

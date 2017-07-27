@@ -15,7 +15,7 @@
         <template>
             [SAY]
             <srai>MISUNDERSTAND</srai>
-            <srai>GIVUP</srai>
+            <srai>GIVEUP</srai>
             <!--<condition>
                 <li name="firstmisunderstanding" value="FALSE">
                     <srai>GIVEUP</srai>

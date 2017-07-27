@@ -82,7 +82,7 @@ class DialogueManager(EventAbstractClass):
             self.memory.raiseEvent("ASR_enable", "0")
         if 'SPRinfocollected' in splitted[1]:
             try:
-                crowd_info = json.loads(self.memory.getData('Humans/Peoplesummary'))
+                crowd_info = json.loads(self.memory.getData('Humans/Crowd'))
                 total = crowd_info['total']
                 males = crowd_info['num_males']
                 females = crowd_info['num_females']

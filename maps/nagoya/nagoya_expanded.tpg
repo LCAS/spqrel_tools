@@ -477,9 +477,6 @@
     - action: NAOqiPlanner/Goal
       edge_id: living2_living3
       node: living3
-    - action: NAOqiPlanner/Goal
-      edge_id: living2_sofafront
-      node: sofafront
     name: living2
     pointset: NA
     pose:
@@ -662,9 +659,6 @@
       y: -0.287000000477
 - node:
     edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: sofafront_living2
-      node: living2
     - action: NAOqiPlanner/Goal
       edge_id: sofafront_sofaside
       node: sofaside

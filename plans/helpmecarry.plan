@@ -8,14 +8,14 @@ waitfor_personhere;
 vsay_hello;
 #vsay_starting;
 
-dialogue_following; #new from andrea
+#dialogue_following; #new from andrea
 
 
 #### 2 - START THE FOLLOWING PHASE
 
 asrenable; #new from andrea
 reccam_on;
-followuntil_stopfollowing; ! *if* (personlost) *do* vsay_comehere; waitfor_personhere; restart_action !
+followuntil_stopfollowing; ! *if* (personlost) *do* vsay_waitforme; navigateto_start; waitfor_personhere; restart_action !
 asrenable_off;
 reccam_off;
 

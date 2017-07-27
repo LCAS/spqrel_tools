@@ -25,8 +25,12 @@ def rhMonitorThread (memory_service):
     count = 0
     match = 1
     while getattr(t, "do_run", True):
-        plist = memory_service.getData('PeoplePerception/PeopleList')
-        personid = memory_service.getData('Actions/personhere/PersonID')
+        try:
+            plist = memory_service.getData('PeoplePerception/PeopleList')
+            personid = memory_service.getData('Actions/personhere/PersonID')
+        except Exception:
+            plist = []
+            personid = 0
         v = 'false'
         try:
             if (len(plist) >= 1):

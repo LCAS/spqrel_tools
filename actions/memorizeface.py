@@ -11,7 +11,7 @@ Update  'Actions/MemorizePeople/Person/IDNUMBER'
 
 PARAMS:
 
-memorizeface_inprofile_Humans/Profile<1|2|3> Read memorykey 'Humans/Profile<1|2|3>
+memorizeface_inmemory_Humans/Profile<1|2|3> Read memorykey 'Humans/Profile<1|2|3>
 
 memorizeface_name_<nameuser>
 
@@ -234,7 +234,7 @@ def actionThread_exec (params):
     personhere=None
     if params:
         parse_params=params.split('_')
-        if parse_params[0]=='inprofile':
+        if parse_params[0]=='inmemory':
             try:
                 userprofile=json.loadsmemory_service.getData(str(parse_params[1]))
                 nameuser=userprofile['Name']

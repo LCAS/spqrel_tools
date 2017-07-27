@@ -6,11 +6,11 @@
 
         <category>
             <pattern>START</pattern>
-            <template>[SAY] Tell me when you are ready to go!|[OPTIONS]I'm ready!_Stop following me!</template>
+            <template>[SAY] Tell me when you are ready to go! Please say "Follow me" to start and "Stop" when we reached the location|[OPTIONS]I'm ready!_Stop following me!</template>
         </category>
 
         <category>
-            <pattern>*</pattern>
+            <pattern>* FOLLOW *</pattern>
             <template>
                 <srai>SAY FOLLOWYOU</srai>
                 |[STOP]

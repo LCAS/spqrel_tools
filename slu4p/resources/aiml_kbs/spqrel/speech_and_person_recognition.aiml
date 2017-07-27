@@ -85,6 +85,14 @@
         </category>
 
         <category>
+            <pattern>WHERE * FIND THE *</pattern>
+            <template>
+                [WHEREIS]
+                <star index="2"/>
+            </template>
+        </category>
+
+        <category>
             <pattern>* WHAT IS THE *</pattern>
             <template>
                 [WHEREIS]

@@ -8,6 +8,7 @@ vsay_starting;
 wait_2;
 enter_30_0_0_4_true; 
 navigateto_living1;  
+headpose_0_-10;
 turn_90_ABS|10;
 headpose_0_-20;
 
@@ -49,6 +50,7 @@ wait_5;
 
 #PLACING ORDERS
 navigateto_sofaside; 
+headpose_0_-10;
 turn_45_ABS|10;
 #TODO: person description
 dialogue_unknownavailable_1;
@@ -56,6 +58,7 @@ dialogue_unknownavailable_2;
 #dialogue_unknownavailable_3;
 
 navigateto_living1;  
+headpose_0_-10;
 turn_90_ABS|10;
 
 
@@ -63,12 +66,16 @@ vsay_callpersonunavailable;
 waitfor_personhere;
 dialogue_providealternatives;
 
-navigateto_bar;
+navigateto_sofaside;
+headpose_0_-10;
+turn_45_ABS|10;
+
 vsay_confirmalternativedrink;
 
 navigateto_hall;
+headpose_0_-10;
 navigateto_start;
-
+headpose_0_-10;
 
 
 

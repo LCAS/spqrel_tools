@@ -3,7 +3,7 @@ import threading
 
 import action_base
 
-import headpose
+#import headpose
 
 headJointsNames = ["HeadYaw", "HeadPitch"]
 headYaw = 0.0
@@ -65,7 +65,7 @@ def actionThread_exec(params):
         # cancelled send empty goal to stop
         memory_service.raiseEvent(mem_key_goal, "")
 
-    headpose.moveHead(motion_service, headYaw, headPitch, headtime)
+    #headpose.moveHead(motion_service, headYaw, headPitch, headtime)
     print "Action " + actionName + " " + params + " terminated"
     # action end
     if goal_reached:

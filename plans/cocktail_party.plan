@@ -17,6 +17,7 @@ vsay_memorizeperson;
 memorizeface_inmemory_Profile1;
 vsay_thanks;
 turn_-20;
+wait_5;
 
 #ORDER 2
 vsay_ordercomehere; 
@@ -27,6 +28,7 @@ vsay_memorizeperson;
 memorizeface_inmemory_Profile2;
 vsay_thanks;
 turn_20;
+wait_5;
 
 #ORDER 3
 lookfor_sittingperson|10;

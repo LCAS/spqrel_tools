@@ -4,6 +4,7 @@ import sys
 import time
 import threading
 import subprocess
+import re
 
 import action_base
 from action_base import *
@@ -39,8 +40,10 @@ def get_filler(argument):
     return clean_string(filler)
 
 
-def LU4R_to_plan(lu4r, memory_service):
+def LU4R_to_plan(lu4r, asr_value, memory_service):
+    lu4r = lu4r + "#" + text2lu4.inputtext(asr_value)
     interpretations = lu4r.split("#")
+
     action = ''
     for interpretation in interpretations:
         interpretation = interpretation.replace(")", "")
@@ -56,7 +59,12 @@ def LU4R_to_plan(lu4r, memory_service):
                     if 'goal' in argument:
                         filler = get_filler(argument)
                         memory_service.raiseEvent("Veply", "I understood that the location is " + filler)
-                        location = memory_service.getData("/location_mapping/" + filler)
+                        try:
+                            location = memory_service.getData("/location_mapping/" + filler)
+                        except:
+                            location = ""
+                            action = ""
+                            memory_service.raiseEvent("Veply", "I'm sorry, I don't know the location")
                         action = action + location
                 action = action + ';'
             elif frame == 'COTHEME':
@@ -78,7 +86,11 @@ def LU4R_to_plan(lu4r, memory_service):
                     if 'theme' in argument:
                         filler = get_filler(argument)
                         memory_service.raiseEvent("Veply", "I understood that the object is a " + filler)
-                        object = memory_service.getData("/location_mapping/" + filler)
+                        try:
+                            object = memory_service.getData("/location_mapping/" + filler)
+                        except:
+                            action = ""
+                            memory_service.raiseEvent("Veply", "I'm sorry, I don't know where is the " + filler)
                     if ('beneficiary' in argument) or ('recipient' in argument):
                         filler = get_filler(argument)
                         if filler == 'me':
@@ -109,7 +121,11 @@ def LU4R_to_plan(lu4r, memory_service):
                     if ('theme' in argument) or ('entity' in argument):
                         filler = get_filler(argument)
                         memory_service.raiseEvent("Veply", "I understood that the object is a " + filler)
-                        object = memory_service.getData("/location_mapping/" + filler)
+                        try:
+                            object = memory_service.getData("/location_mapping/" + filler)
+                        except:
+                            action = ""
+                            memory_service.raiseEvent("Veply", "I'm sorry, I don't know where is the " + filler)
                     if 'source' in argument:
                         filler = get_filler(argument)
                         memory_service.raiseEvent("Veply",
@@ -127,9 +143,7 @@ def LU4R_to_plan(lu4r, memory_service):
                         memory_service.raiseEvent("Veply", "I understood the entity to find is in " + filler)
                         ground = filler
                     if 'phenomenon' in argument:
-                        argument_splitted = argument.splt(':')
-                        filler = argument_splitted[1].replace('"', '')
-                        filler = clean_string(filler)
+                        filler = get_filler(argument)
                         memory_service.raiseEvent("Veply", "I understood that I have to look for" + filler)
                         try:
                             phenomenon = memory_service.getData("/location_mapping/" + filler)
@@ -158,12 +172,12 @@ def LU4R_to_plan(lu4r, memory_service):
 
 
 # non-blocking function
-def doExecPlan(memory_service, lu4r_value):
+def doExecPlan(memory_service, lu4r_value, asr_value):
 
     print " *** DEBUG *** ASR_enable set to 0 !!!"
     memory_service.raiseEvent("ASR_enable","0")
 
-    plan = LU4R_to_plan(lu4r_value, memory_service)
+    plan = LU4R_to_plan(lu4r_value, asr_value, memory_service)
     os.chdir(os.environ["PLAN_DIR"])
     cmd = 'cd ../plans; echo "'+plan+'" > GPSR_task.plan'
     os.system(cmd)
@@ -221,7 +235,7 @@ def actionThread_exec (params):
 
     if (command_understood):
         # compose and start plan
-        doExecPlan(memory_service, lu4r_value)  # non-blocking
+        doExecPlan(memory_service, lu4r_value, asr_value)  # non-blocking
         # wait for end of plan execution
         val = 0
         while (getattr(t, "do_run", True) and val==0): 
@@ -270,12 +284,98 @@ def quit():
     sub1.signal.disconnect(idsub1)
     sub2.signal.disconnect(idsub2)
 
-    
+pairs_say = (
+  (r'(tell me|say) something about yourself',
+  ( "SAY(message=\"peppino\") ")),
+  (r'(tell me|say) the time',
+  ( "SAY(message=\"time\") ")),
+  (r'(tell me|say) what day is tomorrow',
+  ( "SAY(message=\"tomorrow\") ")),
+  (r'(tell me|say) what day is today',
+  ( "SAY(message=\"day\") ")),
+  (r'(tell me|say) your team name',
+  ( "SAY(message=\"teamname\") ")),
+  (r'(tell me|say) your country ',
+  ( "SAY(message=\"teamcountry\") ")),
+  (r'(tell me|say) your team affiliation',
+  ( "SAY(message=\"teamaffiliation\") ")),
+  (r'(tell me|say) (.*) day (.*) week',
+  ( "SAY(message=\"weekday\") ")),
+  (r'(tell me|say) (.*) day (.*) month',
+  ( "SAY(message=\"monthday\") ")),
+  (r'(tell me|say) (.*) joke',
+  ( "SAY(message=\"joke\") ")),
+  (r'(tell|say) (.*) joke to (.*) in (.*)',
+  ( "SAY(message=\"joke\",beneficiary=\" %2 \",goal=\" %1 \") ")),
+  (r'answer a question (.*)',
+  ( "ANSWER(message=\"joke\") ")),
+  (r'navigate (.*) ',
+  ( "SAY(message=\"joke\") ")),
+  (r'(tell me|say) how many (.*) there are (.*)',
+  ( "BEING_LOCATED(located=\"%3\", theme=\"%2\") ")),
+  (r'how many (.*) there are (.*)',
+  ( "BEING_LOCATED(located=\"%2\", theme=\"%1\")")),
+)
 
+reflections = {
+  "the "       : "",
+  "in the "       : "",
+  "to the "       : "",
+  "at the "       : "",
+  "on the "       : ""
+}
+
+
+class Test2lu4(object):
+    def __init__(self, pairs, reflections={}):
+
+        self._pairs = [(re.compile(x, re.IGNORECASE), y) for (x, y) in pairs_say]
+        self._reflections = reflections
+        self._regex = self._compile_reflections()
+
+    def _compile_reflections(self):
+        sorted_refl = sorted(self._reflections.keys(), key=len,
+                             reverse=True)
+        return re.compile(r"\b({0})\b".format("|".join(map(re.escape,
+                                                           sorted_refl))), re.IGNORECASE)
+
+    def _substitute(self, str):
+
+        # Substitute words in the string, according to the specified reflections,
+
+        return self._regex.sub(lambda mo:
+                               self._reflections[mo.string[mo.start():mo.end()]],
+                               str.lower())
+
+    def _wildcards(self, response, match):
+        pos = response.find('%')
+        while pos >= 0:
+            num = int(response[pos + 1:pos + 2])
+            response = response[:pos] + \
+                       self._substitute(match.group(num)) + \
+                       response[pos + 2:]
+            pos = response.find('%')
+        return response
+
+    def inputtext(self, txt):
+        # check each pattern
+        for (pattern, response) in self._pairs:
+            # print 'pattern=',str(pattern)
+            match = pattern.match(txt)
+
+            if match:
+                if len(response) > 1:
+                    resp = response
+
+                resp = self._wildcards(resp, match)  # process wildcards
+
+                return resp
 
 if __name__ == "__main__":
 
     app = action_base.initApp(actionName)
+
+    text2lu4 = Test2lu4(pairs_say, reflections)
         
     init(app.session)
 

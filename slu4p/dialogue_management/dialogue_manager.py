@@ -143,6 +143,7 @@ class DialogueManager(EventAbstractClass):
                 name = self.profile_unavailable['Name']
                 drinks = self.profile_unavailable['DrinkAlternatives']
                 alternatives = ''
+                if alternatives
                 for drink in drinks:
                     alternatives = drink + ',' + alternatives
             except:
@@ -150,7 +151,19 @@ class DialogueManager(EventAbstractClass):
                 alternatives = 'coke, green tea and aquarius'
             # Need to define how to get back the names and drink
             'PROVIDEALTERNATIVES CUSTOMER * ALTERNATIVES * START'
+
             to_send = splitted[0] + ' customer ' + name + ' alternatives ' + alternatives + ' ' + splitted[2]
+        if 'persondescription' == splitted[1]:
+            print 'Found persondescription'
+            try:
+                local_profile = json.loads(self.memory.getData("Humans/" + splitted[2]))
+                name = local_profile['Name']
+                gender = local_profile['Gender']
+                shirt = local_profile['ColorTshirt']
+            except:
+                sentence = ''
+            sentence = name + " is the " + gender + " with the " + shirt + " t-shirt!"
+            self.memory.raiseEvent("Veply", sentence)
         if 'fivequestions' == splitted[0]:
             to_send = splitted[0] + ' ' + splitted[2]
         reply = self.kernel.respond(to_send)

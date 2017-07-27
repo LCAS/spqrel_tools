@@ -63,7 +63,7 @@ def onFaceDetection(facevalues):
 
 def onPeopleDetection(value):
     
-    persoinid=value
+    personid=value
     face={'name':'','faceinfo':{}}
     age={'val':0.0,'conf':0.0}
     gender={'val':0.0,'conf':0.0}

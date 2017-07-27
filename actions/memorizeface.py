@@ -219,6 +219,15 @@ def actionThread_exec (params):
     faces_service.setRecognitionEnabled(True)
     face_char_service = getattr(t, "session", None).service("ALFaceCharacteristics")
     print "Action "+actionName+" started with params "+params
+    tracker_service = getattr(t, "session", None).service("ALTracker")
+    
+    targetName = "Face"
+    tracker_service.registerTarget(targetName,0.1)
+    # Then, start tracker.
+    tracker_service.track(targetName)
+    # set mode
+    mode = "Head"
+    trackerProxy.setMode(mode)
     
     ##memorizeface_inmemory_Profile<1> Read memorykey 'Humans/Profile<1|2|3>
     nameuser=''
@@ -358,7 +367,8 @@ def actionThread_exec (params):
         time.sleep(0.3)
 
     # action end
-
+    tracker_service.stopTracker()
+    tracker_service.unregisterAllTargets()
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
     print "Action "+actionName+" "+params+" terminated"
 

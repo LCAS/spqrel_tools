@@ -29,7 +29,7 @@ def LU4R_callback(data):
     print "LU4R callback: ",lu4r_value
 
 def clean_string(string):
-    return string.replace('to').replace('the').replace('towards').strip()
+    return string.replace('to').replace('the').replace('towards').replace('in').strip()
 
 
 def LU4R_to_plan(lu4r, memory_service):
@@ -135,7 +135,28 @@ def LU4R_to_plan(lu4r, memory_service):
                     action = action + '; '
                     action = action + ' vsay_cannottake; wait_20;'
             elif frame == 'LOCATING':
-                print 'something'
+                object = ''
+                final_position = ''
+                action = action + ' navigateto_'
+                memory_service.raiseEvent("Veply", "I understood that I have to find")
+                for argument in arguments:
+                    if 'ground' in argument:
+                        argument_splitted = argument.splt(':')
+                        filler = argument_splitted[1].replace('"','')
+                        filler = clean_string(filler)
+                        memory_service.raiseEvent("Veply","I understood the entity to find is in"+filler)
+                        ground = filler
+                    if 'phenomenon' in argument:
+                        argument_splitted = argument.splt(':')
+                        filler = argument_splitted[1].replace('"','')
+                        filler = clean_string(filler)
+                        memory_service.raiseEvent("Veply","I understood that I have to look for" + filler)
+                        phenomenon = filler
+                if len(phenomenon) > 0:
+                    action = action + ground
+                    action = action + '; '
+                    # TODO
+                    action = action + ' vsay_; wait_20;'
 
         else:
             print "No arguments"

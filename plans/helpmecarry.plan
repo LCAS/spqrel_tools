@@ -1,4 +1,5 @@
 #### 1 - WAIT FOR THE PERSON TO FOLLOW
+recdata_on;
 
 headpose_0_-30;
 #say_hello;
@@ -13,8 +14,10 @@ dialogue_following; #new from andrea
 #### 2 - START THE FOLLOWING PHASE
 
 asrenable; #new from andrea
+reccam_on;
 followuntil_stopfollowing; ! *if* (personlost) *do* vsay_comehere; waitfor_personhere; restart_action !
 asrenable_off;
+reccam_off;
 
 saveposition_car;
 
@@ -24,9 +27,13 @@ saveposition_car;
 dialogue_lookforhelp;
 headpose_0_-20;
 
-navigateto_^helplocation; ! *if* personhere *do* dialogue_whattime; restart_action !
+navigateto_^helplocation; # ! *if* personhere *do* dialogue_whattime; restart_action !
 
-lookfor_persondetected; ! *if* timeout_lookfor_20 *do* vsay_comehere; restart_action !
+reccam_on;
+lookfor_persondetected; ! *if* timeout_lookfor_20 *do* 
+reccam_off;
+
+vsay_comehere; restart_action !
 
 arm_up;
 vsay_guide; # we could use this action to acquire the name of the guy. At the end of this action, vsay_followme is automatically triggered
@@ -42,5 +49,5 @@ gotopos_^car/coordinates; ! *if* (not personbehind) *do*  turn_180; arm_up ; vsa
 
 dialogue_arrivedcar;
 vsay_farewell;
-
+recdata_off;
 

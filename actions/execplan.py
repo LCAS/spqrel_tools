@@ -82,7 +82,7 @@ def LU4R_to_plan(lu4r, memory_service):
         else:
             print "No arguments"
 
-    return "vsay_starting; waitfor_screentouched; vsay_farewell;"
+    return "speechbtn_starting; wait_5; speechbtn_farewell;"
 
 
 # non-blocking function
@@ -100,7 +100,7 @@ def doExecPlan(memory_service, lu4r_value):
     os.system(cmd)
 
     try:
-        task = subprocess.check_output('cat ../plans/GPSR_task')
+        task = subprocess.check_output('cat ../plans/GPSR_task.plan')
         memory_service.raiseEvent('/gpsr/plan', task)
     except Exception:
         pass

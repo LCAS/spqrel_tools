@@ -34,6 +34,7 @@ def rhMonitorThread (memory_service):
                     personid = plist[i]
                     IsSitting = memory_service.getData("PeoplePerception/Person/"+str(personid)+"/IsSitting")
                     # Save person position
+                    memory_service.insertData("personsitting/test",personid)
                     if (IsSitting == 1):
                         px,py,pz = memory_service.getData("PeoplePerception/Person/"+str(personid)+"/PositionInRobotFrame")
                         memory_service.setData("")

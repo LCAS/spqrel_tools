@@ -68,8 +68,7 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                         action = action + location
                 action = action + ';'
             elif frame == 'COTHEME':
-                # TODO to finish
-                action = action + ' followuntil_stopfollowing'
+                action = action + ' followuntil_stopfollowing; '
                 memory_service.raiseEvent("Veply", "I understood that I need to follow")
                 for argument in arguments:
                     if 'cotheme' in argument:
@@ -150,11 +149,19 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                         except:
                             memory_service.raiseEvent("Veply", "I'm sorry, I don't know where to search")
                         phenomenon = filler
-                    if len(phenomenon) > 0:
-                        action = action + ground
-                        action = action + '; '
-                        action = action + ' lookfor_persondetected|10; '
-                        action = action + ' vsay_cannottake; wait_10;'
+                if len(phenomenon) > 0:
+                    action = action + ground
+                    action = action + '; '
+                    action = action + ' lookfor_persondetected|10; '
+                    action = action + ' vsay_notfound; wait_10;'
+            elif frame == 'SAY':
+                phenomenon = ''
+                memory_service.raiseEvent("Veply", "I understood that I have to say")
+                for argument in arguments:
+                    if 'message' in argument:
+                        argument_splitted = argument.split(':')
+                        filler = argument_splitted[1].replace('"', '')
+                        memory_service.raiseEvent("Veply", filler)
 
         else:
             print "No arguments"

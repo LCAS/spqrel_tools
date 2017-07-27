@@ -87,14 +87,17 @@ def LU4R_to_plan(lu4r, memory_service):
                     if 'goal' in argument:
                         filler = get_filler(argument)
                         memory_service.raiseEvent("Veply", "I understood that the final position of the object will be the " + filler)
-                        final_position = memory_service.getData("/location_mapping/" + filler)
+                        try:
+                            final_position = memory_service.getData("/location_mapping/" + filler)
+                        except:
+                            memory_service.raiseEvent("Veply",
+                                                      "I don't know where I have to bring the " + filler)
                     if 'source' in argument:
                         filler = get_filler(argument)
                         memory_service.raiseEvent("Veply", "I understood that the initial position of the object is " + filler)
-                        final_position = memory_service.getData("/location_mapping/" + filler)
                 if len(object) > 0:
                     action = action + object
-                    action = action + '; '
+                    action = action + '|120; '
                     action = action + ' vsay_cannottake; wait_10;'
                     if len(final_position) > 0:
                         action = action + ' navigateto_' + final_position + ';'
@@ -121,41 +124,23 @@ def LU4R_to_plan(lu4r, memory_service):
                 for argument in arguments:
                     if ('ground' in argument) or ('entity' in argument):
                         filler = get_filler(argument)
-                        memory_service.raiseEvent("Veply", "I understood that the place to be searched is " + filler)
+                        memory_service.raiseEvent("Veply", "I understood the entity to find is in " + filler)
+                        ground = filler
                     if 'phenomenon' in argument:
-                        filler = get_filler(argument)
-                        memory_service.raiseEvent("Veply", "I understood that I need to find " + filler)
-                        action = action + ' navigateto_'
+                        argument_splitted = argument.splt(':')
+                        filler = argument_splitted[1].replace('"', '')
+                        filler = clean_string(filler)
+                        memory_service.raiseEvent("Veply", "I understood that I have to look for" + filler)
                         try:
                             phenomenon = memory_service.getData("/location_mapping/" + filler)
                         except:
                             memory_service.raiseEvent("Veply", "I'm sorry, I don't know where to search")
-                if len(phenomenon) > 0:
-                    action = action + phenomenon
-                    action = action + '; '
-                    action = action + ' vsay_foundobject; wait_10;'
-                object = ''
-                final_position = ''
-                action = action + ' navigateto_'
-                memory_service.raiseEvent("Veply", "I understood that I have to find")
-                for argument in arguments:
-                    if 'ground' in argument:
-                        argument_splitted = argument.splt(':')
-                        filler = argument_splitted[1].replace('"','')
-                        filler = clean_string(filler)
-                        memory_service.raiseEvent("Veply","I understood the entity to find is in"+filler)
-                        ground = filler
-                    if 'phenomenon' in argument:
-                        argument_splitted = argument.splt(':')
-                        filler = argument_splitted[1].replace('"','')
-                        filler = clean_string(filler)
-                        memory_service.raiseEvent("Veply","I understood that I have to look for" + filler)
                         phenomenon = filler
-                if len(phenomenon) > 0:
-                    action = action + ground
-                    action = action + '; '
-                    action = action + 'lookfor_persondetected|10'
-                    action = action + ' vsay_cannottake; wait_10;'
+                    if len(phenomenon) > 0:
+                        action = action + ground
+                        action = action + '; '
+                        action = action + ' lookfor_persondetected|10; '
+                        action = action + ' vsay_cannottake; wait_10;'
 
         else:
             print "No arguments"

@@ -27,8 +27,8 @@ headpose_0_-20;
 navigateto_^helplocation; ! *if* personhere *do* dialogue_whattime; restart_action !
 
 lookfor_persondetected; ! *if* timeout_lookfor_20 *do* say_comehere; restart_action !
-posture
 
+arm_up;
 dialogue_guide; # we could use this action to acquire the name of the guy. At the end of this action, vsay_followme is automatically triggered
 
 
@@ -36,8 +36,8 @@ dialogue_guide; # we could use this action to acquire the name of the guy. At th
 
 waitfor_personbehind;
 
-navigateto_^car/waypoint; ! *if* (not personbehind) *do*  turn_180; vsay_gotocar ; turn_180 ; waitfor_personbehind; restart_action ;
-gotopos_^car/coordinates; ! *if* (not personbehind) *do*  turn_180; vsay_gotocar ; turn_180 ; waitfor_personbehind; restart_action ;
+navigateto_^car/waypoint; ! *if* (not personbehind) *do*  turn_180; arm_up ; vsay_comehere ; turn_180 ; waitfor_personbehind; restart_action ;
+gotopos_^car/coordinates; ! *if* (not personbehind) *do*  turn_180; arm_up ; vsay_comehere ; turn_180 ; waitfor_personbehind; restart_action ;
 
 dialogue_arrivedcar;
 vsay_farewell;

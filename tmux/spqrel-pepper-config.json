@@ -48,7 +48,7 @@
     {
       "name": "dataset",
       "panes": [
-        "cd $SPQREL_HOME/worktree/spqrel_tools/naoqibag; python ./naoqibag.py --pause True --rate 5 --keys all.key --path $SPQREL_HOME/ --o $SPQREL_HOME/keys.log"
+        "cd $SPQREL_HOME/worktree/spqrel_tools/naoqibag; python ./naoqibag.py --pause True --rate 5 --keys all.key --path $SPQREL_HOME/ --o keys.log"
       ]
     },
     {

@@ -158,6 +158,8 @@
         </template>
     </category>
 
+
+
     <category>
         <pattern>CONFIRMDRINK CUSTOMER * DRINK *</pattern>
         <template>
@@ -282,6 +284,11 @@
                 <li>Here I am.</li>
             </random>|[STOPFOLLOWING]
         </template>
+    </category>
+
+    <category>
+        <pattern>WAITFORME</pattern>
+        <template>I'm a bit slow! Please wait for me!</template>
     </category>
 
     <category>

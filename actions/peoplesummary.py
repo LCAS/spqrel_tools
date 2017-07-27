@@ -151,7 +151,7 @@ def actionThread_exec (params):
             age=''
             gender=''
             tshircolor=''
-            result={'PersonID':personid,'Name':name,'Age':age, 'Gender': gender, 'TshirtColor':tshircolor}
+            personid=''
             try:
                 personid=memory_service.gettData('Actions/personhere/PersonID')
         

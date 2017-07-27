@@ -122,6 +122,15 @@
     </category>
 
     <category>
+        <pattern>NOTFOUND</pattern>
+        <template>
+            <random>
+                <li>I'm sorry, but I'm not able to find the entity!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
         <pattern>COMEHERE CUSTOMER *</pattern>
         <template>
             <random>

@@ -1241,9 +1241,9 @@
                     <set name="topic"></set>
                 </think>
             </template>
-        </category>-->
+        </category>
 
-    </topic>
+    </topic>-->
 
     <category>
         <pattern>ARRIVEDCAR START</pattern>

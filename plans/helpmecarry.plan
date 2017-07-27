@@ -30,6 +30,7 @@ lookfor_persondetected; ! *if* timeout_lookfor_20 *do* say_comehere; restart_act
 
 arm_up;
 vsay_guide; # we could use this action to acquire the name of the guy. At the end of this action, vsay_followme is automatically triggered
+turn_180;
 
 
 #### 4 - COMING BACK TO THE CAR

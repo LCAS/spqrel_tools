@@ -7,6 +7,7 @@ wait_2;
 enter_30_0_0_4_true; 
 navigateto_living1;  # TODO check location of party room toponav
 turn_90_ABS|10;
+headpose_0_-20;
 
 #ORDER 1
 vsay_ordercomehere; 

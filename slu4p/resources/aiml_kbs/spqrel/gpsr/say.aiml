@@ -362,6 +362,18 @@
     </category>
 
     <category>
+        <pattern>GUIDE</pattern>
+        <template>
+            <random>
+                    <li>Could you please follow me to the car? I need some help!</li>
+                    <li>Can you please follow me?</li>
+                    <li>Could you plase help me with the grocery at the car?</li>
+                </random>
+                Place yourself behind me to start!
+        </template>
+    </category>
+
+    <category>
         <pattern>STARTING</pattern>
         <template>
             <random>

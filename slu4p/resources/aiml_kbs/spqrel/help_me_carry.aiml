@@ -126,7 +126,7 @@
         <category>
             <pattern>START</pattern>
             <template>
-                <srai>SAY WHATWEDONOW</srai>
+                <srai>SAY WHATNOW</srai>
                 |[OPTIONS]Look for someone in the kitchen_Look for someone in the corridor_Look for someone
                 in the living room_Look for someone in the dining room_Look for someone in the bedroom_Look for someone
                 in the toilet
@@ -395,7 +395,7 @@
 
     </topic>
 
-    <topic name="GUIDE">
+    <!--<topic name="GUIDE">
 
         <category>
             <pattern>RESET</pattern>
@@ -409,14 +409,7 @@
         <category>
             <pattern>START</pattern>
             <template>
-                <condition>
-                    <li name="Operator" value="TOFILL">
-                        <srai>AskName</srai>
-                    </li>
-                    <li>
-                        <srai>NAMEACQUIRED</srai>
-                    </li>
-                </condition>
+                <srai>NAMEACQUIRED</srai>
             </template>
         </category>
 
@@ -1243,22 +1236,12 @@
             <pattern>NAMEACQUIRED</pattern>
             <template>
                 [SAY]
-                <random>
-                    <li>Hi<get name="Operator"/>!
-                    </li>
-                    <li>Hello<get name="Operator"/>!
-                    </li>
-                </random>
-                <random>
-                    <li>Could you please follow me?</li>
-                    <li>Can you follow me?</li>
-                </random>
-                Place yourself behind me to start!
+
                 <think>
                     <set name="topic"></set>
                 </think>
             </template>
-        </category>
+        </category>-->
 
     </topic>
 

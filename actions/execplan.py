@@ -56,7 +56,7 @@ def LU4R_to_plan(lu4r, memory_service):
                 action = action + ';'
             elif frame == 'COTHEME':
                 # TODO to finish
-                action = action + 'followuntil_stopfollowing'
+                action = action + ' followuntil_stopfollowing'
                 memory_service.raiseEvent("Veply", "I understood that I need to follow")
                 for argument in arguments:
                     if 'cotheme' in argument:
@@ -69,7 +69,7 @@ def LU4R_to_plan(lu4r, memory_service):
             elif frame == 'BRINGING' or frame == 'GIVING':
                 object = ''
                 final_position = ''
-                action = action + 'navigateto_'
+                action = action + ' navigateto_'
                 memory_service.raiseEvent("Veply", "I understood that I need to bring")
                 for argument in arguments:
                     if 'theme' in argument:
@@ -102,13 +102,13 @@ def LU4R_to_plan(lu4r, memory_service):
                 if len(object) > 0:
                     action = action + object
                     action = action + '; '
-                    action = action + 'vsay_cannottake; wait_20;'
+                    action = action + ' vsay_cannottake; wait_20;'
                     if len(final_position) > 0:
-                        action = action + 'navigateto_' + final_position + ';'
+                        action = action + ' navigateto_' + final_position + ';'
             elif frame == 'TAKING' or frame == 'MANIPULATION':
                 object = ''
                 final_position = ''
-                action = action + 'navigateto_'
+                action = action + ' navigateto_'
                 memory_service.raiseEvent("Veply", "I understood that I need to take")
                 for argument in arguments:
                     if ('theme' in argument) or ('entity' in argument):
@@ -133,8 +133,8 @@ def LU4R_to_plan(lu4r, memory_service):
                 if len(object) > 0:
                     action = action + object
                     action = action + '; '
-                    action = action + 'vsay_cannottake; wait_20;'
-            elif frame == 'INSPECTING':
+                    action = action + ' vsay_cannottake; wait_20;'
+            elif frame == 'LOCATING':
                 print 'something'
 
         else:
@@ -147,7 +147,7 @@ def LU4R_to_plan(lu4r, memory_service):
                 memory_service.raiseEvent("Veply", "I understood that I need to bring, but I didn't get what")
             elif frame == 'TAKING' or frame == 'MANIPULATION':
                 memory_service.raiseEvent("Veply", "I understood that I need to take, but I don't know what")
-            elif frame == 'INSPECTING':
+            elif frame == 'LOCATING':
                 print 'something'
     return action
 

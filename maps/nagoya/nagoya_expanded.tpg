@@ -3,6 +3,9 @@
     - action: NAOqiPlanner/Goal
       edge_id: start_hall
       node: hall
+    - action: NAOqiPlanner/Goal
+      edge_id: start_outside1
+      node: outside1
     name: start
     pointset: NA
     pose:
@@ -637,8 +640,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 8.450000000000006
-        y: 3.000000000000008
+        x: 9.000000000000004
+        y: 2.5500000000000007
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -732,7 +735,13 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges: []
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside1_start
+      node: start
+    - action: NAOqiPlanner/Goal
+      edge_id: outside1_outside2
+      node: outside2
     name: outside1
     pointset: NA
     pose:
@@ -763,7 +772,16 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges: []
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside2_outside1
+      node: outside1
+    - action: NAOqiPlanner/Goal
+      edge_id: outside2_outside3
+      node: outside3
+    - action: NAOqiPlanner/Goal
+      edge_id: outside2_outside6
+      node: outside6
     name: outside2
     pointset: NA
     pose:
@@ -794,7 +812,13 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges: []
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside3_outside4
+      node: outside4
+    - action: NAOqiPlanner/Goal
+      edge_id: outside3_outside2
+      node: outside2
     name: outside3
     pointset: NA
     pose:
@@ -825,7 +849,13 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges: []
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside4_outside5
+      node: outside5
+    - action: NAOqiPlanner/Goal
+      edge_id: outside4_outside3
+      node: outside3
     name: outside4
     pointset: NA
     pose:
@@ -856,7 +886,10 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges: []
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside5_outside4
+      node: outside4
     name: outside5
     pointset: NA
     pose:
@@ -887,7 +920,13 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges: []
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside6_outside7
+      node: outside7
+    - action: NAOqiPlanner/Goal
+      edge_id: outside6_outside2
+      node: outside2
     name: outside6
     pointset: NA
     pose:
@@ -918,7 +957,13 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges: []
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside7_outside8
+      node: outside8
+    - action: NAOqiPlanner/Goal
+      edge_id: outside7_outside6
+      node: outside6
     name: outside7
     pointset: NA
     pose:
@@ -949,7 +994,13 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges: []
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside8_outside9
+      node: outside9
+    - action: NAOqiPlanner/Goal
+      edge_id: outside8_outside7
+      node: outside7
     name: outside8
     pointset: NA
     pose:
@@ -980,7 +1031,13 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges: []
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside9_outside10
+      node: outside10
+    - action: NAOqiPlanner/Goal
+      edge_id: outside9_outside8
+      node: outside8
     name: outside9
     pointset: NA
     pose:
@@ -1011,7 +1068,10 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges: []
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside10_outside9
+      node: outside9
     name: outside10
     pointset: NA
     pose:

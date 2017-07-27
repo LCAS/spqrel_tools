@@ -132,6 +132,7 @@ def LU4R_to_plan(lu4r, memory_service):
             print "No arguments"
 
     return action
+    #return "speechbtn_starting;\nwait_5;\nspeechbtn_farewell;"
 
 
 # non-blocking function
@@ -141,7 +142,7 @@ def doExecPlan(memory_service, lu4r_value):
     memory_service.raiseEvent("ASR_enable","0")
 
     plan = LU4R_to_plan(lu4r_value, memory_service)
-
+    os.chdir(os.environ["PLAN_DIR"])
     cmd = 'cd ../plans; echo "'+plan+'" > GPSR_task.plan'
     os.system(cmd)
 
@@ -149,10 +150,10 @@ def doExecPlan(memory_service, lu4r_value):
     os.system(cmd)
 
     try:
-        task = subprocess.check_output('cat ../plans/GPSR_task')
+        task = subprocess.check_output('cat ./GPSR_task.plan', shell=True, cwd=os.environ["PLAN_DIR"])
         memory_service.raiseEvent('/gpsr/plan', task)
-    except Exception:
-        pass
+    except Exception as e:
+        print e
 
     print " *** DEBUG *** ASR_enable value = ", memory_service.getData("ASR_enable")
 
@@ -160,8 +161,6 @@ def doExecPlan(memory_service, lu4r_value):
     os.system(cmd)
 
     print " *** DEBUG *** ASR_enable value = ", memory_service.getData("ASR_enable")
-
-
 
 
 def actionThread_exec (params):

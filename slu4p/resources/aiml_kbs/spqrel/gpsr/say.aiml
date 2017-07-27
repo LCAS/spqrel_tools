@@ -41,9 +41,10 @@
         <pattern>WAITASR</pattern>
         <template>
             <random>
-                <li>Before speaking, wait until my eyes are blinking!</li>
-                <li>Speak only when my eyes are blinking!</li>
+                <li>Before speaking, wait until my eyes are blinking</li>
+                <li>Speak only when my eyes are blinking</li>
             </random>
+             and please, speak loud!
         </template>
     </category>
 
@@ -292,7 +293,7 @@
                 <li>I'd like to play riddles!</li>
                 <li>Let's play riddles!</li>
             </random>
-            I'll wait for ten seconds!
+            I'll wait for ten seconds and then I'll turn 180 degrees!
         </template>
     </category>
 

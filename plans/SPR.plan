@@ -29,7 +29,7 @@ vsay_playwithme;
 # 4
 
 waitfor_personhere;
-#peoplesummary_Person;
+peoplesummary_Person;
 
 vsay_weready;
 dialogue_fivequestions_1;

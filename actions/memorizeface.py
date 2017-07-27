@@ -243,7 +243,7 @@ def actionThread_exec (params):
                 print 'Humans/'+str(parse_params[1])+' not found ' 
         elif parse_params[0]=='name':
             nameuser=str(parse_params[1])
-            
+    print 'trying to learn ',nameuser ,'face'       
     ## START MICROSOFT API 
     global msface_naoqi_enabled
     msface_naoqi_enabled='false'
@@ -253,7 +253,7 @@ def actionThread_exec (params):
         if msface_naoqi_enabled== 'true':    
             memory_service.raiseEvent('Actions/FaceRecognition/Command','camera_start')
     except:
-        print 'Data not found Actions/FaceRecognition/Enabled'   
+        print 'not Actions/FaceRecognition/Enabled continue...'   
     # action init
         
     b_completed=False

@@ -320,6 +320,16 @@
     </category>
 
     <category>
+        <pattern>SCANNINGPEOPLE</pattern>
+        <template>
+            <random>
+                <li>Wait! I'm scanning the crowd!</li>
+                <li>Just few moments! I'm acquiring information about the crowd!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
         <pattern>PLAYBLINDMAN</pattern>
         <template>
             <random>

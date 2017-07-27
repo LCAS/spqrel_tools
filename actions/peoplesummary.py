@@ -11,6 +11,7 @@ peoplesummary_{partydescription|SPRgame}
 * 'partydescription' update the 'Humans/Profile<number> 
 * 'SPRgame' return number of males and females detected
 
+* 'Number/sitting'
 TODO:
 
 
@@ -124,7 +125,7 @@ def actionThread_exec (params):
                     print 'Humans/Profile'+str(numberprofile)+' not found '  
                     
 
-        if command=='SPRgame':
+        elif command=='SPRgame':
             peoplevalues =  memory_service.getData("PeoplePerception/PeopleDetected")
             num_total=len(peoplevalues)
             num_males=0
@@ -147,7 +148,7 @@ def actionThread_exec (params):
             
             b_completed=True
                     
-        if command=='Person':
+        elif command=='Person':
             name=''
             age=0
             str_gender=''
@@ -178,7 +179,33 @@ def actionThread_exec (params):
             result={'PersonID':personid,'Name':'','Age':age, 'Gender':str_gender,'TshirtColor':tshircolor}
             str_result=json.dumps(result)                           
             memory_service.insertData('Humans/Peoplesummary',str_result)
-                      
+
+
+        elif command=='Number/sitting':
+            
+            num_total=0
+
+            for p in people_list:
+                
+                if p['face_naoqi']['info']['posture']=='sitting':
+                    num_total +=1
+
+            result={'total':num_total}
+            str_result=json.dumps(result)                           
+            memory_service.insertData('Humans/Peoplesummary',str_result) 
+
+        elif command=='Number/standing':
+            
+            num_total=0
+
+            for p in people_list:
+                
+                if p['face_naoqi']['info']['posture']=='standing':
+                    num_total +=1
+
+            result={'total':num_total}
+            str_result=json.dumps(result)                           
+            memory_service.insertData('Humans/Peoplesummary',str_result)                      
         b_completed=True                   
                     
 

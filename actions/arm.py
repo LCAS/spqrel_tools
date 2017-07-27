@@ -16,14 +16,14 @@ def actionThread_exec (params):
     session = getattr(t, "session", None)
     memory_service = getattr(t, "mem_serv", None)
     rp_service = session.service("ALRobotPosture")
-    motion_service = session.service("ALMotion") ###### MODIFY THISS!!!
+    animation_service = session.service("ALAnimationPlayer") ###### MODIFY THISS!!!
     print "Action "+actionName+" started with params "+params
 
     position = params
     if (position == 'up'):
-            ##########
-    if (positio == 'down'):
-            ###############
+        future = animation_service.run("animations/Stand/Gestures/Hey_1", _async=True)
+    if (position == 'down'):
+        future.cancel()
             
     # action end
     print "Action "+actionName+" "+params+" terminated"

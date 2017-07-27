@@ -218,7 +218,9 @@ def actionThread_exec (params):
     except:
         print 'Data not found Actions/FaceRecognition/Enabled'   
     # action init
-    while (getattr(t, "do_run", True) ): 
+        
+    b_completed=False
+    while (getattr(t, "do_run", True) and b_completed==False):
         
         
         facevalues =  memory_service.getData("FaceDetected")        
@@ -310,12 +312,13 @@ def actionThread_exec (params):
                                 memory_service.raiseEvent('Actions/FaceRecognition/Command','camera_stop')
                                 
                             print 'EXIT TRUE'
-                            quit()
+                            b_completed=True
                             
                             
                         else:
                             
                             print 'There is not PeopleDetected to assign the face'
+                            
                             ###
                             ## FORGET THE FACE ???
                             ## OR SAY SOMETHING

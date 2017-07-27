@@ -15,13 +15,11 @@
         <template>
             [SAY]
             <srai>MISUNDERSTAND</srai>
-            <srai>GIVEUP</srai>
-            <!--<condition>
-                <li name="firstmisunderstanding" value="FALSE">
+            <condition>
+                <li name="firstmisunderstanding" value="TRUE">
                     <srai>GIVEUP</srai>
                     <think>
                         <set name="firstmisunderstanding">FALSE</set>
-                        <set name="topic"></set>
                     </think>
                 </li>
                 <li>
@@ -30,7 +28,7 @@
                         <set name="firstmisunderstanding">TRUE</set>
                     </think>
                 </li>
-            </condition>-->
+            </condition>
         </template>
     </category>
 

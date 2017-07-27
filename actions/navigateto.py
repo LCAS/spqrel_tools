@@ -40,6 +40,8 @@ def actionThread_exec(params):
 
     # action init
     target = params
+    if target[0] == '^':
+        target = memory_service.getData(target[1:])
     print "  -- Goto: " + str(target)
     mem_key_goal = "TopologicalNav/Goal"
     mem_key_status = "TopologicalNav/Status"

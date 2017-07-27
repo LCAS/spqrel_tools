@@ -22,11 +22,11 @@
         <pattern>LOOKATME</pattern>
         <template>
             <random>
-                <li>Hey<get name="Operator"/>, please pay attention!
+                <li>Hey <get name="Operator"/>, please pay attention!
                 </li>
                 <li><get name="Operator"/>, please focus!
                 </li>
-                <li>Do not distract,<get name="Operator"/>!
+                <li>Do not distract, <get name="Operator"/>!
                 </li>
             </random>
             <random>
@@ -116,9 +116,9 @@
             <random>
                 <li><star/>!
                 </li>
-                <li>Hey<star/>!
+                <li>Hey <star/>!
                 </li>
-                <li>Where is<star/>?
+                <li>Where is <star/>?
                 </li>
             </random>
             <random>
@@ -127,6 +127,20 @@
                 <li>Come here, please!</li>
                 <li>Can you come here?</li>
             </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>ORDERCOMEHERE</pattern>
+        <template>
+            Who wants something to drink? Please, come here as I can't see you!
+        </template>
+    </category>
+
+    <category>
+        <pattern>MEMORIZEPERSON</pattern>
+        <template>
+            Please, stay still in front of me. I want to remember you!
         </template>
     </category>
 
@@ -140,23 +154,25 @@
                 <li>Hi buddy!</li>
             </random>
             <random>
-                <li>I have an order for<star index="1"/>. A<star index="2"/>, please!
+                <li>I have an order for <star index="1"/>. A <star index="2"/>, please!
                 </li>
                 <li>
                     <star index="1"/>
-                    ordered a<star index="2"/>.
+                    ordered a <star index="2"/>.
                 </li>
                 <li>
                     <star index="1"/>
-                    would like a<star index="2"/>!
+                    would like a <star index="2"/>!
                 </li>
                 <li>A
                     <star index="2"/>
-                    for<star index="1"/>, please!
+                    for <star index="1"/>, please!
                 </li>
             </random>
         </template>
     </category>
+
+
 
     <category>
         <pattern>CONFIRMDRINK CUSTOMER * DRINK *</pattern>
@@ -210,6 +226,15 @@
                     <star index="1"/>
                     here.
                 </li>
+            </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>CALLPERSONUNAVAILABLE CUSTOMER * DRINK *</pattern>
+        <template>
+            <random>
+                <li>I'm sorry <star index="1"/>, but your drink is not available! Can you please come here?</li>
             </random>
         </template>
     </category>
@@ -282,6 +307,11 @@
                 <li>Here I am.</li>
             </random>|[STOPFOLLOWING]
         </template>
+    </category>
+
+    <category>
+        <pattern>WAITFORME</pattern>
+        <template>I'm a bit slow! Please wait for me!</template>
     </category>
 
     <category>
@@ -362,14 +392,24 @@
     </category>
 
     <category>
+        <pattern>THANKS</pattern>
+        <template>
+            <random>
+                <li>Thank you!</li>
+                <li>Thanks!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
         <pattern>GUIDE</pattern>
         <template>
             <random>
-                    <li>Could you please follow me to the car? I need some help!</li>
-                    <li>Can you please follow me?</li>
-                    <li>Could you plase help me with the grocery at the car?</li>
-                </random>
-                Place yourself behind me to start!
+                <li>Could you please follow me to the car? I need some help!</li>
+                <li>Can you please follow me?</li>
+                <li>Could you plase help me with the grocery at the car?</li>
+            </random>
+            Place yourself behind me to start!
         </template>
     </category>
 

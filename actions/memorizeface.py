@@ -11,7 +11,7 @@ Update  'Actions/MemorizePeople/Person/IDNUMBER'
 
 PARAMS:
 
-memorizeface_inprofile_Humans/Profile<1|2|3> Read memorykey 'Humans/Profile<1|2|3>
+memorizeface_inmemory_Humans/Profile<1|2|3> Read memorykey 'Humans/Profile<1|2|3>
 
 memorizeface_name_<nameuser>
 
@@ -219,22 +219,31 @@ def actionThread_exec (params):
     faces_service.setRecognitionEnabled(True)
     face_char_service = getattr(t, "session", None).service("ALFaceCharacteristics")
     print "Action "+actionName+" started with params "+params
+    tracker_service = getattr(t, "session", None).service("ALTracker")
+    
+    targetName = "Face"
+    tracker_service.registerTarget(targetName,0.1)
+    # Then, start tracker.
+    tracker_service.track(targetName)
+    # set mode
+    mode = "Head"
+    tracker_service.setMode(mode)
     
     ##memorizeface_inmemory_Profile<1> Read memorykey 'Humans/Profile<1|2|3>
     nameuser=''
     personhere=None
     if params:
         parse_params=params.split('_')
-        if parse_params[0]=='inprofile':
+        if parse_params[0]=='inmemory':
             try:
-                userprofile=json.loadsmemory_service.getData(str(parse_params[1]))
+                userprofile=json.loadsmemory_service.getData('Humans/'+str(parse_params[1]))
                 nameuser=userprofile['Name']
                 personhere=userprofile['PersonID']
             except:
                 print 'Humans/'+str(parse_params[1])+' not found ' 
         elif parse_params[0]=='name':
             nameuser=str(parse_params[1])
-            
+    print 'trying to learn ',nameuser ,'face'       
     ## START MICROSOFT API 
     global msface_naoqi_enabled
     msface_naoqi_enabled='false'
@@ -244,7 +253,7 @@ def actionThread_exec (params):
         if msface_naoqi_enabled== 'true':    
             memory_service.raiseEvent('Actions/FaceRecognition/Command','camera_start')
     except:
-        print 'Data not found Actions/FaceRecognition/Enabled'   
+        print 'not Actions/FaceRecognition/Enabled continue...'   
     # action init
         
     b_completed=False
@@ -358,7 +367,8 @@ def actionThread_exec (params):
         time.sleep(0.3)
 
     # action end
-
+    tracker_service.stopTracker()
+    tracker_service.unregisterAllTargets()
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
     print "Action "+actionName+" "+params+" terminated"
 

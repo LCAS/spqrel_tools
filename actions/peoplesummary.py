@@ -66,7 +66,7 @@ def actionThread_exec (params):
             print people_list
             
         except: 
-            print 'Actions/Memorizepeople/Peoplelist memory key not found '   
+            print 'Actions/MemorizePeople/Peoplelist memory key not found '   
 
    
         if command=='Partydescription':
@@ -124,7 +124,7 @@ def actionThread_exec (params):
                     print 'Humans/Profile'+str(numberprofile)+' not found '  
                     
 
-        if command=='Crowd':
+        if command=='SPRgame':
             
             num_males=0
             num_females=0
@@ -143,6 +143,8 @@ def actionThread_exec (params):
             result={'total':num_total,'num_males':num_males,'num_females':num_females }
             str_result=json.dumps(result)    
             memory_service.insertData('Humans/Peoplesummary',str_result)
+            
+            b_completed=True
                     
         if command=='Person':
             name=''
@@ -194,7 +196,7 @@ def actionThread_exec (params):
             str_result=json.dumps(result)                           
             memory_service.insertData('Humans/Peoplesummary',str_result)
                       
-        b_completed=False                   
+        b_completed=True                   
                     
 
     # action end

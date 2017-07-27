@@ -10,7 +10,23 @@
         </category>
 
         <category>
-            <pattern>*</pattern>
+            <pattern>* FOLLOW *</pattern>
+            <template>
+                <srai>SAY FOLLOWYOU</srai>
+                |[STOP]
+            </template>
+        </category>
+
+        <category>
+            <pattern>FOLLOW *</pattern>
+            <template>
+                <srai>SAY FOLLOWYOU</srai>
+                |[STOP]
+            </template>
+        </category>
+
+        <category>
+            <pattern>FOLLOW</pattern>
             <template>
                 <srai>SAY FOLLOWYOU</srai>
                 |[STOP]

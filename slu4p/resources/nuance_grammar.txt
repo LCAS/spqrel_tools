@@ -45,6 +45,9 @@ green tea
 aquarius
 cold brew
 coke
+follow me
+stop following
+stop following me
 what city are we in
 what is the name of your team
 how many teams participate in robocup at home this year

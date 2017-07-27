@@ -107,6 +107,23 @@ class DialogueManager(EventAbstractClass):
             except:
                 print 'Invalid User'
             to_send = splitted[0] + ' customer ' + self.user_profile['Name'] + ' drink ' + self.user_profile['Drink'] + ' ' + splitted[2]
+        if 'callpersonunavailable' == splitted[1]:
+            try:
+                self.profile_1 = json.loads(self.memory.getData("Humans/Profile1"))
+                self.profile_2 = json.loads(self.memory.getData("Humans/Profile2"))
+                self.profile_3 = json.loads(self.memory.getData("Humans/Profile3"))
+                if self.profile_1['DrinkAvailability'] == 'False':
+                    customer = self.profile_1['Name']
+                    drink = self.profile_1['Drink']
+                if self.profile_2['DrinkAvailability'] == 'False':
+                    customer = self.profile_2['Name']
+                    drink = self.profile_2['Drink']
+                if self.profile_3['DrinkAvailability'] == 'False':
+                    customer = self.profile_3['Name']
+                    drink = self.profile_3['Drink']
+            except:
+                pass
+            to_send = 'SAY CALLPERSONUNAVAILABLE CUSTOMER ' + customer + ' DRINK ' + drink
         if 'altdrink' == splitted[0]:
             print 'Found altdrink'
             try:
@@ -164,6 +181,7 @@ class DialogueManager(EventAbstractClass):
                 cocktail_data['PersonID'] = self.person_id
                 cocktail_data['Name'] = customer
                 cocktail_data['Drink'] = drink
+                self.user_profile['DrinkAvailability'] = True
                 self.memory.raiseEvent("DialogueVesponse", json.dumps(cocktail_data))
             elif '[DRINKSALTERNATIVES]' in submessage:
                 data = submessage.replace('[DRINKSALTERNATIVES]', '').replace(')', '').strip()

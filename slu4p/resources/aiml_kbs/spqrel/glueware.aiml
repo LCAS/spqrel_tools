@@ -27,6 +27,18 @@
     </category>
 
     <category>
+        <pattern>PROVIDEALTERNATIVES *</pattern>
+        <template>
+            <think>
+                <set name="topic">PROVIDEALTERNATIVES</set>
+            </think>
+            <srai>
+                <star/>
+            </srai>
+        </template>
+    </category>
+
+    <category>
         <pattern>UNKNOWNAVAILABLE *</pattern>
         <template>
             <think>

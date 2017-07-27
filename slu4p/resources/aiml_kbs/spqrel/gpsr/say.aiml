@@ -38,6 +38,16 @@
     </category>
 
     <category>
+        <pattern>WAITASR</pattern>
+        <template>
+            <random>
+                <li>Before speaking, wait until my eyes are blinking!</li>
+                <li>Speak only when my eyes are blinking!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
         <pattern>INSPECTME</pattern>
         <template>
             <random>
@@ -305,6 +315,7 @@
                 <li>I'm ready! What is you question?</li>
                 <li>Come on, go ahead with you question!</li>
             </random>
+            <srai>WAITASR</srai>
         </template>
     </category>
 

@@ -29,7 +29,58 @@ def LU4R_callback(data):
 
 
 
-def LU4R_to_plan(lu4r):
+def LU4R_to_plan(lu4r, memory_service):
+    interpretations = lu4r.split("#")
+    for interpretation in interpretations:
+        interpretation = interpretation.replace(")", "")
+        splitted = interpretation.split('(')
+        frame = splitted[0]
+        if len(splitted) > 1:
+            arguments_string = splitted[1]
+            arguments = arguments_string.split(',')
+            if frame == 'MOTION':
+                action = 'navigateto_'
+                memory_service.raiseEvent("Veply", "I understood that I need to go somewhere")
+                for argument in arguments:
+                    if 'goal' in argument:
+                        print 'something'
+            elif frame == 'COTHEME':
+                print 'something'
+            elif frame == 'ARRIVING':
+                print 'something'
+            elif frame == 'ATTACHING':
+                print 'something'
+            elif frame == 'BEING_IN_CATEGORY':
+                print 'something'
+            elif frame == 'BEING_LOCATED':
+                print 'something'
+            elif frame == 'BRINGING':
+                print 'something'
+            elif frame == 'CHANGE_DIRECTION':
+                print 'something'
+            elif frame == 'CHANGE_OPERATIONAL_STATE':
+                print 'something'
+            elif frame == 'CLOSURE':
+                print 'something'
+            elif frame == 'GIVING':
+                print 'something'
+            elif frame == 'INSPECTING':
+                print 'something'
+            elif frame == 'MANIPULATION':
+                print 'something'
+            elif frame == 'PERCEPTION_ACTIVE':
+                print 'something'
+            elif frame == 'PLACING':
+                print 'something'
+            elif frame == 'RELEASING':
+                print 'something'
+            elif frame == 'TAKING':
+                print 'something'
+
+
+        else:
+            print "No arguments"
+
     return "vsay_starting; waitfor_screentouched; vsay_farewell;"
 
 
@@ -39,7 +90,7 @@ def doExecPlan(memory_service, lu4r_value):
     print " *** DEBUG *** ASR_enable set to 0 !!!"
     memory_service.raiseEvent("ASR_enable","0")
 
-    plan = LU4R_to_plan(lu4r_value)
+    plan = LU4R_to_plan(lu4r_value, memory_service)
 
     cmd = 'cd ../plans; echo "'+plan+'" > GPSR_task.plan'
     os.system(cmd)

@@ -53,6 +53,8 @@ export TMAP="${TMAP:-$SPQREL_HOME/maps/nagoya/dummy.tpg}"
 
 
 
+
+
 alias shutdown-tmux="tmux list-panes -s -F \"#{pane_pid} #{pane_current_command}\" | grep -v tmux | awk \"{print \\\$1}\" | xargs kill"
 alias kill-tmux="tmux list-panes -s -F \"#{pane_pid} #{pane_current_command}\" | grep -v tmux | awk \"{print \\\$1}\" | xargs kill -9"
 
@@ -69,3 +71,5 @@ echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 echo "PYTHONPATH=$PYTHONPATH"
 
 export GIT_EXEC_PATH=${SPQREL_HOME}/libexec/git-core
+
+export LU4R_IP="127.0.0.1"

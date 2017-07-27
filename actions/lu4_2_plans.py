@@ -111,7 +111,7 @@ if __name__ == "__main__":
         finput = open(Inputnamefile, 'r')
         for message in finput:
             message=message.lower()
-            
+
             answer=text2lu4.inputtext(message)
             print message
             print 'LU4>> ', answer

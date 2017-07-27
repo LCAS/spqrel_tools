@@ -49,7 +49,7 @@ global countdt
 countdt = 0
 global currentangle
 currentangle=0
-Timeoutangle=6
+Timeoutangle=5
 
 headYaw = [ 0.2, 0.0, -0.2, -0.2, 0.0, 0.2, 0.0 ]
 headPitch = [ -0.3, -0.3, -0.3, 0.0, 0.0, 0.0 ,-0.1]
@@ -274,7 +274,27 @@ def actionThread_exec (params):
                 print 'stop currentangle=',currentangle
                 
                 b_completed=True
+                
+        if params== 'Cocktailparty':
+            
+            global countdt
+            global currentangle
+            
+            if countdt>Timeoutangle:
+                
+#                motion_service.moveTo(0.0, 0.0, currentangle)
+#                currentangle+=Step_turn_angle
+                
+                headpose.moveHead(motion_service, headYaw[currentangle], headPitch[currentangle], headtime)
+                countdt = 0
+                currentangle+=1
+            else:
+                countdt+=1
 
+            if currentangle > len(headYaw)-1:
+                print 'stop currentangle=',currentangle
+                
+                b_completed=True
 #            if currentangle > Max_turn_angle:
 #                print 'stop currentangle=',currentangle
 #                

@@ -48,7 +48,7 @@ def actionThread_exec (params):
         val = get_condition(memory_service, params)
         # action exec
         time.sleep(0.25)
-        
+
     print "Action "+actionName+" "+params+" terminated"
     # action end
     tracker_service.stopTracker()
@@ -70,7 +70,7 @@ def quit():
 if __name__ == "__main__":
 
     app = action_base.initApp(actionName)
-        
+
     init(app.session)
 
     #Program stays at this point until we stop it

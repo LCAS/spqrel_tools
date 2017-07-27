@@ -1252,6 +1252,7 @@
                     <li>What do you want to drink?</li>
                     <li>Which drink do you want?</li>
                 </random>
+				Please tell me or choose an option on my screen.
                 |[OPTIONS]green tea_aquarius_cold brew_coke
             </template>
         </category>

@@ -17,11 +17,11 @@ _config_example:
 
 location_mapping:
   entrance: hall
-  bedroom: bed
+  bedroom: bedroomentrance
   kitchen: kitchendoor
-  livingroom: backdoorin
-  balcony: living2
-  corridor: corridor2
+  livingroom: sofacorner
+  balcony: living1
+  corridor: corridor1
   desk: sofafront
   left+rack: backdoorin
   right+rack: backdoorin
@@ -32,7 +32,7 @@ location_mapping:
   bed: bed
   entrance+shelf: hall
   kitchen+shelf: kitchendoor
-  bookcase: sofacorridor
+  bookcase: sofacorner
   sofa: sofafront
   coffee+table: sofafront
   tv: sofafront

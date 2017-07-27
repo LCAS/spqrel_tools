@@ -9,13 +9,11 @@ vsay_starting;
 
 dialogue_following; #new from andrea
 
-#trackface_learnface;
-
 
 #### 2 - START THE FOLLOWING PHASE
 
 asrenable; #new from andrea
-followuntil_stopfollowing; ! *if* (personlost) *do* say_comehere; waitfor_personhere; restart_action !
+followuntil_stopfollowing; ! *if* (personlost) *do* vsay_comehere; waitfor_personhere; restart_action !
 asrenable_off;
 
 saveposition_car;
@@ -26,10 +24,10 @@ saveposition_car;
 dialogue_lookforhelp;
 headpose_0_-20;
 
-navigateto_helplocation; ! *if* personhere *do* dialogue_whattime; restart_action !
+navigateto_^helplocation; ! *if* personhere *do* dialogue_whattime; restart_action !
 
 lookfor_persondetected; ! *if* timeout_lookfor_20 *do* say_comehere; restart_action !
-#arm_up
+posture
 
 dialogue_guide; # we could use this action to acquire the name of the guy. At the end of this action, vsay_followme is automatically triggered
 

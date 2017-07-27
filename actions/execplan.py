@@ -102,7 +102,7 @@ def LU4R_to_plan(lu4r, memory_service):
                 if len(object) > 0:
                     action = action + object
                     action = action + '; '
-                    action = action + ' vsay_cannottake; wait_20;'
+                    action = action + ' vsay_cannottake; wait_10;'
                     if len(final_position) > 0:
                         action = action + ' navigateto_' + final_position + ';'
             elif frame == 'TAKING' or frame == 'MANIPULATION':
@@ -133,7 +133,7 @@ def LU4R_to_plan(lu4r, memory_service):
                 if len(object) > 0:
                     action = action + object
                     action = action + '; '
-                    action = action + ' vsay_cannottake; wait_20;'
+                    action = action + ' vsay_cannottake; wait_10;'
             elif frame == 'LOCATING':
                 object = ''
                 final_position = ''
@@ -155,8 +155,8 @@ def LU4R_to_plan(lu4r, memory_service):
                 if len(phenomenon) > 0:
                     action = action + ground
                     action = action + '; '
-                    # TODO
-                    action = action + ' vsay_; wait_20;'
+                    action = action + 'lookfor_persondetected|10'
+                    action = action + ' vsay_cannottake; wait_10;'
 
         else:
             print "No arguments"

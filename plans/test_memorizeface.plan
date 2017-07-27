@@ -4,6 +4,6 @@
 memorizepeople_Cocktailparty|40;  # timeout in seconds
 waitfor_personhere; ! *if* timeout_waitfor_30 *do* say_comehere; restart_action !
 
-dialogue_takeorder_start;
+dialogue_takeorder;
 memorizeface_inmemory_Profile1;
 say_greetperson;

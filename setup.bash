@@ -72,4 +72,4 @@ echo "PYTHONPATH=$PYTHONPATH"
 
 export GIT_EXEC_PATH=${SPQREL_HOME}/libexec/git-core
 
-export LU4R_IP="127.0.0.1"
+export LU4R_IP="192.168.127.16"

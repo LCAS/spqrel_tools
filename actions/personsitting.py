@@ -23,23 +23,26 @@ def rhMonitorThread (memory_service):
     print "personsitting thread started"
     
     while getattr(t, "do_run", True):
-        personsittingid = memory_service.getData("SittingPeopleDetection/PersonSittingDown")
+        plist = memory_service.getData("PeoplePerception/PeopleList")
         
         personid = 0
         IsSitting = 0
         v = 'false'
         try:
-            if (personsittingid!=None):
-                personid 
-                IsSitting = memory_service.getData("PeoplePerception/Person/"+str(personsittingid)+"/IsSitting")
-                # Save person position
-                px,py,pz = memory_service.getData("PeoplePerception/Person/"+str(personsittingid)+"/PositionInRobotFrame")
-                print "person sitting"
-                print "X: " + str(px) + "  Y: " + str(py)
-                w_px, w_py = point2world(memory_service,[px,py])
-                memory_service.insertData("personsitting/coordinates",[w_px,w_py])
-                memory_service.insertData("personsitting/id",personid)
-                v = 'true'
+            if (plist!=None and len(plist)>0):
+                for i in range (0,len(plist)):
+                    personid = plist[i]
+                    IsSitting = memory_service.getData("PeoplePerception/Person/"+str(personid)+"/IsSitting")
+                    # Save person position
+                    if (IsSitting == 1):
+                        px,py,pz = memory_service.getData("PeoplePerception/Person/"+str(personid)+"/PositionInRobotFrame")
+                        memory_service.setData("")
+                        print "person sitting"
+                        print "X: " + str(px) + "  Y: " + str(py)
+                        w_px, w_py = point2world(memory_service,[px,py])
+                        memory_service.insertData("personsitting/coordinates",[w_px,w_py])
+                        memory_service.insertData("personsitting/id",personid)
+                        v = 'true'
         except:
             v = 'false'
         set_condition(memory_service,'personsitting',v)

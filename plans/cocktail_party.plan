@@ -1,4 +1,5 @@
 # enter and goto room
+headpose_0_-10;
 vsay_dooropen;
 waitfor_dooropen;
 vsay_starting;

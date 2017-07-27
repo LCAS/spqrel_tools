@@ -143,7 +143,8 @@ class DialogueManager(EventAbstractClass):
                 name = self.profile_unavailable['Name']
                 drinks = self.profile_unavailable['DrinkAlternatives']
                 alternatives = ''
-                if alternatives
+                if len(alternatives) == 0:
+                    drinks = ['coke', 'green tea', 'aquarius']
                 for drink in drinks:
                     alternatives = drink + ',' + alternatives
             except:

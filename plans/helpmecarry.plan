@@ -41,7 +41,6 @@ waitfor_personbehind;
 navigateto_^car/waypoint; ! *if* (not personbehind) *do*  turn_180; vsay_gotocar ; turn_180 ; waitfor_personbehind; restart_action ;
 gotopos_^car/coordinates; ! *if* (not personbehind) *do*  turn_180; vsay_gotocar ; turn_180 ; waitfor_personbehind; restart_action ;
 
-
 dialogue_arrivedcar;
 vsay_farewell;
 

@@ -61,9 +61,9 @@ def onFaceDetection(facevalues):
     return face
  
 
-def onPeopleDetection(values):
+def onPeopleDetection(value):
     
-    personid=values[0]
+    personid=values
     print 'personid= ',personid
     face={'name':'','faceinfo':{}}
     age={'val':0.0,'conf':0.0}

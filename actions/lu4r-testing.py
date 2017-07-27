@@ -5,7 +5,7 @@ import action_base
 
 from json import loads, dumps
 
-LU4R_URI = 'http://localhost:9090/'
+LU4R_URI = 'http://192.168.1.14:9001/'
 
 if __name__ == "__main__":
     app = action_base.initApp('lu4rtest')

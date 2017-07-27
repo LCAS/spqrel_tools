@@ -30,7 +30,7 @@ def LU4R_callback(data):
 
 
 def clean_string(string):
-    return string.replace('to').replace('the').replace('towards').replace('in').strip()
+    return string.replace('to','').replace('the','').replace('towards','').replace('in','').strip()
 
 
 def get_filler(argument):

@@ -60,14 +60,14 @@ def actionThread_exec (params):
     
     while (getattr(t, "do_run", True) and b_completed==False):
         try:
-            mem_list=memory_service.getData('Actions/MemorizePeople/Peoplelist')
+            mem_list=memory_service.getData('Actions/MemorizePeople/PeopleList')
             people_list=json.loads(mem_list)
 
             print 'len',len(people_list)
             print people_list
             
         except: 
-            print 'Actions/MemorizePeople/Peoplelist memory key not found '   
+            print 'Actions/MemorizePeople/PeopleList memory key not found '   
 
    
         if command=='Partydescription':

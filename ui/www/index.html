@@ -74,6 +74,15 @@ document.onready = function() {
                         <table class="table table-condensed table-striped">
                             <tbody>
                                 <tr>
+                                    <td class="col-md-3">Speech Recognition:</td>
+                                    <td class="col-md-9"><p id="ASR_transcription">-</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">Speech Understanding:</td>
+                                    <td class="col-md-9"><p id="CommandInterpretations">-</p></td>
+                                </tr>
+
+                                <tr>
                                     <td class="col-md-3">Current Plan:</td>
                                     <td class="col-md-9"><p id="PNP_CurrentPlan">-</p></td>
                                 </tr>
@@ -124,7 +133,7 @@ document.onready = function() {
                     <div class="panel-body">
                         I have interpreted this mission:
                         <ul id="gprs_plan" class="list-group">
-                            <div id="gpsr_plan" style="font-size:26;">
+                            <div id="gpsr_plan">
                             </div>
                         </ul>                                             
                    </div>

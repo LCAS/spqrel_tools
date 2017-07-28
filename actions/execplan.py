@@ -172,13 +172,13 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                         fillerp = get_filler(argument)
                         to_say = "I understood that I have to look for " + fillerp
                         memory_service.raiseEvent("Veply", to_say)
-                        try:
-                            phenomenon = memory_service.getData("/location_mapping/" + filler)
-                        except:
-                            to_say = "I'm sorry, I'm too tired to search for " + filler
-                            memory_service.raiseEvent("Veply", to_say)
-                        phenomenon = filler
+                try:
+                    phenomenon = memory_service.getData("/location_mapping/" + fillerg)
+                except:
+                    to_say = "I'm sorry, I'm too tired to search for " + fillerp
+                    memory_service.raiseEvent("Veply", to_say)
                     print 'TO_SAY: ' + to_say
+
                 if len(phenomenon) > 0:
                     ground = 'navigateto_' + fillerg
                     action = action + ground

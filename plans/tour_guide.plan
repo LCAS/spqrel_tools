@@ -26,7 +26,7 @@ enter_30_0_0_3_false;
 turn_90;
 lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
 
-< (not persondetected) ? GOTO_LABELSTART : GOTO_LABELPERSONFOUND? >
+#< (not persondetected) ? GOTO_LABELSTART : GOTO_LABELPERSONFOUND? >
 
 ### GO TO THE PERSON FOUND
 

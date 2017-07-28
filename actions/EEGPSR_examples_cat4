@@ -1,4 +1,29 @@
 Meet Olivia at the bed, then greet her in the kitchen
+Robot please tell me how many black-dressed men are in the bedroom
+Could you please find the oldest man in the bedroom and follow it
+Offer something to eat to all the women in the corridor
+Could you please find the slimmest woman in the bedroom and follow it
+Could you please bring the cold brew to the smallest woman in the bedroom
+Please Meet Mason at the sofa, then greet him in the bedroom
+Could you offer something to eat to all the men in the bedroom
+Could you please tell me how many yellow-dressed women are in the kitchen
+Find the child in the corridor and follow it
+Robot please greet the pointing right woman in the bedroom
+Meet Emma at the desk, then greet her in the kitchen
+Find the tallest man in the entrance and guide it to the living room
+Could you please find the man wearing necklace in the living room and follow it
+Bring the apple to the child in the balcony
+Could you please Meet Liam at the TV, then find him in the bedroom
+Bring the bread to the child in the corridor
+Greet the child in the entrance
+Could you please tell me how many lying men are in the living room
+Bring the asience to the child in the balcony
+
+
+REMARKS
+#######
+
+Meet Olivia at the bed, then greet her in the kitchen
 	kitchen
 		At least three people must be in the kitchen
 	remarks
@@ -21,7 +46,7 @@ Could you please bring the cold brew to the smallest woman in the bedroom
 Please Meet Mason at the sofa, then greet him in the bedroom
 	bedroom
 		At least three people must be in the bedroom
-	remarks
+	remarksGreet the child in the entrance
 		There is only one person at sofa
 Could you offer something to eat to all the men in the bedroom
 	bedroom
@@ -54,3 +79,15 @@ Could you please Meet Liam at the TV, then find him in the bedroom
 		At least three people must be in the bedroom
 	remarks
 		There is only one person at TV
+Bring the bread to the child in the corridor
+	corridor
+		At least three people must be in the corridor
+Greet the child in the entrance
+	entrance
+		At least three people must be in the entrance
+Could you please tell me how many lying men are in the living room.
+	living room
+		At least three people must be in the living room
+Bring the asience to the child in the balcony
+	balcony
+		At least three people must be in the balcony

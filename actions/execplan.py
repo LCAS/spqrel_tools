@@ -37,7 +37,8 @@ def clean_string(string):
 def get_filler(argument):
     argument_splitted = argument.split(':')
     filler = argument_splitted[1].replace('"', '')
-    return clean_string(filler)
+    filler = clean_string(filler)
+    return filler.replace(" ", "+")
 
 
 def LU4R_to_plan(lu4r, asr_value, memory_service):
@@ -68,7 +69,7 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                         except:
                             location = ""
                             action = ""
-                            memory_service.raiseEvent("Veply", "I'm sorry, I don't know the location")
+                            memory_service.raiseEvent("Veply", "I don't want to go to " + filler + " now")
                         action = action + location
                 action = action + ';'
             elif frame == 'COTHEME':
@@ -93,7 +94,7 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                             object = memory_service.getData("/location_mapping/" + filler)
                         except:
                             action = ""
-                            memory_service.raiseEvent("Veply", "I'm sorry, I don't know where is the " + filler)
+                            memory_service.raiseEvent("Veply", "I'm sorry, I cannot bring you the " + filler)
                     if ('beneficiary' in argument) or ('recipient' in argument):
                         filler = get_filler(argument)
                         if filler == 'me':
@@ -106,7 +107,7 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                             final_position = memory_service.getData("/location_mapping/" + filler)
                         except:
                             memory_service.raiseEvent("Veply",
-                                                      "I don't know where I have to bring the " + filler)
+                                                      "Sorry, I'm not allowed to bring the " + filler)
                     if 'source' in argument:
                         filler = get_filler(argument)
                         memory_service.raiseEvent("Veply", "I understood that the initial position of the object is " + filler)
@@ -128,7 +129,7 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                             object = memory_service.getData("/location_mapping/" + filler)
                         except:
                             action = ""
-                            memory_service.raiseEvent("Veply", "I'm sorry, I don't know where is the " + filler)
+                            memory_service.raiseEvent("Veply", "Sorry, I'm not allowed to take the " + filler)
                     if 'source' in argument:
                         filler = get_filler(argument)
                         memory_service.raiseEvent("Veply",
@@ -151,7 +152,7 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                         try:
                             phenomenon = memory_service.getData("/location_mapping/" + filler)
                         except:
-                            memory_service.raiseEvent("Veply", "I'm sorry, I don't know where to search")
+                            memory_service.raiseEvent("Veply", "I'm sorry, I'm too tired to search for " + filler)
                         phenomenon = filler
                 if len(phenomenon) > 0:
                     action = action + ground

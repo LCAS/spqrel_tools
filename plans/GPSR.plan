@@ -8,18 +8,18 @@ vsay_starting;
 wait_2;
 #enter_30_0_0_4_true; 
 
-navigateto_bedroomentrance; 
+#navigateto_bedroomentrance; 
 #turn_-90_ABS; # mayte check
 
 # RUN 1
 execplan; 
 GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
-navigateto_bedroomentrance; 
+#navigateto_bedroomentrance; 
 
 # RUN 2
 execplan; 
 GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
-navigateto_bedroomentrance; 
+#navigateto_bedroomentrance; 
 
 # RUN 3
 execplan; 
@@ -28,7 +28,7 @@ GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
 
 # exit the arena
 vsay_farewell;
-navigateto_exit; 
+#navigateto_exit; 
 
 recdata_off;
 

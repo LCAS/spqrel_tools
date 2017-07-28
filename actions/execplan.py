@@ -159,6 +159,7 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                 phenomenon = ''
                 to_say = "I understood that I need to find"
                 memory_service.raiseEvent("Veply", to_say)
+                ground = ''
                 for argument in arguments:
                     if ('ground' in argument) or ('entity' in argument):
                         filler = get_filler(argument)

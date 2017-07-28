@@ -10,13 +10,14 @@ wait_2;
 
 < (not persondetected) ? GOTO LABEL1 >
 
+storecentralperson;
+
 #TODO: pointing with the arm where the customer is? (to state we understood where the customer is?)
 dialogue_orderdetected;
 
 < (not takeorder) ? GOTO LABEL1 >
 
 goto_^person|40;
-saveposition_person;
 
 dialogue_restauranttakeorder;
   
@@ -26,7 +27,7 @@ vsay_order_1;  # repeat the order to the barman
 
 vsay_cannotgrasp; # continue rule on manipulation: "I can not carry the food, can you help me. I will guide you to the customer."
 
-goto_^person|40; #delivery step 
+goto_centralperson|40; #delivery step 
 
 vsay_hereorder; # say to the person "Hi, here is your order"
 

@@ -36,6 +36,9 @@ def coords(params):
         return [13.6, 9.8]
     elif (params=='person'):
         return [15.6, 9.8]
+    elif (params=='centralperson'):
+        person_x,person_y = memory_service.getData("center_person/pose")
+        return [person_x,person_y]
     elif (params=='rips'):
         return [1.1, -2.0]
     elif (params=='corridor2'):

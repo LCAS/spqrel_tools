@@ -27,24 +27,26 @@ def actionThread_exec (params):
 
     # action init
    
-    #tracker_service = session.service("ALTracker")
-    #tracker_service.setMode("Move")
-    #tracker_service.registerTarget("Sound",[1,0.1])
-    #tracker_service.track("Sound")
+    tracker_service = session.service("ALTracker")
+    tracker_service.setMode("Move")
+    tracker_service.registerTarget("Sound",[2,0.2])
+    tracker_service.track("Sound")
 
     # action init
+
+    val = False
 
     while (getattr(t, "do_run", True) and (not val)): 
         #print "Action "+actionName+" "+params+" exec..."
         # action exec
-        sound_value =  memory_service.getData("ALSoundLocalization/SoundLocated")
-        confidence = sound_value[1][2]
-        print "confidence = ",confidence
-        if confidence > confidence_threshold:
-            print "sound detected"
-
         try:
-            val = get_condition(memory_service, params)
+            sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
+            if len(sound_value)>1:
+                #print "confidence: ", sound_value[1][2]
+                confidence = sound_value[1][2]
+                if (confidence > 0.2):
+                    val = True
+                    time.sleep(5)
         except:
 	        pass
         # action exec
@@ -52,8 +54,8 @@ def actionThread_exec (params):
 		
     print "Action "+actionName+" "+params+" terminated"
     # action end
-    #tracker_service.stopTracker()
-    #tracker_service.unregisterAllTargets()
+    tracker_service.stopTracker()
+    tracker_service.unregisterAllTargets()
     # action end
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
 

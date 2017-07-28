@@ -1,0 +1,1539 @@
+<?xml version="1.0"?>
+<aiml version="1.0">
+
+
+    <topic name="ORDERDETECTED">
+        <category>
+            <pattern>START</pattern>
+            <template>
+                [SAY] I've detected a customer! Should I go and take the order?|[OPTIONS]yes_no
+                <think>
+                    <set name="topic">WAITFORORDER</set>
+                </think>
+            </template>
+        </category>
+    </topic>
+
+    <topic name="WAITFORORDER">
+        <category>
+            <pattern>* YES *</pattern>
+            <template>
+                [SAY] Okay! I'm going to take the order!|[TAKEORDER]
+                <think>
+                    <set name="topic"></set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>YES *</pattern>
+            <template>
+                [SAY] Okay! I'm going to take the order!|[TAKEORDER]
+                <think>
+                    <set name="topic"></set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* YES</pattern>
+            <template>
+                [SAY] Okay! I'm going to take the order!|[TAKEORDER]
+                <think>
+                    <set name="topic"></set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>YES</pattern>
+            <template>
+                [SAY] Okay! I'm going to take the order!|[TAKEORDER]
+                <think>
+                    <set name="topic"></set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* SPARKLE *</pattern>
+            <template>
+                [SAY] Thank you for choosing me! I'm going to take the order!|[TAKEORDER]
+                <think>
+                    <set name="topic"></set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* SPARKLE</pattern>
+            <template>
+                [SAY] Thank you for choosing me! I'm going to take the order!|[TAKEORDER]
+                <think>
+                    <set name="topic"></set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>SPARKLE *</pattern>
+            <template>
+                [SAY] Thank you for choosing me! I'm going to take the order!|[TAKEORDER]
+                <think>
+                    <set name="topic"></set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>SPARKLE</pattern>
+            <template>
+                [SAY] Thank you for choosing me! I'm going to take the order!|[TAKEORDER]
+                <think>
+                    <set name="topic"></set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>*</pattern>
+            <template>
+            </template>
+        </category>
+
+    </topic>
+
+    <topic name="TAKEORDER">
+
+        <category>
+            <pattern>RESET</pattern>
+            <template>
+                <think>
+                    <set name="Customer">TOFILL</set>
+                    <set name="Drink">TOFILL</set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>START</pattern>
+            <template>
+                <condition>
+                    <li name="Customer" value="TOFILL">
+                        <think>
+                            <set name="topic">ASKNAME</set>
+                        </think>
+                        <srai>AskName</srai>
+                    </li>
+                    <li name="Drink" value="TOFILL">
+                        <think>
+                            <set name="topic">ASKDRINK</set>
+                        </think>
+                        <srai>AskDrink</srai>
+                    </li>
+                    <li>
+                        <srai>COCKTAILDONE</srai>
+                    </li>
+                </condition>
+            </template>
+        </category>
+
+        <category>
+            <pattern>STOP</pattern>
+            <template>
+                <set name="topic"></set>
+                [STOP]
+            </template>
+        </category>
+
+        <category>
+            <pattern>COCKTAILDONE</pattern>
+            <template>
+                [SAY]
+                <random>
+                    <li><get name="Customer"/>, thanks for your order. I'm going to bring you a <get name="Drink"/>!
+                    </li>
+                    <li>Perfect <get name="Customer"/>! Your
+                        <get name="Drink"/>
+                        is coming soon!
+                    </li>
+                    <li>A
+                        <get name="Drink"/>
+                        for <get name="Customer"/>! This is my new mission!
+                    </li>
+                    <li>Just a <get name="Drink"/>? I think you can do better, <get name="Customer"/>! However, I'll bring
+                        you a <get name="Drink"/>...
+                    </li>
+                </random>
+                <srai>TAKEORDERDATA</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>TAKEORDERDATA</pattern>
+            <template>
+                |[TAKEORDERDATA]<get name="Customer"/>(<get name="Drink"/>)
+            </template>
+        </category>
+    </topic>
+
+	<topic name="PROVIDEALTERNATIVES">
+		<category>
+            <pattern>RESET</pattern>
+            <template>
+                <think>
+                    <set name="Drink">TOFILL</set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>CUSTOMER * ALTERNATIVES * START</pattern>
+            <template>
+				Hi <star index="1"/>, these are the alternative drinks: <star index="2"/>
+                <condition>
+                    <li name="Drink" value="TOFILL">
+                        <think>
+                            <set name="topic">ASKDRINK</set>
+                        </think>
+                        <srai>AskDrink</srai>
+                    </li>
+                    <li>
+                        <srai>COCKTAILDONE</srai>
+                    </li>
+                </condition>
+            </template>
+        </category>
+
+        <category>
+            <pattern>STOP</pattern>
+            <template>
+                <set name="topic"></set>
+                [STOP]
+            </template>
+        </category>
+
+        <category>
+            <pattern>COCKTAILDONE</pattern>
+            <template>
+                [SAY]
+                <random>
+                    <li><get name="Customer"/>, thanks for your order. I'm going to bring you a <get name="Drink"/>!
+                    </li>
+                    <li>Perfect <get name="Customer"/>! Your
+                        <get name="Drink"/>
+                        is coming soon!
+                    </li>
+                    <li>A
+                        <get name="Drink"/>
+                        for <get name="Customer"/>! This is my new mission!
+                    </li>
+                    <li>Just a <get name="Drink"/>? I think you can do better, <get name="Customer"/>! However, I'll bring
+                        you a <get name="Drink"/>...
+                    </li>
+                </random>
+                <srai>TAKEORDERDATA</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>TAKEORDERDATA</pattern>
+            <template>
+                |[TAKEORDERDATA]<get name="Customer"/>(<get name="Drink"/>)
+            </template>
+        </category>
+
+		<!--<category>
+            <pattern>STOP</pattern>
+            <template>
+                <set name="topic"></set>
+                [STOP]
+            </template>
+        </category>-->
+
+    </topic>
+
+
+    <topic name="UNKNOWNAVAILABLE">
+        <category>
+            <pattern>CUSTOMER * DRINK * START</pattern>
+            <template>
+                <think>
+                    <set name="temp_customer">
+                        <star index="1"/>
+                    </set>
+                </think>
+                [SAY]
+                <random>
+                    <li>I'm sorry!</li>
+                    <li>Wait...</li>
+                    <li>Excuse me!</li>
+                </random>
+                <random>
+                    <li>I don't know whether the
+                        <star index="2"/>
+                        for
+                        <star index="1"/>
+                        is available or not.
+                    </li>
+                    <li>I'm not able to see if the
+                        <star index="2"/>
+                        for
+                        <star index="1"/>
+                        is available.
+                    </li>
+                </random>
+                <random>
+                    <li>Is there the
+                        <star index="2"/>
+                        for <star index="1"/>?
+                    </li>
+                    <li>Is there the <star index="2"/>?
+                    </li>
+                </random>
+                |[OPTIONS]Yes_No
+            </template>
+        </category>
+
+        <category>
+            <pattern>* YES *</pattern>
+            <template>
+                <srai>POSITIVERESPONSE</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* YES</pattern>
+            <template>
+                <srai>POSITIVERESPONSE</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>YES *</pattern>
+            <template>
+                <srai>POSITIVERESPONSE</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>YES</pattern>
+            <template>
+                <srai>POSITIVERESPONSE</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* NO *</pattern>
+            <template>
+                <srai>NEGATIVERESPONSE</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* NO</pattern>
+            <template>
+                <srai>NEGATIVERESPONSE</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>NO *</pattern>
+            <template>
+                <srai>NEGATIVERESPONSE</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>NO</pattern>
+            <template>
+                <srai>NEGATIVERESPONSE</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>POSITIVERESPONSE</pattern>
+            <template>
+                [SAY]
+                <random>
+                    <li>Great!</li>
+                    <li>Perfect!</li>
+                    <li>That's great!</li>
+                    <li>Brilliant!</li>
+                </random>
+                |[DRINKAVAILABLE]
+            </template>
+        </category>
+
+        <category>
+            <pattern>NEGATIVERESPONSE</pattern>
+            <template>
+                [SAY]
+                <random>
+                    <li>Okay, no problem!</li>
+                    <li>Sure, no problem!</li>
+                </random>
+                <srai>ALTDRINK CUSTOMER
+                    <get name="temp_customer"/>
+                    START
+                </srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>CUSTOMER * DRINK * STOP</pattern>
+            <template>
+                <set name="topic"></set>
+                [STOP]
+            </template>
+        </category>
+
+    </topic>
+
+    <topic name="ALTDRINK">
+        <category>
+            <pattern>CUSTOMER * START</pattern>
+            <template>
+                [SAY]
+                <random>
+                    <li>What do you have, instead?</li>
+                    <li>What can I bring to <star index="1"/>, instead?
+                    </li>
+                    <li>Do you have something else I can bring to <star index="1"/>, instead?
+                    </li>
+                </random>
+                |[OPTIONS]green tea_aquarius_cold brew_coke
+            </template>
+        </category>
+
+        <category>
+            <pattern>CUSTOMER * STOP</pattern>
+            <template>
+                <set name="topic"></set>
+                [STOP]
+            </template>
+        </category>
+
+        <!--
+            I think the best way to catch the alternatives (as I don't know how they will be
+            given), is to take everything the user says and try to match (afterwards) the
+            possible drinks, among the ones pre-defined.
+        -->
+        <category>
+            <that>INSTEAD</that>
+            <pattern>*</pattern>
+            <template>[DRINKSALTERNATIVES]
+                <star/>
+            </template>
+        </category>
+
+
+    </topic>
+
+
+    <topic name="ASKNAME">
+        <category>
+            <pattern>ASKNAME</pattern>
+            <template>
+                [SAY]
+                <random>
+                    <li>Hi there, I'm Sparkle!</li>
+                    <li>Hello, I'm Sparkle!</li>
+                    <li>Nice to meet you, I'm Sparkle!</li>
+                </random>
+                I'm ready to get your order!
+                <random>
+                    <li>Please, can you tell me your name?</li>
+                    <li>What is your name?</li>
+                    <li>What's your name?</li>
+                </random>
+                |[OPTIONS]noah_emma_olivia_liam_sophia_mason_ava_jacob_isabella_william_mia_ethan_abigail_james_emily_alexander_charlotte_michael_harper_benjamin
+            </template>
+        </category>
+
+	<category>
+		<pattern>* NOAH *</pattern>
+		<template>
+			<think>
+				<set name="Customer">noah</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>NOAH *</pattern>
+		<template>
+			<think>
+				<set name="Customer">noah</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* NOAH</pattern>
+		<template>
+			<think>
+				<set name="Customer">noah</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>NOAH</pattern>
+		<template>
+			<think>
+				<set name="Customer">noah</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* EMMA *</pattern>
+		<template>
+			<think>
+				<set name="Customer">emma</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>EMMA *</pattern>
+		<template>
+			<think>
+				<set name="Customer">emma</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* EMMA</pattern>
+		<template>
+			<think>
+				<set name="Customer">emma</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>EMMA</pattern>
+		<template>
+			<think>
+				<set name="Customer">emma</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* OLIVIA *</pattern>
+		<template>
+			<think>
+				<set name="Customer">olivia</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>OLIVIA *</pattern>
+		<template>
+			<think>
+				<set name="Customer">olivia</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* OLIVIA</pattern>
+		<template>
+			<think>
+				<set name="Customer">olivia</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>OLIVIA</pattern>
+		<template>
+			<think>
+				<set name="Customer">olivia</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* LIAM *</pattern>
+		<template>
+			<think>
+				<set name="Customer">liam</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>LIAM *</pattern>
+		<template>
+			<think>
+				<set name="Customer">liam</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* LIAM</pattern>
+		<template>
+			<think>
+				<set name="Customer">liam</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>LIAM</pattern>
+		<template>
+			<think>
+				<set name="Customer">liam</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* SOPHIA *</pattern>
+		<template>
+			<think>
+				<set name="Customer">sophia</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>SOPHIA *</pattern>
+		<template>
+			<think>
+				<set name="Customer">sophia</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* SOPHIA</pattern>
+		<template>
+			<think>
+				<set name="Customer">sophia</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>SOPHIA</pattern>
+		<template>
+			<think>
+				<set name="Customer">sophia</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* MASON *</pattern>
+		<template>
+			<think>
+				<set name="Customer">mason</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>MASON *</pattern>
+		<template>
+			<think>
+				<set name="Customer">mason</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* MASON</pattern>
+		<template>
+			<think>
+				<set name="Customer">mason</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>MASON</pattern>
+		<template>
+			<think>
+				<set name="Customer">mason</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* AVA *</pattern>
+		<template>
+			<think>
+				<set name="Customer">ava</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>AVA *</pattern>
+		<template>
+			<think>
+				<set name="Customer">ava</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* AVA</pattern>
+		<template>
+			<think>
+				<set name="Customer">ava</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>AVA</pattern>
+		<template>
+			<think>
+				<set name="Customer">ava</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* JACOB *</pattern>
+		<template>
+			<think>
+				<set name="Customer">jacob</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>JACOB *</pattern>
+		<template>
+			<think>
+				<set name="Customer">jacob</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* JACOB</pattern>
+		<template>
+			<think>
+				<set name="Customer">jacob</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>JACOB</pattern>
+		<template>
+			<think>
+				<set name="Customer">jacob</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* ISABELLA *</pattern>
+		<template>
+			<think>
+				<set name="Customer">isabella</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>ISABELLA *</pattern>
+		<template>
+			<think>
+				<set name="Customer">isabella</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* ISABELLA</pattern>
+		<template>
+			<think>
+				<set name="Customer">isabella</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>ISABELLA</pattern>
+		<template>
+			<think>
+				<set name="Customer">isabella</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* WILLIAM *</pattern>
+		<template>
+			<think>
+				<set name="Customer">william</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>WILLIAM *</pattern>
+		<template>
+			<think>
+				<set name="Customer">william</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* WILLIAM</pattern>
+		<template>
+			<think>
+				<set name="Customer">william</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>WILLIAM</pattern>
+		<template>
+			<think>
+				<set name="Customer">william</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* MIA *</pattern>
+		<template>
+			<think>
+				<set name="Customer">mia</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>MIA *</pattern>
+		<template>
+			<think>
+				<set name="Customer">mia</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* MIA</pattern>
+		<template>
+			<think>
+				<set name="Customer">mia</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>MIA</pattern>
+		<template>
+			<think>
+				<set name="Customer">mia</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* ETHAN *</pattern>
+		<template>
+			<think>
+				<set name="Customer">ethan</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>ETHAN *</pattern>
+		<template>
+			<think>
+				<set name="Customer">ethan</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* ETHAN</pattern>
+		<template>
+			<think>
+				<set name="Customer">ethan</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>ETHAN</pattern>
+		<template>
+			<think>
+				<set name="Customer">ethan</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* ABIGAIL *</pattern>
+		<template>
+			<think>
+				<set name="Customer">abigail</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>ABIGAIL *</pattern>
+		<template>
+			<think>
+				<set name="Customer">abigail</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* ABIGAIL</pattern>
+		<template>
+			<think>
+				<set name="Customer">abigail</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>ABIGAIL</pattern>
+		<template>
+			<think>
+				<set name="Customer">abigail</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* JAMES *</pattern>
+		<template>
+			<think>
+				<set name="Customer">james</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>JAMES *</pattern>
+		<template>
+			<think>
+				<set name="Customer">james</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* JAMES</pattern>
+		<template>
+			<think>
+				<set name="Customer">james</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>JAMES</pattern>
+		<template>
+			<think>
+				<set name="Customer">james</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* EMILY *</pattern>
+		<template>
+			<think>
+				<set name="Customer">emily</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>EMILY *</pattern>
+		<template>
+			<think>
+				<set name="Customer">emily</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* EMILY</pattern>
+		<template>
+			<think>
+				<set name="Customer">emily</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>EMILY</pattern>
+		<template>
+			<think>
+				<set name="Customer">emily</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* ALEXANDER *</pattern>
+		<template>
+			<think>
+				<set name="Customer">alexander</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>ALEXANDER *</pattern>
+		<template>
+			<think>
+				<set name="Customer">alexander</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* ALEXANDER</pattern>
+		<template>
+			<think>
+				<set name="Customer">alexander</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>ALEXANDER</pattern>
+		<template>
+			<think>
+				<set name="Customer">alexander</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* CHARLOTTE *</pattern>
+		<template>
+			<think>
+				<set name="Customer">charlotte</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>CHARLOTTE *</pattern>
+		<template>
+			<think>
+				<set name="Customer">charlotte</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* CHARLOTTE</pattern>
+		<template>
+			<think>
+				<set name="Customer">charlotte</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>CHARLOTTE</pattern>
+		<template>
+			<think>
+				<set name="Customer">charlotte</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* MICHAEL *</pattern>
+		<template>
+			<think>
+				<set name="Customer">michael</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>MICHAEL *</pattern>
+		<template>
+			<think>
+				<set name="Customer">michael</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* MICHAEL</pattern>
+		<template>
+			<think>
+				<set name="Customer">michael</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>MICHAEL</pattern>
+		<template>
+			<think>
+				<set name="Customer">michael</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* HARPER *</pattern>
+		<template>
+			<think>
+				<set name="Customer">harper</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>HARPER *</pattern>
+		<template>
+			<think>
+				<set name="Customer">harper</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* HARPER</pattern>
+		<template>
+			<think>
+				<set name="Customer">harper</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>HARPER</pattern>
+		<template>
+			<think>
+				<set name="Customer">harper</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* BENJAMIN *</pattern>
+		<template>
+			<think>
+				<set name="Customer">benjamin</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>BENJAMIN *</pattern>
+		<template>
+			<think>
+				<set name="Customer">benjamin</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* BENJAMIN</pattern>
+		<template>
+			<think>
+				<set name="Customer">benjamin</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>BENJAMIN</pattern>
+		<template>
+			<think>
+				<set name="Customer">benjamin</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+    </topic>
+
+
+    <topic name="ASKDRINK">
+        <category>
+            <pattern>ASKDRINK</pattern>
+            <template>
+                [SAY]
+                <random>
+                    <li>Hey <get name="Customer"/>!
+                    </li>
+                    <li>Hi <get name="Customer"/>!
+                    </li>
+                    <li>Hello <get name="Customer"/>!
+                    </li>
+                    <li>Hi there, <get name="Customer"/>!
+                    </li>
+                </random>
+                <random>
+                    <li>What do you want to drink?</li>
+                    <li>Which drink do you want?</li>
+                </random>
+				Please tell me or choose an option on my screen.
+                |[OPTIONS]green tea_aquarius_cold brew_coke
+            </template>
+        </category>
+
+	<category>
+		<pattern>* GREEN TEA *</pattern>
+		<template>
+			<think>
+				<set name="Drink">green tea</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>GREEN TEA *</pattern>
+		<template>
+			<think>
+				<set name="Drink">green tea</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* GREEN TEA</pattern>
+		<template>
+			<think>
+				<set name="Drink">green tea</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>GREEN TEA</pattern>
+		<template>
+			<think>
+				<set name="Drink">green tea</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* AQUARIUS *</pattern>
+		<template>
+			<think>
+				<set name="Drink">aquarius</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>AQUARIUS *</pattern>
+		<template>
+			<think>
+				<set name="Drink">aquarius</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* AQUARIUS</pattern>
+		<template>
+			<think>
+				<set name="Drink">aquarius</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>AQUARIUS</pattern>
+		<template>
+			<think>
+				<set name="Drink">aquarius</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* COLD BREW *</pattern>
+		<template>
+			<think>
+				<set name="Drink">cold brew</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>COLD BREW *</pattern>
+		<template>
+			<think>
+				<set name="Drink">cold brew</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* COLD BREW</pattern>
+		<template>
+			<think>
+				<set name="Drink">cold brew</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>COLD BREW</pattern>
+		<template>
+			<think>
+				<set name="Drink">cold brew</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* COKE *</pattern>
+		<template>
+			<think>
+				<set name="Drink">coke</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>COKE *</pattern>
+		<template>
+			<think>
+				<set name="Drink">coke</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* COKE</pattern>
+		<template>
+			<think>
+				<set name="Drink">coke</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+	<category>
+		<pattern>COKE</pattern>
+		<template>
+			<think>
+				<set name="Drink">coke</set>
+				<set name="topic">TAKEORDER</set>
+			</think>
+			<srai>START</srai>
+		</template>
+	</category>
+
+    </topic>
+
+</aiml>

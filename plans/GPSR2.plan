@@ -1,0 +1,3 @@
+# RUN 1
+execplan; ! *if* timeout_execplan_180 *do* skip_action !
+navigateto_bedroomentrance; 

@@ -33,6 +33,7 @@ def rhMonitorThread (memory_service,motion_service):
                 confidence = sound_value[1][2]
                 if (confidence > 0.2):
                     v = 'true'
+                    time.sleep(5)
                     sound_azimuth = sound_value[1][0]
                     head_yaw = sound_value[2][5]
                     turn_angle = sound_azimuth + head_yaw

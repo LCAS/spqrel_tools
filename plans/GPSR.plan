@@ -9,17 +9,14 @@ wait_2;
 enter_30_0_0_4_true; 
 
 navigateto_bedroomentrance; 
-turn_-135_ABS;
 
 # RUN 1
 execplan; ! *if* timeout_execplan_180 *do* skip_action !
 navigateto_bedroomentrance; 
-turn_-135_ABS;
 
 # RUN 2
 execplan; ! *if* timeout_execplan_180 *do* skip_action !
 navigateto_bedroomentrance; 
-turn_-135_ABS;
 
 # RUN 3
 execplan; ! *if* timeout_execplan_180 *do* skip_action !

@@ -214,6 +214,10 @@ class DialogueManager(EventAbstractClass):
                 cocktail_data['Drink'] = drink
                 cocktail_data['DrinkAvailability'] = True
                 self.memory.raiseEvent("DialogueVesponse", json.dumps(cocktail_data))
+            elif '[TAKEORDER]' in submessage:
+                data = submessage.replace('[TAKEORDERDATA]', '').replace(')', '').strip()
+                set_condition(self.memory, "takeorder", "true")
+                self.memory.raiseEvent("DialogueVesponse", 'takeorder')
             elif '[DRINKSALTERNATIVES]' in submessage:
                 data = submessage.replace('[DRINKSALTERNATIVES]', '').replace(')', '').strip()
                 alternatives = []

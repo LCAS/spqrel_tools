@@ -32,24 +32,21 @@ lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
 
 LABELPERSONFOUND;
 
-#goto_^person|40;
+#vsay_excuseme;
 followuntil_personhere_persondetectedid;
-animation_bow_false;
 greet_Japanese;
+animation_bow_false;
 greet_English;
+animation_hey1;
 
+#vsay_introduce; #sparkle introduces himself and says nice to meet you
+#animation_handshake
+#dialogue_guiding; #TODO "Do you want to follow me to any of the areas? YES NO" similar to vsay_guiding
 
-
-#insert: waving hand while calling for attention kindly
-
-#vsay_introduce; #sparkle introduces him/herself
 
 #sparkle should shake the hand of the spectator
 
-#dialogue_guiding; #TODO "Do you want to follow me to any of the areas? YES NO" similar to vsay_guiding
-
 #< (not wantstofollow) ? vsay_thanksanyway; GOTO LABEL1 : (wantstofollow) ? > #the robot should leave th group of people and go somewhere else
-
 #waitfor_personbehind;
 
 #goto_^audiencearena|40;

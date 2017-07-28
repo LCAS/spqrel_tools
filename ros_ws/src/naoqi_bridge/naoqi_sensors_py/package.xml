@@ -1,0 +1,52 @@
+<package>
+  <name>naoqi_sensors_py</name>
+  <version>0.5.5</version>
+
+  <description>
+    ROS driver for miscellaneous sensors on NAO.
+    Python bindings for camera, sonar and octomap
+    C++: bindings for camera only (requires NAOqi to build)
+  </description>
+
+  <author>Séverin Lemaignan</author>
+  <author>Vincent Rabaud</author>
+  <author>Karsten Knese</author>
+  <author>Jack O'Quin</author>
+  <author>Ken Tossell</author>
+  <author>Patrick Beeson</author>
+  <author>Nate Koenig</author>
+  <author>Andrew Howard</author>
+  <author>Damien Douxchamps</author>
+  <author>Dan Dennedy</author>
+  <author>Daniel Maier</author>
+
+  <maintainer email="severin.lemaignan@epfl.ch">Séverin Lemaignan</maintainer>
+  <maintainer email="surya.ambrose@gmail.com">Surya Ambrose</maintainer>
+  <license>LGPL and Apache2</license>
+
+  <url type="website">http://ros.org/wiki/naoqi_sensors</url>
+  <url type="bugtracker">https://github.com/ros-naoqi/naoqi_bridge/issues</url>
+  <url type="repository">https://github.com/ros-naoqi/naoqi_bridge.git</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>boost</build_depend>
+  <build_depend>camera_info_manager</build_depend>
+  <build_depend>dynamic_reconfigure</build_depend>
+  <build_depend>naoqi_driver_py</build_depend>
+  <build_depend>octomap</build_depend>
+  <build_depend>octomap_msgs</build_depend>
+
+
+  <run_depend>boost</run_depend>
+  <run_depend>camera_info_manager</run_depend>
+  <run_depend>camera_info_manager_py</run_depend>
+  <run_depend>dynamic_reconfigure</run_depend>
+  <run_depend>naoqi_driver_py</run_depend>
+  <run_depend>octomap</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+
+  <conflict>nao_sensors</conflict>
+
+</package>

@@ -11,7 +11,7 @@ from action_base import *
 actionName = "animation"
 
 
-def parser(params)
+def parser(params):
     if params = ('hey1'):
         return ('animations/Stand/Gestures/Hey_1')
     elif params = ('hey6'):

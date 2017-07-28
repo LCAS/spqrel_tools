@@ -11,19 +11,19 @@ waitfor_continue;
 START;
 enter_30_0_0_1_false;
 turn_90;
-lookfor_persondetected|20; ! *if* persondected *do* GOTO PERSONFOUND !
+lookfor_persondetected|20; ! *if* persondected *do* GOTO_PERSONFOUND !
 
 enter_30_0_0_1_false;
 turn_90;
-lookfor_persondetected|20; ! *if* persondected *do* GOTO PERSONFOUND !
+lookfor_persondetected|20; ! *if* persondected *do* GOTO_PERSONFOUND !
 
 enter_30_0_0_1_false;
 turn_90;
-lookfor_persondetected|20; ! *if* persondected *do* GOTO PERSONFOUND !
+lookfor_persondetected|20; ! *if* persondected *do* GOTO_PERSONFOUND !
 
 enter_30_0_0_1_false;
 turn_90;
-lookfor_persondetected|20; ! *if* persondected *do* GOTO PERSONFOUND !
+lookfor_persondetected|20; ! *if* persondected *do* GOTO_PERSONFOUND !
 
 
 ### GO TO THE PERSON FOUND

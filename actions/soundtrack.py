@@ -25,11 +25,15 @@ def actionThread_exec (params):
 
     print "Action "+actionName+" started with params "+params
 
+    values = params.split('_')
+    confidence_threshold = values[0]
+    distance_to_people = values[1]
+    time_to_rotate = values[2]
     # action init
    
     tracker_service = session.service("ALTracker")
     tracker_service.setMode("Move")
-    tracker_service.registerTarget("Sound",[2,0.2])
+    tracker_service.registerTarget("Sound",[distance_to_people,confidence_threshold])
     tracker_service.track("Sound")
 
     # action init
@@ -41,12 +45,12 @@ def actionThread_exec (params):
         # action exec
         try:
             sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
-            if len(sound_value)>1:
+            if len(sound_value)> 1 :
                 #print "confidence: ", sound_value[1][2]
                 confidence = sound_value[1][2]
-                if (confidence > 0.2):
+                if (confidence > confidence_threshold):
                     val = True
-                    time.sleep(5)
+                    time.sleep(10)
         except:
 	        pass
         # action exec

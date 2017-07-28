@@ -20,8 +20,7 @@ def actionThread_exec (params):
     print "Action "+actionName+" started with params "+params
 
     position = params
-    future = animation_service.run("animations/Stand/Gestures/BowShort_1", _async=True)
-    future.cancel()
+    future = animation_service.run("animations/Stand/Gestures/BowShort_1")
             
     # action end
     print "Action "+actionName+" "+params+" terminated"

@@ -34,6 +34,8 @@ def actionThread_exec (params):
 
     # action init
 
+    val = False
+    
     while (getattr(t, "do_run", True) and (not val)): 
         #print "Action "+actionName+" "+params+" exec..."
         # action exec

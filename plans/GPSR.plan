@@ -6,7 +6,7 @@ vsay_dooropen;
 waitfor_dooropen;
 vsay_starting;
 wait_2;
-enter_30_0_0_4_true; 
+#enter_30_0_0_4_true; 
 
 navigateto_bedroomentrance; 
 #turn_-90_ABS; # mayte check

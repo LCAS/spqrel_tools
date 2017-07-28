@@ -282,16 +282,16 @@ def actionThread_exec (params):
         # compose and start plan
         doExecPlan(memory_service, lu4r_value, asr_value)  # non-blocking
         # wait for end of plan execution
-        val = 0
-        while (getattr(t, "do_run", True) and val==0): 
-            time.sleep(2)
-            try:
-                actpl = memory_service.getData("PNP/ActivePlaces")
-            except:
-                actpl = ""
-            #print "    [DEBUG] active places: ",actpl
-            if ("goal" in actpl):
-                val = 1
+        #val = 0
+        #while (getattr(t, "do_run", True) and val==0): 
+        #    time.sleep(2)
+        #    try:
+        #        actpl = memory_service.getData("PNP/ActivePlaces")
+        #    except:
+        #        actpl = ""
+        #    #print "    [DEBUG] active places: ",actpl
+        #    if ("goal" in actpl):
+        #        val = 1
             
     else:
         memory_service.raiseEvent('DialogueVequest',"say_GIVEUP")

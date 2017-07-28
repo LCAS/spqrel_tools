@@ -26,9 +26,9 @@ def actionThread_exec (params):
     print "Action "+actionName+" started with params "+params
 
     values = params.split('_')
-    confidence_threshold = values[0]
-    distance_to_people = values[1]
-    time_to_rotate = values[2]
+    confidence_threshold = int(values[0])/100
+    distance_to_people = float(values[1])
+    time_to_rotate = int(values[2])
 
     print "Confidence: " , confidence_threshold
     print "Distance: " , distance_to_people
@@ -38,7 +38,7 @@ def actionThread_exec (params):
    
     tracker_service = session.service("ALTracker")
     tracker_service.setMode("Move")
-    tracker_service.registerTarget("Sound",[float(distance_to_people),float(confidence_threshold)])
+    tracker_service.registerTarget("Sound",[distance_to_people,confidence_threshold])
     tracker_service.track("Sound")
 
     # action init
@@ -55,11 +55,17 @@ def actionThread_exec (params):
                 confidence = sound_value[1][2]
                 if (confidence > confidence_threshold):
                     val = True
-                    time.sleep(int(time_to_rotate))
+                    break
         except:
 	        pass
+
         # action exec
         time.sleep(0.25)
+
+    count = time_to_rotate * 10
+    while (getattr(t, "do_run", True) and  val and count > 0):
+        time.sleep(.1)
+        count -= 1
 		
     print "Action "+actionName+" "+params+" terminated"
     # action end

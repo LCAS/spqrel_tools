@@ -7,8 +7,9 @@ saveposition_start; #TODO: memorize initial pose: get NAOqiLocalizer/RobotPose a
 
 vsay_readytotakeorder;
 LABEL1;
+asrenable_off;
 soundtrack_30_2_10; #confidence_distance_time
-headpose_0_0;
+headpitch_0;
 wait_2;
 
 < (not persondetected) ? GOTO_LABEL1 : persondetected ? >;
@@ -36,7 +37,7 @@ vsay_hereorder; # say to the person "Hi, here is your order"
 
 goto_^start|40;
 
-GOTO LABEL1; #repeat this plan until referee gives terminate signal. 
+GOTO_LABEL1; #repeat this plan until referee gives terminate signal. 
 
 
 

@@ -12,6 +12,14 @@
                 </think>
             </template>
         </category>
+
+        <category>
+            <pattern>STOP</pattern>
+            <template>
+                <set name="topic"></set>
+                [STOP]
+            </template>
+        </category>
     </topic>
 
     <topic name="WAITFORORDER">

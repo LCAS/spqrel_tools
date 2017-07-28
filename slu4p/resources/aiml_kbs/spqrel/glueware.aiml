@@ -37,6 +37,16 @@
     </category>
 
     <category>
+        <pattern>RESTAURANTTAKEORDER *</pattern>
+        <template>
+            <think>
+                <set name="topic">RESTAURANTTAKEORDER</set>
+                <srai>START</srai>
+            </think>
+        </template>
+    </category>
+
+    <category>
         <pattern>ALTDRINK *</pattern>
         <template>
             <think>

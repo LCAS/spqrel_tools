@@ -40,7 +40,13 @@ def actionThread_exec (params):
         #print "Action "+actionName+" "+params+" exec..."
         # action exec
         try:
-            val = get_condition(memory_service, params)
+            sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
+            if len(sound_value)>1:
+                #print "confidence: ", sound_value[1][2]
+                confidence = sound_value[1][2]
+                if (confidence > 0.2):
+                    val = True
+                    time.sleep(5)
         except:
 	        pass
         # action exec

@@ -10,15 +10,15 @@ import qi
 import os
 import traceback
 
-lu4r_ip = '192.168.1.14'
+lu4r_ip = '192.168.127.19'
 lu4r_port = '9001'
 lu4r_url = 'http://' + lu4r_ip + ':' + str(lu4r_port) + '/service/nlu'
 
 
 
 
-def to_plan(frame):
-    return execplan.LU4R_to_plan(frame, memory_service)
+def to_plan(asr, frame):
+    return execplan.LU4R_to_plan(frame, asr, memory_service)
 
 
 if __name__ == "__main__":
@@ -61,7 +61,7 @@ for line in f:
 
         answer=response.text.strip()
         try:
-                plan = to_plan(answer)
+                plan = to_plan(line, answer)
                 print "+++ utterance '%s' translated into %s" %(line, plan)
                 file_out.write(plan+'\n')
         except Exception as e:

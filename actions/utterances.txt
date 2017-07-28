@@ -1,15 +1,15 @@
 # WORKING
-#Go to the kitchen, go to the bedroom, and go to the kitchen
-#Take the aquarius from the dining table to the kitchen
+Go to the kitchen, go to the bedroom, and go to the kitchen
+Take the aquarius from the dining table to the kitchen
 
-# WIP
-# go to the kitchen, locate a person, and answer a question
+# WIP, partial
+go to the kitchen, locate a person, and answer a question
 
 
 # Wrong plans, but ok
 # Look for the fork in the kitchen
 
-Tell me how many tea there are on the bar
+Tell me how many tea there are on the kitchen table
 
 #Give to Skyler at the desk the coke from the counter
 #Look for the tea in the bathroom

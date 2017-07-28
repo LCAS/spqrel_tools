@@ -41,6 +41,10 @@ def get_filler(argument):
 
 
 def LU4R_to_plan(lu4r, asr_value, memory_service):
+
+    text2lu4 = Test2lu4(pairs_say, reflections)
+
+
     lu4r = lu4r + "#" + text2lu4.inputtext(asr_value)
     interpretations = lu4r.split("#")
 
@@ -375,14 +379,13 @@ class Test2lu4(object):
                     resp = response
 
                 resp = self._wildcards(resp, match)  # process wildcards
-
                 return resp
+        return ''
 
 if __name__ == "__main__":
 
     app = action_base.initApp(actionName)
 
-    text2lu4 = Test2lu4(pairs_say, reflections)
         
     init(app.session)
 

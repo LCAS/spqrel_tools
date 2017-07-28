@@ -17,21 +17,25 @@ def actionThread_exec (params):
     print "Action "+actionName+" started with params "+params
     # action init
     count = 1
-    car_x, car_y , car_t = memory_service.getData('NAOqiLocalizer/RobotPose')
-    last_node = memory_service.getData('TopologicalNav/LastNode')
+    try:
+        car_x, car_y , car_t = memory_service.getData('NAOqiLocalizer/RobotPose')
+        last_node = memory_service.getData('TopologicalNav/LastNode')
+    except Exception:
+        car_x = 0
+        car_y = 0
+        last_node = 'start'
+
     position_name = params
     # action init
-    while (getattr(t, "do_run", True) and count>0): 
-        print "Action "+actionName+" "+params+" exec..."
-        # action exec
-        count = count - 1
-        print "saved" + position_name
-        
-        memory_service.insertData(position_name+"/coordinates",str(car_x)+"_"+str(car_y))
-        memory_service.insertData(position_name+"/waypoint", last_node)
+    print "Action "+actionName+" "+params+" exec..."
+    # action exec
+    print "saved" + position_name
+    
+    memory_service.insertData(position_name+"/coordinates",str(car_x)+"_"+str(car_y))
+    memory_service.insertData(position_name+"/waypoint", last_node)
 
-        # action exec
-        time.sleep(0.1)
+    # action exec
+    time.sleep(0.1)
 
     print "Action "+actionName+" "+params+" terminated"
     # action end

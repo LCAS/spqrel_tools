@@ -56,8 +56,8 @@ def actionThread_exec(params):
     memory_service = getattr(t, "mem_serv", None)
     print "Action " + actionName + " started with params " + params
 
-    t = threading.currentThread()
     while getattr(t, "do_run", True):
+        print "Action " + actionName + " running params " + params
         plist = memory_service.getData("PeoplePerception/VisiblePeopleList")
         try:
             if (len(plist) > 0):

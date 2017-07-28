@@ -30,9 +30,9 @@ def actionThread_exec (params):
     distance_to_people = values[1]
     time_to_rotate = values[2]
 
-    print "confidence: " , confidence_threshold
-    print "distance: " , distance_to_people
-    print "time: " , time_to_rotate
+    print "Confidence: " , confidence_threshold
+    print "Distance: " , distance_to_people
+    print "Time: " , time_to_rotate
 
     # action init
    
@@ -50,6 +50,7 @@ def actionThread_exec (params):
         # action exec
         try:
             sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
+            print sound_value
             if len(sound_value)> 1 :
                 #print "confidence: ", sound_value[1][2]
                 confidence = sound_value[1][2]

@@ -21,7 +21,7 @@ def actionThread_exec (params):
 
     position = params
     if (position == 'up'):
-        future = animation_service.run("animations/Stand/Gestures/You1", _async=True)
+        future = animation_service.run("animations/Stand/Gestures/You_1", _async=True)
     if (position == 'down'):
         future.cancel()
             

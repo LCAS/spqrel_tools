@@ -1,6 +1,5 @@
-# WORKING
-#Go to the kitchen, go to the bedroom, and go to the kitchen
-#Take the aquarius from the dining table to the kitchen
+Go to the kitchen, go to the bedroom, and go to the kitchen
+Take the aquarius from the dining table to the kitchen
 
 # WIP, partial
 #go to the kitchen, locate a person, and answer a question

@@ -23,7 +23,7 @@ dialogue_restauranttakeorder;
   
 goto_^start|40;
 
-vsay_order_1;  # repeat the order to the barman
+vsay_restaurantlistorders;  # repeat the order to the barman
 
 vsay_cannotgrasp; # continue rule on manipulation: "I can not carry the food, can you help me. I will guide you to the customer."
 

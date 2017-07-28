@@ -15,7 +15,7 @@ def readKeysFile(keys_file, memory_service):
     for line in keys_file:
         key = line.strip()
 
-        if key[0] == '#':
+        if len(key) > 0 or key[0] == '#':
             print "Skipped comment: ", key
         elif key[0:7] == 'include':
             new_keys_filename = key[8:len(key)]

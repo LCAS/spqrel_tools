@@ -17,7 +17,7 @@ from action_base import *
 import dooropen, obstaclehere, screentouched
 import say, vsay, wait, waitfor, goto, turn, lookfor, dialogue, dialoguestart, dialoguestop, asrenable
 import posture, personhere, headpose, followuntil, movementdetected, webpage, personbehind, persondetected, speechbtn
-import execplan, saveposition, soundtrack, navigateto, memorizepeople, memorizeface, sounddetected, continuebtn, enter, recdata, assign, reccam, gotopos, storecentralperson
+import execplan, saveposition, soundtrack, navigateto, memorizepeople, memorizeface, sounddetected, continuebtn, enter, recdata, assign, reccam, gotopos, storecentralperson, fake
 import personlost, peoplesummary, arm
 
 def init(session):
@@ -60,6 +60,7 @@ def init(session):
     gotopos.init(session)
     arm.init(session)
     storecentralperson.init(session)
+    fake.init(session)
 
 def quit():
     screentouched.quit()
@@ -101,6 +102,7 @@ def quit():
     gotopos.quit()
     arm.quit()
     storecentralperson.quit()
+    fake.quit()
 
 def main():
     global memory_service

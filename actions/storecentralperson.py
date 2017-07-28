@@ -66,8 +66,9 @@ def actionThread_exec(params):
                     memory_service.insertData("center_person/id", str(p_id))
                     memory_service.insertData("center_person/pose", [p_x, p_y])
                 break
-        except Exception:
-            pass
+        except Exception as e:
+            print 'EXCEPTION: %s' % str(e)
+            break
     # action exec
     time.sleep(0.1)
 

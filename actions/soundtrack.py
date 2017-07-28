@@ -29,13 +29,13 @@ def actionThread_exec (params):
    
     tracker_service = session.service("ALTracker")
     tracker_service.setMode("Move")
-    tracker_service.registerTarget("Sound",[1.5,0.2])
+    tracker_service.registerTarget("Sound",[2,0.2])
     tracker_service.track("Sound")
 
     # action init
 
     val = False
-    
+
     while (getattr(t, "do_run", True) and (not val)): 
         #print "Action "+actionName+" "+params+" exec..."
         # action exec

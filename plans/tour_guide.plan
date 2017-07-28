@@ -9,19 +9,19 @@ waitfor_continue;
 # vsay_starttourguide;
 
 START;
-enter_1_0_0;
+enter_30_0_0_1_false;
 turn_90;
 lookfor_persondetected|20; ! *if* persondected *do* GOTO PERSONFOUND !
 
-enter_1_0_0;
+enter_30_0_0_1_false;
 turn_90;
 lookfor_persondetected|20; ! *if* persondected *do* GOTO PERSONFOUND !
 
-enter_1_0_0;
+enter_30_0_0_1_false;
 turn_90;
 lookfor_persondetected|20; ! *if* persondected *do* GOTO PERSONFOUND !
 
-enter_1_0_0;
+enter_30_0_0_1_false;
 turn_90;
 lookfor_persondetected|20; ! *if* persondected *do* GOTO PERSONFOUND !
 

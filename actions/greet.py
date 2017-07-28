@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import qi
 import argparse
 import sys
@@ -50,8 +52,10 @@ def actionThread_exec (params):
     while (getattr(t, "do_run", True) and count > 0): 
         #print "Action "+actionName+" "+params+" exec..."
         # action exec
-        greet(lang)
-        count -= 1
+        what_to_say = greet(lang)
+	print what_to_say
+	tts_service.say(what_to_say)
+	count -= 1
 
         # action exec
 
@@ -59,7 +63,7 @@ def actionThread_exec (params):
     # action end
 
     if len(params) > 0:
-        tts.setLanguage("English")
+        tts_service.setLanguage("English")
 
     # action end
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");

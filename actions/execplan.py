@@ -161,15 +161,16 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                 to_say = "I understood that I need to find"
                 memory_service.raiseEvent("Veply", to_say)
                 ground = ''
+                fillerp = ''
+                fillerg = ''
                 for argument in arguments:
-                    if ('ground' in argument) or ('entity' in argument):
-                        filler = get_filler(argument)
-                        to_say = "I understood the entity to find is in " + filler
-                        memory_service.raiseEvent("Veply", to_say)
-                        ground = 'navigateto_' + filler
-                    if 'phenomenon' in argument:
-                        filler = get_filler(argument)
-                        to_say = "I understood that I have to look for " + filler
+                    if ('ground' in argument) or ('entity' in argument):   # kitchen
+                        fillerg = get_filler(argument)
+                        to_say = "I understood the entity to find is in " + fillerg
+                        memory_service.raiseEvent("Veply", to_say)                        
+                    if 'phenomenon' in argument: # maria
+                        fillerp = get_filler(argument)
+                        to_say = "I understood that I have to look for " + fillerp
                         memory_service.raiseEvent("Veply", to_say)
                         try:
                             phenomenon = memory_service.getData("/location_mapping/" + filler)
@@ -179,6 +180,7 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                         phenomenon = filler
                     print 'TO_SAY: ' + to_say
                 if len(phenomenon) > 0:
+                    ground = 'navigateto_' + fillerg
                     action = action + ground
                     action = action + '; '
                     action = action + ' lookfor_persondetected|10; '

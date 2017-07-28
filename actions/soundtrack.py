@@ -33,7 +33,7 @@ def actionThread_exec (params):
    
     tracker_service = session.service("ALTracker")
     tracker_service.setMode("Move")
-    tracker_service.registerTarget("Sound",[distance_to_people,confidence_threshold])
+    tracker_service.registerTarget("Sound",[float(distance_to_people),float(confidence_threshold)])
     tracker_service.track("Sound")
 
     # action init
@@ -50,7 +50,7 @@ def actionThread_exec (params):
                 confidence = sound_value[1][2]
                 if (confidence > confidence_threshold):
                     val = True
-                    time.sleep(10)
+                    time.sleep(time_to_rotate)
         except:
 	        pass
         # action exec

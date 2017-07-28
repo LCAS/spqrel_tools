@@ -5,7 +5,7 @@ saveposition_start; #TODO: memorize initial pose: get NAOqiLocalizer/RobotPose a
 
 LABEL1;
 vsay_readytotakeorder;
-soundtrack_sounddetected;
+soundtrack_0.2_2_10; #confidence_distance_time
 wait_2;
 
 < (not persondetected) ? GOTO LABEL1 >

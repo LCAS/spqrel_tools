@@ -33,7 +33,7 @@ lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
 LABELPERSONFOUND;
 
 #vsay_excuseme;
-followuntil_personhere_persondetectedid;
+followuntil_personhere_persondetectedid; #conditions_memorykey (to read the id we want to follow)
 greet_Japanese;
 animation_bow_false;
 greet_English;
@@ -43,15 +43,13 @@ animation_hey1;
 #animation_handshake
 #dialogue_guiding; #TODO "Do you want to follow me to any of the areas? YES NO" similar to vsay_guiding
 
-
-#sparkle should shake the hand of the spectator
-
-#< (not wantstofollow) ? vsay_thanksanyway; GOTO LABEL1 : (wantstofollow) ? > #the robot should leave th group of people and go somewhere else
+#< (not wantstofollow) ? vsay_thanksanyway; turn_180; GOTO LABELSTART : (wantstofollow) ? > #the robot should leave th group of people and go somewhere else
 #waitfor_personbehind;
 
-#goto_^audiencearena|40;
+#navigateto_^audiencearena|40;
 
-#vsay_explainrobocup;
+#vsay_explainrobocup; #e.g. Please can you sit here i will explain now briefly our robocup league
+
 #turn_180;
 
 

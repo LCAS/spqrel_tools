@@ -1,0 +1,131 @@
+Bring me a food
+Could you please go to the bookcase, meet Emily, and take her
+Come after Abigail
+Navigate to the desk, meet Mia, and take her
+Bring me a fruit
+Could you please go to the kitchen table, meet Emma, and guide her
+Please deliver snack to a waving person
+Meet Noah and accompany him
+Go to the desk, meet Abigail, and accompany her
+Please follow Mason
+Robot please bring me a cutlery
+Lead Olivia to the teepee
+Could you please escort James to the kitchen table
+Could you bring me some food
+Bring me some drink
+Go to the sofa, meet Olivia, and escort her
+Navigate to the bookcase, meet Michael, and take him
+Deliver snack to me
+Meet Harper and take her
+Take Emily to the teepee
+Robot please go to the teepee, meet Alexander, and accompany him
+Accompany Sophia to the sofa
+Could you please follow Isabella
+Meet Olivia and guide her
+Lead Ethan to the teepee
+Navigate to the TV, meet James, and accompany him
+Please follow Charlotte
+Navigate to the teepee, meet Olivia, and accompany her
+Could you please go after Benjamin
+Navigate to the kitchen table, meet Emma, and lead her
+
+
+
+
+
+########
+#REMARKS
+########
+
+Bring me a food
+	food
+		radish
+Could you please go to the bookcase, meet Emily, and take her
+	Emily
+	 Emily must be taken from bookcase to sofa, but he will get lost before reaching it
+Come after Abigail
+	Abigail
+		 Abigail is at the teepee
+Navigate to the desk, meet Mia, and take her
+	Mia
+		 Mia must be taken from desk to desk, but he will get lost before reaching it
+Bring me a fruit
+	fruit
+		apple
+Could you please go to the kitchen table, meet Emma, and guide her
+	Emma
+		 Emma must be taken from kitchen table to TV, but he will get lost before reaching it
+Please deliver snack to a waving person
+	snack
+		jelly
+	remarks
+		 The waving person is in the kitchen
+Meet Noah and accompany him
+	Noah
+		 Noah must be taken from bookcase to bed, but he will get lost before reaching it
+Go to the desk, meet Abigail, and accompany her
+	Abigail
+		 Abigail must be taken from desk to kitchen table, but he will get lost before reaching it
+Please follow Mason
+	Mason
+		 Mason is at the TV
+Robot please bring me a cutlery
+	cutlery
+		chopsticks
+Lead Olivia to the teepee
+	Olivia
+		 Olivia is at the TV
+Could you please escort James to the kitchen table
+	James
+		 James is at the bookcase
+Could you bring me some food
+	food
+		onion
+Bring me some drink
+	drink
+		green tea
+Go to the sofa, meet Olivia, and escort her
+	Olivia
+		 Olivia must be taken from sofa to TV, but he will get lost before reaching it
+Navigate to the bookcase, meet Michael, and take him
+	Michael
+		 Michael must be taken from bookcase to teepee, but he will get lost before reaching it
+Deliver snack to me
+	snack
+		cup star
+Meet Harper and take her
+	Harper
+		 Harper must be taken from TV to sofa, but he will get lost before reaching it
+Take Emily to the teepe
+	Emily
+		 Emily is at the sofa
+Robot please go to the teepee, meet Alexander, and accompany him
+	Alexander
+		 Alexander must be taken from teepee to bookcase, but he will get lost before reaching it
+Accompany Sophia to the sofa
+	Sophia
+		 Sophia is at the bookcase
+Could you please follow Isabella
+	Isabella
+		 Isabella is at the teepee
+Meet Olivia and guide her
+	Olivia
+		 Olivia must be taken from bed to bed, but he will get lost before reaching it
+Lead Ethan to the teepee
+	Ethan
+		 Ethan is at the sofa
+Navigate to the TV, meet James, and accompany him
+	James
+		 James must be taken from TV to teepee, but he will get lost before reaching it
+Please follow Charlotte
+	Charlotte
+		 Charlotte is at the desk
+Navigate to the teepee, meet Olivia, and accompany her
+	Olivia
+		 Olivia must be taken from teepee to sofa, but he will get lost before reaching it
+Could you please go after Benjamin
+	Benjamin
+		 Benjamin is at the sofa
+Navigate to the kitchen table, meet Emma, and lead her
+	Emma
+		 Emma must be taken from kitchen table to teepee, but he will get lost before reaching it

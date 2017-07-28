@@ -27,6 +27,7 @@ def rhMonitorThread (memory_service):
         v = 'false'
         try:
             if (len(plist)>0):
+                memory_service.insertData("persondetectedid")
                 v = 'true'
         except:
             v = 'false'

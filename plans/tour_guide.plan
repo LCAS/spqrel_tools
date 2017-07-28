@@ -10,19 +10,19 @@ posture_Stand;
 # vsay_starttourguide;
 
 LABELSTART;
-enter_30_0_0_1_false;
+enter_30_0_0_3_false;
 turn_90;
 lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
 
-enter_30_0_0_1_false;
+enter_30_0_0_3_false;
 turn_90;
 lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
 
-enter_30_0_0_1_false;
+enter_30_0_0_3_false;
 turn_90;
 lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
 
-enter_30_0_0_1_false;
+enter_30_0_0_3_false;
 turn_90;
 lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
 
@@ -33,7 +33,7 @@ lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
 LABELPERSONFOUND;
 
 #goto_^person|40;
-followuntil_personhere;
+followuntil_personhere_persondetectedid;
 animation_bow_false;
 greet_Japanese;
 greet_English;

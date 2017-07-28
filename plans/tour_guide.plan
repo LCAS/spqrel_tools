@@ -12,19 +12,19 @@ posture_Stand;
 START;
 enter_30_0_0_1_false;
 turn_90;
-lookfor_persondetected|20; ! *if* persondetected *do* GOTO_PERSONFOUND !
+lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_PERSONFOUND !
 
 enter_30_0_0_1_false;
 turn_90;
-lookfor_persondetected|20; ! *if* persondetected *do* GOTO_PERSONFOUND !
+lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_PERSONFOUND !
 
 enter_30_0_0_1_false;
 turn_90;
-lookfor_persondetected|20; ! *if* persondetected *do* GOTO_PERSONFOUND !
+lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_PERSONFOUND !
 
 enter_30_0_0_1_false;
 turn_90;
-lookfor_persondetected|20; ! *if* persondetected *do* GOTO_PERSONFOUND !
+lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_PERSONFOUND !
 
 
 ### GO TO THE PERSON FOUND

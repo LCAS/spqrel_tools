@@ -12,11 +12,11 @@ actionName = "animation"
 
 
 def parser(params):
-    if params = ('hey1'):
+    if params == ('hey1'):
         return ('animations/Stand/Gestures/Hey_1')
-    elif params = ('hey6'):
+    elif params == ('hey6'):
         return ('animations/Stand/Gestures/Hey_6')
-    elif params = ('bow'):
+    elif params == ('bow'):
         return ('animations/Stand/Gestures/BowShort_1')
     else:
         return('')

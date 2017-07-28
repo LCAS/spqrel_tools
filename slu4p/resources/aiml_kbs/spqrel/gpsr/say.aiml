@@ -96,6 +96,15 @@
     </category>
 
     <category>
+        <pattern>READYTOTAKEORDER</pattern>
+        <template>
+            <random>
+                <li>I'm ready to take the order. Please, speak loud!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
         <pattern>PERSONDETECTED</pattern>
         <template>
             <random>

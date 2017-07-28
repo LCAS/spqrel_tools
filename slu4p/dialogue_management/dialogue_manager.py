@@ -18,6 +18,7 @@ class DialogueManager(EventAbstractClass):
     cocktail_data = {}
     location = {}
     order_counter = 0
+    restaurant_order_counter = 0
 
     def __init__(self, ip, port, aiml_path, drinks_path):
         super(self.__class__, self).__init__(self, ip, port)
@@ -31,6 +32,7 @@ class DialogueManager(EventAbstractClass):
         self.__learn(aiml_path)
 
         self.possible_drinks = slu_utils.lines_to_list(drinks_path)
+        #self.food = slu_utils.lines_to_list(drinks_path)
 
     def start(self, *args, **kwargs):
         self.subscribe(
@@ -89,6 +91,22 @@ class DialogueManager(EventAbstractClass):
                 to_send = "say SPRinfocollected total " + total + " males " + males + " females " + females
             except:
                 to_send = "say SPRinfocollected donotknow"
+
+        if 'restaurantlistorders' in splitted[1]:
+                for i in range(1, self.restaurant_order_counter):
+                    try:
+                        table = json.loads(self.memory.getData('/Restaurant/Table' + str(i)))
+                        order = table['Order']
+                        if len(order) == 1:
+                            reply = order[0] + ' for table ' + str(i)
+                            self.memory.raiseEvent("Veply", reply)
+                        elif len(order) == 2:
+                            self.restaurant_order_counter += 1
+                            reply = order[0] + ' and ' + order[1] + ' for table ' + str(i)
+                            self.memory.raiseEvent("Veply", reply)
+                    except:
+                        pass
+
         if 'order' == splitted[1] or 'confirmdrink' == splitted[1] or 'confirmnotavailable' == splitted[1] or 'unknownavailable' == splitted[1]:
             try:
                 self.current_user_id = splitted[2]
@@ -214,10 +232,41 @@ class DialogueManager(EventAbstractClass):
                 cocktail_data['Drink'] = drink
                 cocktail_data['DrinkAvailability'] = True
                 self.memory.raiseEvent("DialogueVesponse", json.dumps(cocktail_data))
+            elif '[RESTAURANTORDERDATA]' in submessage:
+                data = submessage.replace('[RESTAURANTORDERDATA]', '').replace(')', '').strip()
+                food_alternatives = []
+                self.restaurant_order_data = {}
+                for drink in self.possible_drinks:
+                    if drink in data:
+                        food_alternatives.append(drink)
+                self.restaurant_order_data['Order'] = food_alternatives
+                if len(food_alternatives) == 1:
+                    self.restaurant_order_counter += 1
+                    reply = 'So, you want only ' + food_alternatives[0]
+                    self.memory.raiseEvent("Veply", reply)
+                    self.memory.insertData("/Restaurant/Table" + str(self.restaurant_order_counter),
+                                           json.dumps(self.restaurant_order_data))
+                    self.memory.raiseEvent("DialogueVesponse", json.dumps(self.restaurant_order_data))
+                elif len(food_alternatives) == 2:
+                    self.restaurant_order_counter += 1
+                    reply = 'So, you want ' + food_alternatives[0] + ' and ' + food_alternatives[1]
+                    self.memory.raiseEvent("Veply", reply)
+                    self.memory.insertData("/Restaurant/Table" + str(self.restaurant_order_counter),
+                                           json.dumps(self.restaurant_order_data))
+                    self.memory.raiseEvent("DialogueVesponse", json.dumps(self.restaurant_order_data))
+                else:
+                    reply = 'Sorry, I did not understand your choice. '
+                    self.memory.raiseEvent("Veply", reply)
+                    reply = self.kernel.respond(reply)
+                    self.do_something(reply)
             elif '[TAKEORDER]' in submessage:
-                data = submessage.replace('[TAKEORDERDATA]', '').replace(')', '').strip()
+                data = submessage.replace('[TAKEORDER]', '').replace(')', '').strip()
                 set_condition(self.memory, "takeorder", "true")
                 self.memory.raiseEvent("DialogueVesponse", 'takeorder')
+            elif '[NOTTAKEORDER]' in submessage:
+                data = submessage.replace('[NOTTAKEORDER]', '').replace(')', '').strip()
+                set_condition(self.memory, "takeorder", "false")
+                self.memory.raiseEvent("DialogueVesponse", 'nottakeorder')
             elif '[DRINKSALTERNATIVES]' in submessage:
                 data = submessage.replace('[DRINKSALTERNATIVES]', '').replace(')', '').strip()
                 alternatives = []

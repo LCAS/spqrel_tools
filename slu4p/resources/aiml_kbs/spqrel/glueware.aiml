@@ -20,10 +20,19 @@
             <think>
                 <set name="topic">ORDERDETECTED</set>
             </think>
-            <srai>RESET</srai>
             <srai>
                 <star/>
             </srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>ASKORDER</pattern>
+        <template>
+            <think>
+                <set name="topic">ASKORDER</set>
+                <srai>ASKORDER</srai>
+            </think>
         </template>
     </category>
 

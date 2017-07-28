@@ -1,7 +1,3 @@
-green tea
-aquarius
-cold brew
-coke
 chewing gum
 fries
 candy
@@ -13,3 +9,4 @@ jelly
 bread
 cup star
 orange
+coke

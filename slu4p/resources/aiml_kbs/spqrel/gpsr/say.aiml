@@ -131,6 +131,17 @@
     </category>
 
     <category>
+        <pattern>CANNOTTAKE</pattern>
+        <template>
+            <random>
+                <li>They said that my hands are handsome!</li>
+                <li>Sorry, I've just painted my nails with enamel!</li>
+            </random>
+            I'm sorry, but I'm not allowed to grasp!
+        </template>
+    </category>
+
+    <category>
         <pattern>NOTFOUND</pattern>
         <template>
             <random>

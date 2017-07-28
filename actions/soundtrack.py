@@ -29,6 +29,11 @@ def actionThread_exec (params):
     confidence_threshold = values[0]
     distance_to_people = values[1]
     time_to_rotate = values[2]
+
+    print "confidence: " , confidence_threshold
+    print "distance: " , distance_to_people
+    print "time: " , time_to_rotate
+
     # action init
    
     tracker_service = session.service("ALTracker")

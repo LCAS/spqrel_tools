@@ -1,21 +1,24 @@
 # run this with an empty map
 
+recdata_on;
+posture_Stand;
 
 saveposition_start; #TODO: memorize initial pose: get NAOqiLocalizer/RobotPose and save pose in toponav?
 
-LABEL1;
 vsay_readytotakeorder;
+LABEL1;
 soundtrack_30_2_10; #confidence_distance_time
+headpose_0_0;
 wait_2;
 
-< (not persondetected) ? GOTO LABEL1 >
+< (not persondetected) ? GOTO_LABEL1 : persondetected ? >;
 
 storecentralperson;
 
 #TODO: pointing with the arm where the customer is? (to state we understood where the customer is?)
 dialogue_orderdetected;
 
-< (not takeorder) ? GOTO LABEL1 >
+< (not takeorder) ? GOTO_LABEL1 : takeorder ? >;
 
 goto_^person|40;
 

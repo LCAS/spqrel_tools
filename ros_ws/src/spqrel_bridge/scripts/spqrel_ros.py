@@ -3,9 +3,11 @@ import rospy
 import qi
 import argparse
 import os
+import json
 import sys
 from std_msgs.msg import String
-
+from sensor_msgs.msg import Image
+from ms_face_api.srv import Detect, DetectRequest
 
 class Qi2RosStringTopic(object):
 
@@ -36,6 +38,7 @@ class Ros2QiStringTopic():
 
     def _on_event(self, data):
         self.memory_service.raiseEvent(self.memory_key, data.data)
+        self.memory_service.insertData(self.memory_key, data.data)
 
     def __init__(self, memory_service, topic_name, prefix='/ros/'):
         self.memory_service = memory_service
@@ -60,7 +63,7 @@ class SPQReLROSBridge():
             self.memory_service, 'Veply', latch=True
         )
         self.person_ana_r2q = Ros2QiStringTopic(
-            self.memory_service, 'person_analysis_outcome'
+            self.memory_service, '/person_analysis_outcome'
         )
         self.trigger_tobi = Qi2RosStringTopic(
             self.memory_service, 'trigger_person_analysis'
@@ -70,6 +73,71 @@ class SPQReLROSBridge():
         self.website_pub = rospy.Publisher('/qi/webview/url',
                                            String, queue_size=1)
 
+        self.trigger_tobi_sub = rospy.Subscriber(
+            '/qi/trigger_person_analysis',
+            String, self._trigger_tobi)
+        self.trigger_tobi_sub = rospy.Subscriber(
+            '/detect_people/fusion',
+            String, self._stop_tobi)
+
+        self._image_pub = rospy.Publisher(
+            '/spqrel/camera/image_raw',
+            Image, queue_size=1)
+        self._depth_pub = rospy.Publisher(
+            '/spqrel/depth/image_raw',
+            Image, queue_size=1)
+
+        self._image_counter = 0
+        self._depth_counter = 0
+        self._THROTTLE = 5
+
+    def _image_cb(self, img):
+        self._image_counter += 1
+        if self._image_counter > self._THROTTLE:
+            rospy.loginfo('publish image')
+            self._image_pub.publish(img)
+            self._image_counter = 0
+
+    def _depth_cb(self, img):
+        self._depth_counter += 1
+        if self._depth_counter > self._THROTTLE:
+            rospy.loginfo('publish depth')
+            self._depth_pub.publish(img)
+            self._depth_counter = 0
+
+    def _stop_tobi(self, _):
+        rospy.loginfo('stop tobi')
+        if self._cam_sub:
+            self._cam_sub.unregister()
+            self._cam_sub = None
+        if self._depth_sub:
+            self._depth_sub.unregister()
+            self._depth_sub = None
+
+    def _trigger_tobi(self, data):
+        rospy.loginfo('trigger tobi')
+        self._cam_sub = rospy.Subscriber(
+            'spqrel_pepper/camera/front/camera/image_raw',
+            Image, self._image_cb
+        )
+        self._depth_sub = rospy.Subscriber(
+            'spqrel_pepper/camera/depth/camera/image_raw',
+            Image, self._depth_cb
+        )
+
+        # d = rospy.ServiceProxy('/ms_face_api/detect', Detect)
+        # r = DetectRequest()
+        # r.topic = 'spqrel_pepper/camera/front/camera/image_raw'
+        # res = d.call(r)
+        # res_faces = []
+        # for f in
+        # res_dict = {
+        #     'age': res.age,
+        #     'gender': res.gender,
+        #     'smile': res.smile
+        # }
+        # print json.dumps(res)
+
     def display_webview(self, uri=None):
         if uri is None:
             uri = 'http://%s:1036/' % self.ip
@@ -77,16 +145,9 @@ class SPQReLROSBridge():
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--pip", type=str,
-        default=os.environ['PEPPER_IP'],
-        help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
-    parser.add_argument("--pport", type=int, default=9559,
-                        help="Naoqi port number")
-    args = parser.parse_args()
-    pip = args.pip
-    pport = args.pport
+
+    pip = os.environ['PEPPER_IP']
+    pport = 9559
 
     try:
         connection_url = "tcp://" + pip + ":" + str(pport)
@@ -106,4 +167,5 @@ if __name__ == "__main__":
     rospy.set_param('PEPPER_IP', ip)
 
     bridge = SPQReLROSBridge(app.session)
+    bridge.display_webview()
     rospy.spin()

@@ -16,7 +16,7 @@ from conditions import get_condition
 actionName = "trackface"
 
 
-def actionThread_exec (params):
+def actionThread_exec(params):
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
     session = getattr(t, "session", None)
@@ -26,30 +26,20 @@ def actionThread_exec (params):
     # action init
     tracker_service = session.service("ALTracker")
 
-    tracker_service.setMode("Head")
+    p = params.split('_')
 
-    tracker_service.registerTarget("Face",0.15)
-    tracker_service.track("Face")
-    
-    val = False
-    # action init
+    if p[0] == 'start':
+        tracker_service.setMode("Head")
 
-    while (getattr(t, "do_run", True) and (not val)): 
-        #print "Action "+actionName+" "+params+" exec..."
-        # action exec
-        try:
-            val = get_condition(memory_service, params)
-        except:
-	        pass
-        # action exec
-        time.sleep(0.25)
-		
+        tracker_service.registerTarget("Face", 0.15)
+        tracker_service.track("Face")
+    elif p[0] == 'stop':
+        tracker_service.stopTracker()
+        tracker_service.unregisterAllTargets()
     print "Action "+actionName+" "+params+" terminated"
     # action end
-    tracker_service.stopTracker()
-    tracker_service.unregisterAllTargets()
     # action end
-    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+    memory_service.raiseEvent("PNP_action_result_" + actionName, "success")
 
 
 def init(session):

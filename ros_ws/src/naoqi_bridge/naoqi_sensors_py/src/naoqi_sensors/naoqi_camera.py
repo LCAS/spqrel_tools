@@ -303,7 +303,7 @@ class NaoqiCam (NaoqiNode):
                 infomsg.D = []
                 infomsg.binning_x = 0
                 infomsg.binning_y = 0
-                infomsg.distortion_model = ""
+                infomsg.distortion_model = "plumb_bob"
 
                 infomsg.header = img.header
                 self.pub_info_.publish(infomsg)

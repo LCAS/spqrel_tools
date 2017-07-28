@@ -126,11 +126,11 @@ def actionThread_exec (params):
                     
 
         elif command=='SPRgame':
-            peoplevalues =  memory_service.getData("PeoplePerception/PeopleDetected")
-            num_total=len(peoplevalues)
+
             num_males=0
             num_females=0
             num_total=len(people_list)
+            
             for p in people_list:
                 
                 if p['face_naoqi']['faceinfo']['gender']['val'] =='male':
@@ -142,7 +142,7 @@ def actionThread_exec (params):
             print 'TOTAL MALES :', num_males
             print 'TOTAL FEMALES :', num_females
             
-            result={'total':num_total,'num_males':num_males,'num_females':num_females }
+            result={'total_persons':num_total,'num_males':num_males,'num_females':num_females }
             str_result=json.dumps(result)    
             memory_service.insertData('Humans/Crowd',str_result)
             
@@ -162,10 +162,12 @@ def actionThread_exec (params):
                 print 'memory Actions/personhere/PersonID not available'
             
             try:
-                personid =  memory_service.getData("PeoplePerception/VisiblePeopleList")
+                listvisible =  memory_service.getData("PeoplePerception/VisiblePeopleList")
+                personid=listvisible[0]
             except:
                 print 'memory Actions/personhere/PersonID not available'                
-                
+            
+            
             try:
                 shirtcolorName =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ShirtColor")
                 propage =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/AgeProperties")
@@ -183,34 +185,72 @@ def actionThread_exec (params):
                 
             result={'PersonID':personid,'Name':'','Age':age, 'Gender':str_gender,'TshirtColor':tshircolor}
             str_result=json.dumps(result)                           
-            memory_service.insertData('Humans/Peoplesummary',str_result)
+            memory_service.insertData('Humans/Description',str_result)
 
 
         elif command=='Number/sitting':
             
-            num_total=0
+            num_total=len(people_list)
 
             for p in people_list:
                 
                 if p['face_naoqi']['info']['posture']=='sitting':
-                    num_total +=1
+                    num_target +=1
 
-            result={'total':num_total}
+            result={'total_persons':num_total,'result':num_target}
             str_result=json.dumps(result)                           
             memory_service.insertData('Humans/Peoplesummary',str_result) 
 
         elif command=='Number/standing':
             
-            num_total=0
+            num_total=len(people_list)
+            num_target=0
 
             for p in people_list:
                 
                 if p['face_naoqi']['info']['posture']=='standing':
-                    num_total +=1
+                    num_target +=1
 
-            result={'total':num_total}
+            result={'total_persons':num_total,'result':num_target}
             str_result=json.dumps(result)                           
-            memory_service.insertData('Humans/Peoplesummary',str_result)                      
+            memory_service.insertData('Humans/Peoplesummary',str_result)  
+
+        elif command=='Number/males':
+            
+            num_males=0
+            num_total=len(people_list)
+            
+            for p in people_list:
+                
+                if p['face_naoqi']['faceinfo']['gender']['val'] =='male':
+                    num_males +=1
+                    
+            print '*****'
+            print 'TOTAL PERSONS :', num_total
+            print 'TOTAL MALES :', num_males
+            
+            result={'total_persons':num_total,'result':num_males}
+            str_result=json.dumps(result)    
+            memory_service.insertData('Humans/Crowd',str_result)
+            
+        elif command=='Number/females':
+            
+            num_females=0
+            num_total=len(people_list)
+            
+            for p in people_list:
+                
+                if p['face_naoqi']['faceinfo']['gender']['val'] =='male':
+                    num_females +=1
+                    
+            print '*****'
+            print 'TOTAL PERSONS :', num_total
+            print 'TOTAL FEMALES :', num_females
+            
+            result={'total_persons':num_total,'result':num_females}
+            str_result=json.dumps(result)    
+            memory_service.insertData('Humans/Crowd',str_result)
+                    
         b_completed=True                   
                     
 

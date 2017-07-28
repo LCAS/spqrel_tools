@@ -1,5 +1,7 @@
+sparkle
 yes
 no
+stop
 hello
 hi
 noah

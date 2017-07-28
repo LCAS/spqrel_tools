@@ -14,6 +14,7 @@ from action_base import *
 
 actionName = "execplan"
 
+gpsrtaskname = "GPSRtask"
 
 asrkey = "ASR_transcription"
 lu4rkey = "CommandInterpretations"
@@ -219,29 +220,29 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
 # non-blocking function
 def doExecPlan(memory_service, lu4r_value, asr_value):
 
-    print " *** DEBUG *** ASR_enable set to 0 !!!"
+    #print " *** DEBUG *** ASR_enable set to 0 !!!"
     memory_service.raiseEvent("ASR_enable","0")
 
     plan = LU4R_to_plan(lu4r_value, asr_value, memory_service)
     os.chdir(os.environ["PLAN_DIR"])
-    cmd = 'cd ../plans; echo "'+plan+'" > GPSR_task.plan'
+    cmd = 'cd ../plans; echo "'+plan+'" > '+gpsrtaskname+'.plan'
     os.system(cmd)
 
-    cmd = 'cd ../plans; pnpgen_translator inline GPSR_task.plan' # ER ???
+    cmd = 'cd ../plans; pnpgen_translator inline '+gpsrtaskname+'.plan' # ER ???
     os.system(cmd)
 
     try:
-        task = subprocess.check_output('cat ./GPSR_task.plan', shell=True, cwd=os.environ["PLAN_DIR"])
+        task = subprocess.check_output('cat ./'+gpsrtaskname+'.plan', shell=True, cwd=os.environ["PLAN_DIR"])
         memory_service.raiseEvent('/gpsr/plan', task)
     except Exception as e:
         print e
 
-    print " *** DEBUG *** ASR_enable value = ", memory_service.getData("ASR_enable")
+    #print " *** DEBUG *** ASR_enable value = ", memory_service.getData("ASR_enable")
 
-    cmd = 'cd ../plans; ./run_plan.py --plan GPSR_task'
-    os.system(cmd)
+    #cmd = 'cd ../plans; ./run_plan.py --plan '+gpsrtaskname
+    #os.system(cmd)
 
-    print " *** DEBUG *** ASR_enable value = ", memory_service.getData("ASR_enable")
+    #print " *** DEBUG *** ASR_enable value = ", memory_service.getData("ASR_enable")
 
 
 def actionThread_exec (params):
@@ -299,8 +300,8 @@ def actionThread_exec (params):
 
     print "Action "+actionName+" "+params+" terminated"
     # action end
-    cmd = "cd ../plans; ./run_plan.py --plan GPSR2"
-    os.system(cmd)
+    #cmd = "cd ../plans; ./run_plan.py --plan GPSR2"
+    #os.system(cmd)
     memory_service.raiseEvent("ASR_enable","0")
     # action end
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");

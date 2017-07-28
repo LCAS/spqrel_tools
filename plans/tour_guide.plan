@@ -1,0 +1,64 @@
+# run this with an empty map
+
+continuebtn_show;
+waitfor_continue;
+posture_Stand;
+
+
+### PATROLLING IN A 2m SQUARE
+
+# vsay_starttourguide;
+
+LABELSTART;
+enter_30_0_0_3_false;
+turn_90;
+lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
+
+enter_30_0_0_3_false;
+turn_90;
+lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
+
+enter_30_0_0_3_false;
+turn_90;
+lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
+
+enter_30_0_0_3_false;
+turn_90;
+lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
+
+#< (not persondetected) ? GOTO_LABELSTART : GOTO_LABELPERSONFOUND? >
+
+### GO TO THE PERSON FOUND
+
+LABELPERSONFOUND;
+
+#goto_^person|40;
+followuntil_personhere_persondetectedid;
+animation_bow_false;
+greet_Japanese;
+greet_English;
+
+
+
+#insert: waving hand while calling for attention kindly
+
+#vsay_introduce; #sparkle introduces him/herself
+
+#sparkle should shake the hand of the spectator
+
+#dialogue_guiding; #TODO "Do you want to follow me to any of the areas? YES NO" similar to vsay_guiding
+
+#< (not wantstofollow) ? vsay_thanksanyway; GOTO LABEL1 : (wantstofollow) ? > #the robot should leave th group of people and go somewhere else
+
+#waitfor_personbehind;
+
+#goto_^audiencearena|40;
+
+#vsay_explainrobocup;
+#turn_180;
+
+
+
+
+
+

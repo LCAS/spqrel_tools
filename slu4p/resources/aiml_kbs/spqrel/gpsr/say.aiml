@@ -99,7 +99,7 @@
         <pattern>READYTOTAKEORDER</pattern>
         <template>
             <random>
-                <li>I'm ready to take the order. Please, speak loud!</li>
+                <li>Hello I'm Sparkle, I'm ready to take your orders. Please, speak loud my name!</li>
             </random>
         </template>
     </category>

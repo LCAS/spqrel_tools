@@ -1,0 +1,25 @@
+<package>
+  <name>naoqi_bridge</name>
+  <version>0.5.5</version>
+  <description>Meta package to interface ROS with Aldebaran's NAOqi.</description>
+  <author>Vincent Rabaud</author>
+  <maintainer email="surya.ambrose@gmail.com">Surya Ambrose</maintainer>
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/nao</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>naoqi_apps</run_depend>
+  <run_depend>naoqi_bridge_msgs</run_depend>
+  <run_depend>naoqi_driver</run_depend>
+  <run_depend>naoqi_driver_py</run_depend>
+  <run_depend>naoqi_pose</run_depend>
+  <run_depend>naoqi_sensors_py</run_depend>
+  <run_depend>naoqi_tools</run_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+
+</package>

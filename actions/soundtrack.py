@@ -26,7 +26,7 @@ def actionThread_exec (params):
     print "Action "+actionName+" started with params "+params
 
     values = params.split('_')
-    confidence_threshold = int(values[0])/100
+    confidence_threshold = float(values[0])/100.0
     distance_to_people = float(values[1])
     time_to_rotate = int(values[2])
 
@@ -37,7 +37,7 @@ def actionThread_exec (params):
     # action init
    
     tracker_service = session.service("ALTracker")
-    tracker_service.setMode("Move")
+    tracker_service.setMode("WholeBody")
     tracker_service.registerTarget("Sound",[distance_to_people,confidence_threshold])
     tracker_service.track("Sound")
 

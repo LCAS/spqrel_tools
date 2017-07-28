@@ -1,0 +1,46 @@
+<package>
+  <name>naoqi_driver_py</name>
+  <version>0.5.5</version>
+  <description>
+    <p>
+      Python implementation of the driver package for the Naoqi robot, providing access to walking commands,
+      joint angles, and sensor data (odometry, IMU, ...). The
+      most-current version is compatible with the Nao API version 1.12 or newer,
+      connecting to a real or simulated Nao by wrapping Aldebaran Robotics'
+      NaoQI API in Python. This requires the "lib" directory of the Aldebaran
+      Python SDK to be in your PYTHONPATH environment variable.
+
+      Note that cameras drivers are provided in a separate package (naoqi_sensors_py).
+    </p>
+  </description>
+  <author>Armin Hornung</author>
+  <maintainer email="severin.lemaignan@epfl.ch">Severin Lemaignan</maintainer>
+  <maintainer email="surya.ambrose@gmail.com">Surya Ambrose</maintainer>
+  <license>BSD</license>
+
+  <url>http://ros.org/wiki/naoqi_driver</url>
+  <url type="bugtracker">https://github.com/ros-naoqi/naoqi_bridge/issues</url>
+  <url type="repository">https://github.com/ros-naoqi/naoqi_bridge.git</url>
+
+  <author>Armin Hornung</author>
+  <author>Stefan Osswald</author>
+  <author>Daniel Maier</author>
+  <author>Miguel Sarabia</author>
+  <author>Severin Lemaignan</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>dynamic_reconfigure</build_depend>
+
+  <run_depend>actionlib</run_depend>
+  <run_depend>rospy</run_depend>
+  <!--<run_depend>python-dbus</run_depend>-->
+  <run_depend>roslaunch</run_depend>
+  <run_depend>std_srvs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>naoqi_bridge_msgs</run_depend>
+  <run_depend>humanoid_nav_msgs</run_depend>
+  <run_depend>nav_msgs</run_depend>
+  <run_depend>dynamic_reconfigure</run_depend>
+</package>

@@ -5,7 +5,7 @@ import action_base
 
 from json import loads, dumps
 
-LU4R_URI = 'http://192.168.1.14:9001/'
+LU4R_URI = 'http://192.168.127.16:9001/service/nlu'
 
 if __name__ == "__main__":
     app = action_base.initApp('lu4rtest')
@@ -40,6 +40,8 @@ def to_plan(frame):
 if __name__ == "__main__":
     utterances = load_text()
     for u in utterances:
-        print 'testing utterance: %s' % u
-        frame = ask_lu4r(u)
-        print to_plan(frame)
+        if '#' not in u:
+            print 'testing utterance: %s' % u
+            frame = ask_lu4r(u)
+            print 'ok'
+            print to_plan(frame)

@@ -24,7 +24,19 @@ def actionThread_exec (params):
     tracker_service = session.service("ALTracker")
 
     #We need to obtain the id of the person to follow
-    personid = memory_service.getData("EngagementZones/PersonEnteredZone1")
+    params = params.split('_')
+
+    if len(params) == 2:
+        try:
+            personid = memory_service.getData(params[1])
+            params = params[0]
+        except:
+            pass
+    else:
+        try:
+            personid = memory_service.getData("EngagementZones/PersonEnteredZone1")
+        except:
+            pass
     print "Person ID = ",personid
 
     tracker_service.setMode("Navigate")

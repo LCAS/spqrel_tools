@@ -50,13 +50,12 @@ def actionThread_exec (params):
         # action exec
         try:
             sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
-            print sound_value
             if len(sound_value)> 1 :
                 #print "confidence: ", sound_value[1][2]
                 confidence = sound_value[1][2]
                 if (confidence > confidence_threshold):
                     val = True
-                    time.sleep(time_to_rotate)
+                    time.sleep(int(time_to_rotate))
         except:
 	        pass
         # action exec

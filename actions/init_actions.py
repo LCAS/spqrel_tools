@@ -18,7 +18,7 @@ import dooropen, obstaclehere, screentouched
 import say, vsay, wait, waitfor, goto, turn, lookfor, dialogue, dialoguestart, dialoguestop, asrenable
 import posture, personhere, headpose, followuntil, movementdetected, webpage, personbehind, persondetected, speechbtn
 import execplan, saveposition, soundtrack, navigateto, memorizepeople, memorizeface, sounddetected, continuebtn, enter, recdata, assign, reccam, gotopos, storecentralperson, fake
-import personlost, peoplesummary, arm, headpitch
+import personlost, peoplesummary, arm, bow, headpitch
 
 def init(session):
     screentouched.init(session)
@@ -59,9 +59,11 @@ def init(session):
     reccam.init(session)
     gotopos.init(session)
     arm.init(session)
+    bow.init(session)
     storecentralperson.init(session)
     fake.init(session)
     headpitch.init(session)
+    
 
 def quit():
     screentouched.quit()
@@ -102,6 +104,7 @@ def quit():
     reccam.quit()
     gotopos.quit()
     arm.quit()
+    bow.quit()
     storecentralperson.quit()
     fake.quit()
     headpitch.quit()

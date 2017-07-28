@@ -97,12 +97,15 @@ def rhMonitorThread (memory_service, rate, output_file):
     output_file.write(str(keys_list))
     output_file.write('\n')
     while getattr(t, "do_run", True):
-        values =  memory_service.getListData(keys_list)
-        ts = time.time()
-        timestamp = 'timestamp: %f\n' % ts
-        output_file.write(timestamp)
-        output_file.write(str(values))        
-        output_file.write('\n')
+        try:
+            values = memory_service.getListData(keys_list)
+            ts = time.time()
+            timestamp = 'timestamp: %f\n' % ts
+            output_file.write(timestamp)
+            output_file.write(str(values))
+            output_file.write('\n')
+        except:
+            pass
 
         time.sleep(1.0/rate)
     print "Exiting Thread Log"

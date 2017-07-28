@@ -1,0 +1,79 @@
+# run this with an empty map
+
+continuebtn_show;
+waitfor_continue;
+
+LABEL1;
+lookfor_persondetected|60;
+
+< (not persondetected) ? turn_90; GOTO LABEL1 : (persondetected) ? >
+
+#person found
+
+goto_^person|40;
+
+#insert: waving hand while calling for attention kindly
+
+vsay_introduce; #sparkle introduces him/herself
+
+#sparkle should shake the hand of the spectator
+
+dialogue_guiding; #TODO "Do you want to follow me to any of the areas? YES NO" similar to vsay_guiding
+
+< (not wantstofollow) ? vsay_thanksanyway; GOTO LABEL1 : (wantstofollow) ? > #the robot should leave th group of people and go somewhere else
+
+waitfor_personbehind;
+
+goto_^audiencearena|40;
+
+vsay_explainrobocup;
+turn_180;
+
+
+#### 4 - COMING BACK TO THE CAR
+
+
+
+
+saveposition_start; #TODO: memorize initial pose: get NAOqiLocalizer/RobotPose and save pose in toponav?
+
+LABEL1;
+vsay_readytotakeorder;
+soundtrack_30_2_10; #confidence_distance_time
+wait_2;
+
+
+
+storecentralperson;
+
+#TODO: pointing with the arm where the customer is? (to state we understood where the customer is?)
+dialogue_orderdetected;
+
+< (not takeorder) ? GOTO LABEL1 >
+
+goto_^person|40;
+
+dialogue_restauranttakeorder;
+
+goto_^start|40;
+
+vsay_restaurantlistorders;  # repeat the order to the barman
+
+vsay_cannotgrasp; # continue rule on manipulation: "I can not carry the food, can you help me. I will guide you to the customer."
+
+goto_centralperson|40; #delivery step
+
+vsay_hereorder; # say to the person "Hi, here is your order"
+
+goto_^start|40;
+
+GOTO LABEL1; #repeat this plan until referee gives terminate signal.
+
+
+
+
+
+
+
+
+

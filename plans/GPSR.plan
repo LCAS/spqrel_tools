@@ -13,21 +13,21 @@ turn_-135_ABS;
 
 # RUN 1
 execplan; ! *if* timeout_execplan_180 *do* skip_action !
-goto_location;
+navigateto_bedroomentrance; 
+turn_-135_ABS;
 
 # RUN 2
 execplan; ! *if* timeout_execplan_180 *do* skip_action !
-goto_location;
+navigateto_bedroomentrance; 
+turn_-135_ABS;
 
 # RUN 3
 execplan; ! *if* timeout_execplan_180 *do* skip_action !
-goto_location;
-
 
 
 # exit the arena
 vsay_farewell;
-goto_entrance; ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
-goto_exit;
+navigateto_exit; 
+
 
 recdata_off;

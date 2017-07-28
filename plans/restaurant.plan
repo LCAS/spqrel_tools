@@ -8,7 +8,7 @@ saveposition_start; #TODO: memorize initial pose: get NAOqiLocalizer/RobotPose a
 vsay_readytotakeorder;
 LABEL1;
 asrenable_off;
-soundtrack_30_2_10; #confidence_distance_time
+soundtrack_20_4_3; #confidence_distance_time
 headpitch_0;
 wait_2;
 

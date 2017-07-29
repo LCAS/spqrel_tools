@@ -21,15 +21,68 @@ GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
 navigateto_backdoorin;
 asrenable;
 
-# RUN 3
+# RUN 2
 vsay_nextquestion;
-execplan; 
+execplan;
 GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
+navigateto_backdoorin;
+asrenable;
+
+# RUN 2
+vsay_nextquestion;
+execplan;
+GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
+navigateto_backdoorin;
+asrenable;
+
+# RUN 2
+vsay_nextquestion;
+execplan;
+GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
+navigateto_backdoorin;
+asrenable;
+
+# RUN 2
+vsay_nextquestion;
+execplan;
+GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
+navigateto_backdoorin;
+asrenable;
+
+# RUN 2
+vsay_nextquestion;
+execplan;
+GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
+navigateto_backdoorin;
+asrenable;
+
+
+# RUN 2
+vsay_nextquestion;
+execplan;
+GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
+navigateto_backdoorin;
+asrenable;
+
+
+# RUN 2
+vsay_nextquestion;
+execplan;
+GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
+navigateto_backdoorin;
+asrenable;
+
+
+# RUN 2
+vsay_nextquestion;
+execplan;
+GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
+navigateto_backdoorin;
+asrenable;
 
 
 # exit the arena
 vsay_farewell;
-navigateto_exit;
 
 recdata_off;
 

@@ -5,7 +5,10 @@ continuebtn_show;
 waitfor_continue;
 posture_Stand;
 
-# vsay_starttourguide;
+vsay_starttourguide;
+
+GOTO_LABELTEST; #########################################3
+
 
 #### GET OUT OG THE ARENA
 
@@ -17,6 +20,8 @@ navigateto_outarena;
 
 vsay_lookingforsomeone
 enter_30_0_0_3_false;
+
+LABELTEST; ########################################################3
 
 LABELSTART;
 enter_30_0_0_3_false;
@@ -43,26 +48,33 @@ memorizepeople; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
 
 LABELPERSONFOUND;
 
+selectpersonmemory;
 vsay_callingattention;
-followuntil_personhere_persondetectedid; #conditions_memorykey (to read the id we want to follow)
+followuntil_personhere_Humans/TargetID; #condition_memorykey (to read the id we want to follow)
 
 animation_bow_1; #animationname_blocking
 greet_Japanese;
-animation_hey1_false;
-greet_English;
+#animation_hey1_false;
+#greet_English;
 
-#vsay_introduce; #sparkle introduces himself and says nice to meet you
-#animation_handshake
-#dialogue_guiding; #TODO "Do you want to follow me to any of the areas? YES NO" similar to vsay_guiding
+vsay_introducemyself;
+vsay_handshake;
+shakehand;
+dialogue_guiding;
 
-#< (not wantstofollow) ? vsay_thanksanyway; turn_180; GOTO LABELSTART : (wantstofollow) ? > #the robot should leave th group of people and go somewhere else
-#waitfor_personbehind;
+GOTO_LABELEND; ##########################################3
+
+#< (not wantstofollow) ? turn_180; GOTO LABELSTART : (wantstofollow) ? > #the robot should leave th group of people and go somewhere else
 
 #navigateto_^audiencearena|40;
 
-#vsay_explainrobocup; #e.g. Please can you sit here i will explain now briefly our robocup league
+turn_180;
 
-#turn_180;
+END; ##############################################
+
+vsay_explainrobocup;
+
+vsay_farewell;
 
 recdata_off;
 

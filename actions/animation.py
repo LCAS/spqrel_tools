@@ -34,7 +34,6 @@ def actionThread_exec (params):
     animation_service = session.service("ALAnimationPlayer")
 
     #get original stiffness
-    original_stiffness = 
 
     # parse the paramaters
     print "Action "+actionName+" started with params "+params

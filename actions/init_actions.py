@@ -65,6 +65,7 @@ def init(session):
     headpitch.init(session)
     greet.init(session)
     animation.init(session)
+    shakehand.init(session)
     
 
 def quit():
@@ -112,6 +113,7 @@ def quit():
     headpitch.quit()
     greet.quit()
     animation.quit()
+    shakehand.quit()
 
 def main():
     global memory_service

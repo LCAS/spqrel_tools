@@ -72,7 +72,7 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                 for argument in arguments:
                     if 'goal' in argument:
                         filler = get_filler(argument)
-                        location = to_memory_key(filler)
+                        location = to_memory_key(filler, memory_service)
                         if len(location) == 0:
                             to_say = to_say + "I'm sorry, I understood the word " + filler + ", but I failed to ground it. "
                 if len(location) > 0:
@@ -102,7 +102,7 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                     if 'theme' in argument:
                         theme_filler = get_filler(argument)
                         to_say = to_say + "I understood that the object is " + theme_filler + ". "
-                        theme_memory_key = to_memory_key()
+                        theme_memory_key = to_memory_key(theme_filler, memory_service)
                         if len(theme_memory_key) == 0:
                             to_say = to_say + "I'm sorry, I am not able to ground " + theme_filler + ". "
                     if ('beneficiary' in argument) or ('recipient' in argument):
@@ -112,7 +112,7 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                         to_say = to_say + "I understood that I have to bring it to " + filler + ". "
                     if 'goal' in argument:
                         goal_filler = get_filler(argument)
-                        goal_memory_key = to_memory_key(goal_filler)
+                        goal_memory_key = to_memory_key(goal_filler, memory_service)
                         to_say = to_say + "I understood that the final position of the object will be " + goal_filler + ". "
                         if len(goal_memory_key) == 0:
                             to_say = to_say + "Sorry, I'm not allowed to bring the " + goal_filler + ". "
@@ -138,7 +138,7 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                     if 'theme' in argument:
                         theme_filler = get_filler(argument)
                         to_say = to_say + "I understood that the object is " + theme_filler + ". "
-                        theme_memory_key = to_memory_key()
+                        theme_memory_key = to_memory_key(theme_filler, memory_service)
                         if len(theme_memory_key) == 0:
                             to_say = to_say + "I'm sorry, I am not able to ground " + theme_filler + ". "
                     if 'source' in argument:
@@ -158,11 +158,11 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                 for argument in arguments:
                     if ('ground' in argument) or ('entity' in argument):   # kitchen
                         ground_filler = get_filler(argument)
-                        ground_memory_key = to_memory_key(ground_filler)
+                        ground_memory_key = to_memory_key(ground_filler, memory_service)
                         to_say = to_say + "I understood the entity to find is in " + ground_filler + ". "
                     if 'phenomenon' in argument:
                         phenomenon_filler = get_filler(argument)
-                        phenomenon_memory_key = to_memory_key(phenomenon_filler)
+                        phenomenon_memory_key = to_memory_key(phenomenon_filler, memory_service)
                         to_say = to_say + "I understood that I have to look for " + phenomenon_filler + ". "
                 if len(phenomenon_memory_key) > 0:
                     to_say = to_say + "I'm going to look for " + phenomenon_filler

@@ -121,7 +121,7 @@ def onPeopleDetection(value):
 
         # Write data in json format
 
-        shirtcolor={'name': shirtcolorName, 'hsv':shirtcolorHSV}
+        shirtcolor={'name': shirtcolorName.lower(), 'hsv':shirtcolorHSV}
         personinfo={'height': round(height,2), 'shirtcolor': shirtcolor,'posture':posture}
         face['faceinfo']=facecharacteristics
         
@@ -254,6 +254,7 @@ def actionThread_exec (params):
                             
                 person=onPeopleDetection(personid)
                 try:
+                    
                     
                     if person['info']['shirtcolor']['name']==targetvalue:
                         

@@ -14,7 +14,7 @@
     <category>
         <pattern>HELLO</pattern>
         <template>
-            <srai>GREETINGS</srai>
+            Hello!
         </template>
     </category>
 

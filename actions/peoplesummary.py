@@ -263,8 +263,8 @@ def actionThread_exec (params):
                 
                 for p in people_list:
                     
-                   person['info']['shirtcolor']['name']==targetvalue
-                        num_target +=1
+                   if person['info']['shirtcolor']['name']==targetvalue:
+                       num_target +=1
                         
                 print '*****'
                 print 'TOTAL PERSONS :', num_total

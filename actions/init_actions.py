@@ -18,11 +18,7 @@ import dooropen, obstaclehere, screentouched
 import say, vsay, wait, waitfor, goto, turn, lookfor, dialogue, dialoguestart, dialoguestop, asrenable
 import posture, personhere, headpose, followuntil, movementdetected, webpage, personbehind, persondetected, speechbtn
 import execplan, saveposition, soundtrack, navigateto, memorizepeople, memorizeface, sounddetected, continuebtn, enter, recdata, assign, reccam, gotopos, storecentralperson, fake
-<<<<<<< HEAD
-import personlost, peoplesummary, arm, bow, headpitch, greet, animation, shakehand, selectpersonmemory, analyseperson
-=======
-import personlost, peoplesummary, arm, bow, headpitch, greet, animation, shakehand, selectpersonmemory, tvsay
->>>>>>> 552a66cfb957b5f523583ea9b6708fe091409ffc
+import personlost, peoplesummary, arm, bow, headpitch, greet, animation, shakehand, selectpersonmemory, analyseperson, tvsay
 
 def init(session):
     screentouched.init(session)

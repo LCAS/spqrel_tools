@@ -22,11 +22,11 @@
         <pattern>LOOKATME</pattern>
         <template>
             <random>
-                <li>Hey <get name="Operator"/>, please pay attention!
+                <li>Hey<get name="Operator"/>, please pay attention!
                 </li>
                 <li><get name="Operator"/>, please focus!
                 </li>
-                <li>Do not distract, <get name="Operator"/>!
+                <li>Do not distract,<get name="Operator"/>!
                 </li>
             </random>
             <random>
@@ -38,13 +38,20 @@
     </category>
 
     <category>
+        <pattern>CALLINGATTENTION</pattern>
+        <template>
+            Excuse me! Can I bother you for a while?
+        </template>
+    </category>
+
+    <category>
         <pattern>WAITASR</pattern>
         <template>
             <random>
                 <li>Before speaking, wait until my eyes are blinking</li>
                 <li>Speak only when my eyes are blinking</li>
             </random>
-             and please, speak loud!
+            and please, speak loud!
         </template>
     </category>
 
@@ -131,17 +138,6 @@
     </category>
 
     <category>
-        <pattern>CANNOTTAKE</pattern>
-        <template>
-            <random>
-                <li>They said that my hands are handsome!</li>
-                <li>Sorry, I've just painted my nails with enamel!</li>
-            </random>
-            I'm sorry, but I'm not allowed to grasp!
-        </template>
-    </category>
-
-    <category>
         <pattern>NOTFOUND</pattern>
         <template>
             <random>
@@ -156,9 +152,9 @@
             <random>
                 <li><star/>!
                 </li>
-                <li>Hey <star/>!
+                <li>Hey<star/>!
                 </li>
-                <li>Where is <star/>?
+                <li>Where is<star/>?
                 </li>
             </random>
             <random>
@@ -194,25 +190,23 @@
                 <li>Hi buddy!</li>
             </random>
             <random>
-                <li>I have an order for <star index="1"/>. A <star index="2"/>, please!
+                <li>I have an order for<star index="1"/>. A<star index="2"/>, please!
                 </li>
                 <li>
                     <star index="1"/>
-                    ordered a <star index="2"/>.
+                    ordered a<star index="2"/>.
                 </li>
                 <li>
                     <star index="1"/>
-                    would like a <star index="2"/>!
+                    would like a<star index="2"/>!
                 </li>
                 <li>A
                     <star index="2"/>
-                    for <star index="1"/>, please!
+                    for<star index="1"/>, please!
                 </li>
             </random>
         </template>
     </category>
-
-
 
     <category>
         <pattern>CONFIRMDRINK CUSTOMER * DRINK *</pattern>
@@ -274,7 +268,8 @@
         <pattern>CALLPERSONUNAVAILABLE CUSTOMER * DRINK *</pattern>
         <template>
             <random>
-                <li>I'm sorry <star index="1"/>, but your drink is not available! Can you please come here?</li>
+                <li>I'm sorry<star index="1"/>, but your drink is not available! Can you please come here?
+                </li>
             </random>
         </template>
     </category>
@@ -284,7 +279,14 @@
         <template>
             Scan completed!
             <random>
-                <li>There are <star index="1"/> persons in the room, <star index="2"/> are males and <star index="3"/> are females!</li>
+                <li>There are
+                    <star index="1"/>
+                    persons in the room,
+                    <star index="2"/>
+                    are males and
+                    <star index="3"/>
+                    are females!
+                </li>
             </random>
         </template>
     </category>
@@ -345,7 +347,8 @@
             <random>
                 <li>Here we are.</li>
                 <li>Here I am.</li>
-            </random>|[STOPFOLLOWING]
+            </random>
+            |[STOPFOLLOWING]
         </template>
     </category>
 
@@ -432,6 +435,13 @@
     </category>
 
     <category>
+        <pattern>LOOKINGFORSOMEONE</pattern>
+        <template>
+            I'm going to start looking for someone!
+        </template>
+    </category>
+
+    <category>
         <pattern>THANKS</pattern>
         <template>
             <random>
@@ -458,8 +468,8 @@
         <template>
             <random>
                 <li>Let's start!</li>
-                <li>I'm ready to do it!</li>
-                <li>Great! Let's do it!</li>
+                <li>I'm ready to start!</li>
+                <li>I'm ready! Let's start!</li>
             </random>
         </template>
     </category>
@@ -472,7 +482,40 @@
                 <li>Well done!</li>
                 <li>Mission accomplished!</li>
             </random>
-            Bye bye!
+            <random>
+                <li>Bye bye!</li>
+                <li>Goodbye!</li>
+                <li>See you!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>INTRODUCEMYSELF</pattern>
+        <template>
+            Hi! My name is Sparkle! Nice to meet you!
+        </template>
+    </category>
+
+    <category>
+        <pattern>HANDSHAKE</pattern>
+        <template>
+            What about a handshake?
+        </template>
+    </category>
+
+    <category>
+        <pattern>EXPLAINROBOCUP</pattern>
+        <template>
+            Robocup at Home is the best competition in the world because robots really interact with people and they do
+            not just play football! See, try to ask a Nao to guide you around! This really means to be social!
+        </template>
+    </category>
+
+    <category>
+        <pattern>STARTTOURGUIDE</pattern>
+        <template>
+            Hi there! Come on people! Sparkle is starting the tour guide!
         </template>
     </category>
 

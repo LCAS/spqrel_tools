@@ -263,6 +263,14 @@ class DialogueManager(EventAbstractClass):
                 data = submessage.replace('[TAKEORDER]', '').replace(')', '').strip()
                 set_condition(self.memory, "takeorder", "true")
                 self.memory.raiseEvent("DialogueVesponse", 'takeorder')
+            elif '[WANTSTOFOLLOW]' in submessage:
+                data = submessage.replace('[WANTSTOFOLLOW]', '').replace(')', '').strip()
+                set_condition(self.memory, "wantstofollow", "true")
+                self.memory.raiseEvent("DialogueVesponse", 'wantstofollow')
+            elif '[NOTFOLLOW]' in submessage:
+                data = submessage.replace('[NOTFOLLOW]', '').replace(')', '').strip()
+                set_condition(self.memory, "wantstofollow", "false")
+                self.memory.raiseEvent("DialogueVesponse", 'wantstofollow')
             elif '[NOTTAKEORDER]' in submessage:
                 data = submessage.replace('[NOTTAKEORDER]', '').replace(')', '').strip()
                 set_condition(self.memory, "takeorder", "false")

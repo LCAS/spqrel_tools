@@ -2,6 +2,18 @@
 <aiml version="1.0">
 
     <category>
+        <pattern>GUIDING *</pattern>
+        <template>
+            <think>
+                <set name="topic">GUIDING</set>
+            </think>
+            <srai>
+                <star/>
+            </srai>
+        </template>
+    </category>
+
+    <category>
         <pattern>TAKEORDER *</pattern>
         <template>
             <think>

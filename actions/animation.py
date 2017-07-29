@@ -26,20 +26,30 @@ def parser(params):
 def actionThread_exec (params):
     t = threading.currentThread()
     session = getattr(t, "session", None)
+    
+    # init services
     memory_service = getattr(t, "mem_serv", None)
     rp_service = session.service("ALRobotPosture")
-    animation_service = session.service("ALAnimationPlayer") 
+    motion_service = session.service("ALMotion")
+    animation_service = session.service("ALAnimationPlayer")
+
+    #get original stiffness
+    original_stiffness = 
+
+    # parse the paramaters
     print "Action "+actionName+" started with params "+params
 
     values = params.split('_')
     animation_name = parser(values[0])
     if values[1] == 1:
-        blocking = True
+        async = False
     else:
-        blocking = False
+        asyn = True
 
-    animation = animation_service.run(animation_name, _async=blocking)
+    # execute the animation
+    animation = animation_service.run(animation_name, _async=async)
   
+    #finish the action
     print "Action "+actionName+" "+params+" terminated"
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
 

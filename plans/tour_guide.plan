@@ -1,11 +1,19 @@
 # run this with an empty map
 
+recdata_on;
 continuebtn_show;
 waitfor_continue;
 posture_Stand;
 
 
-### PATROLLING IN A 2m SQUARE
+
+#### GET OUT OG THE ARENA
+
+navigateto_outarena;
+
+
+
+#### PATROLLING IN A 2m SQUARE
 
 # vsay_starttourguide;
 
@@ -28,16 +36,19 @@ lookfor_persondetected|20; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
 
 #< (not persondetected) ? GOTO_LABELSTART : GOTO_LABELPERSONFOUND? >
 
-### GO TO THE PERSON FOUND
+
+
+#### GO TO THE PERSON FOUND
 
 LABELPERSONFOUND;
 
 #vsay_excuseme;
 followuntil_personhere_persondetectedid; #conditions_memorykey (to read the id we want to follow)
+
+animation_bow_true;
 greet_Japanese;
-animation_bow_false;
+animation_hey1_false;
 greet_English;
-animation_hey1;
 
 #vsay_introduce; #sparkle introduces himself and says nice to meet you
 #animation_handshake
@@ -52,7 +63,7 @@ animation_hey1;
 
 #turn_180;
 
-
+recdata_off;
 
 
 

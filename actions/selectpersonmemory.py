@@ -51,7 +51,6 @@ def actionThread_exec (params):
     t = threading.currentThread()
     print "selectpersonmemory thread started"
     memory_service = getattr(t, "mem_serv", None)
-    https://github.com/LCAS/spqrel_tools.git
 
     print "Action "+actionName+" started with params "+params
     

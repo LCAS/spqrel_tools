@@ -2,35 +2,34 @@ recdata_on;
 
 # enter the arena and goto location
 headpose_0_-10;
-vsay_dooropen;
-waitfor_dooropen;
 vsay_starting;
 wait_2;
-#enter_30_0_0_4_true; 
 
-#navigateto_bedroomentrance; 
 #turn_-90_ABS; # mayte check
 
 # RUN 1
+vsay_nextquestion;
 execplan; 
 GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
-#navigateto_bedroomentrance;
+navigateto_backdoorin;
 asrenable;
 
 # RUN 2
+vsay_nextquestion;
 execplan; 
 GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
-#navigateto_bedroomentrance;
+navigateto_backdoorin;
 asrenable;
 
 # RUN 3
+vsay_nextquestion;
 execplan; 
 GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
 
 
 # exit the arena
 vsay_farewell;
-#navigateto_exit; 
+navigateto_exit;
 
 recdata_off;
 

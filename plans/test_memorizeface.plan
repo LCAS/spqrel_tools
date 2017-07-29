@@ -4,17 +4,9 @@
 memorizepeople_Cocktailparty|40;  # timeout in seconds
 waitfor_personhere; ! *if* timeout_waitfor_20 *do* vsay_comehere; restart_action !
 
-dialogue_takeorder;
+dialogue_askname;
 memorizeface_inmemory_Profile1|15;
-say_greetperson;
 
-dialogue_takeorder;
-memorizeface_inmemory_Profile2|15;
-say_greetperson;
-
-dialogue_takeorder;
-memorizeface_inmemory_Profile3|15;
-say_greetperson;
-peoplesummary_Partydescription;
+peoplesummary_Crowd;
 
 

@@ -257,7 +257,7 @@ def actionThread_exec (params):
             targettype=new_params[0]
             targetvalue=new_params[1]
             
-            if targettype='Number/color':
+            if targettype=='Number/color':
                 num_target=0
                 num_total=len(people_list)
                 

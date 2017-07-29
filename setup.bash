@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 _SETUP_DIR=$(builtin cd "`dirname "${BASH_SOURCE[0]}"`" > /dev/null && pwd)
 
 clean_path_var () {
@@ -73,3 +74,4 @@ echo "PYTHONPATH=$PYTHONPATH"
 export GIT_EXEC_PATH=${SPQREL_HOME}/libexec/git-core
 
 export LU4R_IP="192.168.127.16"
+export TOBI_IP="192.168.127.21"

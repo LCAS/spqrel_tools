@@ -74,7 +74,11 @@ def actionThread_exec (params):
         #motion_service.setAngles(jointsNames, handDown,0.5)
     
         
-
+        #print "restoring stiffness", currentStiffnesses
+        #restore stiffness after shaking
+        motion_service.setStiffnesses(jointsNames, currentStiffnesses)
+        #restore previous joint values
+        motion_service.setAngles(jointsNames, currentSensorAngles, 0.2)
 
         count -= 1
         # action exec
@@ -95,11 +99,11 @@ def init(session):
 def quit():
     print actionName+" quit"
 
-    print "restoring stiffness", currentStiffnesses
+    #print "restoring stiffness", currentStiffnesses
     #restore stiffness after shaking
-    motion_service.setStiffnesses(jointsNames, currentStiffnesses)
+    #motion_service.setStiffnesses(jointsNames, currentStiffnesses)
     #restore previous joint values
-    motion_service.setAngles(jointsNames, currentSensorAngles, 0.2)
+    #motion_service.setAngles(jointsNames, currentSensorAngles, 0.2)
         
     actionThread_exec.do_run = False
     

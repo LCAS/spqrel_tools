@@ -19,14 +19,21 @@
     </category>
 
     <category>
+        <pattern>HELLOANDREA</pattern>
+        <template>
+            Hello Andrea! How can I help you?
+        </template>
+    </category>
+
+    <category>
         <pattern>LOOKATME</pattern>
         <template>
             <random>
-                <li>Hey<get name="Operator"/>, please pay attention!
+                <li>Hey <get name="Operator"/>, please pay attention!
                 </li>
                 <li><get name="Operator"/>, please focus!
                 </li>
-                <li>Do not distract,<get name="Operator"/>!
+                <li>Do not distract, <get name="Operator"/>!
                 </li>
             </random>
             <random>

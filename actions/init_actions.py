@@ -18,7 +18,7 @@ import dooropen, obstaclehere, screentouched
 import say, vsay, wait, waitfor, goto, turn, lookfor, dialogue, dialoguestart, dialoguestop, asrenable
 import posture, personhere, headpose, followuntil, movementdetected, webpage, personbehind, persondetected, speechbtn
 import execplan, saveposition, soundtrack, navigateto, memorizepeople, memorizeface, sounddetected, continuebtn, enter, recdata, assign, reccam, gotopos, storecentralperson, fake
-import personlost, peoplesummary, arm, bow, headpitch, greet, animation, shakehand, selectpersonmemory
+import personlost, peoplesummary, arm, bow, headpitch, greet, animation, shakehand, selectpersonmemory, analyseperson, tvsay
 
 def init(session):
     screentouched.init(session)
@@ -67,6 +67,8 @@ def init(session):
     greet.init(session)
     animation.init(session)
     shakehand.init(session)
+    analyseperson.init(session)
+    tvsay.init(session)
     
 
 def quit():
@@ -116,6 +118,8 @@ def quit():
     greet.quit()
     animation.quit()
     shakehand.quit()
+    analyseperson.quit()
+    tvsay.quit()
 
 def main():
     global memory_service

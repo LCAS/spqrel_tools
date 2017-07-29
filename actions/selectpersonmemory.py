@@ -40,7 +40,7 @@ from conditions import set_condition
 ##PARAMS
 #confidenceThreshold=0.4 #default =0.4
 min_size={'w':0.10 ,'h':0.10}
-command='closer'
+command='closest'
 
 actionName = "selectpersonmemory"
         
@@ -51,11 +51,12 @@ def actionThread_exec (params):
     t = threading.currentThread()
     print "selectpersonmemory thread started"
     memory_service = getattr(t, "mem_serv", None)
-    https://github.com/LCAS/spqrel_tools.git
 
     print "Action "+actionName+" started with params "+params
     
-    command=params
+    if params!='':
+        
+        command=params
 
     b_completed=False
     people_list=[]
@@ -99,7 +100,7 @@ def actionThread_exec (params):
                 print 'people features error'     
                 
             list_profiles=[]
-            for numberprofile in range(1,4):https://github.com/LCAS/spqrel_tools.git
+            for numberprofile in range(1,4):
                 
                 try:
                     mem=memory_service.getData('Humans/Profile'+str(numberprofile))
@@ -204,7 +205,7 @@ def actionThread_exec (params):
                     str_result=json.dumps(result)                           
                     memory_service.insertData('Humans/Description',str_result)
 
-        elif command=='closer':
+        elif command=='closest':
             
             targetvalue=command
             mindistance=5.0

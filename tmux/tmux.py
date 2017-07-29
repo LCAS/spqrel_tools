@@ -321,7 +321,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    tmux = TMux(configfile=args.config)
+    tmux = TMux(session_name=args.session, configfile=args.config)
 
     if (args.init):
         tmux.init()

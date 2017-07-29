@@ -4,6 +4,7 @@ import sys
 import time
 import threading
 from naoqi import ALProxy
+import os
 
 import action_base
 from action_base import *
@@ -19,19 +20,26 @@ def actionThread_exec (params):
     #tts_service = getattr(t, "session", None).service("ALTextToSpeech")
     print "Action "+actionName+" started with params "+params
     #params_list = params.split("_")
-    tobi_tts = ALProxy("ALTextToSpeech", params, 9559)
-    tobi_memory = ALProxy("ALMemory", params, 9559)
+    tobi_tts = ALProxy("ALTextToSpeech", os.environ['TOBI_IP'], 9559)
+    tobi_tts.setParameter("speed", 90)
+    tobi_tts.setParameter("pitchShift", 0.9)
+    tobi_memory = ALProxy("ALMemory", os.environ['TOBI_IP'], 9559)
     # action init
-    #memory_service.raiseEvent('DialogueVequest',"say_"+params)
-    tobi_tts.say("Hello World!")
+    #memory_service.raiseEvent('DialogueVequest', "tvsay_"+params)
+    to_say = ''
+    if "hello" in params:
+        to_say = "Hello! I'm Tobee!"
+    elif "help" in params:
+        to_say = "How can I help you?"
+    tobi_tts.say(to_say)
     print "  -- VSay: "+params
     val = 0
     time.sleep(1)
     # action init
-    
-    while (getattr(t, "do_run", True) and val==0): 
+
+    while (getattr(t, "do_run", True) and val==0):
         # print "Action "+actionName+" "+params+" exec..."
-        # action exec 
+        # action exec
         val = tobi_memory.getData("ALTextToSpeech/TextDone")
         # action exec
         time.sleep(0.5)
@@ -46,6 +54,10 @@ def actionThread_exec (params):
 
 def init(session):
     print actionName+" init"
+    tobi_tts = ALProxy("ALTextToSpeech", os.environ['TOBI_IP'], 9559)
+    tobi_tts.setParameter("speed", 90)
+    tobi_tts.setParameter("pitchShift", 0.9)
+    tobi_memory = ALProxy("ALMemory", os.environ['TOBI_IP'], 9559)
     action_base.init(session, actionName, actionThread_exec)
 
 
@@ -58,7 +70,7 @@ def quit():
 if __name__ == "__main__":
 
     app = action_base.initApp(actionName)
-        
+
     init(app.session)
 
     #Program stays at this point until we stop it

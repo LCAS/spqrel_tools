@@ -1,5 +1,5 @@
 {
-  "init_cmd": "export MAP=/home/nao/spqrel_launch/maps/nagoya/emptymap.yaml; export TMAP=/home/nao/spqrel_launch/maps/nagoya/nagoya_gmapping.tpg; $SPQREL_HOME/worktree/spqrel_tools/scripts/config_manager.py --file $SPQREL_CONFIG",
+  "init_cmd": "export MAP=/home/nao/spqrel_launch/maps/nagoya/nagoya_gmapping.yaml; export TMAP=/home/nao/spqrel_launch/maps/nagoya/nagoya_gmapping.tpg; $SPQREL_HOME/worktree/spqrel_tools/scripts/config_manager.py --file $SPQREL_CONFIG",
   "windows": [
     {
       "name": "bash",
@@ -26,8 +26,14 @@
       "panes": [
         "cd $SPQREL_HOME/slu4p; python speech_to_text/local_speech_recognition.py -v resources/nuance_grammar.txt -k resources/google_keys.txt",
         "sleep 3; cd $SPQREL_HOME/slu4p; python speech_reranking/reranker.py --noun-dictionary resources/noun_dictionary.txt --verb-dictionary resources/verb_dictionary.txt --nuance-grammar resources/nuance_grammar.txt",
-        "sleep 6; cd $SPQREL_HOME/slu4p; python dialogue_management/dialogue_manager.py -a resources/aiml_kbs/spqrel",
+        "sleep 6; cd $SPQREL_HOME/slu4p; python dialogue_management/dialogue_manager.py -a resources/aiml_kbs/spqrel/gpsr",
         "sleep 9; cd $SPQREL_HOME/slu4p; python text_to_speech/text_to_speech.py"
+      ]
+    },
+    {
+      "name": "slu4p",
+      "panes": [
+        "sleep 12; cd $SPQREL_HOME/slu4p; python language_understanding/language_understanding.py -l $LU4R_IP -o 9001"
       ]
     },
     {

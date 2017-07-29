@@ -28,9 +28,11 @@ def actionThread_exec (params):
     #memory_service.raiseEvent('DialogueVequest', "tvsay_"+params)
     to_say = ''
     if "hello" in params:
-        to_say = "Hello! I'm Tobee!"
-    elif "help" in params:
-        to_say = "How can I help you?"
+        to_say = "Hello! I'm Tobi! Can I help you?"
+    elif "andreahere" in params:
+        to_say = "Andrea is here!"
+    elif "andreanothere" in params:
+        to_say = "Andrea is not here!"
     tobi_tts.say(to_say)
     print "  -- VSay: "+params
     val = 0

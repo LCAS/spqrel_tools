@@ -88,7 +88,7 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
                             filler = "you"
                         to_say = to_say + "I understood that I need to follow " + filler + ". I will do it until I receive the stop command. "
                 if 'you' in filler:
-                    action = action + ' vsay_followyou; asrenable; followuntil_screentouched|; asrenable_off;'
+                    action = action + ' vsay_followyou; headpose_0_-20; followuntil_screentouched; '
                 else:
                     to_say = to_say + "I don't know how to identify Maria. Please, go on! "
                 memory_service.raiseEvent("Veply", to_say)

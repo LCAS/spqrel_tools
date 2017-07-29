@@ -43,7 +43,7 @@ def actionThread_exec (params):
     if values[1] == '1':
         async = False
     else:
-        asyn = True
+        async = True
 
     # execute the animation
     animation = animation_service.run(animation_name, _async=async)

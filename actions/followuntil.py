@@ -37,7 +37,7 @@ def actionThread_exec (params):
             personid = memory_service.getData("EngagementZones/PersonEnteredZone1")
         except:
             pass
-    print "Person ID = ",personid
+    #print "Person ID = ",personid
 
     tracker_service.setMode("Navigate")
     # The robot stays a 50 centimeters of target with 10 cm precision

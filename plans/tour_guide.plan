@@ -12,17 +12,18 @@ GOTO_LABELTEST; #########################################3
 
 #### GET OUT OG THE ARENA
 
-navigateto_outarena;
+navigateto_outside2;
 
 
 
 #### PATROLLING IN A 2m SQUARE
 
-vsay_lookingforsomeone
+vsay_lookingforsomeone;
 enter_30_0_0_3_false;
 
 LABELTEST; ########################################################3
 
+vsay_lookingforsomeone;
 LABELSTART;
 enter_30_0_0_3_false;
 turn_90;
@@ -50,7 +51,7 @@ LABELPERSONFOUND;
 
 selectpersonmemory;
 vsay_callingattention;
-followuntil_personhere_Humans/TargetID; #condition_memorykey (to read the id we want to follow)
+followuntil_personhere_persondetectedid; #condition_memorykey (to read the id we want to follow)
 
 animation_bow_1; #animationname_blocking
 greet_Japanese;
@@ -62,15 +63,15 @@ vsay_handshake;
 shakehand;
 dialogue_guiding;
 
-GOTO_LABELEND; ##########################################3
+#GOTO_LABELEND; ##########################################3
 
-#< (not wantstofollow) ? turn_180; GOTO LABELSTART : (wantstofollow) ? > #the robot should leave th group of people and go somewhere else
+< (not wantstofollow) ? turn_180; GOTO LABELSTART : (wantstofollow) ? > #the robot should leave th group of people and go somewhere else
 
-#navigateto_^audiencearena|40;
+navigateto_outside4|40;
 
 turn_180;
 
-END; ##############################################
+#LABELEND; ##############################################
 
 vsay_explainrobocup;
 

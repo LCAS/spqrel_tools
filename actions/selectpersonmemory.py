@@ -100,7 +100,7 @@ def actionThread_exec (params):
                 print 'people features error'     
                 
             list_profiles=[]
-            for numberprofile in range(1,4):https://github.com/LCAS/spqrel_tools.git
+            for numberprofile in range(1,4):
                 
                 try:
                     mem=memory_service.getData('Humans/Profile'+str(numberprofile))

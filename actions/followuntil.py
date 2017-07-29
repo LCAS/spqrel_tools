@@ -24,21 +24,25 @@ def actionThread_exec (params):
     tracker_service = session.service("ALTracker")
 
     #We need to obtain the id of the person to follow
-    params = params.split('_')
+    #try:
+    #    params = params.split('_')
+    #except:
+    #    params = params
 
-    if len(params) == 2:
-        try:
-            personid = memory_service.getData(params[1])
-            params = params[0]
-        except:
-            pass
-    else:
-        try:
-            personid = memory_service.getData("EngagementZones/PersonEnteredZone1")
-        except:
-            pass
-    print "Person ID = ",personid
-
+    #if len(params) == 2:
+    #    try:
+    #        personid = memory_service.getData(params[1])
+    #        params = params[0]
+    #    except:
+    #        pass
+    #else:
+    #    try:
+    #        
+    #    except:
+    #        pass
+    #print "Person ID = ",personid
+    
+    personid = memory_service.getData("EngagementZones/PersonEnteredZone1")
     tracker_service.setMode("Navigate")
     # The robot stays a 50 centimeters of target with 10 cm precision
     tracker_service.setRelativePosition([-0.5, 0.0, 0.0, 0.1, 0.1, 0.3])

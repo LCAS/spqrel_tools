@@ -26,19 +26,19 @@ LABELTEST; ########################################################3
 LABELSTART;
 enter_30_0_0_3_false;
 turn_90;
-memorizepeople; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
+memorizepeople_SPRgame; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
 
 enter_30_0_0_3_false;
 turn_90;
-memorizepeople; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
+memorizepeople_SPRgame; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
 
 enter_30_0_0_3_false;
 turn_90;
-memorizepeople; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
+memorizepeople_SPRgame; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
 
 enter_30_0_0_3_false;
 turn_90;
-memorizepeople; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
+memorizepeople_SPRgame; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
 
 #< (not persondetected) ? GOTO_LABELSTART : GOTO_LABELPERSONFOUND? >
 
@@ -55,7 +55,7 @@ followuntil_personhere_Humans/TargetID; #condition_memorykey (to read the id we 
 animation_bow_1; #animationname_blocking
 greet_Japanese;
 #animation_hey1_false;
-#greet_English;
+greet_English;
 
 vsay_introducemyself;
 vsay_handshake;

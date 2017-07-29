@@ -1,12 +1,58 @@
 
-# TEST
 
-memorizepeople_Cocktailparty|40;  # timeout in seconds
-waitfor_personhere; ! *if* timeout_waitfor_20 *do* vsay_comehere; restart_action !
+recdata_on;
+continuebtn_show;
+waitfor_continue;
+posture_Stand;
 
-dialogue_askname;
-memorizeface_inmemory_Profile1|15;
+vsay_starttourguide;
 
-peoplesummary_Crowd;
+GOTO_LABELTEST; #########################################3
 
+
+#### GET OUT OG THE ARENA
+
+navigateto_outarena;
+
+
+
+#### PATROLLING IN A 2m SQUARE
+
+vsay_lookingforsomeone
+enter_30_0_0_3_false;
+
+LABELTEST; ########################################################3
+
+LABELSTART;
+enter_30_0_0_3_false;
+turn_90;
+memorizepeople_SPRgame; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
+
+enter_30_0_0_3_false;
+turn_90;
+memorizepeople_SPRgame; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
+
+enter_30_0_0_3_false;
+turn_90;
+memorizepeople_SPRgame; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
+
+enter_30_0_0_3_false;
+turn_90;
+memorizepeople_SPRgame; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
+
+#< (not persondetected) ? GOTO_LABELSTART : GOTO_LABELPERSONFOUND? >
+
+
+
+#### GO TO THE PERSON FOUND
+
+LABELPERSONFOUND;
+
+selectpersonmemory;
+vsay_callingattention;
+followuntil_personhere_Humans/TargetID; #condition_memorykey (to read the id we want to follow)
+
+animation_bow_1; #animationname_blocking
+#animation_hey1_false;
+greet_English;
 

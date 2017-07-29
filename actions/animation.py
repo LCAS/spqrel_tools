@@ -41,7 +41,7 @@ def actionThread_exec (params):
 
     values = params.split('_')
     animation_name = parser(values[0])
-    if values[1] == 1:
+    if values[1] == '1':
         async = False
     else:
         asyn = True

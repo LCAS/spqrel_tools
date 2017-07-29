@@ -16,6 +16,7 @@ navigateto_outarena;
 #### PATROLLING IN A 2m SQUARE
 
 # vsay_starttourguide;
+enter_30_0_0_3_false;
 
 LABELSTART;
 enter_30_0_0_3_false;
@@ -45,7 +46,7 @@ LABELPERSONFOUND;
 #vsay_excuseme;
 followuntil_personhere_persondetectedid; #conditions_memorykey (to read the id we want to follow)
 
-animation_bow_true;
+animation_bow_1; #animationname_blocking
 greet_Japanese;
 animation_hey1_false;
 greet_English;

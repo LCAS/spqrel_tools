@@ -186,7 +186,10 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
             elif frame == 'LOCATING':
                 to_say = to_say + "I understood that I need to search, but I don't know what. "
             memory_service.raiseEvent("Veply", to_say)
-    return action
+    if len(action) == 0:
+        return 'vsay_nextquestion; '
+    else:
+        return action
 
 
 # non-blocking function

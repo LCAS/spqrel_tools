@@ -6,7 +6,7 @@ import os
 import json
 import sys
 from std_msgs.msg import String
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image, CameraInfo
 from ms_face_api.srv import Detect, DetectRequest
 
 class Qi2RosStringTopic(object):
@@ -86,6 +86,9 @@ class SPQReLROSBridge():
         self._depth_pub = rospy.Publisher(
             '/spqrel/depth/image_raw',
             Image, queue_size=1)
+        self._depth_info_pub = rospy.Publisher(
+            '/spqrel/depth/camera_info',
+            CameraInfo, queue_size=1)
 
         self._image_counter = 0
         self._depth_counter = 0
@@ -94,16 +97,20 @@ class SPQReLROSBridge():
     def _image_cb(self, img):
         self._image_counter += 1
         if self._image_counter > self._THROTTLE:
-            rospy.loginfo('publish image')
+            rospy.logdebug('publish image')
             self._image_pub.publish(img)
             self._image_counter = 0
 
     def _depth_cb(self, img):
         self._depth_counter += 1
         if self._depth_counter > self._THROTTLE:
-            rospy.loginfo('publish depth')
+            rospy.logdebug('publish depth')
             self._depth_pub.publish(img)
             self._depth_counter = 0
+
+    def _depth_info_cb(self, info):
+        rospy.logdebug('publish depth info')
+        self._depth_info_pub.publish(info)
 
     def _stop_tobi(self, _):
         rospy.loginfo('stop tobi')
@@ -113,6 +120,9 @@ class SPQReLROSBridge():
         if self._depth_sub:
             self._depth_sub.unregister()
             self._depth_sub = None
+        if self._depth_info_sub:
+            self._depth_info_sub.unregister()
+            self._depth_info_sub = None
 
     def _trigger_tobi(self, data):
         rospy.loginfo('trigger tobi')
@@ -123,6 +133,10 @@ class SPQReLROSBridge():
         self._depth_sub = rospy.Subscriber(
             'spqrel_pepper/camera/depth/camera/image_raw',
             Image, self._depth_cb
+        )
+        self._depth_info_sub = rospy.Subscriber(
+            '/spqrel_pepper/camera/depth/camera/camera_info',
+            CameraInfo, self._depth_info_cb
         )
 
         # d = rospy.ServiceProxy('/ms_face_api/detect', Detect)

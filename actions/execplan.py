@@ -42,8 +42,13 @@ def get_filler(argument):
     return filler
 
 
-def to_memory_key(filler):
-    return filler.replace(" ", "+")
+def to_memory_key(filler, memory_service):
+    try:
+        memory_key = memory_service.getData("/location_mapping/" + filler.replace(" ", "+"))
+    except:
+        return ''
+    return memory_key
+
 
 
 def LU4R_to_plan(lu4r, asr_value, memory_service):
@@ -53,6 +58,7 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
     interpretations = lu4r.split("#")
     action = ''
     for interpretation in interpretations:
+        to_say = ''
         if not interpretation:
             continue
         interpretation = interpretation.replace(")", "")
@@ -62,159 +68,123 @@ def LU4R_to_plan(lu4r, asr_value, memory_service):
             arguments_string = splitted[1]
             arguments = arguments_string.split(',')
             if frame == 'MOTION' or frame == 'ARRIVING':
-                action = action + ' navigateto_'
-                memory_service.raiseEvent("Veply", "I understood that I need to go")
+                to_say = to_say + "I understood that I need to go. "
                 for argument in arguments:
                     if 'goal' in argument:
                         filler = get_filler(argument)
-                        to_say = "I understood that the location is " + filler
-                        memory_service.raiseEvent("Veply", to_say)
-                        try:
-                            location = memory_service.getData("/location_mapping/" + filler)
-                        except:
-                            location = ""
-                            action = ""
-                            to_say = "I don't want to go to " + filler + " now"
-                            memory_service.raiseEvent("Veply", to_say)
-                        print 'TO_SAY: ' + to_say
-                        action = action + location
-                action = action + ';'
+                        location = to_memory_key(filler)
+                        if len(location) == 0:
+                            to_say = to_say + "I'm sorry, I understood the word " + filler + ", but I failed to ground it. "
+                if len(location) > 0:
+                    to_say = to_say + "I understood that the location is " + filler + ". "
+                    action = action + 'navigateto_' + location + ';'
+                memory_service.raiseEvent("Veply", to_say)
             elif frame == 'COTHEME':
-                action = action + ' followuntil_stopfollowing; '
-                memory_service.raiseEvent("Veply", "I understood that I need to follow")
+                to_say = to_say + "I understood that I need to follow. "
                 for argument in arguments:
                     if 'cotheme' in argument:
                         filler = get_filler(argument)
-                        to_say = "I understood that I need to follow " + filler + ". I will do it until I receive the stop command."
-                        memory_service.raiseEvent("Veply", to_say)
-                        print 'TO_SAY: ' + to_say
-                        #action = action + location
+                        if "me" in filler:
+                            filler = "you"
+                        to_say = to_say + "I understood that I need to follow " + filler + ". I will do it until I receive the stop command. "
+                if 'you' in filler:
+                    action = action + ' vsay_followyou; asrenable; followuntil_stopfollowing|; asrenable_off;'
+                else:
+                    to_say = to_say + "I don't know how to identify Maria. Please, go on! "
+                memory_service.raiseEvent("Veply", to_say)
             elif frame == 'BRINGING' or frame == 'GIVING':
-                object = ''
-                final_position = ''
-                action = action + ' navigateto_'
-                memory_service.raiseEvent("Veply", "I understood that I need to bring")
-                print arguments
+                theme_filler = ''
+                theme_memory_key = ''
+                goal_filler = ''
+                goal_memory_key = ''
+                to_say = to_say + "I understood that I need to bring. "
                 for argument in arguments:
                     if 'theme' in argument:
-                        filler = get_filler(argument)
-                        to_say = "I understood that the object is " + filler
-                        memory_service.raiseEvent("Veply", to_say)
-                        try:
-                            object = memory_service.getData("/location_mapping/" + filler)
-                        except:
-                            action = ""
-                            to_say = "I'm sorry, I cannot bring you " + filler
-                            memory_service.raiseEvent("Veply", to_say)
+                        theme_filler = get_filler(argument)
+                        to_say = to_say + "I understood that the object is " + theme_filler + ". "
+                        theme_memory_key = to_memory_key()
+                        if len(theme_memory_key) == 0:
+                            to_say = to_say + "I'm sorry, I am not able to ground " + theme_filler + ". "
                     if ('beneficiary' in argument) or ('recipient' in argument):
                         filler = get_filler(argument)
                         if filler == 'me':
                             filler = 'you'
-                        to_say = "I understood that I have to bring it to " + filler
-                        memory_service.raiseEvent("Veply", to_say)
+                        to_say = to_say + "I understood that I have to bring it to " + filler + ". "
                     if 'goal' in argument:
-                        filler = get_filler(argument)
-                        to_say = "I understood that the final position of the object will be the " + filler
-                        memory_service.raiseEvent("Veply", to_say)
-                        try:
-                            final_position = memory_service.getData("/location_mapping/" + filler)
-                        except:
-                            to_say = "Sorry, I'm not allowed to bring the " + filler
-                            memory_service.raiseEvent("Veply", to_say)
+                        goal_filler = get_filler(argument)
+                        goal_memory_key = to_memory_key(goal_filler)
+                        to_say = to_say + "I understood that the final position of the object will be " + goal_filler + ". "
+                        if len(goal_memory_key) == 0:
+                            to_say = to_say + "Sorry, I'm not allowed to bring the " + goal_filler + ". "
                     if 'source' in argument:
-                        filler = get_filler(argument)
-                        to_say = "I understood that the initial position of the object is " + filler
-                        memory_service.raiseEvent("Veply", to_say)
-                    print 'TO_SAY: ' + to_say
-                if len(object) > 0:
-                    action = action + object
-                    action = action + '|120; '
-                    action = action + ' vsay_cannottake; wait_10;'
-                    if len(final_position) > 0:
-                        action = action + ' navigateto_' + final_position + ';'
-            elif frame == 'TAKING' or frame == 'MANIPULATION':
-                object = ''
-                action = action + ' navigateto_'
-                memory_service.raiseEvent("Veply", "I understood that I need to take")
-                for argument in arguments:
-                    if ('theme' in argument) or ('entity' in argument):
-                        filler = get_filler(argument)
-                        to_say = "I understood that the object is a " + filler
-                        memory_service.raiseEvent("Veply", to_say)
-                        try:
-                            object = memory_service.getData("/location_mapping/" + filler)
-                        except:
-                            action = ""
-                            to_say = "Sorry, I'm not allowed to take the " + filler
-                            memory_service.raiseEvent("Veply", to_say)
-                    if 'source' in argument:
-                        filler = get_filler(argument)
-                        to_say = "I understood that the initial position of the object is " + filler
-                        memory_service.raiseEvent("Veply", to_say)
-                    print 'TO_SAY: ' + to_say
-                if len(object) > 0:
-                    action = action + object
-                    action = action + '; '
-                    action = action + ' vsay_cannottake; wait_10;'
-            elif frame == 'LOCATING':
-                phenomenon = ''
-                to_say = "I understood that I need to find"
+                        source_filler = get_filler(argument)
+                        to_say = to_say + "I understood that the initial position of the object is " + source_filler + ". "
+                if len(theme_memory_key) > 0:
+                    action = action + ' navigateto_' + theme_memory_key + '; vsay_cannottake; wait_10; '
+                else:
+                    to_say = to_say + "I'm sorry, but I don't have the object " + theme_filler + " in my semantic map. "
+                if len(goal_memory_key) > 0:
+                    action = action + ' navigateto_' + goal_memory_key + ';'
+                else:
+                    to_say = to_say + "I'm sorry, but I don't have the goal of the action in my semantic map. "
                 memory_service.raiseEvent("Veply", to_say)
-                ground = ''
-                fillerp = ''
-                fillerg = ''
+            elif frame == 'TAKING' or frame == 'MANIPULATION':
+                theme_filler = ''
+                theme_memory_key = ''
+                goal_filler = ''
+                goal_memory_key = ''
+                to_say = to_say + "I understood that I need to bring. "
+                for argument in arguments:
+                    if 'theme' in argument:
+                        theme_filler = get_filler(argument)
+                        to_say = to_say + "I understood that the object is " + theme_filler + ". "
+                        theme_memory_key = to_memory_key()
+                        if len(theme_memory_key) == 0:
+                            to_say = to_say + "I'm sorry, I am not able to ground " + theme_filler + ". "
+                    if 'source' in argument:
+                        source_filler = get_filler(argument)
+                        to_say = to_say + "I understood that the initial position of the object is " + source_filler + ". "
+                if len(theme_memory_key) > 0:
+                    action = action + ' navigateto_' + theme_memory_key + '; vsay_cannottake; wait_10; '
+                else:
+                    to_say = to_say + "I'm sorry, but I don't have the object " + theme_filler + " in my semantic map. "
+                memory_service.raiseEvent("Veply", to_say)
+            elif frame == 'LOCATING':
+                ground_filler = '';
+                ground_memory_key = '';
+                phenomenon_filler = ''
+                phenomenon_memory_key = ''
+                to_say = to_say + "I understood that I need to find. "
                 for argument in arguments:
                     if ('ground' in argument) or ('entity' in argument):   # kitchen
-                        fillerg = get_filler(argument)
-                        to_say = "I understood the entity to find is in " + fillerg
-                        memory_service.raiseEvent("Veply", to_say)                        
-                    if 'phenomenon' in argument: # maria
-                        fillerp = get_filler(argument)
-                        to_say = "I understood that I have to look for " + fillerp
-                        memory_service.raiseEvent("Veply", to_say)
-                try:
-                    phenomenon = memory_service.getData("/location_mapping/" + fillerg)
-                except:
-                    to_say = "I'm sorry, I'm too tired to search for " + fillerp
-                    memory_service.raiseEvent("Veply", to_say)
-                    print 'TO_SAY: ' + to_say
-
-                if len(phenomenon) > 0:
-                    ground = 'navigateto_' + fillerg
-                    action = action + ground
-                    action = action + '; '
-                    action = action + ' lookfor_persondetected|10; '
-                    action = action + ' vsay_notfound; wait_10;'
-            elif frame == 'SAY':
-                phenomenon = ''
-                to_say = "I understood that I have to say"
+                        ground_filler = get_filler(argument)
+                        ground_memory_key = to_memory_key(ground_filler)
+                        to_say = to_say + "I understood the entity to find is in " + ground_filler + ". "
+                    if 'phenomenon' in argument:
+                        phenomenon_filler = get_filler(argument)
+                        phenomenon_memory_key = to_memory_key(phenomenon_filler)
+                        to_say = to_say + "I understood that I have to look for " + phenomenon_filler + ". "
+                if len(phenomenon_memory_key) > 0:
+                    to_say = to_say + "I'm going to look for " + phenomenon_filler
+                    action = action + ' navigateto_' + phenomenon_filler + "; wait_10; vsay_notfound; wait_10;"
+                elif len(ground_memory_key) > 0:
+                    to_say = to_say + "I'm going to look for " + ground_filler
+                    action = action + ' navigateto_' + phenomenon_filler + "; wait_10; vsay_notfound; wait_10;"
+                else:
+                    to_say = to_say + "I'm sorry, I don't have neither " + phenomenon_filler + " nor " + ground_filler + " in my semantic map. "
                 memory_service.raiseEvent("Veply", to_say)
-                for argument in arguments:
-                    if 'message' in argument:
-                        argument_splitted = argument.split(':')
-                        filler = argument_splitted[1].replace('"', '')
-                        memory_service.raiseEvent("Veply", filler)
-                    print 'TO_SAY: ' + to_say
-
         else:
             print "No arguments"
             if frame == 'MOTION' or frame == 'ARRIVING':
-                to_say = "I understood that I need to go, but I don't know where"
-                memory_service.raiseEvent("Veply", to_say)
+                to_say = to_say + "I understood that I need to go, but I don't know where. "
             elif frame == 'COTHEME':
-                to_say = "I just understood that I need to follow someone"
-                memory_service.raiseEvent("Veply", to_say)
+                to_say = to_say + "I just understood that I need to follow someone. "
             elif frame == 'BRINGING' or frame == 'GIVING':
-                to_say = "I understood that I need to bring, but I didn't get what"
-                memory_service.raiseEvent("Veply", )
+                to_say = to_say + "I understood that I need to bring, but I didn't get what. "
             elif frame == 'TAKING' or frame == 'MANIPULATION':
-                to_say = "I understood that I need to take, but I don't know what"
-                memory_service.raiseEvent("Veply", )
+                to_say = to_say + "I understood that I need to take, but I don't know what. "
             elif frame == 'LOCATING':
-                to_say = "I understood that I need to search, but I don't know what"
-                memory_service.raiseEvent("Veply", )
-            else:
-                to_say = ''
+                to_say = to_say + "I understood that I need to search, but I don't know what. "
             memory_service.raiseEvent("Veply", to_say)
     return action
 

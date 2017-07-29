@@ -40,6 +40,7 @@ from conditions import set_condition
 ##PARAMS
 #confidenceThreshold=0.4 #default =0.4
 min_size={'w':0.10 ,'h':0.10}
+command='closer'
 
 actionName = "selectpersonmemory"
         
@@ -50,7 +51,7 @@ def actionThread_exec (params):
     t = threading.currentThread()
     print "selectpersonmemory thread started"
     memory_service = getattr(t, "mem_serv", None)
-    
+    https://github.com/LCAS/spqrel_tools.git
 
     print "Action "+actionName+" started with params "+params
     
@@ -98,7 +99,7 @@ def actionThread_exec (params):
                 print 'people features error'     
                 
             list_profiles=[]
-            for numberprofile in range(1,4):
+            for numberprofile in range(1,4):https://github.com/LCAS/spqrel_tools.git
                 
                 try:
                     mem=memory_service.getData('Humans/Profile'+str(numberprofile))

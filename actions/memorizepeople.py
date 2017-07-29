@@ -219,7 +219,7 @@ def actionThread_exec (params):
                     iswavingright='right'
                 # Write data in json format
 
-                shirtcolor={'name': shirtcolorName, 'hsv':shirtcolorHSV}
+                shirtcolor={'name': shirtcolorName.lower(), 'hsv':shirtcolorHSV}
                 personinfo={'height': round(height,2), 'shirtcolor': shirtcolor,'posture':posture,'waving': wavingmode}
                 
 

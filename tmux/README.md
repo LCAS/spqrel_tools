@@ -53,23 +53,27 @@ Just run `tmux.py -h`, output whould be something like this:
 
 ```
 usage: tmux.py [-h] [--config CONFIG] [--init INIT] [--session SESSION]
-               {list,launch,stop,kill} ...
+               {list,launch,stop,relaunch,terminate,server,pids,running} ...
 
 positional arguments:
-  {list,launch,stop,kill}
+  {list,launch,stop,relaunch,terminate,server,pids,running}
                         sub-command help
     list                show windows
     launch              launch window(s)
     stop                stop windows(s)
-    kill                kill window(s)
+    relaunch            relaunch windows(s)
+    terminate           kill window(s)
+    server              run web server
+    pids                pids of processes
+    running             returns true of there is a process running in the
+                        window
 
 optional arguments:
   -h, --help            show this help message and exit
   --config CONFIG       JSON config file. see sample-config.json. Default:
                         spqrel-pepper-config.json
   --init INIT           Should tmux be initialised? Default: True
-  --session SESSION     The session that is controlled. Default: spqrel
-```
+  --session SESSION     The session that is controlled. Default: spqrel```
 
 ### Typical usage (corresponding to the `sample.json` file above)
 

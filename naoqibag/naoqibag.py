@@ -69,19 +69,22 @@ def cameraMonitorThread (pip, pport, rate):
     camera = 0
     resolution = 2    # VGA
     colorSpace = 11   # RGB
-    videoClient = camProxy.subscribeCamera("NAOqibag", camera, resolution, colorSpace, 5)
+    fps = rate
+    videoClient = camProxy.subscribeCamera("NAOqibag"+str(time.time()), camera, resolution, colorSpace, float(fps))
+    print "Current camera rate: ", camProxy.getFrameRate(camera)
     while (camera_enabled):
         pepperImage = camProxy.getImageRemote(videoClient)
-        imageWidth = pepperImage[0]
-        imageHeight = pepperImage[1]
-        array = pepperImage[6]
-    
-        # Create a PIL Image from our pixel array.
-        im = Image.frombytes("RGB", (imageWidth, imageHeight), array)
-            
-        # Save the image.
-        image_name = os.path.join(camera_log_dir, 'spqrel_kTopCamera_%f_rgb.png' % time.time())
-        im.save(image_name, "PNG")
+        if (pepperImage != None):
+            imageWidth = pepperImage[0]
+            imageHeight = pepperImage[1]
+            array = pepperImage[6]
+        
+            # Create a PIL Image from our pixel array.
+            im = Image.frombytes("RGB", (imageWidth, imageHeight), array)
+        
+            # Save the image.
+            image_name = os.path.join(camera_log_dir, 'spqrel_kTopCamera_%f_rgb.png' % time.time())
+            im.save(image_name, "PNG")
                 
         time.sleep(1.0/rate)
         

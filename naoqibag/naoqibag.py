@@ -70,8 +70,10 @@ def cameraMonitorThread (pip, pport, rate):
     resolution = 2    # VGA
     colorSpace = 11   # RGB
     fps = rate
-    videoClient = camProxy.subscribeCamera("NAOqibag"+str(time.time()), camera, resolution, colorSpace, float(fps))
-    print "Current camera rate: ", camProxy.getFrameRate(camera)
+    cameraname = "NAOqibag"+str(time.time())
+    videoClient = camProxy.subscribeCamera(cameraname, camera, resolution, colorSpace, int(fps))
+    #camProxy.setFrameRate(videoClient, int(fps))
+    print "Current camera rate: ", camProxy.getFrameRate(videoClient)
     while (camera_enabled):
         pepperImage = camProxy.getImageRemote(videoClient)
         if (pepperImage != None):

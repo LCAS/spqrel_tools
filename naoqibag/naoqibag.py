@@ -15,7 +15,7 @@ def readKeysFile(keys_file, memory_service):
     for line in keys_file:
         key = line.strip()
 
-        if len(key) > 0 or key[0] == '#':
+        if len(key) > 0 and key[0] == '#':
             print "Skipped comment: ", key
         elif key[0:7] == 'include':
             new_keys_filename = key[8:len(key)]
@@ -34,11 +34,11 @@ def onEventCamera(pip, pport, value):
     global camera_enabled
     global camera_frame_rate
     print "value: ", value 
-    if (value==0):
+    if (float(value)==0):
         camera_enabled = 0
     else:
         camera_enabled = 1
-        camera_frame_rate = value
+        camera_frame_rate = float(value)
         #create a thead that monitors directly the signal
         camMonitorThread = threading.Thread(target = cameraMonitorThread, args = (pip, pport, camera_frame_rate))
         camMonitorThread.start()        
@@ -83,7 +83,6 @@ def cameraMonitorThread (pip, pport, rate):
         image_name = os.path.join(camera_log_dir, 'spqrel_kTopCamera_%f_rgb.png' % time.time())
         im.save(image_name, "PNG")
                 
-    
         time.sleep(1.0/rate)
         
     camProxy.unsubscribe(videoClient)

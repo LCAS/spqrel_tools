@@ -54,6 +54,7 @@ def actionThread_exec (params):
     memory_service = getattr(t, "mem_serv", None)
     tts_service = getattr(t, "session", None).service("ALTextToSpeech")
     print "Action "+actionName+" started with params "+params
+
     # action init
     count = 1
     tosay = phraseToSay(memory_service,params)
@@ -67,10 +68,8 @@ def actionThread_exec (params):
         # action exec
         time.sleep(0.1)
 
+    # action end
     print "Action "+actionName+" "+params+" terminated"
-    # action end
-
-    # action end
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
 
 

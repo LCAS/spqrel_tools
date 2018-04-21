@@ -19,6 +19,7 @@ def actionThread_exec (params):
     motion_service = getattr(t, "session", None).service("ALMotion")
 
     print "Action "+actionName+" started with params "+params
+
     # action init
 
     val = params
@@ -59,9 +60,8 @@ def actionThread_exec (params):
     motion_service.moveTo(x, y, theta) #blocking function
     motion_service.setExternalCollisionProtectionEnabled('Move', True)
     
+    # action end
     print "Action "+actionName+" "+params+" terminated"
-    # action end
-    # action end
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
 
 

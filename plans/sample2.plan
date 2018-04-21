@@ -18,3 +18,56 @@ vsay_farewell;
 
 headpose_0_-30;
 
+# pre: <standard BG behaviors>, eff: list of people detected with features
+# moves the head in fixed poses, fixed time duration
+# termination: fixed time
+memorizepeople; 
+
+# pre: list of people detected or on-line analysis
+# eff: ID of person with <parameter> feature
+# termination condition: <parameter> is filled (blocking)
+findperson_<parameter>;
+
+
+# pre: list of people detected
+# eff: aggregated data 
+# termination: constant
+peoplesummary_<parameter>
+
+
+# pre: person ID to follow
+# eff: follow
+# termination: <stop> condition
+followuntil_<stop>
+
+
+# pre: non-empty list of people deteted with features
+# eff: any target person ID
+# termination: constant (non-blocking)
+selectperson;
+
+
+
+LABELSTART;
+
+memorizepeople; # fills properties of detected people
+
+# do until some detection
+< (not persondetected) ? GOTO_LABELSTART : (persondetected) ? >;  
+
+# select the best one
+selectperson; # ID in memory
+
+# approach person
+followuntil_personhere_MemoryKey;
+
+# describe the person using feature from memorizepeople
+vsay_hello;
+vsay_persondescription; 
+
+
+
+
+
+
+

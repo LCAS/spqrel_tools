@@ -38,12 +38,15 @@ update:
 		(cd $$d; git pull); \
 	done
 
-clean: cookies/configure-$(TOOLCHAIN)
+clean: 
+#cookies/configure-$(TOOLCHAIN)
+	rm -rf $(WORKTREE)/.qi
 	rm -rf $(PNMLS)
-	for qb in $(QIBUILDS); do \
-		d=`dirname $$qb`; \
-		(cd $$d; pwd; qibuild clean -z -s -f) \
-	done
+	rm -rf $(QIBUILDS_BUILD_DIRS)
+#	for qb in $(QIBUILDS); do \
+#		d=`dirname $$qb`; \
+#		(cd $$d; pwd; qibuild clean -z -s -f) \
+#	done
 	rm -rf cookies
 
 BINS:=$(shell find $(QIBUILDS_BUILD_DIRS) -type f  | xargs -r file | grep -G "LSB *executable" | cut -f1 -d: | grep -v CMakeFiles)

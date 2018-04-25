@@ -1,3 +1,7 @@
+sparkle
+yes
+no
+stop
 hello
 hi
 noah
@@ -45,18 +49,11 @@ green tea
 aquarius
 cold brew
 coke
-what city are we in
-what is the name of your team
-how many teams participate in robocup at home this year
-who won the popular vote in the us election
-what is the highest mountain in japan
-name the two robocup at home standard platforms
-what does dspl stand for
-what does sspl stand for
-who did alphabet sell boston dynamics to
-nagoya has one of the largest train stations in the world
-how large is it
-where is your team located
-who created star wars
-who lives in a pineapple under the sea
-who is grace hopper
+follow me
+stop following
+stop following me
+stop
+time
+what's the time
+what is the time
+what time is it

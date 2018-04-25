@@ -25,35 +25,52 @@ def actionThread_exec (params):
 
     print "Action "+actionName+" started with params "+params
 
-    # action init
-   
-    #tracker_service = session.service("ALTracker")
-    #tracker_service.setMode("Move")
-    #tracker_service.registerTarget("Sound",[1,0.1])
-    #tracker_service.track("Sound")
+    values = params.split('_')
+    confidence_threshold = float(values[0])/100.0
+    distance_to_people = float(values[1])
+    time_to_rotate = int(values[2])
+
+    print "Confidence: " , confidence_threshold
+    print "Distance: " , distance_to_people
+    print "Time: " , time_to_rotate
 
     # action init
+   
+    tracker_service = session.service("ALTracker")
+    tracker_service.setMode("WholeBody")
+    tracker_service.registerTarget("Sound",[distance_to_people,confidence_threshold])
+    tracker_service.track("Sound")
+
+    # action init
+
+    val = False
 
     while (getattr(t, "do_run", True) and (not val)): 
         #print "Action "+actionName+" "+params+" exec..."
         # action exec
-        sound_value =  memory_service.getData("ALSoundLocalization/SoundLocated")
-        confidence = sound_value[1][2]
-        print "confidence = ",confidence
-        if confidence > confidence_threshold:
-            print "sound detected"
-
         try:
-            val = get_condition(memory_service, params)
+            sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
+            if len(sound_value)> 1 :
+                #print "confidence: ", sound_value[1][2]
+                confidence = sound_value[1][2]
+                if (confidence > confidence_threshold):
+                    val = True
+                    break
         except:
 	        pass
+
         # action exec
         time.sleep(0.25)
+
+    count = time_to_rotate * 10
+    while (getattr(t, "do_run", True) and  val and count > 0):
+        time.sleep(.1)
+        count -= 1
 		
     print "Action "+actionName+" "+params+" terminated"
     # action end
-    #tracker_service.stopTracker()
-    #tracker_service.unregisterAllTargets()
+    tracker_service.stopTracker()
+    tracker_service.unregisterAllTargets()
     # action end
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
 

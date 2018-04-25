@@ -17,7 +17,9 @@ from action_base import *
 import dooropen, obstaclehere, screentouched
 import say, vsay, wait, waitfor, goto, turn, lookfor, dialogue, dialoguestart, dialoguestop, asrenable
 import posture, personhere, headpose, followuntil, movementdetected, webpage, personbehind, persondetected, speechbtn
-import execplan, saveposition, soundtrack, navigateto, memorizepeople, memorizeface, sounddetected, continuebtn, enter
+import execplan, saveposition, soundtrack, navigateto, memorizepeople, memorizeface, sounddetected, continuebtn, enter, recdata, assign, reccam, gotopos, storecentralperson, fake
+import personlost, peoplesummary, arm, bow, headpitch, greet, animation, shakehand, selectpersonmemory, analyseperson #tvsay,
+import trackface
 
 def init(session):
     screentouched.init(session)
@@ -47,10 +49,29 @@ def init(session):
     speechbtn.init(session)
     navigateto.init(session)
     memorizepeople.init(session)
-    #memorizeface.init(session)
+    memorizeface.init(session)
+    selectpersonmemory.init(session)
     sounddetected.init(session)
     continuebtn.init(session)
     enter.init(session)
+    recdata.init(session)
+    assign.init(session)
+    personlost.init(session)
+    peoplesummary.init(session)
+    reccam.init(session)
+    gotopos.init(session)
+    arm.init(session)
+    bow.init(session)
+    storecentralperson.init(session)
+    fake.init(session)
+    headpitch.init(session)
+    greet.init(session)
+    animation.init(session)
+    shakehand.init(session)
+    analyseperson.init(session)
+    #tvsay.init(session)
+    trackface.init(session)
+    
 
 def quit():
     screentouched.quit()
@@ -76,16 +97,32 @@ def quit():
     persondetected.quit()
     execplan.quit()
     saveposition.quit()
+    selectpersonmemory.quit()
     soundtrack.quit()
     speechbtn.quit()
     navigateto.quit()
     memorizepeople.quit()
-    #memorizeface.quit()
+    memorizeface.quit()
     sounddetected.quit()
     enter.quit()
-    continuebtn.quit(session)
-    
-
+    continuebtn.quit()
+    recdata.quit()
+    assign.quit()
+    personlost.quit()
+    peoplesummary.quit()
+    reccam.quit()
+    gotopos.quit()
+    arm.quit()
+    bow.quit()
+    storecentralperson.quit()
+    fake.quit()
+    headpitch.quit()
+    greet.quit()
+    animation.quit()
+    shakehand.quit()
+    analyseperson.quit()
+    #tvsay.quit()
+    trackface.quit()
 
 def main():
     global memory_service
@@ -113,7 +150,7 @@ def main():
 
     init(session)
 
-    app.run()    
+    app.run()
 
     quit()
 

@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<aiml version="1.0">
+
+
+    <topic name="GUIDING">
+        <category>
+            <pattern>START</pattern>
+            <template>
+                [SAY]Would you like to follow me to the arena? I have something interesting to tell you!
+                Please say "Yes" or "No"!|[OPTIONS]Yes_No
+            </template>
+        </category>
+
+        <category>
+            <pattern>* YES *</pattern>
+            <template>
+                <srai>POSITIVERESPONSE</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* YES</pattern>
+            <template>
+                <srai>POSITIVERESPONSE</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>YES *</pattern>
+            <template>
+                <srai>POSITIVERESPONSE</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>YES</pattern>
+            <template>
+                <srai>POSITIVERESPONSE</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* NO *</pattern>
+            <template>
+                <srai>NEGATIVERESPONSE</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* NO</pattern>
+            <template>
+                <srai>NEGATIVERESPONSE</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>NO *</pattern>
+            <template>
+                <srai>NEGATIVERESPONSE</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>NO</pattern>
+            <template>
+                <srai>NEGATIVERESPONSE</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>*</pattern>
+            <template>[SAY]Sorry, I don't understand.. Today it's too noisy here! You can also reply with the buttons on the screen!</template>
+        </category>
+
+        <category>
+            <pattern>POSITIVERESPONSE</pattern>
+            <template>
+                [SAY]
+                <random>
+                    <li>Great!</li>
+                    <li>Perfect!</li>
+                    <li>That's great!</li>
+                    <li>Brilliant!</li>
+                </random>
+                Then follow me! But pay attention, don't get lost!|[WANTSTOFOLLOW]
+            </template>
+        </category>
+
+        <category>
+            <pattern>NEGATIVERESPONSE</pattern>
+            <template>
+                [SAY]
+                <random>
+                    <li>Okay, no problem!</li>
+                    <li>Sure, no problem!</li>
+                </random>
+                Thanks anyway and have a nice day!|[NOTFOLLOW]
+            </template>
+        </category>
+
+        <category>
+            <pattern>STOP</pattern>
+            <template>
+                <set name="topic"></set>
+                [STOP]
+            </template>
+        </category>
+    </topic>
+
+    <topic name="ANYQUESTION">
+        <category>
+            <pattern>START</pattern>
+            <template>
+                [SAY]Now it's your turn! Please ask me a question!
+            </template>
+        </category>
+
+        <category>
+            <pattern>*</pattern>
+            <template>[SAY]
+                <random>
+                    <li>Oh, very interesting question!</li>
+                    <li>Nice, interesting question!</li>
+                    <li>That's an interesting point!</li>
+                </random>
+                <random>
+                    <li>Maybe it's better if we discuss about it offline..</li>
+                    <li>I'll send you an e-mail with all the details later!</li>
+                    <li>You want to know too many details.. this is confidential!</li>
+                </random>
+                </template>
+        </category>
+
+        <category>
+            <pattern>POSITIVERESPONSE</pattern>
+            <template>
+                [SAY]
+                <random>
+                    <li>Great!</li>
+                    <li>Perfect!</li>
+                    <li>That's great!</li>
+                    <li>Brilliant!</li>
+                </random>
+                Then follow me! But pay attention, don't get lost!|[WANTSTOFOLLOW]
+            </template>
+        </category>
+
+        <category>
+            <pattern>NEGATIVERESPONSE</pattern>
+            <template>
+                [SAY]
+                <random>
+                    <li>Okay, no problem!</li>
+                    <li>Sure, no problem!</li>
+                </random>
+                Thanks anyway and have a nice day!|[NOTFOLLOW]
+            </template>
+        </category>
+
+        <category>
+            <pattern>STOP</pattern>
+            <template>
+                <set name="topic"></set>
+                [STOP]
+            </template>
+        </category>
+    </topic>
+
+
+</aiml>

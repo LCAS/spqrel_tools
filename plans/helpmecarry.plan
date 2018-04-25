@@ -1,30 +1,25 @@
 #### 1 - WAIT FOR THE PERSON TO FOLLOW
-
-#goto_exit;
-#turn_130_ABS;
+recdata_on;
 
 headpose_0_-30;
 #say_hello;
 
 waitfor_personhere; 
 vsay_hello;
-vsay_starting;
+#vsay_starting;
 
-dialogue_following; #new from andrea
-
-#trackface_learnface;
+#dialogue_following; #new from andrea
 
 
 #### 2 - START THE FOLLOWING PHASE
 
 asrenable; #new from andrea
-followuntil_stopfollowing; ! *if* (personlost) *do* say_comehere; waitfor_personhere; restart_action !
+reccam_on;
+followuntil_stopfollowing; ! *if* (personlost) *do* vsay_waitforme; navigateto_start; waitfor_personhere; restart_action !
 asrenable_off;
+reccam_off;
 
-#vsay_carhere; #this is not required as the robot says something when it detects the stopfollowing
-#saveposition_car;
-#vsay_whatnow; #this is triggered by the following dialogue (dialogue_lookforhelp)
-#dialogue_lookforhelp; #understand the location to go "helplocation"
+saveposition_car;
 
 
 #### 3 - LOOK FOR HELP
@@ -32,25 +27,27 @@ asrenable_off;
 dialogue_lookforhelp;
 headpose_0_-20;
 
-#goto_helplocation; ! *if* personhere *do* dialogue_whattime; restart_action !
+navigateto_^helplocation; # ! *if* personhere *do* dialogue_whattime; restart_action !
 
-lookfor_persondetected; ! *if* timeout_lookfor_20 *do* say_comehere; restart_action !
-dialogue_guide; # we could use this action to acquire the name of the guy. At the end of this action, vsay_followme is automatically triggered
+reccam_on;
+lookfor_persondetected; ! *if* timeout_lookfor_20 *do* 
+reccam_off;
+
+vsay_comehere; restart_action !
+
+arm_up;
+vsay_guide; # we could use this action to acquire the name of the guy. At the end of this action, vsay_followme is automatically triggered
+turn_180;
 
 
 #### 4 - COMING BACK TO THE CAR
 
-#vsay_followme;
 waitfor_personbehind;
 
-#goto_car; ! *if* (not personbehind) *do*  turn_180; vsay_gotocar ; turn_180 ; waitfor_personbehind; restart_action ;
+navigateto_^car/waypoint; ! *if* (not personbehind) *do*  turn_180; arm_up ; vsay_comehere ; turn_180 ; waitfor_personbehind; restart_action !
+gotopos_^car/coordinates; ! *if* (not personbehind) *do*  turn_180; arm_up ; vsay_comehere ; turn_180 ; waitfor_personbehind; restart_action !
 
-## gotocar: "hey dont get distracted, please follow me again to the car, place yourself behind me to continue"
-
-#say_arrivedcar
 dialogue_arrivedcar;
-
-
 vsay_farewell;
-
+recdata_off;
 

@@ -11,7 +11,7 @@ Memorize people
 
 Writes in ALMemory 'Actions/MemorizePeople/PeopleList/' json string with all features 
 
-params== 'Crowd'
+params== 'SPRgame'
 '''
 
 
@@ -35,6 +35,9 @@ from utils import point2world
 import conditions
 from conditions import set_condition
 
+
+import headpose
+
 actionName = "memorizepeople"
 
 global people_list
@@ -48,8 +51,11 @@ global currentangle
 currentangle=0
 Timeoutangle=5
 
+headYaw = [ 0.2, 0.0, -0.2, -0.2, 0.0, 0.2, 0.0 ]
+headPitch = [ -0.3, -0.3, -0.3, 0.0, 0.0, 0.0 ,-0.1]
+headtime = 0.6
+
 def update_data(currentuser):
-    
     b_new=True
     
     try:
@@ -57,39 +63,41 @@ def update_data(currentuser):
         people_list=json.loads(mem_list)
         
     except:
-        
+
         people_list=[]
-    
         
-    # update some info for old detections
-    
-    for i in range(len(people_list)):
+    if len(people_list)>1:
         
-        if currentuser['person_naoqiid']==people_list[i]['person_naoqiid']:
+        
+        # update some info for old detections
+        
+        for i in range(len(people_list)):
             
-            json_person=people_list[i]
-            
-#            mem_person=memory_service.getData('Actions/memorizepeople/'+people_list[i])
-#            json_person=json.loads(mem_person)
-            b_new=False
-            
-            json_person['info']['height']=currentuser['info']['height']
-            json_person['info']['posture']=currentuser['info']['posture']
-            
-            # Update only if confidence is higher 
-            if currentuser['face_naoqi']['faceinfo']['age']['conf'] >json_person['face_naoqi']['faceinfo']['age']['conf']:
-                json_person['face_naoqi']['faceinfo']['age']=currentuser['face_naoqi']['faceinfo']['age']
-
-            if currentuser['face_naoqi']['faceinfo']['gender']['conf'] >json_person['face_naoqi']['faceinfo']['gender']['conf']:
-                json_person['face_naoqi']['faceinfo']['gender']=currentuser['face_naoqi']['faceinfo']['gender']
+            if currentuser['person_naoqiid']==people_list[i]['person_naoqiid']:
                 
-#            ## Write data in ALMemory
-#            str_person=json.dumps(json_person)
-#            memory_service.insertData('Actions/memorizepeople/Person/'+currentuser['personid'], str_person)
-
-            people_list[i]=json_person
-   
-        
+                json_person=people_list[i]
+                
+    #            mem_person=memory_service.getData('Actions/MemorizePeople/'+people_list[i])
+    #            json_person=json.loads(mem_person)
+                b_new=False
+                
+                json_person['info']['height']=currentuser['info']['height']
+                json_person['info']['posture']=currentuser['info']['posture']
+                
+                # Update only if confidence is higher 
+                if currentuser['face_naoqi']['faceinfo']['age']['conf'] >json_person['face_naoqi']['faceinfo']['age']['conf']:
+                    json_person['face_naoqi']['faceinfo']['age']=currentuser['face_naoqi']['faceinfo']['age']
+    
+                if currentuser['face_naoqi']['faceinfo']['gender']['conf'] >json_person['face_naoqi']['faceinfo']['gender']['conf']:
+                    json_person['face_naoqi']['faceinfo']['gender']=currentuser['face_naoqi']['faceinfo']['gender']
+                    
+    #            ## Write data in ALMemory
+    #            str_person=json.dumps(json_person)
+    #            memory_service.insertData('Actions/MemorizePeople/Person/'+currentuser['personid'], str_person)
+    
+                people_list[i]=json_person
+       
+            
     ## ADD new person    
     if b_new is True:
         
@@ -98,7 +106,12 @@ def update_data(currentuser):
         
         
     str_person=json.dumps(people_list)
-    memory_service.insertData('Actions/Memorizepeople/Peoplelist', str_person) 
+    memory_service.insertData('Actions/MemorizePeople/PeopleList', str_person) 
+    
+
+
+
+
 
 def actionThread_exec (params):
 
@@ -109,7 +122,7 @@ def actionThread_exec (params):
     faces_service = getattr(t, "session", None).service("ALFaceDetection")
     faces_service.setRecognitionEnabled(True)
     motion_service  = getattr(t, "session", None).service("ALMotion")
-    #face_char_service = getattr(t, "session", None).service("ALFaceCharacteristics")
+    face_char_service = getattr(t, "session", None).service("ALFaceCharacteristics")
     print "Action "+actionName+" started with params "+params
 
     # DElete old list
@@ -117,7 +130,7 @@ def actionThread_exec (params):
     people_list=[]
 
     b_completed=False
-    memory_service.insertData("PeoplePerception/PeopleList",people_list) 
+    memory_service.insertData('Actions/MemorizePeople/PeopleList',people_list) 
     
     while (getattr(t, "do_run", True) and b_completed==False):
         
@@ -139,8 +152,8 @@ def actionThread_exec (params):
             try:
                 
                 #try:
-#                res_char=face_char_service.analyzeFaceCharacteristics(personid)
-#                print 'res_char',res_char
+                res_char=face_char_service.analyzeFaceCharacteristics(personid)
+                print 'res_char',res_char
                 
                 #lookingat =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/LookingAtRobotScore")
                 #gazedirection =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/GazeDirection")
@@ -149,6 +162,7 @@ def actionThread_exec (params):
                 propexpression =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ExpressionProperties")
                 propsmile =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/SmileProperties")
 
+                print 'propgender',propgender
                 
                 if propgender[0] ==0.0:
                     str_gender='female'
@@ -205,7 +219,7 @@ def actionThread_exec (params):
                     iswavingright='right'
                 # Write data in json format
 
-                shirtcolor={'name': shirtcolorName, 'hsv':shirtcolorHSV}
+                shirtcolor={'name': shirtcolorName.lower(), 'hsv':shirtcolorHSV}
                 personinfo={'height': round(height,2), 'shirtcolor': shirtcolor,'posture':posture,'waving': wavingmode}
                 
 
@@ -241,42 +255,69 @@ def actionThread_exec (params):
             
 
 
-        if params== 'Crowd':
+        if params== 'SPRgame':
             global countdt
             global currentangle
             
             if countdt>Timeoutangle:
                 
-                motion_service.moveTo(0.0, 0.0, currentangle)
-                currentangle+=Step_turn_angle
+#                motion_service.moveTo(0.0, 0.0, currentangle)
+#                currentangle+=Step_turn_angle
                 
-
+                headpose.moveHead(motion_service, headYaw[currentangle], headPitch[currentangle], headtime)
                 countdt = 0
+                currentangle+=1
             else:
                 countdt+=1
 
-            if currentangle > Max_turn_angle:
+            if currentangle > len(headYaw)-1:
                 print 'stop currentangle=',currentangle
                 
                 b_completed=True
                 
-            try:
-                mem_list=memory_service.getData('Actions/MemorizePeople/PeopleList')
-                people_list=json.loads(mem_list)
+        if params== 'Cocktailparty':
+            
+            global countdt
+            global currentangle
+            
+            if countdt>Timeoutangle:
+                
+#                motion_service.moveTo(0.0, 0.0, currentangle)
+#                currentangle+=Step_turn_angle
+                
+                headpose.moveHead(motion_service, headYaw[currentangle], headPitch[currentangle], headtime)
+                countdt = 0
+                currentangle+=1
+            else:
+                countdt+=1
+
+            if currentangle > len(headYaw)-1:
+                print 'stop currentangle=',currentangle
                 
                 b_completed=True
-                
-                for p in people_list:
-                    if p['face_naoqi']['faceinfo']['gender']['conf']<0.6:
-                        b_completed=False
-                        
-                if b_completed is True and len(people_list)>3:
-                    b_completed=True
-                        
-        
-            except:
-                pass
-            
+#            if currentangle > Max_turn_angle:
+#                print 'stop currentangle=',currentangle
+#                
+#                b_completed=True
+
+     
+#            try:
+#                mem_list=memory_service.getData('Actions/MemorizePeople/PeopleList')
+#                people_list=json.loads(mem_list)
+#                
+#                b_completed=True
+#                
+#                for p in people_list:
+#                    if p['face_naoqi']['faceinfo']['gender']['conf']<0.6:
+#                        b_completed=False
+#                        
+#                if b_completed is True and len(people_list)>3:
+#                    b_completed=True
+#                        
+#        
+#            except:
+#                pass
+#            
             
                 
             

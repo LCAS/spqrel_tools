@@ -1,0 +1,7 @@
+waitfor_screentouched;
+say_hello;
+navigateto_bed;
+navigateto_fridge;
+waitfor_personhere;
+followuntil_personhere_persondetectedid;
+

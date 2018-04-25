@@ -1,35 +1,29 @@
 waitfor_screentouched|5; # wait for screen touched with timeout of 5 seconds
 
-LABEL_START;
+LABEL1;
 
-waitfor_personhere; ! *if* screentouched *do* skip_action ! 
+#execplan;
 
+wait_1; # needed to set a timeout below, since it is not possible
+        # to interrupt sub-plans
 
-< personhere? say_hello : (not personhere)? GOTO_LABEL_START >;
+GPSRtask; ! *if* timeout_wait_10 *do* skip_action !
 
-GOTO_LABEL_END;
+say_hello;
 
+wait_1; # needed to set a timeout below, since it is not possible
+        # to interrupt sub-plans
 
-#turn_^Actions/personhere/PersonAngleTurn;
+GPSRtask; ! *if* timeout_wait_10 *do* skip_action !
 
-#dialogue_takeorder;
+say_hello;
 
-#waitfor_dooropen;
-#waitfor_screentouched;
-#say_starting;
-#goto_entrance;
-#say_hello;
+wait_1; # needed to set a timeout below, since it is not possible
+        # to interrupt sub-plans
 
-LABEL_END;
+GPSRtask; ! *if* timeout_wait_10 *do* skip_action !
 
-#say_greetperson;
-wait_1;
+say_hello;
 
-
-
-say_end;
-
-
-
-
+say_exit;
 

@@ -11,7 +11,7 @@ Update  'Actions/MemorizePeople/Person/IDNUMBER'
 
 PARAMS:
 
-memorizeface_inprofile_Humans/Profile<1|2|3> Read memorykey 'Humans/Profile<1|2|3>
+memorizeface_inmemory_Humans/Profile<1|2|3> Read memorykey 'Humans/Profile<1|2|3>
 
 memorizeface_name_<nameuser>
 
@@ -61,19 +61,18 @@ def onFaceDetection(facevalues):
     return face
  
 
-def onPeopleDetection(values):
+def onPeopleDetection(value):
     
-    personid=values[0]
-    print 'personid= ',personid
+    personid=value
     face={'name':'','faceinfo':{}}
     age={'val':0.0,'conf':0.0}
     gender={'val':0.0,'conf':0.0}
     smile={'val':0.0,'conf':0.0}
-    
     try:
         
-        #res_char=face_char_service.analyzeFaceCharacteristics(personid)
-        #print 'res_char',res_char
+        #try:
+        res_char=face_char_service.analyzeFaceCharacteristics(personid)
+        print 'res_char',res_char
         
         #lookingat =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/LookingAtRobotScore")
         #gazedirection =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/GazeDirection")
@@ -81,7 +80,8 @@ def onPeopleDetection(values):
         propgender =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/GenderProperties")
         propexpression =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ExpressionProperties")
         propsmile =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/SmileProperties")
-        
+
+        print 'propgender',propgender
         
         if propgender[0] ==0.0:
             str_gender='female'
@@ -95,15 +95,16 @@ def onPeopleDetection(values):
         #expression={'neutral':round(propexpression[0],2),'happy':round(propexpression[1],2),'surprised':round(propexpression[2],2),'angry':round(propexpression[3],2),'sad':round(propexpression[4],2)}
         
     except:
-        #print 'FaceCharacteristics error '
+        print 'FaceCharacteristics error '
         pass
 #                    
     facecharacteristics={'age':age, 'gender':gender,'smile':smile, 'expression':{}}
 
 
     shirtcolor={'name': '', 'hsv':[]}
-    personinfo={'height': 0.0, 'shirtcolor': {} }
+    personinfo={'height': 0.0, 'shirtcolor': shirtcolor,'posture':'' }
     poseinworld={'x':0.0,'y': 0.0} 
+    
     try:
 #                angles =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/AnglesYawPitch")
 #                distance =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/Distance")
@@ -111,35 +112,63 @@ def onPeopleDetection(values):
         shirtcolorName =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ShirtColor")
         shirtcolorHSV =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/ShirtColorHSV")
         PositionInRobotFrame =memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/PositionInRobotFrame")
+        issitting=memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/IsSitting") #0 is standing,1 sitting,2 is unknown.
+        
+        iswaving=memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/IsWaving")
+        iswavingcenter=memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/IsWavingCenter")
+        iswavingleft=memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/IsWavingLeft")
+        iswavingright=memory_service.getData( "PeoplePerception/Person/" +str(personid)+"/IsWavingRight")
+        
 
+        
+
+#
         posture='unknow'
         if issitting==0:
             posture='standing'
         elif issitting==1:
-            posture='sitting'       
-
+            posture='sitting'
+            
+        wavingmode='none'
+        if iswavingcenter==1:
+            wavingmode='center'
+        if iswavingcenter==1:
+            iswavingleft='left'
+        if iswavingcenter==1:
+            iswavingright='right'
         # Write data in json format
 
         shirtcolor={'name': shirtcolorName, 'hsv':shirtcolorHSV}
-        personinfo={'height': round(height,2), 'shirtcolor': shirtcolor,'posture':posture}
-        face['faceinfo']=facecharacteristics
+        personinfo={'height': round(height,2), 'shirtcolor': shirtcolor,'posture':posture,'waving': wavingmode}
         
+
         w_px, w_py = point2world(memory_service,[PositionInRobotFrame[0],PositionInRobotFrame[1]])
         poseinworld={'x':w_px,'y': w_py}
-                
+        
+        
+        
         
     except:
-        #print 'Person info error '
+        print 'Person info error '
         pass
 
-    face['faceinfo']=facecharacteristics      
-    posetopological={'current_node':'TODO','closest_node':'TODO'}
+
+    try:
+        current_node=memory_service.getData('TopologicalNav/CurrentNode')
+        closest_node=memory_service.getData('TopologicalNav/ClosestNode')
+        
+    except:
+        #print 'topological localization error '
+        current_node=None
+        closest_node=None
+        
+    face['faceinfo']=facecharacteristics
+
+    posetopological={'current_node':current_node,'closest_node':closest_node}
     lastlocation= {'world':poseinworld , 'topological':posetopological}
     
     user={'personid': personid ,'person_naoqiid': personid,'info': personinfo, 'lastlocation':lastlocation, 'face_naoqi': face,'face_ms_api': {}}
     
-   
-    return user
     
 def updateMemorizePeople(currentuser):
 
@@ -191,22 +220,32 @@ def actionThread_exec (params):
     faces_service.setRecognitionEnabled(True)
     face_char_service = getattr(t, "session", None).service("ALFaceCharacteristics")
     print "Action "+actionName+" started with params "+params
+    tracker_service = getattr(t, "session", None).service("ALTracker")
+    
+    targetName = "Face"
+    tracker_service.registerTarget(targetName,0.1)
+    # Then, start tracker.
+    tracker_service.track(targetName)
+    # set mode
+    mode = "Head"
+    tracker_service.setMode(mode)
     
     ##memorizeface_inmemory_Profile<1> Read memorykey 'Humans/Profile<1|2|3>
     nameuser=''
     personhere=None
     if params:
         parse_params=params.split('_')
-        if parse_params[0]=='inprofile':
+        if parse_params[0]=='inmemory':
             try:
-                userprofile=json.loadsmemory_service.getData(str(parse_params[1]))
+                mem_temp=memory_service.getData('Humans/'+str(parse_params[1]))
+                userprofile=json.loads(mem_temp)
                 nameuser=userprofile['Name']
                 personhere=userprofile['PersonID']
             except:
                 print 'Humans/'+str(parse_params[1])+' not found ' 
         elif parse_params[0]=='name':
             nameuser=str(parse_params[1])
-            
+    print 'trying to learn ',nameuser ,'face'       
     ## START MICROSOFT API 
     global msface_naoqi_enabled
     msface_naoqi_enabled='false'
@@ -216,9 +255,11 @@ def actionThread_exec (params):
         if msface_naoqi_enabled== 'true':    
             memory_service.raiseEvent('Actions/FaceRecognition/Command','camera_start')
     except:
-        print 'Data not found Actions/FaceRecognition/Enabled'   
+        print 'not Actions/FaceRecognition/Enabled continue...'   
     # action init
-    while (getattr(t, "do_run", True) ): 
+        
+    b_completed=False
+    while (getattr(t, "do_run", True) and b_completed==False):
         
         
         facevalues =  memory_service.getData("FaceDetected")        
@@ -274,9 +315,19 @@ def actionThread_exec (params):
 
                     if learned is True:
 
+                        tracker_service.stopTracker()
+                        tracker_service.unregisterAllTargets()
+                        
                         person=None
                         personid=None
-                        
+                        personhere=None
+
+                        try:
+                            personhere=memory_service.gettData('Actions/personhere/PersonID')
+                            
+                        except:
+                            print 'memory Actions/personhere/PersonID not available'
+                                                    
                             
                         if personhere is not None:
                             
@@ -286,14 +337,8 @@ def actionThread_exec (params):
                             
                             personid=peoplevisible
                                                     
-                        else:
                             
-                            try:
-                                personid=memory_service.gettData('Actions/personhere/PersonID')
-                        
-                            except:
-                                print 'memory Actions/personhere/PersonID not available'
-                        
+   
                         
                         if personid is not None:
                             
@@ -310,12 +355,13 @@ def actionThread_exec (params):
                                 memory_service.raiseEvent('Actions/FaceRecognition/Command','camera_stop')
                                 
                             print 'EXIT TRUE'
-                            quit()
+                            b_completed=True
                             
                             
                         else:
                             
                             print 'There is not PeopleDetected to assign the face'
+                            
                             ###
                             ## FORGET THE FACE ???
                             ## OR SAY SOMETHING
@@ -327,7 +373,8 @@ def actionThread_exec (params):
         time.sleep(0.3)
 
     # action end
-
+    tracker_service.stopTracker()
+    tracker_service.unregisterAllTargets()
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
     print "Action "+actionName+" "+params+" terminated"
 

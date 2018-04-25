@@ -120,9 +120,6 @@
     - action: NAOqiPlanner/Goal
       edge_id: corridor2_living1
       node: living1
-    - action: NAOqiPlanner/Goal
-      edge_id: corridor2_kitchendoor
-      node: kitchendoor
     name: corridor2
     pointset: NA
     pose:
@@ -154,9 +151,6 @@
       y: -0.287000000477
 - node:
     edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: kitchendoor_corridor2
-      node: corridor2
     - action: NAOqiPlanner/Goal
       edge_id: kitchendoor_kitchenshelf
       node: kitchenshelf
@@ -203,6 +197,9 @@
     - action: NAOqiPlanner/Goal
       edge_id: kitchenshelf_kitchendoor
       node: kitchendoor
+    - action: NAOqiPlanner/Goal
+      edge_id: kitchenshelf_sofaside
+      node: sofaside
     name: kitchenshelf
     pointset: NA
     pose:
@@ -474,9 +471,6 @@
     - action: NAOqiPlanner/Goal
       edge_id: living2_living3
       node: living3
-    - action: NAOqiPlanner/Goal
-      edge_id: living2_sofafront
-      node: sofafront
     name: living2
     pointset: NA
     pose:
@@ -591,6 +585,9 @@
     - action: NAOqiPlanner/Goal
       edge_id: sofaside_sofacorner
       node: sofacorner
+    - action: NAOqiPlanner/Goal
+      edge_id: sofaside_kitchenshelf
+      node: kitchenshelf
     name: sofaside
     pointset: NA
     pose:
@@ -659,9 +656,6 @@
       y: -0.287000000477
 - node:
     edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: sofafront_living2
-      node: living2
     - action: NAOqiPlanner/Goal
       edge_id: sofafront_sofaside
       node: sofaside

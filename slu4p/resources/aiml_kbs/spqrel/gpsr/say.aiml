@@ -14,7 +14,14 @@
     <category>
         <pattern>HELLO</pattern>
         <template>
-            <srai>GREETINGS</srai>
+            Hello!
+        </template>
+    </category>
+
+    <category>
+        <pattern>HELLOANDREA</pattern>
+        <template>
+            Hello Andrea! How can I help you?
         </template>
     </category>
 
@@ -22,11 +29,11 @@
         <pattern>LOOKATME</pattern>
         <template>
             <random>
-                <li>Hey<get name="Operator"/>, please pay attention!
+                <li>Hey <get name="Operator"/>, please pay attention!
                 </li>
                 <li><get name="Operator"/>, please focus!
                 </li>
-                <li>Do not distract,<get name="Operator"/>!
+                <li>Do not distract, <get name="Operator"/>!
                 </li>
             </random>
             <random>
@@ -34,6 +41,24 @@
                 <li>Someone requires our help!</li>
                 <li>Duty calls!</li>
             </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>CALLINGATTENTION</pattern>
+        <template>
+            Excuse me! Can I bother you for a while?
+        </template>
+    </category>
+
+    <category>
+        <pattern>WAITASR</pattern>
+        <template>
+            <random>
+                <li>Before speaking, wait until my eyes are blinking</li>
+                <li>Speak only when my eyes are blinking</li>
+            </random>
+            and please, speak loud!
         </template>
     </category>
 
@@ -85,6 +110,15 @@
     </category>
 
     <category>
+        <pattern>READYTOTAKEORDER</pattern>
+        <template>
+            <random>
+                <li>Hello I'm Sparkle, I'm ready to take your orders. Please, speak loud my name!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
         <pattern>PERSONDETECTED</pattern>
         <template>
             <random>
@@ -95,6 +129,26 @@
             <random>
                 <li>I'm getting there!</li>
                 <li>Wait for me!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>CANNOTTAKE</pattern>
+        <template>
+            <random>
+                <li>I'm sorry, but I'm not able to take the object!</li>
+                <li>Sorry, I cannot take the object!</li>
+                <li>It's impossible for me to take the object, sorry!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>NOTFOUND</pattern>
+        <template>
+            <random>
+                <li>I'm sorry, but I'm not able to find the entity!</li>
             </random>
         </template>
     </category>
@@ -116,6 +170,20 @@
                 <li>Come here, please!</li>
                 <li>Can you come here?</li>
             </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>ORDERCOMEHERE</pattern>
+        <template>
+            Who wants something to drink? Please, come here as I can't see you!
+        </template>
+    </category>
+
+    <category>
+        <pattern>MEMORIZEPERSON</pattern>
+        <template>
+            Please, stay still in front of me. I want to remember you!
         </template>
     </category>
 
@@ -204,6 +272,43 @@
     </category>
 
     <category>
+        <pattern>CALLPERSONUNAVAILABLE CUSTOMER * DRINK *</pattern>
+        <template>
+            <random>
+                <li>I'm sorry<star index="1"/>, but your drink is not available! Can you please come here?
+                </li>
+            </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>SPRINFOCOLLECTED TOTAL * MALES * FEMALES *</pattern>
+        <template>
+            Scan completed!
+            <random>
+                <li>There are
+                    <star index="1"/>
+                    persons in the room,
+                    <star index="2"/>
+                    are males and
+                    <star index="3"/>
+                    are females!
+                </li>
+            </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>SPRINFOCOLLECTED DONOTKNOW</pattern>
+        <template>
+            Scan completed!
+            <random>
+                <li>I'm sorry, but I wasn't able to detect you!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
         <pattern>FOLLOWYOU</pattern>
         <template>
             <random>
@@ -249,8 +354,14 @@
             <random>
                 <li>Here we are.</li>
                 <li>Here I am.</li>
-            </random>|[STOPFOLLOWING]
+            </random>
+            |[STOPFOLLOWING]
         </template>
+    </category>
+
+    <category>
+        <pattern>WAITFORME</pattern>
+        <template>I'm a bit slow! Please wait for me!</template>
     </category>
 
     <category>
@@ -262,6 +373,7 @@
                 <li>I'd like to play riddles!</li>
                 <li>Let's play riddles!</li>
             </random>
+            I'll wait for ten seconds and then I'll turn 180 degrees!
         </template>
     </category>
 
@@ -283,6 +395,17 @@
             <random>
                 <li>I'm ready! What is you question?</li>
                 <li>Come on, go ahead with you question!</li>
+            </random>
+            <srai>WAITASR</srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>SCANNINGPEOPLE</pattern>
+        <template>
+            <random>
+                <li>Wait! I'm scanning the crowd!</li>
+                <li>Just few moments! I'm acquiring information about the crowd!</li>
             </random>
         </template>
     </category>
@@ -319,12 +442,41 @@
     </category>
 
     <category>
+        <pattern>LOOKINGFORSOMEONE</pattern>
+        <template>
+            I'm going to start looking for someone!
+        </template>
+    </category>
+
+    <category>
+        <pattern>THANKS</pattern>
+        <template>
+            <random>
+                <li>Thank you!</li>
+                <li>Thanks!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>GUIDE</pattern>
+        <template>
+            <random>
+                <li>Could you please follow me to the car? I need some help!</li>
+                <li>Can you please follow me?</li>
+                <li>Could you plase help me with the grocery at the car?</li>
+            </random>
+            Place yourself behind me to start!
+        </template>
+    </category>
+
+    <category>
         <pattern>STARTING</pattern>
         <template>
             <random>
                 <li>Let's start!</li>
-                <li>I'm ready to do it!</li>
-                <li>Great! Let's do it!</li>
+                <li>I'm ready to start!</li>
+                <li>I'm ready! Let's start!</li>
             </random>
         </template>
     </category>
@@ -337,7 +489,40 @@
                 <li>Well done!</li>
                 <li>Mission accomplished!</li>
             </random>
-            Bye bye!
+            <random>
+                <li>Bye bye!</li>
+                <li>Goodbye!</li>
+                <li>See you!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>INTRODUCEMYSELF</pattern>
+        <template>
+            Hi! My name is Sparkle! Nice to meet you!
+        </template>
+    </category>
+
+    <category>
+        <pattern>HANDSHAKE</pattern>
+        <template>
+            What about a handshake?
+        </template>
+    </category>
+
+    <category>
+        <pattern>EXPLAINROBOCUP</pattern>
+        <template>
+            Robocup at Home is the best competition in the world because robots really interact with people and they do
+            not just play football! See, try to ask a Nao to guide you around! This really means to be social!
+        </template>
+    </category>
+
+    <category>
+        <pattern>STARTTOURGUIDE</pattern>
+        <template>
+            Hi there! Come on people! Sparkle is starting the tour guide!
         </template>
     </category>
 

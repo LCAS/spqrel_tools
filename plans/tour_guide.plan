@@ -1,0 +1,84 @@
+# run this with an empty map
+
+recdata_on;
+continuebtn_show;
+waitfor_continue;
+posture_Stand;
+
+vsay_starttourguide;
+
+GOTO_LABELTEST; #########################################3
+
+
+#### GET OUT OG THE ARENA
+
+navigateto_outside2;
+
+
+
+#### PATROLLING IN A 2m SQUARE
+
+vsay_lookingforsomeone;
+enter_30_0_0_3_false;
+
+LABELTEST; ########################################################3
+
+vsay_lookingforsomeone;
+LABELSTART;
+enter_30_0_0_3_false;
+turn_90;
+memorizepeople_SPRgame; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
+
+enter_30_0_0_3_false;
+turn_90;
+memorizepeople_SPRgame; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
+
+enter_30_0_0_3_false;
+turn_90;
+memorizepeople_SPRgame; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
+
+enter_30_0_0_3_false;
+turn_90;
+memorizepeople_SPRgame; ! *if* (persondetected) *do* GOTO_LABELPERSONFOUND !
+
+#< (not persondetected) ? GOTO_LABELSTART : GOTO_LABELPERSONFOUND? >
+
+
+
+#### GO TO THE PERSON FOUND
+
+LABELPERSONFOUND;
+
+selectpersonmemory;
+vsay_callingattention;
+followuntil_personhere_persondetectedid; #condition_memorykey (to read the id we want to follow)
+
+animation_bow_1; #animationname_blocking
+greet_Japanese;
+#animation_hey1_false;
+greet_English;
+
+vsay_introducemyself;
+vsay_handshake;
+shakehand;
+dialogue_guiding;
+
+#GOTO_LABELEND; ##########################################3
+
+< (not wantstofollow) ? turn_180; GOTO LABELSTART : (wantstofollow) ? > #the robot should leave th group of people and go somewhere else
+
+navigateto_outside4|40;
+
+turn_180;
+
+#LABELEND; ##############################################
+
+vsay_explainrobocup;
+
+vsay_farewell;
+
+recdata_off;
+
+
+
+

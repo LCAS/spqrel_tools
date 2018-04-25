@@ -1,24 +1,49 @@
 # run this with an empty map
 
-lookfor_persondetected;  # timeout in seconds
+recdata_on;
+posture_Stand;
 
-< persondetected? 
-    vsay_persondetected;
-    goto_person ! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
->;
+saveposition_start; #TODO: memorize initial pose: get NAOqiLocalizer/RobotPose and save pose in toponav?
 
-dialogue_takeorder;
+vsay_readytotakeorder;
+LABEL1;
+asrenable_off;
+soundtrack_20_4_3; #confidence_distance_time
+headpitch_0;
+wait_2;
 
-goto_start;
+< (not persondetected) ? GOTO_LABEL1 : persondetected ? >;
 
-vsay_order_1;  # repeat the order to the barman
+storecentralperson;
 
-vsay_cannotgrasp; # continue rule on manipulation
+#TODO: pointing with the arm where the customer is? (to state we understood where the customer is?)
+dialogue_orderdetected;
 
-goto_person;
+< (not takeorder) ? GOTO_LABEL1 : takeorder ? >;
 
-vsay_getorder; # say to the person about his/her order
+goto_^person|40;
 
-goto_start;
+dialogue_restauranttakeorder;
+  
+goto_^start|40;
+
+vsay_restaurantlistorders;  # repeat the order to the barman
+
+vsay_cannotgrasp; # continue rule on manipulation: "I can not carry the food, can you help me. I will guide you to the customer."
+
+goto_centralperson|40; #delivery step 
+
+vsay_hereorder; # say to the person "Hi, here is your order"
+
+goto_^start|40;
+
+GOTO_LABEL1; #repeat this plan until referee gives terminate signal. 
+
+
+
+
+
+
+
 
 

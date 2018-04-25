@@ -23,15 +23,32 @@ def rhMonitorThread (memory_service):
     print "personlost thread started"
     personid = 0
     count = 0
+    match = 1
     while getattr(t, "do_run", True):
-        plist = memory_service.getData("PeoplePerception/PeopleList")
+        try:
+            plist = memory_service.getData('PeoplePerception/PeopleList')
+            personid = memory_service.getData('Actions/personhere/PersonID')
+        except Exception:
+            plist = []
+            personid = 0
         v = 'false'
         try:
-            if (len(plist)==0):
+            if (len(plist) >= 1):
+                if personid in plist:
+                    match = 1
+                    memory_service.insertData('personlost',0)
+                else:
+                    match = 0
+
+            else:
+                match = 0 
+                
+            if (match == 0):
                 count += 1
                 if (count >= 10): #5 seconds without seeing anyone
                     v = 'true'
                     count = 0
+                    memory_service.insertData('personlost',1)
         except:
             v = 'false'
 

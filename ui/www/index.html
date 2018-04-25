@@ -65,7 +65,7 @@ document.onready = function() {
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-8">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Robot Status</h3>
@@ -73,6 +73,15 @@ document.onready = function() {
                     <div class="panel-body">
                         <table class="table table-condensed table-striped">
                             <tbody>
+                                <tr>
+                                    <td class="col-md-3">Speech Recognition:</td>
+                                    <td class="col-md-9"><p id="ASR_transcription">-</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">Speech Understanding:</td>
+                                    <td class="col-md-9"><p id="CommandInterpretations">-</p></td>
+                                </tr>
+
                                 <tr>
                                     <td class="col-md-3">Current Plan:</td>
                                     <td class="col-md-9"><p id="PNP_CurrentPlan">-</p></td>
@@ -114,7 +123,25 @@ document.onready = function() {
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+
+
+            <!--<div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">GPSR actions</h3>
+                    </div>
+                    <div class="panel-body">
+                        I have interpreted this mission:
+                        <ul id="gprs_plan" class="list-group">
+                            <div id="gpsr_plan">
+                            </div>
+                        </ul>                                             
+                   </div>
+                </div>
+            </div>
+-->
+
+            <div class="col-md-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Plans</h3>

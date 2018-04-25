@@ -6,11 +6,27 @@
 
         <category>
             <pattern>START</pattern>
-            <template>[SAY] Tell me when you are ready to go!|[OPTIONS]I'm ready!_Stop following me!</template>
+            <template>[SAY] Tell me when you are ready to go! Please say "Follow me" to start and "Stop" when we reached the location|[OPTIONS]I'm ready!_Stop following me!</template>
         </category>
 
         <category>
-            <pattern>*</pattern>
+            <pattern>* FOLLOW *</pattern>
+            <template>
+                <srai>SAY FOLLOWYOU</srai>
+                |[STOP]
+            </template>
+        </category>
+
+        <category>
+            <pattern>FOLLOW *</pattern>
+            <template>
+                <srai>SAY FOLLOWYOU</srai>
+                |[STOP]
+            </template>
+        </category>
+
+        <category>
+            <pattern>FOLLOW</pattern>
             <template>
                 <srai>SAY FOLLOWYOU</srai>
                 |[STOP]
@@ -126,7 +142,7 @@
         <category>
             <pattern>START</pattern>
             <template>
-                <srai>SAY WHATWEDONOW</srai>
+                <srai>SAY WHATNOW</srai>
                 |[OPTIONS]Look for someone in the kitchen_Look for someone in the corridor_Look for someone
                 in the living room_Look for someone in the dining room_Look for someone in the bedroom_Look for someone
                 in the toilet
@@ -395,7 +411,7 @@
 
     </topic>
 
-    <topic name="GUIDE">
+    <!--<topic name="GUIDE">
 
         <category>
             <pattern>RESET</pattern>
@@ -409,14 +425,7 @@
         <category>
             <pattern>START</pattern>
             <template>
-                <condition>
-                    <li name="Operator" value="TOFILL">
-                        <srai>AskName</srai>
-                    </li>
-                    <li>
-                        <srai>NAMEACQUIRED</srai>
-                    </li>
-                </condition>
+                <srai>NAMEACQUIRED</srai>
             </template>
         </category>
 
@@ -1243,35 +1252,25 @@
             <pattern>NAMEACQUIRED</pattern>
             <template>
                 [SAY]
-                <random>
-                    <li>Hi<get name="Operator"/>!
-                    </li>
-                    <li>Hello<get name="Operator"/>!
-                    </li>
-                </random>
-                <random>
-                    <li>Could you please follow me?</li>
-                    <li>Can you follow me?</li>
-                </random>
-                Place yourself behind me to start!
+
                 <think>
                     <set name="topic"></set>
                 </think>
             </template>
         </category>
 
-    </topic>
+    </topic>-->
 
     <category>
         <pattern>ARRIVEDCAR START</pattern>
         <template>
             [SAY]
             <random>
-                <li>Hey<get name="Operator"/>, we arrived at the car!
+                <li>Hey <get name="Operator"/>, we arrived at the car!
                 </li>
                 <li><get name="Operator"/>, here we are!
                 </li>
-                <li>Stop<get name="Operator"/>, this is the car!
+                <li>Stop <get name="Operator"/>, this is the car!
                 </li>
             </random>
         </template>

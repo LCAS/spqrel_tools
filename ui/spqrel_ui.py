@@ -140,13 +140,23 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
                 'buttons': self._answer_options_parse(actstr)
             }))
 
-        self.answeroptions = ALSubscriber(
+        self.continuebutton = ALSubscriber(
             memory_service, "ContinueButton",
             lambda actstr: self.sendJSON({
                 'method': 'show_continue_button',
                 'options': self._answer_options_parse(actstr)
             }))
 
+        self.plan = ALSubscriber(
+            memory_service, "/gpsr/plan",
+            lambda actstr: self.sendJSON({
+                'method': 'update_html',
+                'id': 'gpsr_plan',
+                'html': '<li class="list-group-item">' +
+                        ('</li><li class="list-group-item">'
+                            .join(actstr.split('\n'))) +
+                        '</li>'
+            }))
 
         self.als_notification = ALSubscriber(
             memory_service, "notificationAdded",
@@ -158,6 +168,8 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
 
         # all the ones that are just HTML updates
         als_names = [
+            "CommandInterpretations",
+            "ASR_transcription", 
             "TopologicalNav/Goal",
             "TopologicalNav/CurrentNode",
             "TopologicalNav/ClosestNode",

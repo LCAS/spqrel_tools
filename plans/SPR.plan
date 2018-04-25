@@ -1,6 +1,10 @@
 # SPR
 
+recdata_on; # starts data recording
+
 # 1
+
+headpose_0_-20;
 
 vsay_playriddles;
 
@@ -11,17 +15,21 @@ turn_180;
 
 # 3
 
-#memorizepeople;
-#peoplesummary_SPRgame;
 
-#vsay_SPRinfocollected; # TODO
+reccam_on;
+vsay_scanningpeople;
+memorizepeople_SPRgame;
+reccam_off;
+peoplesummary_SPRgame;
+
+vsay_SPRinfocollected;
 
 vsay_playwithme;
 
 # 4
 
-#waitfor_personhere;
-#peoplesummary_Person;
+waitfor_personhere;
+peoplesummary_Person;
 
 vsay_weready;
 dialogue_fivequestions_1;
@@ -45,12 +53,15 @@ wait_15;
 
 # 5
 
+vsay_weready;
 dialogue_mutequestion;
 
 < sounddetected? turn_^AngleSound
 >
 dialogue_lastresponse;
 
+wait_5;
+vsay_weready;
 dialogue_mutequestion;
 
 < sounddetected? turn_^AngleSound
@@ -58,21 +69,31 @@ dialogue_mutequestion;
 
 dialogue_lastresponse;
 
+wait_5;
+vsay_weready;
 dialogue_mutequestion;
 
 < sounddetected? turn_^AngleSound
 >
 dialogue_lastresponse;
 
+wait_5;
+vsay_weready;
 dialogue_mutequestion;
 
 < sounddetected? turn_^AngleSound
 >
 dialogue_lastresponse;
 
+wait_5;
+vsay_weready;
 dialogue_mutequestion;
 
 < sounddetected? turn_^AngleSound
 >
 dialogue_lastresponse;
+
+vsay_farewell;
+
+recdata_off; # ends data recording
 

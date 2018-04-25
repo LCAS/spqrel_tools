@@ -1,0 +1,1095 @@
+<?xml version="1.0"?>
+<aiml version="1.0">
+
+
+    <topic name="FIVEQUESTIONS">
+
+        <category>
+            <pattern>START</pattern>
+            <template>
+            </template>
+        </category>
+
+        <category>
+            <pattern>STOP</pattern>
+            <template>
+                <think>
+                    <set name="topic"></set>
+                </think>
+                [STOP]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WHERE IS THE *</pattern>
+            <template>
+                [WHEREIS]
+                <star index="2"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHERE IS THE *</pattern>
+            <template>
+                [WHEREIS]
+                <star/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WHERE IS *</pattern>
+            <template>
+                [WHEREIS]
+                <star index="2"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHERE IS *</pattern>
+            <template>
+                [WHEREIS]
+                <star/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WHERE ARE THE *</pattern>
+            <template>
+                [WHEREIS]
+                <star index="2"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHERE ARE THE *</pattern>
+            <template>
+                [WHEREIS]
+                <star/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WHERE ARE *</pattern>
+            <template>
+                [WHEREIS]
+                <star index="2"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHERE ARE *</pattern>
+            <template>
+                [WHEREIS]
+                <star/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHERE * FIND THE *</pattern>
+            <template>
+                [WHEREIS]
+                <star index="2"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WHAT IS THE *</pattern>
+            <template>
+                [WHEREIS]
+                <star index="2"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHAT IS THE *</pattern>
+            <template>
+                [WHEREIS]
+                <star/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WHAT IS *</pattern>
+            <template>
+                [WHEREIS]
+                <star index="2"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHAT IS *</pattern>
+            <template>
+                [WHEREIS]
+                <star/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WHAT ARE THE *</pattern>
+            <template>
+                [WHEREIS]
+                <star index="2"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHAT ARE THE *</pattern>
+            <template>
+                [WHEREIS]
+                <star/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WHAT ARE *</pattern>
+            <template>
+                [WHEREIS]
+                <star index="2"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHAT ARE *</pattern>
+            <template>
+                [WHEREIS]
+                <star/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MALE *</pattern>
+            <template>
+                [MALE]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MALES *</pattern>
+            <template>
+                [MALE]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MALE</pattern>
+            <template>
+                [MALE]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MALES</pattern>
+            <template>
+                [MALE]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* FEMALE *</pattern>
+            <template>
+                [FEMALE]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* FEMALES *</pattern>
+            <template>
+                [FEMALE]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* FEMALE</pattern>
+            <template>
+                [FEMALE]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* FEMALES</pattern>
+            <template>
+                [FEMALE]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MANY * THERE ARE IN THE *</pattern>
+            <template>
+                [HOWMANY]<star index="2"/>#
+                <star index="3"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MANY * ARE IN THE *</pattern>
+            <template>
+                [HOWMANY]<star index="2"/>#
+                <star index="3"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MANY * ARE IN *</pattern>
+            <template>
+                [HOWMANY]<star index="2"/>#
+                <star index="3"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MANY * THERE ARE IN *</pattern>
+            <template>
+                [HOWMANY]<star index="2"/>#
+                <star index="3"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MANY * ARE THERE IN *</pattern>
+            <template>
+                [HOWMANY]<star index="2"/>#
+                <star index="3"/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* SIZE *</pattern>
+            <template>
+                [CROWD]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* NUMBER * CHILDREN</pattern>
+            <template>
+                [CHILDREN]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* NUMBER * KIDS</pattern>
+            <template>
+                [CHILDREN]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WAVING *</pattern>
+            <template>
+                [WAVING]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WAVING</pattern>
+            <template>
+                [WAVING]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* RISING *</pattern>
+            <template>
+                [RISING]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* RISING</pattern>
+            <template>
+                [RISING]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* STANDING *</pattern>
+            <template>
+                [STANDING]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* STANDING</pattern>
+            <template>
+                [STANDING]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* STAND *</pattern>
+            <template>
+                [STANDING]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* STAND</pattern>
+            <template>
+                [STANDING]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* SITTING *</pattern>
+            <template>
+                [SITTING]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* SITTING</pattern>
+            <template>
+                [SITTING]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* SEATED *</pattern>
+            <template>
+                [SITTING]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* SEATED</pattern>
+            <template>
+                [SITTING]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* LYING *</pattern>
+            <template>
+                [LYING]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* LYING</pattern>
+            <template>
+                [LYING]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* OLD *</pattern>
+            <template>
+                [HOWOLD]
+            </template>
+        </category>
+
+        <category>
+            <pattern>AM * MAN *</pattern>
+            <template>
+                [GENDER]
+            </template>
+        </category>
+
+        <category>
+            <pattern>AM * MAN</pattern>
+            <template>
+                [GENDER]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* AM * MAN *</pattern>
+            <template>
+                [GENDER]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* AM * MAN</pattern>
+            <template>
+                [GENDER]
+            </template>
+        </category>
+
+        <category>
+            <pattern>AM * WOMAN *</pattern>
+            <template>
+                [GENDER]
+            </template>
+        </category>
+
+        <category>
+            <pattern>AM * WOMAN</pattern>
+            <template>
+                [GENDER]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* AM * WOMAN *</pattern>
+            <template>
+                [GENDER]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* AM * WOMAN</pattern>
+            <template>
+                [GENDER]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* CITY *</pattern>
+            <template>[SAY]We are in Nagoya!</template>
+        </category>
+
+        <category>
+            <pattern>* NAME * YOUR TEAM</pattern>
+            <template>[SAY]The name of my team is SPQReL</template>
+        </category>
+
+        <category>
+            <pattern>* YOUR TEAM LOCATED</pattern>
+            <template>[SAY]Our team is located in Rome (Italy) and Lincoln (UK)</template>
+        </category>
+
+        <category>
+            <pattern>* PARTICIPATE * ROBOCUP AT HOME *</pattern>
+            <template>[SAY]There are 31 teams this year</template>
+        </category>
+
+        <category>
+            <pattern>* POPULAR VOTE *</pattern>
+            <template>[SAY]Hillary Clinton</template>
+        </category>
+
+        <category>
+            <pattern>* US ELECTION</pattern>
+            <template>[SAY]Hillary Clinton</template>
+        </category>
+
+        <category>
+            <pattern>* MOUNTAIN *</pattern>
+            <template>[SAY]The highest mountain is Mount Fuji</template>
+        </category>
+
+        <category>
+            <pattern>* JAPAN</pattern>
+            <template>[SAY]The highest mountain is Mount Fuji</template>
+        </category>
+
+        <category>
+            <pattern>* STANDARD PLATFORMS</pattern>
+            <template>[SAY]The Pepper and HSR</template>
+        </category>
+
+        <category>
+            <pattern>* STANDARD PLATFORM</pattern>
+            <template>[SAY]The Pepper and HSR</template>
+        </category>
+
+        <category>
+            <pattern>* DSPL *</pattern>
+            <template>[SAY]Stands for Domestic Standard Platform League.</template>
+        </category>
+
+        <category>
+            <pattern>* SSPL *</pattern>
+            <template>[SAY]Stands for Social Standard Platform League.</template>
+        </category>
+
+        <category>
+            <pattern>* ALPHABET *</pattern>
+            <template>[SAY]To SoftBank.</template>
+        </category>
+
+        <category>
+            <pattern>* BOSTON *</pattern>
+            <template>[SAY]To SoftBank.</template>
+        </category>
+
+        <category>
+            <pattern>* DYNAMICS *</pattern>
+            <template>[SAY]To SoftBank.</template>
+        </category>
+
+        <category>
+            <pattern>NAGOYA *</pattern>
+            <template>[SAY]Over four hundreds ten thousands square metres.</template>
+        </category>
+
+        <category>
+            <pattern>* TRAIN STATIONS *</pattern>
+            <template>[SAY]Over four hundreds ten thousands square metres.</template>
+        </category>
+
+        <category>
+            <pattern>* WORLD *</pattern>
+            <template>[SAY]Over four hundreds ten thousands square metres.</template>
+        </category>
+
+        <category>
+            <pattern>* HOW LARGE *</pattern>
+            <template>[SAY]Over four hundreds ten thousands square metres.</template>
+        </category>
+
+        <category>
+            <pattern>* STAR WARS</pattern>
+            <template>[SAY]George Lucas</template>
+        </category>
+
+        <category>
+            <pattern>* UNDER THE SEA</pattern>
+            <template>[SAY]Sponge Bob Squarepants!</template>
+        </category>
+
+        <category>
+            <pattern>* PINEAPPLE *</pattern>
+            <template>[SAY]Sponge Bob Squarepants!</template>
+        </category>
+
+        <category>
+            <pattern>* GRACE HOPPER</pattern>
+            <template>[SAY]Grace Hopper is the inventor of the first compiler.</template>
+        </category>
+
+        <!--
+        TODO!!
+            * Object questions
+        -->
+
+    </topic>
+
+    <topic name="MUTEQUESTION">
+
+        <category>
+            <pattern>START</pattern>
+            <template>
+            </template>
+        </category>
+
+        <category>
+            <pattern>STOP</pattern>
+            <template>
+                <think>
+                    <set name="topic"></set>
+                </think>
+                [STOP]
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WHERE IS THE *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[WHEREIS]
+                        <star index="2"/>
+                    </set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHERE IS THE *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[WHEREIS]
+                        <star/>
+                    </set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WHERE IS *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[WHEREIS]
+                        <star index="2"/>
+                    </set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHERE IS *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[WHEREIS]
+                        <star/>
+                    </set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WHERE ARE THE *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[WHEREIS]
+                        <star index="2"/>
+                    </set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHERE ARE THE *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[WHEREIS]
+                        <star/>
+                    </set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WHERE ARE *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[WHEREIS]
+                        <star index="2"/>
+                    </set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>WHERE ARE *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[WHEREIS]
+                        <star/>
+                    </set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MANY * THERE ARE IN THE *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[HOWMANY]<star index="2"/>#
+                        <star index="3"/>
+                    </set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MANY * ARE IN THE *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[HOWMANY]<star index="2"/>#
+                        <star index="3"/>
+                    </set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MANY * ARE IN *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[HOWMANY]<star index="2"/>#
+                        <star index="3"/>
+                    </set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MANY * THERE ARE IN *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[HOWMANY]<star index="2"/>#
+                        <star index="3"/>
+                    </set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MANY * ARE THERE IN *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[HOWMANY]<star index="2"/>#
+                        <star index="3"/>
+                    </set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* SIZE *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[CROWD]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+
+        <category>
+            <pattern>* NUMBER * CHILDREN</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[CHILDREN]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* NUMBER * KIDS</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[CHILDREN]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MALE *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[MALE]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MALES *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[MALE]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MALE</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[MALE]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* MALES</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[MALE]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* FEMALE *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[FEMALE]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* FEMALES *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[FEMALE]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* FEMALE</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[FEMALE]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* FEMALES</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[FEMALE]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WAVING *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[WAVING]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* WAVING</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[WAVING]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* RISING *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[RISING]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* RISING</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[RISING]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* STANDING *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[STANDING]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* STANDING</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[STANDING]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* STAND *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[STANDING]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* STAND</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[STANDING]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* SITTING *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[SITTING]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* SITTING</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[SITTING]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* SEATED *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[SITTING]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* SEATED</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[SITTING]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* LYING *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[LYING]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* LYING</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[LYING]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* OLD *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[HOWOLD]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>AM * MAN *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[GENDER]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>AM * MAN</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[GENDER]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* AM * MAN *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[GENDER]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* AM * MAN</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[GENDER]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>AM * WOMAN *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[GENDER]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>AM * WOMAN</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[GENDER]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* AM * WOMAN *</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[GENDER]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* AM * WOMAN</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">[GENDER]</set>
+                </think>
+                <srai>STOP</srai>
+            </template>
+        </category>
+
+        <!--
+        TODO!!
+            * Object questions
+            * Predefined questions
+        -->
+
+        <category>
+            <pattern>*</pattern>
+            <template>
+                <think>
+                    <set name="lastresponse">
+                        <srai>FAILUREMANAGEMENT</srai>
+                    </set>
+                    <set name="topic">FIVEQUESTIONS</set>
+                </think>
+                [STOP]
+            </template>
+        </category>
+
+    </topic>
+
+</aiml>

@@ -2,6 +2,18 @@
 <aiml version="1.0">
 
     <category>
+        <pattern>GUIDING *</pattern>
+        <template>
+            <think>
+                <set name="topic">GUIDING</set>
+            </think>
+            <srai>
+                <star/>
+            </srai>
+        </template>
+    </category>
+
+    <category>
         <pattern>TAKEORDER *</pattern>
         <template>
             <think>
@@ -15,10 +27,54 @@
     </category>
 
     <category>
+        <pattern>ORDERDETECTED *</pattern>
+        <template>
+            <think>
+                <set name="topic">ORDERDETECTED</set>
+            </think>
+            <srai>
+                <star/>
+            </srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>ASKORDER</pattern>
+        <template>
+            <think>
+                <set name="topic">ASKORDER</set>
+                <srai>ASKORDER</srai>
+            </think>
+        </template>
+    </category>
+
+    <category>
+        <pattern>RESTAURANTTAKEORDER *</pattern>
+        <template>
+            <think>
+                <set name="topic">RESTAURANTTAKEORDER</set>
+                <srai>START</srai>
+            </think>
+        </template>
+    </category>
+
+    <category>
         <pattern>ALTDRINK *</pattern>
         <template>
             <think>
                 <set name="topic">ALTDRINK</set>
+            </think>
+            <srai>
+                <star/>
+            </srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>PROVIDEALTERNATIVES *</pattern>
+        <template>
+            <think>
+                <set name="topic">PROVIDEALTERNATIVES</set>
             </think>
             <srai>
                 <star/>
@@ -136,11 +192,11 @@
         </template>
     </category>
 
-    <category>
+    <!--<category>
         <pattern>*</pattern>
         <template>
             <srai>FAILUREMANAGEMENT</srai>
         </template>
-    </category>
+    </category>-->
 
 </aiml>

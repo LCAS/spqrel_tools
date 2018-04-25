@@ -76,6 +76,82 @@
         </category>
     </topic>
 
+	<topic name="PROVIDEALTERNATIVES">
+		<category>
+            <pattern>RESET</pattern>
+            <template>
+                <think>
+                    <set name="Drink">TOFILL</set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>CUSTOMER * ALTERNATIVES * START</pattern>
+            <template>
+				Hi <star index="1"/>, these are the alternative drinks: <star index="2"/>
+                <condition>
+                    <li name="Drink" value="TOFILL">
+                        <think>
+                            <set name="topic">ASKDRINK</set>
+                        </think>
+                        <srai>AskDrink</srai>
+                    </li>
+                    <li>
+                        <srai>COCKTAILDONE</srai>
+                    </li>
+                </condition>
+            </template>
+        </category>
+
+        <category>
+            <pattern>STOP</pattern>
+            <template>
+                <set name="topic"></set>
+                [STOP]
+            </template>
+        </category>
+
+        <category>
+            <pattern>COCKTAILDONE</pattern>
+            <template>
+                [SAY]
+                <random>
+                    <li><get name="Customer"/>, thanks for your order. I'm going to bring you a <get name="Drink"/>!
+                    </li>
+                    <li>Perfect <get name="Customer"/>! Your
+                        <get name="Drink"/>
+                        is coming soon!
+                    </li>
+                    <li>A
+                        <get name="Drink"/>
+                        for <get name="Customer"/>! This is my new mission!
+                    </li>
+                    <li>Just a <get name="Drink"/>? I think you can do better, <get name="Customer"/>! However, I'll bring
+                        you a <get name="Drink"/>...
+                    </li>
+                </random>
+                <srai>TAKEORDERDATA</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>TAKEORDERDATA</pattern>
+            <template>
+                |[TAKEORDERDATA]<get name="Customer"/>(<get name="Drink"/>)
+            </template>
+        </category>
+
+		<!--<category>
+            <pattern>STOP</pattern>
+            <template>
+                <set name="topic"></set>
+                [STOP]
+            </template>
+        </category>-->
+
+    </topic>
+
 
     <topic name="UNKNOWNAVAILABLE">
         <category>
@@ -109,7 +185,7 @@
                 <random>
                     <li>Is there the
                         <star index="2"/>
-                        for<star index="1"/>?
+                        for <star index="1"/>?
                     </li>
                     <li>Is there the <star index="2"/>?
                     </li>
@@ -225,7 +301,7 @@
                     <li>Do you have something else I can bring to <star index="1"/>, instead?
                     </li>
                 </random>
-                |[OPTIONS]beer+wine+whisky_water+coke+beer
+                |[OPTIONS]green tea_aquarius_cold brew_coke
             </template>
         </category>
 
@@ -1176,6 +1252,7 @@
                     <li>What do you want to drink?</li>
                     <li>Which drink do you want?</li>
                 </random>
+				Please tell me or choose an option on my screen.
                 |[OPTIONS]green tea_aquarius_cold brew_coke
             </template>
         </category>

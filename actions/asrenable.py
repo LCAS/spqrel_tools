@@ -9,6 +9,7 @@ from action_base import *
 
 
 actionName = "asrenable"
+asrkey = 'ASR_enable'
 
 def actionThread_exec (params):
     t = threading.currentThread()
@@ -17,9 +18,9 @@ def actionThread_exec (params):
     print "Action "+actionName+" "+params+" started"
     # action init
     if (params=='off'):
-        memory_service.raiseEvent('ASR_enable','0')
+        memory_service.raiseEvent(asrkey,'0')
     else:
-        memory_service.raiseEvent('ASR_enable','1')
+        memory_service.raiseEvent(asrkey,'1')
     # action init
     
     time.sleep(1.0)
@@ -30,11 +31,9 @@ def actionThread_exec (params):
 
 
 def init(session):
-    global orderID
     print actionName+" init"
     action_base.init(session, actionName, actionThread_exec)
     session.service("ALMemory").declareEvent('DialogueVequest')
-    orderID = 0
 
 
 def quit():

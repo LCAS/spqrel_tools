@@ -1,42 +1,103 @@
 # enter and goto room
+recdata_on;
+
+headpose_0_-10;
+vsay_dooropen;
 waitfor_dooropen;
-goto_entrance;
-#goto_partyroom;  # TODO set location of party room
+vsay_starting;
+wait_2;
+enter_30_0_0_4_true; 
+navigateto_living1;  
+headpose_0_-10;
+turn_90_ABS|10;
+headpose_0_-20;
 
-
-# order_n (n=1,2,3,4) is a data structure containing information about an order
-# including: name of person, drink ordered, features of person, person location, ...
-
-# first order
-lookfor_persondetected|60;  # timeout in seconds
-
-< persondetected? goto_person :
-  (not persondetected)? say_comehere >;
-
-waitfor_personhere; ! *if* timeout_waitfor_60 *do* say_comehere; restart_action !
+#ORDER 1
+vsay_ordercomehere; 
+waitfor_personhere; ! *if* timeout_waitfor_20 *do* vsay_comehere; restart_action !
 
 dialogue_takeorder;
+vsay_memorizeperson;
+reccam_on;
+memorizeface_inmemory_Profile1;
+reccam_off;
+vsay_thanks;
+turn_-20;
+wait_5;
 
-#acquire_perceptual_information # TODO this is just a placeholder. the idea is to acquire the information here
+#ORDER 2
+vsay_ordercomehere; 
+waitfor_personhere; ! *if* timeout_waitfor_20 *do* vsay_comehere; restart_action !
+
+dialogue_takeorder;
+vsay_memorizeperson;
+reccam_on;
+memorizeface_inmemory_Profile2;
+reccam_off;
+vsay_thanks;
+turn_20;
+wait_5;
+
+#ORDER 3
+#lookfor_sittingperson|10;
+#approach_^personsitting/id|10;
+#dialogue_takeorder;
+#vsay_memorizeperson;
+#reccam_on;
+#memorizeface_inmemory_Profile3;
+#reccam_off;
+#vsay_thanks;
+
+#PLACING ORDERS
+navigateto_sofaside; 
+headpose_0_-10;
+turn_45_ABS|10;
+#TODO: person description
+dialogue_unknownavailable_1;
+dialogue_unknownavailable_2;
+#dialogue_unknownavailable_3;
+
+navigateto_living1;  
+headpose_0_-10;
+turn_90_ABS|10;
 
 
-# look for another person ???
-# goto another waypoint
-turn_90_REL;
-wait_10;  # wait that previous persondetected is forgot
+vsay_callpersonunavailable; 
+waitfor_personhere;
+dialogue_providealternatives;
+
+navigateto_sofaside;
+headpose_0_-10;
+turn_45_ABS|10;
+
+vsay_confirmalternativedrink;
+
+navigateto_hall;
+headpose_0_-10;
+navigateto_start;
+headpose_0_-10;
+
+
+
+
+
+
+
+
+#< persondetected? turn_90 >
 
 # second order
-lookfor_persondetected|60;  # timeout in seconds
-< persondetected? goto_person :
-  (not persondetected)? say_comehere >;
-waitfor_personhere; ! *if* timeout_waitfor_120 *do* GOTO_LABEL_NEXT_PERSON !
-dialogue_takeorder;
+#lookfor_persondetected|20;  # timeout in seconds
+#< persondetected? goto_person :
+#  (not persondetected)? say_comehere >;
+#waitfor_personhere; ! *if* timeout_waitfor_120 *do* GOTO_LABEL_NEXT_PERSON !
+#dialogue_takeorder;
 
 # look for another person ???
 
-turn_90_REL;
+#turn_90_REL;
 
-LABEL_NEXT_PERSON;
+#LABEL_NEXT_PERSON;
 
 # third order (sitting person not calling)
 #lookfor_sittingperson|10;   # TODO missing condition sittingperson
@@ -45,61 +106,39 @@ LABEL_NEXT_PERSON;
 #    dialogue_takeorder;
 #>;
 
-LABEL_BAR;
-
-goto_bar;
 
 # FROM HERE IT MUST BE COMPLETED AND TESTED
 
 # check valid orders received in previous phase
 
-< valid_order1 ?
-    vsay_order_1;  # robot describes the info in Humans/ProfileX 
-    observe_objects;
-    < drinkavailable ? vsay_confirmdrink_1 :
-      not_drinkavailable ? vsay_confirmnotavailable_1; dialogue_altdrink_1  :
-      unknown_drinkavailable ? dialogue_unknownavailable_1;  > :
-  (not valid_order1)? 
->;
+#< valid_order1 ?
+#    vsay_order_1;  # robot describes the info in Humans/ProfileX 
+#    observe_objects;
+#    < drinkavailable ? vsay_confirmdrink_1 :
+#      not_drinkavailable ? vsay_confirmnotavailable_1; dialogue_altdrink_1  :
+#      unknown_drinkavailable ? dialogue_unknownavailable_1;  > :
+#  (not valid_order1)? 
+#>;
 
-< valid_order2 ?
-    say_order_2;
-    observe_objects;
-    < drinkavailable ? say_confirmdrink :
-      not_drinkavailable ? choosealt_order2; say_altorder2  :
-      unknown_drinkavailable ? ask_altdrink; answer_altorder2  > :
-  (not valid_order2)? 
->;
+#< valid_order2 ?
+#    say_order_2;
+#    observe_objects;
+#    < drinkavailable ? say_confirmdrink :
+#      not_drinkavailable ? choosealt_order2; say_altorder2  :
+#      unknown_drinkavailable ? ask_altdrink; answer_altorder2  > :
+#  (not valid_order2)? 
+#>;
 
-< valid_order3 ?
-    say_order_3;
-    observe_objects;
-    < drinkavailable ? say_confirmdrink :
-      not_drinkavailable ? choosealt_order3; say_altorder3  :
-      unknown_drinkavailable ? ask_altdrink; answer_altorder3  > :
-  (not valid_order3)? 
->;
-
-
-# go back to party room to receive the corrected order
-# altorder is either altorder1,2,3
-
-goto_partyroom;
-say_callperson_altorder; 
-waitfor_personhere;
-vsay_altorder_4; # robot speaks alternative drinks 
-dialogue_takeorder_4;
-waitfor_order4;
-
-# go back to bar to place the corrected order
-goto_bar;
-say_order4;
-say_goodbye;
+#< valid_order3 ?
+#    say_order_3;
+#    observe_objects;
+#    < drinkavailable ? say_confirmdrink :
+#      not_drinkavailable ? choosealt_order3; say_altorder3  :
+#      unknown_drinkavailable ? ask_altdrink; answer_altorder3  > :
+#  (not valid_order3)? 
+#>;
 
 
-# exit the arena
-goto_entrance;
-goto_exit;
 
 
 

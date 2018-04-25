@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<aiml version="1.0">
+
+
+    <topic name="ORDERDETECTED">
+        <category>
+            <pattern>START</pattern>
+            <template>
+                [SAY] I've detected a customer! Should I go and take the order?|[OPTIONS]yes_no
+                <think>
+                    <set name="topic">WAITFORORDER</set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>STOP</pattern>
+            <template>
+                <set name="topic"></set>
+                [STOP]
+            </template>
+        </category>
+    </topic>
+
+    <topic name="WAITFORORDER">
+        <category>
+            <pattern>* YES *</pattern>
+            <template>
+                [SAY] Okay! I'm going to take the order!|[TAKEORDER]
+                <think>
+                    <set name="topic"></set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>YES *</pattern>
+            <template>
+                [SAY] Okay! I'm going to take the order!|[TAKEORDER]
+                <think>
+                    <set name="topic"></set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* YES</pattern>
+            <template>
+                [SAY] Okay! I'm going to take the order!|[TAKEORDER]
+                <think>
+                    <set name="topic"></set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>YES</pattern>
+            <template>
+                [SAY] Okay! I'm going to take the order!|[TAKEORDER]
+                <think>
+                    <set name="topic"></set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* SPARKLE *</pattern>
+            <template>
+                [SAY] Thank you for choosing me! I'm going to take the order!|[TAKEORDER]
+                <think>
+                    <set name="topic"></set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>* SPARKLE</pattern>
+            <template>
+                [SAY] Thank you for choosing me! I'm going to take the order!|[TAKEORDER]
+                <think>
+                    <set name="topic"></set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>SPARKLE *</pattern>
+            <template>
+                [SAY] Thank you for choosing me! I'm going to take the order!|[TAKEORDER]
+                <think>
+                    <set name="topic"></set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>SPARKLE</pattern>
+            <template>
+                [SAY] Thank you for choosing me! I'm going to take the order!|[TAKEORDER]
+                <think>
+                    <set name="topic"></set>
+                </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>*</pattern>
+            <template>[NOTTAKEORDER]</template>
+        </category>
+
+    </topic>
+
+    <topic name="RESTAURANTTAKEORDER">
+
+        <category>
+            <pattern>START</pattern>
+            <template>
+                <think>
+                    <set name="topic">ASKORDER</set>
+                </think>
+                <srai>ASKORDER</srai>
+            </template>
+        </category>
+
+        <category>
+            <pattern>STOP</pattern>
+            <template>
+                <set name="topic"></set>
+                [STOP]
+            </template>
+        </category>
+    </topic>
+
+    <topic name="ASKORDER">
+        <category>
+            <pattern>ASKORDER</pattern>
+            <template>
+                [SAY] What would you like?
+                Please tell me or choose an option on my screen.
+                |[OPTIONS]green tea_aquarius_cold brew_coke_chewing gum_fries_candy_radish_apple_onion_corn_jelly_bread_cup star_orange
+            </template>
+        </category>
+
+        <category>
+            <pattern>*</pattern>
+            <template>
+                [RESTAURANTORDERDATA]<star/>
+            </template>
+        </category>
+    </topic>
+
+</aiml>

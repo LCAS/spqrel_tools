@@ -25,16 +25,22 @@ def actionThread_exec (params):
     while (getattr(t, "do_run", True) and (not val)): 
         #print "Action "+actionName+" "+params+" exec..."
         # action exec
-        val = get_condition(memory_service, params)
-        # action exec
+        neg = False
+        cond = params
 
+        if params[0:4]=='not_':
+            neg = True
+            cond = params[4:]
 
+        val = get_condition(memory_service, cond)
+        if neg:
+            val = not val
+
+        #print 'DEBUG waitfor %s neg=%r -> %r' %(cond, neg, val)
         time.sleep(0.25)
         
+    # action end
     print "Action "+actionName+" "+params+" terminated"
-    # action end
-
-    # action end
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
 
 

@@ -1,0 +1,1097 @@
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: start_hall
+      node: hall
+    - action: NAOqiPlanner/Goal
+      edge_id: start_outside1
+      node: outside1
+    name: start
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 0.05000000000000604
+        y: 0.10000000000000853
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: hall_start
+      node: start
+    - action: NAOqiPlanner/Goal
+      edge_id: hall_corridor1
+      node: corridor1
+    - action: NAOqiPlanner/Goal
+      edge_id: hall_bedroomentrance
+      node: bedroomentrance
+    name: hall
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 1.5000000000000062
+        y: 0.10000000000000853
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: corridor1_hall
+      node: hall
+    - action: NAOqiPlanner/Goal
+      edge_id: corridor1_bedroomentrance
+      node: bedroomentrance
+    - action: NAOqiPlanner/Goal
+      edge_id: corridor1_corridor2
+      node: corridor2
+    name: corridor1
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 3.600000000000006
+        y: 0.7500000000000089
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: corridor2_corridor1
+      node: corridor1
+    - action: NAOqiPlanner/Goal
+      edge_id: corridor2_living1
+      node: living1
+    - action: NAOqiPlanner/Goal
+      edge_id: corridor2_kitchendoor
+      node: kitchendoor
+    name: corridor2
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 6.000000000000005
+        y: 2.950000000000008
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: kitchendoor_corridor2
+      node: corridor2
+    - action: NAOqiPlanner/Goal
+      edge_id: kitchendoor_kitchenshelf
+      node: kitchenshelf
+    - action: NAOqiPlanner/Goal
+      edge_id: kitchendoor_kitchencorner
+      node: kitchencorner
+    name: kitchendoor
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 6.950000000000006
+        y: 1.9000000000000083
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: kitchenshelf_fridge
+      node: fridge
+    - action: NAOqiPlanner/Goal
+      edge_id: kitchenshelf_backdoorin
+      node: backdoorin
+    - action: NAOqiPlanner/Goal
+      edge_id: kitchenshelf_kitchendoor
+      node: kitchendoor
+    name: kitchenshelf
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 9.550000000000006
+        y: 0.10000000000000853
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: fridge_bed
+      node: bed
+    - action: NAOqiPlanner/Goal
+      edge_id: fridge_kitchenshelf
+      node: kitchenshelf
+    - action: NAOqiPlanner/Goal
+      edge_id: fridge_kitchencorner
+      node: kitchencorner
+    name: fridge
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 7.750000000000007
+        y: -1.8499999999999925
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: bed_bedroomentrance
+      node: bedroomentrance
+    - action: NAOqiPlanner/Goal
+      edge_id: bed_fridge
+      node: fridge
+    name: bed
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 5.600000000000007
+        y: -3.049999999999992
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: bedroomentrance_corridor1
+      node: corridor1
+    - action: NAOqiPlanner/Goal
+      edge_id: bedroomentrance_hall
+      node: hall
+    - action: NAOqiPlanner/Goal
+      edge_id: bedroomentrance_bed
+      node: bed
+    name: bedroomentrance
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 3.7000000000000064
+        y: -0.7499999999999929
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: backdoorin_backdoorout
+      node: backdoorout
+    - action: NAOqiPlanner/Goal
+      edge_id: backdoorin_kitchenshelf
+      node: kitchenshelf
+    - action: NAOqiPlanner/Goal
+      edge_id: backdoorin_sofaside
+      node: sofaside
+    name: backdoorin
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 11.500000000000007
+        y: 1.6000000000000085
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: backdoorout_backdoorin
+      node: backdoorin
+    name: backdoorout
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 12.650000000000006
+        y: 0.40000000000000746
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: living1_living4
+      node: living4
+    - action: NAOqiPlanner/Goal
+      edge_id: living1_living2
+      node: living2
+    - action: NAOqiPlanner/Goal
+      edge_id: living1_corridor2
+      node: corridor2
+    - action: NAOqiPlanner/Goal
+      edge_id: living1_sofacorner
+      node: sofacorner
+    name: living1
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 6.400000000000006
+        y: 4.8500000000000085
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: living2_living1
+      node: living1
+    - action: NAOqiPlanner/Goal
+      edge_id: living2_living3
+      node: living3
+    name: living2
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 8.600000000000007
+        y: 6.800000000000008
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: living3_living4
+      node: living4
+    - action: NAOqiPlanner/Goal
+      edge_id: living3_living2
+      node: living2
+    name: living3
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 7.000000000000007
+        y: 8.600000000000009
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: living4_living3
+      node: living3
+    - action: NAOqiPlanner/Goal
+      edge_id: living4_living1
+      node: living1
+    name: living4
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 5.700000000000006
+        y: 6.700000000000008
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: sofaside_sofafront
+      node: sofafront
+    - action: NAOqiPlanner/Goal
+      edge_id: sofaside_backdoorin
+      node: backdoorin
+    - action: NAOqiPlanner/Goal
+      edge_id: sofaside_sofacorner
+      node: sofacorner
+    name: sofaside
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 10.350000000000007
+        y: 3.050000000000008
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: sofacorner_living1
+      node: living1
+    - action: NAOqiPlanner/Goal
+      edge_id: sofacorner_sofaside
+      node: sofaside
+    name: sofacorner
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 9.000000000000004
+        y: 2.5500000000000007
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: sofafront_sofaside
+      node: sofaside
+    name: sofafront
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 11.000000000000007
+        y: 4.450000000000008
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: kitchencorner_kitchendoor
+      node: kitchendoor
+    - action: NAOqiPlanner/Goal
+      edge_id: kitchencorner_fridge
+      node: fridge
+    name: kitchencorner
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 5.550000000000006
+        y: 0.5000000000000089
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside1_start
+      node: start
+    - action: NAOqiPlanner/Goal
+      edge_id: outside1_outside2
+      node: outside2
+    name: outside1
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: -1.099999999999997
+        y: 1.0000000000000018
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside2_outside1
+      node: outside1
+    - action: NAOqiPlanner/Goal
+      edge_id: outside2_outside3
+      node: outside3
+    - action: NAOqiPlanner/Goal
+      edge_id: outside2_outside6
+      node: outside6
+    name: outside2
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: -2.2499999999999964
+        y: 2.250000000000001
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside3_outside4
+      node: outside4
+    - action: NAOqiPlanner/Goal
+      edge_id: outside3_outside2
+      node: outside2
+    name: outside3
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: -0.7999999999999972
+        y: 3.6000000000000014
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside4_outside5
+      node: outside5
+    - action: NAOqiPlanner/Goal
+      edge_id: outside4_outside3
+      node: outside3
+    name: outside4
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 0.9000000000000039
+        y: 5.050000000000001
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside5_outside4
+      node: outside4
+    name: outside5
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 2.350000000000003
+        y: 6.500000000000002
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside6_outside7
+      node: outside7
+    - action: NAOqiPlanner/Goal
+      edge_id: outside6_outside2
+      node: outside2
+    name: outside6
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: -4.099999999999997
+        y: 0.9500000000000011
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside7_outside8
+      node: outside8
+    - action: NAOqiPlanner/Goal
+      edge_id: outside7_outside6
+      node: outside6
+    name: outside7
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: -5.599999999999997
+        y: -0.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside8_outside9
+      node: outside9
+    - action: NAOqiPlanner/Goal
+      edge_id: outside8_outside7
+      node: outside7
+    name: outside8
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: -4.349999999999997
+        y: -1.799999999999999
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside9_outside10
+      node: outside10
+    - action: NAOqiPlanner/Goal
+      edge_id: outside9_outside8
+      node: outside8
+    name: outside9
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: -3.049999999999997
+        y: -3.1499999999999986
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+- node:
+    edges:
+    - action: NAOqiPlanner/Goal
+      edge_id: outside10_outside9
+      node: outside9
+    name: outside10
+    pointset: NA
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: -1.7499999999999964
+        y: -4.6
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477

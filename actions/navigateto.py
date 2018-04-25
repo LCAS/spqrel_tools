@@ -3,7 +3,11 @@ import threading
 
 import action_base
 
+#import headpose
 
+headJointsNames = ["HeadYaw", "HeadPitch"]
+headYaw = 0.0
+headPitch = -0.2 # head up
 actionName = "navigateto"
 
 
@@ -33,6 +37,7 @@ def actionThread_exec(params):
 
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
+    motion_service = getattr(t, "session", None).service("ALMotion")
     # tts_service = getattr(t, "session", None).service("ALTextToSpeech")
 
     print "Action " + actionName + " started with params " + params
@@ -40,6 +45,8 @@ def actionThread_exec(params):
 
     # action init
     target = params
+    if target[0] == '^':
+        target = memory_service.getData(target[1:])
     print "  -- Goto: " + str(target)
     mem_key_goal = "TopologicalNav/Goal"
     mem_key_status = "TopologicalNav/Status"
@@ -57,6 +64,8 @@ def actionThread_exec(params):
     if not getattr(t, "do_run", True):
         # cancelled send empty goal to stop
         memory_service.raiseEvent(mem_key_goal, "")
+
+    #headpose.moveHead(motion_service, headYaw, headPitch, headtime)
     print "Action " + actionName + " " + params + " terminated"
     # action end
     if goal_reached:

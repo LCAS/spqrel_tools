@@ -25,7 +25,7 @@ def rhMonitorThread (memory_service):
             pdist = memory_service.getData("Device/SubDeviceList/Platform/Back/Sonar/Sensor/Value")
             #distance to consider that the person following
             #print "rear sonar dist: ", pdist
-            if (pdist < 0.9):
+            if (pdist < 1.5):
                 v = 'true'
         except:
             v = 'false'

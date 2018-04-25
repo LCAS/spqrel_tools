@@ -2,8 +2,8 @@
 vsay_dooropen;
 waitfor_dooropen;
 vsay_starting;
-wait_2;
-enter_30_0_0_4_true; 
+wait_1;
+enter_30_0_0_5_true; 
 goto_corridor2;  #! *if* obstaclehere *do* vsay_obstacle; waitfor_not_obstaclehere; restart_action !
 
 # 

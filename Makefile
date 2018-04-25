@@ -48,6 +48,10 @@ clean:
 #		(cd $$d; pwd; qibuild clean -z -s -f) \
 #	done
 	rm -rf cookies
+	rm -f $(WORKTREE)/PetriNetPlans/PNPgen/bin/pnpgen_translator
+	rm -rf $(WORKTREE)/PetriNetPlans/PNP/build
+	rm -rf $(WORKTREE)/PetriNetPlans/PNPgen/build
+
 
 BINS:=$(shell find $(QIBUILDS_BUILD_DIRS) -type f  | xargs -r file | grep -G "LSB *executable" | cut -f1 -d: | grep -v CMakeFiles)
 LIBS:=$(shell find $(QIBUILDS_BUILD_DIRS) -type f -a -name "*.so" | xargs -r file | grep -G "LSB *shared object" | cut -f1 -d: | grep -v CMakeFiles)
@@ -117,7 +121,7 @@ cookies/configure-$(TOOLCHAIN):	$(QIBUILDS) $(WORKTREE)/.qi $(PNPTRANS)
 	done
 	mkdir -p cookies; touch $@
 
-configure: cookies/configure-$(TOOLCHAIN)
+configure: $(PNPTRANS) cookies/configure-$(TOOLCHAIN)
 
 reconfigure: 
 	-rm cookies/configure-$(TOOLCHAIN)

@@ -19,12 +19,12 @@ It provides the following modules:
 
 The modules are self-contained, so that there is no need to install other libraries.
 
-##Requirements
+## Requirements
  * `Python (2.7)`
  * `pynaoqi (> 2.5)`
  * `Pepper robot`
  
-##Setup
+## Setup
 
 To setup the `SLU4P` packages, the whole folder has to be uploaded directly on the Pepper (e.g. in the `/home/nao` folder).
 Then, navigate to the `slu4p` folder and run the `setup.sh`:
@@ -40,10 +40,10 @@ Notice that you may need to change the execution permissions of the bash file wi
 $ chmod +x setup.sh
 ```
 
-##Running
+## Running
 The system can be lauched by individually running each module (see below).
 
-###Speech-To-Text
+### Speech-To-Text
 
 This module enables the speech-to-text capability on the Pepper robot.
 The key feature here is that the recognition of speech is performed through two ASRs. In fact, the free-form Google ASR and the internal vocabulary-based Nuance ASR can be used simultaneously. While the Google ASR provides transcriptions without any restriction on the lexicon, the Nuance ASR needs the definition of a vocabulary of keywords/sentences that are domain-specific.
@@ -63,12 +63,12 @@ As the Speech Recognition is the entry point of the SLU process, it requires a m
     * *Nuance grammar*: a text file that contains, for each line, a keyword/sentence to be recognized by Nuance ASR.
     * *GoogleAPI keys*: a text file where, in each line, a Google key is provided.
 
-####Running
+#### Running
 
 ```
 $ python speech_to_text/speech_recognition.py -v resources/nuance_grammar.txt -k resources/google_keys.txt
 ```
-####Usage
+#### Usage
 
 ```
 usage: speech_recognition.py [-h] [-i PIP] [-p PPORT] [-l LANG]
@@ -92,12 +92,12 @@ optional arguments:
                         Google ASR
 ```
 
-#####TODO
+##### TODO
 
  * Check the availability of the network connection (Google requirement): if not, deactivate Google ASR
  * Catch the requests limit error
 
-###Speech Re-Ranking
+### Speech Re-Ranking
 
 The ranking provided by the ASR takes into account only the acoustic information of the spoken sentence. The domain, instead, plays a key role in determining the correct hypothesis and should be considered to improve the robusness of the recognition. This module enables a re-ranking process, by relying on evidences provided by the application domain. The process is based on approach proposed in [1].
 
@@ -120,13 +120,13 @@ The module subscribes the `VordRecognized` event and, once the new ranking has b
  * **Dependencies**
     * `Speech Recognition`
 
-####Running
+#### Running
 
 ```
 $ python speech_reranking/reranker.py --noun-dictionary resources/noun_dictionary.txt --verb-dictionary resources/verb_dictionary.txt --nuance-grammar resources/nuance_grammar.txt
 ```
 
-####Usage
+#### Usage
 
 ```
 usage: reranker.py [-h] [-i PIP] [-p PPORT] [-a ALPHA] [-n NOUN_COST]
@@ -160,7 +160,7 @@ optional arguments:
                         the vocabulary
 ```
 
-###Language Understanding
+### Language Understanding
 
 WIP
 
@@ -170,7 +170,7 @@ WIP
  * **Dependencies**
     * `Speech Recognition`
 
-###Dialogue Management
+### Dialogue Management
 
 Whenever a sentence is recognized, a reply has to be generated. This module enables such capability into the Pepper. The interaction patterns are specified through the AIML language. Hence, in order to run the module, an AIML Knowledge Base has to be provided. The AIML interpreter is based on [PyAIML](https://pypi.python.org/pypi/aiml/0.8.6). As NaoQi does not allow to install packages through the `pip` command, the source code of the interpreter has been embedded into the module.
 
@@ -182,13 +182,13 @@ Whenever the Re-Ranking module raises the `VRanked` event, this module picks the
  * **Dependencies**
     * `Speech Recognition`
 
-####Running
+#### Running
 
 ```
 $ python dialogue_management/dialogue_manager.py -a resources/aiml_kbs/alice
 ```
 
-####Usage
+#### Usage
 
 ```
 usage: dialogue_manager.py [-h] [-i PIP] [-p PPORT] [-a AIML_PATH]
@@ -202,7 +202,7 @@ optional arguments:
                         Path to the root folder of AIML Knowledge Base
 ```
 
-###Text-To-Speech
+### Text-To-Speech
 
 This module is the end of the processing chain. Its purpose is to generate a speech, given a text representing the sentence. During initialization, it creates `ALAnimatedSpeech` and `ALMotion` proxies. While the former is used to produce the audio given the text, the latter is used to recover to the breathing behavior after the animated speech finishes. The module subscribes the `Veply` event and, whenever it is triggered, generates the corresponding speech.
 
@@ -210,13 +210,13 @@ This module is the end of the processing chain. Its purpose is to generate a spe
     * `Speech Recognition`
     * `Dialogue Management`
 
-####Running
+#### Running
 
 ```
 $ python text_to_speech/text_to_speech.py
 ```
 
-####Usage
+#### Usage
 
 ```
 usage: text_to_speech.py [-h] [-i PIP] [-p PPORT]
@@ -231,16 +231,16 @@ optional arguments:
                         The body language modality while speaking
 ```
 
-##Author
+## Author
 
 * **Andrea Vanzo** - [andrea.vanzo1@gmail.com](mailto:andrea.vanzo1@gmail.com)
 
-##Acknowledgements
+## Acknowledgements
 
-##References
+## References
 [1] Andrea Vanzo, Danilo Croce, Emanuele Bastianelli, Roberto Basili, Daniele Nardi, *"Robust Spoken Language Understanding for House Service Robots"*, In Proceedings of the 17th International Conference on Intelligent Text Processing and Computational Linguistics CICLing 2016, Konya, Turkey, 2016.
 
-##FAQ
+## FAQ
 
 * **When I try to run one of the modules, I get the following error**:
 

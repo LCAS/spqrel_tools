@@ -21,18 +21,25 @@ real_path () {
 	python -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' "$1"
 }
 
-
+if [ -r "$_SETUP_DIR/setup-local.bash" ]; then
+  echo "* loading local config" >& 2
+  source "$_SETUP_DIR/setup-local.bash"
+fi
 
 if [ "$1" ]; then
 	export SPQREL_HOME="$1"
 else
-	SPQREL_HOME=$_SETUP_DIR
+  if [ -z "$SPQREL_HOME" ]; then
+	  export SPQREL_HOME=$_SETUP_DIR
+  else
+    export SPQREL_HOME
+  fi
 fi
 
 # default home is $HOME/spqrel
-export SPQREL_HOME=`real_path "${SPQREL_HOME:-$HOME/spqrel}"`
-
-export SPQREL_CONFIG=$SPQREL_HOME/worktree/spqrel_tools/scripts/spqrel-config.yaml
+export SPQREL_HOME=`real_path "${SPQREL_HOME}"`
+export SPQREL_CONFIG="$SPQREL_HOME/worktree/spqrel_tools/scripts/spqrel-config.yaml"
+export SPQREL_TOOLS="$SPQREL_HOME/worktree/spqrel_tools"
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SPQREL_HOME/lib
 
@@ -41,23 +48,17 @@ export PNPGEN_BIN=`find $SPQREL_HOME -path "*/bin/pnpgen_translator"| sed 's@/pn
 
 export PATH=$PATH:$SPQREL_HOME/bin:$PNPGEN_BIN
 
-export PYTHONPATH=${PYTHONPATH}:$SPQREL_HOME/slu4p:$SPQREL_HOME/worktree/PetriNetPlans/PNPnaoqi/actions:$SPQREL_HOME/worktree/spqrel_tools/scripts:$SPQREL_HOME/worktree/spqrel_navigation/src/topological_navigation/scripts/
-export SLU4R_ROOT=$SPQREL_HOME/slu4p
-export PLAN_DIR=$SPQREL_HOME/plans
+export PYTHONPATH="${PYTHONPATH}:$SPQREL_TOOLS/slu4p:$SPQREL_HOME/worktree/PetriNetPlans/PNPnaoqi/actions:$SPQREL_TOOLS/scripts:$SPQREL_HOME/worktree/spqrel_navigation/src/topological_navigation/scripts/"
 
-# Pepper's IP
+export SLU4R_ROOT="$SPQREL_TOOLS/slu4p"
+export PLAN_DIR="$SPQREL_TOOLS/plans"
+
+# meaningfull default which may already have been set in setup-local.bash
+
 export PEPPER_IP="${PEPPER_IP:-localhost}"
-
 export MAP="${MAP:-$SPQREL_HOME/maps/nagoya/dummy.yaml}"
 export TMAP="${TMAP:-$SPQREL_HOME/maps/nagoya/dummy.tpg}"
-
-
-
-
-
-
-alias shutdown-tmux="tmux list-panes -s -F \"#{pane_pid} #{pane_current_command}\" | grep -v tmux | awk \"{print \\\$1}\" | xargs kill"
-alias kill-tmux="tmux list-panes -s -F \"#{pane_pid} #{pane_current_command}\" | grep -v tmux | awk \"{print \\\$1}\" | xargs kill -9"
+export LU4R_IP="${LU4R_IP}:-192.168.127.16}"
 
 # clean paths
 export LD_LIBRARY_PATH=`clean_path_var $LD_LIBRARY_PATH`
@@ -65,13 +66,13 @@ export PATH=`clean_path_var $PATH`
 export PYTHONPATH=`clean_path_var $PYTHONPATH`
 
 
-echo "SPQREL_HOME=$SPQREL_HOME"
-echo "PEPPER_IP=$PEPPER_IP"
-echo "PATH=$PATH"
-echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" 
-echo "PYTHONPATH=$PYTHONPATH"
+echo "  SPQREL_HOME=$SPQREL_HOME" >& 2
+echo "  SPQREL_TOOLS=$SPQREL_TOOLS" >& 2
+echo "  SLU4R_ROOT=$SLU4R_ROOT" >& 2
+echo "  PEPPER_IP=$PEPPER_IP" >& 2
+echo "  PATH=$PATH" >& 2
+echo "  LD_LIBRARY_PATH=$LD_LIBRARY_PATH"  >& 2
+echo "  PYTHONPATH=$PYTHONPATH" >& 2
 
 export GIT_EXEC_PATH=${SPQREL_HOME}/libexec/git-core
 
-export LU4R_IP="192.168.127.16"
-export TOBI_IP="192.168.127.21"

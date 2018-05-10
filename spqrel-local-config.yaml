@@ -1,16 +1,18 @@
 ---
-init_cmd: export PEPPER_IP=localhost; export TMAP=~/spqrel/spqrel_launch/worktree/spqrel_tools/maps/nagoya/nagoya_expanded.tpg;
-  export MAP=~/spqrel/spqrel_launch/worktree/spqrel_tools/maps/nagoya/nagoya_expanded.yaml;
-  source ~/spqrel/spqrel_launch/worktree/spqrel_tools/setup-dev.bash /opt/naoqi; source
-  ~/spqrel/spqrel_launch/setup.bash; $SPQREL_HOME/worktree/spqrel_tools/scripts/config_manager.py
-  --file $SPQREL_CONFIG
+init_cmd: 
+  source setup.bash;
+  source setup-dev.bash;
 windows:
 - name: bash
   panes:
   - bash
-- name: htop
+- name: init
   panes:
   - htop
+  - naoqi-bin
+- name: config
+  panes:
+  - $SPQREL_TOOLS/scripts/config_manager.py --file $SPQREL_CONFIG
 - name: navigation
   panes:
   - "#cd $SPQREL_HOME/bin; ./pepper_localizer --map $MAP --initial_pose_x 0 --initial_pose_y

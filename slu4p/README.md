@@ -66,7 +66,7 @@ As the Speech Recognition is the entry point of the SLU process, it requires a m
 #### Running
 
 ```
-$ python speech_to_text/speech_recognition.py -v resources/nuance_grammar.txt -k resources/google_keys.txt
+$ python speech_to_text/local_speech_recognition.py -v resources/nuance_grammar.txt -k resources/cloud_google_keys.txt
 ```
 #### Usage
 

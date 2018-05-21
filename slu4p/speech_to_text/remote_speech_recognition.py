@@ -213,7 +213,7 @@ def main():
                         help="Turn off blinking eyes when recognition starts")
     parser.add_argument("-v", "--vocabulary", type=str, default="resources/nuance_grammar.txt",
                         help="A txt file containing the list of sentences composing the vocabulary")
-    parser.add_argument("-k", "--keys", type=str, default="resources/google_keys.txt",
+    parser.add_argument("-k", "--keys", type=str, default="resources/cloud_google_keys.txt",
                         help="A txt file containing the list of the keys for the Google ASR")
     parser.add_argument("-o", "--asr-logging", type=bool, default=False,
                         help="Logs the audio files")

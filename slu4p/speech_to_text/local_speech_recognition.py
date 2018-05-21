@@ -105,8 +105,8 @@ class SpeechRecognition(EventAbstractClass):
         """
         if os.path.exists(self.AUDIO_FILE + '.wav'):
             if os.path.getsize(self.AUDIO_FILE + '.wav') > 0:
-                os.system(self.FLAC_COMM + self.AUDIO_FILE + '.wav')
-                f = open(self.AUDIO_FILE + '.flac', 'rb')
+                # os.system(self.FLAC_COMM + self.AUDIO_FILE + '.wav') # we can actually use the wav directly...
+                f = open(self.AUDIO_FILE + '.wav', 'rb')
                 flac_cont = f.read()
                 f.close()
                 results = {}
@@ -211,7 +211,7 @@ def main():
                         help="Turn off blinking eyes when recognition starts")
     parser.add_argument("-v", "--vocabulary", type=str, default="resources/nuance_grammar.txt",
                         help="A txt file containing the list of sentences composing the vocabulary")
-    parser.add_argument("-k", "--keys", type=str, default="resources/google_keys.txt",
+    parser.add_argument("-k", "--keys", type=str, default="resources/cloud_google_keys.txt",
                         help="A txt file containing the list of the keys for the Google ASR")
     parser.add_argument("-o", "--asr-logging", type=bool, default=False,
                         help="Logs the audio files")

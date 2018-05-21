@@ -1,5 +1,5 @@
 ---
-init_cmd: export MAP=/home/nao/spqrel_launch/maps/nagoya/nagoya_gmapping.yaml; export
+init_cmd: source ~/.bashrc; export MAP=/home/nao/spqrel_launch/maps/nagoya/nagoya_gmapping.yaml; export
   TMAP=/home/nao/spqrel_launch/maps/nagoya/nagoya_gmapping.tpg; $SPQREL_HOME/worktree/spqrel_tools/scripts/config_manager.py --file $SPQREL_CONFIG
 windows:
 - name: bash

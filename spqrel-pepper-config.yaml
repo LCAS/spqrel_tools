@@ -1,6 +1,6 @@
 ---
-init_cmd: source ~/.bashrc; export MAP=/home/nao/spqrel_launch/maps/nagoya/nagoya_gmapping.yaml; export
-  TMAP=/home/nao/spqrel_launch/maps/nagoya/nagoya_gmapping.tpg; $SPQREL_HOME/worktree/spqrel_tools/scripts/config_manager.py --file $SPQREL_CONFIG
+init_cmd: 
+  source setup.bash;
 windows:
 - name: bash
   panes:
@@ -8,6 +8,9 @@ windows:
 - name: init
   panes:
   - cd $SPQREL_HOME/scripts; python postureinit.py
+- name: config
+  panes:
+  - $SPQREL_TOOLS/scripts/config_manager.py --file $SPQREL_CONFIG
 - name: navigation
   panes:
   - cd $SPQREL_HOME/bin; ./pepper_localizer --map $MAP --initial_pose_x 0 --initial_pose_y

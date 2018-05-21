@@ -111,3 +111,6 @@ build-*/
 
 # PyCharm
 .idea/
+
+
+setup-local.bash

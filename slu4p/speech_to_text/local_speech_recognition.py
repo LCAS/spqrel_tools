@@ -1,5 +1,6 @@
 import argparse
 import signal
+import os
 from naoqi import ALProxy, ALBroker, ALModule
 from google_client import *
 from event_abstract import *

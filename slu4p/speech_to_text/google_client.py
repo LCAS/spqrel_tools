@@ -10,9 +10,9 @@ class GoogleClient:
 
     def __init__(self, language, key_file):
         keys = slu_utils.lines_to_list(key_file)
-	self.language = language
-	key = keys[0]
-	self.url = "https://speech.googleapis.com/v1/speech:recognize?key=%s" % key
+        self.language = language
+        key = keys[0]
+        self.url = "https://speech.googleapis.com/v1/speech:recognize?key=%s" % key
 
     def recognize_file(self, file_path):
         try:
@@ -23,7 +23,7 @@ class GoogleClient:
 	    audio_json = {"content": base64_data}
 	    config_json = {"languageCode": self.language}
 	    json_data = {"config": config_json, "audio": audio_json}
-            response = requests.post(self.url, json=json_data, headers=self.headers, timeout=self.timeout)
+	    response = requests.post(self.url, json=json_data, headers=self.headers, timeout=self.timeout)
 	    json_res = json.loads(response.text)
             if "results" in json_res.keys() and "alternatives" in json_res["results"][0].keys():
                 for alternative in json_res["results"][0]["alternatives"]:
@@ -46,7 +46,7 @@ class GoogleClient:
 	    audio_json = {"content": base64_data}
 	    config_json = {"languageCode": self.language}
 	    json_data = {"config": config_json, "audio": audio_json}
-            response = requests.post(self.url, json=json_data, headers=self.headers, timeout=self.timeout)
+	    response = requests.post(self.url, json=json_data, headers=self.headers, timeout=self.timeout)
             json_res = json.loads(response.text)
 	    if "results" in json_res.keys() and "alternatives" in json_res["results"][0].keys():
 	        for alternative in json_res["results"][0]["alternatives"]:

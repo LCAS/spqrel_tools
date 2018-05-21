@@ -35,7 +35,6 @@ class TextToSpeech(EventAbstractClass):
         self.broker.shutdown()
 
     def callback(self, *args, **kwargs):
-	print "SAYING:", args[1]
         self.tts.say(args[1])
         #self.tts.say(args[1], self.configuration)
 

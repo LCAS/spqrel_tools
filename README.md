@@ -12,7 +12,7 @@ Development scripts from the spqrel team
 
 * run `make` in `spqrel_tools`, it should compile all binaries and translate all plans found
 * got to the `spqrel_tools` directory
-* configure your local environment in `setup-local.bash` (e.g. like [this](https://github.com/LCAS/spqrel_tools/blob/master/setup-local.bash)), in particular, set the path to all the NAOQI SDKs and the path to the top-level SPQReL directory structure, i.e. to `sparel_launch`.
+* configure your local environment in `setup-local.bash` (e.g. like [this](https://github.com/LCAS/spqrel_tools/blob/master/setup-local.bash)), in particular, set the path to all the NAOQI SDKs and the path to the top-level SPQReL directory structure, i.e. to `spqrel_launch`.
 * fire up TMule as either:
   * `tmule --config spqrel-local-config.yaml server` (if you want to run locally)
   * `tmule --config spqrel-pepper-config.yaml server` (this is the config usually run on Pepper)

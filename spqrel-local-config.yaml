@@ -3,9 +3,6 @@ init_cmd:
   source setup.bash;
   source setup-dev.bash;
 windows:
-- name: bash
-  panes:
-  - bash
 - name: init
   panes:
   - htop

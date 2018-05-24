@@ -31,14 +31,14 @@ Development scripts from the spqrel team
 1. make sure you load your local development environment: `source setup-dev.bash` (to configure the paths for the SDK) and `source setup.bash` (to configure environment to work with your local worktree) 
 1. run `make` in `spqrel_tools`, it should compile all binaries and translate all plans found
 1. fire up TMule as either:
-  * `tmule --config spqrel-local-config.yaml server` (if you want to run locally)
-  * `tmule --config spqrel-pepper-config.yaml server` (this is the config usually run on Pepper)
+    * `tmule --config spqrel-local-config.yaml server` (if you want to run locally)
+    * `tmule --config spqrel-pepper-config.yaml server` (this is the config usually run on Pepper)
 
     Either will result in the TMule control server being launched and accessible via web browser wherever it was launched (E.g. on Pepper Wifi address) at port 9999, e.g. http://localhost:9999.
 1. Start the TMule sub-systems you want to use (in the browser)
 1. In order to make everything is orderly terminated, stop the TMule server with `[Ctrl-C]` and follow this by 
-  * `tmule --config spqrel-local-config.yaml terminate` 
-  * `tmule --config spqrel-pepper-config.yaml terminate` 
+    * `tmule --config spqrel-local-config.yaml terminate` 
+    * `tmule --config spqrel-pepper-config.yaml terminate` 
 
     respectively
 

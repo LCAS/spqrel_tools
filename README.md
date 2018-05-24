@@ -34,12 +34,12 @@ Development scripts from the spqrel team
   * `tmule --config spqrel-local-config.yaml server` (if you want to run locally)
   * `tmule --config spqrel-pepper-config.yaml server` (this is the config usually run on Pepper)
 
-  Either will result in the TMule control server being launched and accessible via web browser wherever it was launched (E.g. on Pepper Wifi address) at port 9999, e.g. http://localhost:9999.
+    Either will result in the TMule control server being launched and accessible via web browser wherever it was launched (E.g. on Pepper Wifi address) at port 9999, e.g. http://localhost:9999.
 1. Start the TMule sub-systems you want to use (in the browser)
 1. In order to make everything is orderly terminated, stop the TMule server with `[Ctrl-C]` and follow this by 
   * `tmule --config spqrel-local-config.yaml terminate` 
   * `tmule --config spqrel-pepper-config.yaml terminate` 
 
-  respectively
+    respectively
 
 

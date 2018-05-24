@@ -3,7 +3,9 @@ Development scripts from the spqrel team
 
 # Install on PC
 
-* check out the [`Dockerfile`](https://github.com/LCAS/spqrel_launch/blob/master/Dockerfile) in [`lcas/spqrel_launch`](https://github.com/LCAS/spqrel_launch) to get working overall steps to set up a system from scratch. Or, simply use the docker image: `docker run -it lcasuol/spqrel_launch`.
+* check out the [`Dockerfile`](https://github.com/LCAS/spqrel_launch/blob/master/Dockerfile) in [`lcas/spqrel_launch`](https://github.com/LCAS/spqrel_launch) to get working overall steps to set up a system from scratch. This `Dockerfile` is not meant to be taken verbatim, but it documents all general steps required to get a suitable local workspace.
+
+Or, simply use the docker image: `docker run -it lcasuol/spqrel_launch`.
 * The docker image also provides the perfect, clean cross-compilation environment for pepper. Steps to cross compile in docker, see the [`nut.yml`](https://github.com/LCAS/spqrel_launch/blob/master/nut.yml)
 * install tmule: `sudo pip install -U tmule` 
 

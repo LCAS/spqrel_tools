@@ -2,9 +2,6 @@
 init_cmd: 
   source setup.bash;
 windows:
-- name: bash
-  panes:
-  - bash
 - name: init
   panes:
   - cd $SPQREL_HOME/scripts; python postureinit.py

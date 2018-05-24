@@ -16,7 +16,12 @@ p.begin()
 
 p.exec_action('modiminit', 'cocktailparty')
 p.exec_action('interact', 'ready')
+while (not p.get_condition('dooropen')):
+    time.sleep(1)
+    
+p.exec_action('interact', 'party')
 
+p.exec_action('interact', 'comehere')
 
 # p.exec_action('say', 'hello')
 

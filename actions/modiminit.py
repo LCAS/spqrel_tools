@@ -27,10 +27,6 @@ from ws_client import *
 
 actionName = "modiminit"
 
-#pepper_ip = '192.168.1.134' # ethernet
-pepper_ip = '127.0.0.1'
-pepper_port = 9101
-
 def demopath(params):
     demo_path = os.getenv('DEMO_PATH')
     if demo_path == None:
@@ -47,16 +43,16 @@ def actionThread_exec (params):
 
     # action init
     count = 1
+    pepper_ip = os.getenv('PEPPER_IP')
+    pepper_port = 9101
     setServerAddr(pepper_ip, pepper_port)
     # action init
     while (getattr(t, "do_run", True) and count>0): 
         print "Action "+actionName+" "+params+" exec..."
         # action exec
-        print ("WS client:: sending data ...")
         data_str = "im.setProfile(['*', '*', 'en', '*'])"+"\n"
         data_str += "im.setPath('"+ demopath(params) +"')"+"\n###ooo###\n\n"
         csend(data_str)
-        print ("WS client:: data sent")
         
         count = count - 1
         # action exec

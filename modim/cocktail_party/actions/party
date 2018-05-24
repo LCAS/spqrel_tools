@@ -1,0 +1,13 @@
+IMAGE
+<*, *, *, *>:  "img/cocktailparty.jpg"
+----
+TEXT
+<*,*,*,*>: "Let's party"
+----
+GESTURE
+<*,*,*,*>: animations/Stand/Gestures/Excited_1
+----
+TTS
+<*,*,*,*>: "Let's party!"
+----
+

@@ -15,7 +15,7 @@ The main steps to get to a SPQReL workspace:
     sudo pip install qibuild tmule
     ```
 
-1. create your top-level workspace, we assume `$HOME/sqprel` for now, you may chose something else.
+1. create your top-level workspace, we assume `$HOME/spqrel` for now, you may chose something else.
 
     ```
     mkdir -p $HOME/spqrel/workspace

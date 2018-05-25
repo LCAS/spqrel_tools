@@ -14,13 +14,6 @@ except Exception as e:
     print "Please set MODIM_HOME environment variable to MODIM folder."
     print e
     sys.exit(1)
-
-try:
-    sys.path.insert(0, os.getenv('MODIM_HOME')+'/src/GUI')
-except Exception as e:
-    print "Please set MODIM_HOME environment variable to MODIM folder."
-    print e
-    sys.exit(1)
     
 import ws_client
 from ws_client import *

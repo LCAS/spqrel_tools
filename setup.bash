@@ -48,7 +48,7 @@ export PNPGEN_BIN=`find $SPQREL_HOME -path "*/bin/pnpgen_translator"| sed 's@/pn
 
 export PATH=$PATH:$SPQREL_HOME/bin:$PNPGEN_BIN
 
-export PYTHONPATH="${PYTHONPATH}:$SPQREL_TOOLS/slu4p:$SPQREL_HOME/worktree/PetriNetPlans/PNPnaoqi/actions:$SPQREL_TOOLS/scripts:$SPQREL_HOME/worktree/spqrel_navigation/src/topological_navigation/scripts/"
+export PYTHONPATH="${PYTHONPATH}:$SPQREL_TOOLS/slu4p:$SPQREL_HOME/worktree/PetriNetPlans/PNPnaoqi/actions:$SPQREL_HOME/worktree/PetriNetPlans/pyPNP:$SPQREL_TOOLS/scripts:$SPQREL_HOME/worktree/spqrel_navigation/src/topological_navigation/scripts/"
 
 export SLU4R_ROOT="$SPQREL_TOOLS/slu4p"
 export PLAN_DIR="$SPQREL_TOOLS/plans"

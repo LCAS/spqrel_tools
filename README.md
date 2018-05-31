@@ -29,7 +29,8 @@ Development scripts from the spqrel team
 
 1. go to your `spqrel_tools` directory (e.g. `cd $HOME/spqrel/workspace/spqrel_launch/worktree/spqrel_tools`)
 1. make sure you load your local development environment: `source setup-dev.bash` (to configure the paths for the SDK) and `source setup.bash` (to configure environment to work with your local worktree) 
-1. run `make` in `spqrel_tools`, it should compile all binaries and translate all plans found
+    * make sure you haven't sourced any other configurations, e.g. ROS workspaces etc. _Never autoload any project-specific environments in your `.bashrc`_.
+1. run `make install` in `spqrel_tools`, it should compile all binaries and translate all plans found, and install everything in the respective places. It will find all qibuild workspaces under `worktree/` (all submodules configured)
 1. fire up TMule as either:
     * `tmule --config spqrel-local-config.yaml server` (if you want to run locally)
     * `tmule --config spqrel-pepper-config.yaml server` (this is the config usually run on Pepper)
@@ -42,4 +43,9 @@ Development scripts from the spqrel team
 
     respectively
 
+# General Desing Considerations about environment setup and making:
+
+* all *general* configurations (applying to both local installation on your computer and on pepper should you into `setup.bash`. This file loads `setup-local.bash` if it exists and must respect the variables defined in `spqrel-local.bash`. They must always take precendence. `setup.bash` is the place to set all required environment variables
+* all *development* configurations (e.g. where the find the SDK, etc.) are configured in `setup-dev.bash`. This file also reads `setup-local.bash`, but should only be `source`-d on development machines (i.e. `linux64`) and _not_ on Pepper.
+* the `setup-local.bash` contains all the local paths you need to configure for _your_ environment. Changes to that file shall not be committed to the repository ever. Hence, it is good practice to configure it in git to be ignored using `git update-index --skip-worktree setup-local.bash`
 

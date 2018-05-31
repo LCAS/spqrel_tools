@@ -1,5 +1,8 @@
 _SETUP_DIR=$(builtin cd "`dirname "${BASH_SOURCE[0]}"`" > /dev/null && pwd)
 
+ENVFILE="`mktemp -p /tmp env.XXXX`"
+env | sort > "$ENVFILE"
+
 clean_path_var () {
   path_var="$1"
   old_content="$path_var:"; path_var=
@@ -21,7 +24,6 @@ real_path () {
 }
 
 if [ -r "$_SETUP_DIR/setup-local.bash" ]; then
-  echo "* loading local config" >& 2
   source "$_SETUP_DIR/setup-local.bash"
 fi
 
@@ -44,16 +46,21 @@ export PATH=${NAOQI_BIN}:${PATH}
 
 PYTHONPATH=`clean_path_var $PYTHONPATH`
 LD_LIBRARY_PATH=`clean_path_var $LD_LIBRARY_PATH`
+DYLD_LIBRARY_PATH=`clean_path_var $DYLD_LIBRARY_PATH`
 PATH=`clean_path_var $PATH`
 
-if [ "$PYNAOQI" ]; then
-  echo "found pynaoqi in $PYNAOQI"  >& 2
-else
+if [ -z "$PYNAOQI" ]; then
   echo "couldn't find pynaoqi"  >& 2
 fi
 
-if [ "$NAOQI_LIB" ]; then
-  echo "found C++ SDK in $NAOQI_LIB" >& 2
-else
+if [ -z "$NAOQI_LIB" ]; then
   echo "couldn't find C++ SDK"  >& 2
 fi
+
+# display environment changes if we are running interactively.
+if [ "$PS1" ]; then
+    echo "configured ENV changes:"
+    env | sort| diff --unchanged-line-format= --old-line-format= --new-line-format='%L' "$ENVFILE" -  | sed 's/^/  /'
+fi
+
+rm "$ENVFILE"

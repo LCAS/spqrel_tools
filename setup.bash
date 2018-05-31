@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 _SETUP_DIR=$(builtin cd "`dirname "${BASH_SOURCE[0]}"`" > /dev/null && pwd)
 
+ENVFILE="`mktemp -p /tmp env.XXXX`"
+env | sort > "$ENVFILE"
+
 clean_path_var () {
   path_var="$1"
   old_content="$path_var:"; path_var=
@@ -22,7 +25,6 @@ real_path () {
 }
 
 if [ -r "$_SETUP_DIR/setup-local.bash" ]; then
-  echo "* loading local config" >& 2
   source "$_SETUP_DIR/setup-local.bash"
 fi
 
@@ -40,6 +42,7 @@ fi
 export SPQREL_HOME=`real_path "${SPQREL_HOME}"`
 export SPQREL_CONFIG="$SPQREL_HOME/worktree/spqrel_tools/scripts/spqrel-config.yaml"
 export SPQREL_TOOLS="$SPQREL_HOME/worktree/spqrel_tools"
+export PNP_HOME="$SPQREL_HOME/worktree/PetriNetPlans"
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SPQREL_HOME/lib
 
@@ -58,10 +61,10 @@ export PLAN_DIR="$SPQREL_TOOLS/plans"
 export PEPPER_IP="${PEPPER_IP:-localhost}"
 export MAP="${MAP:-$SPQREL_HOME/maps/nagoya/dummy.yaml}"
 export TMAP="${TMAP:-$SPQREL_HOME/maps/nagoya/dummy.tpg}"
-export LU4R_IP="${LU4R_IP}:-192.168.127.16}"
+export LU4R_IP="${LU4R_IP:-192.168.127.16}"
 
-export MODIM_HOME=$SPQREL_HOME/worktree/modim
-export PEPPER_TOOLS_HOME=$SPQREL_HOME/worktree/pepper_tools
+export MODIM_HOME="$SPQREL_HOME/worktree/modim"
+export PEPPER_TOOLS_HOME="$SPQREL_HOME/worktree/pepper_tools"
 
 # clean paths
 export LD_LIBRARY_PATH=`clean_path_var $LD_LIBRARY_PATH`
@@ -69,19 +72,26 @@ export PATH=`clean_path_var $PATH`
 export PYTHONPATH=`clean_path_var $PYTHONPATH`
 
 
-echo "  SPQREL_HOME=$SPQREL_HOME" >& 2
-echo "  SPQREL_TOOLS=$SPQREL_TOOLS" >& 2
-echo "  SLU4R_ROOT=$SLU4R_ROOT" >& 2
-echo "  PEPPER_IP=$PEPPER_IP" >& 2
-echo "  PATH=$PATH" >& 2
-echo "  MODIM_HOME=$MODIM_HOME" >& 2
-echo "  PEPPER_TOOLS_HOME=$PEPPER_TOOLS_HOME" >& 2
-echo "  LD_LIBRARY_PATH=$LD_LIBRARY_PATH"  >& 2
-echo "  PYTHONPATH=$PYTHONPATH" >& 2
+
+
+
+# echo "  SPQREL_HOME=$SPQREL_HOME" >& 2
+# echo "  SPQREL_TOOLS=$SPQREL_TOOLS" >& 2
+# echo "  SLU4R_ROOT=$SLU4R_ROOT" >& 2
+# echo "  PEPPER_IP=$PEPPER_IP" >& 2
+# echo "  PATH=$PATH" >& 2
+# echo "  MODIM_HOME=$MODIM_HOME" >& 2
+# echo "  PEPPER_TOOLS_HOME=$PEPPER_TOOLS_HOME" >& 2
+# echo "  LD_LIBRARY_PATH=$LD_LIBRARY_PATH"  >& 2
+# echo "  PYTHONPATH=$PYTHONPATH" >& 2
 
 if [ -d ${SPQREL_HOME}/libexec/git-core ]; then
     export GIT_EXEC_PATH=${SPQREL_HOME}/libexec/git-core
-    echo "using git-core at $GIT_EXEC_PATH" >& 2    
 fi
 
-
+# display environment changes if we are running interactively.
+if [ "$PS1" ]; then
+    echo "configured ENV changes:"
+    env | sort| diff --unchanged-line-format= --old-line-format= --new-line-format='%L' "$ENVFILE" -  | sed 's/^/  /'
+fi
+rm "$ENVFILE"

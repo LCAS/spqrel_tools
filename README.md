@@ -22,7 +22,7 @@ Development scripts from the spqrel team
             spqrel_tools/ (submodule via git clone https://github.com/lcas/spqrel_tools.git)
         ```
 1. go to `cd worktree/spqrel_tools`
-1. edit the local config file [`setup-local.bash`](./setup-local.bash) so that cour SDKs are being found and your top-level SPQReL root is being set (_note_: This file is in `gitignore`, so you will never commit the changes to this file, they are just for you local installation)
+1. edit the local config file [`setup-local.bash`](./setup-local.bash) so that cour SDKs are being found and your top-level SPQReL root is being set (_note_: Make sure you don't commit you local changes. run `git update-index --skip-worktree setup-local.bash` once to avoid it being accidentally committed. It's your own configuration that goes in here only.)
 1. If you are going to develop in any of the submodules (most likely in `spqrel_tools/`), you will notice that the git head is detached (don't worry if you don't know what I'm talking about). Simply check out the branch you want to work on (usually `git checkout master`) and you are good to go.
 
 # Compile and Start

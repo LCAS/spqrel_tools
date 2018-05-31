@@ -60,6 +60,9 @@ export MAP="${MAP:-$SPQREL_HOME/maps/nagoya/dummy.yaml}"
 export TMAP="${TMAP:-$SPQREL_HOME/maps/nagoya/dummy.tpg}"
 export LU4R_IP="${LU4R_IP}:-192.168.127.16}"
 
+export MODIM_HOME=$SPQREL_HOME/worktree/modim
+export PEPPER_TOOLS_HOME=$SPQREL_HOME/worktree/pepper_tools
+
 # clean paths
 export LD_LIBRARY_PATH=`clean_path_var $LD_LIBRARY_PATH`
 export PATH=`clean_path_var $PATH`

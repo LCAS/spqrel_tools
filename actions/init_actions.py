@@ -21,6 +21,7 @@ import execplan, saveposition, soundtrack, navigateto, memorizepeople, memorizef
 import personlost, peoplesummary, arm, bow, headpitch, greet, animation, shakehand, selectpersonmemory, analyseperson #tvsay,
 import trackface
 import modiminit, interact
+import fullpeopleperception
 
 def init(session):
     screentouched.init(session)
@@ -74,8 +75,8 @@ def init(session):
     trackface.init(session)
     modiminit.init(session)
     interact.init(session)
+    fullpeopleperception.init(session)
     
-
 def quit():
     screentouched.quit()
     dooropen.quit()
@@ -128,6 +129,7 @@ def quit():
     trackface.quit()
     modiminit.quit() 
     interact.quit()
+    fullpeopleperception.quit()
     
 def main():
     global memory_service

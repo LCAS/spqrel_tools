@@ -14,9 +14,6 @@ from naoqi import ALProxy
 import conditions
 from conditions import set_condition
 
-last_personid = 0
-p_dist_thres = 1.5
-
 # function called when the signal "EngagementZones/PersonEnteredZone1" is triggered
 def zone1_callback(data):
     global memory_service
@@ -27,48 +24,40 @@ def zone1_callback(data):
 
 
 def rhMonitorThread (memory_service):
-    global last_personid
     t = threading.currentThread()
-    print "personhere thread started"
+    print "fullpeopleperception thread started"
 
     while getattr(t, "do_run", True):
-        plist = memory_service.getData("PeoplePerception/VisiblePeopleList")
-        
-        personid = 0
-        v = 'false'
-        if (plist!=None and len(plist)>0):
-            personid = plist[0]
+        plist = memory_service.getData("PeoplePerception/PeopleList")
 
-            #print 'personhere:: personid ',personid    
-            pmemkey_dist = "PeoplePerception/Person/"+str(personid)+"/Distance"
+        for personid in plist:
+            pmemkey_dist   = "PeoplePerception/Person/"+str(personid)+"/Distance"
             pmemkey_angles = "PeoplePerception/Person/"+str(personid)+"/AnglesYawPitch"
-            pmemkey_pos = "PeoplePerception/Person/"+str(personid)+"/PositionInRobotFrame"
+            pmemkey_pos    = "PeoplePerception/Person/"+str(personid)+"/PositionInRobotFrame"
+            pmemkey_sit    = "PeoplePerception/Person/"+str(personid)+"/IsSitting"
+            pmemkey_wave   = "PeoplePerception/Person/"+str(personid)+"/IsWaving"
+            pmemkey_height = "PeoplePerception/Person/"+str(personid)+"/RealHeight"
+            pmemkey_shirt  = "PeoplePerception/Person/"+str(personid)+"/ShirtColor"
 
-            pdist = memory_service.getData(pmemkey_dist)
-            #print "personhere:: distance ",pdist
-            if (pdist < p_dist_thres):
-                v = 'true'
-            else:
-                v = 'false'
+            key_list = [pmemkey_dist, pmemkey_angles, pmemkey_pos, pmemkey_sit,
+                        pmemkey_wave, pmemkey_height, pmemkey_shirt]
+            
+            data_list = memory_service.getListData(key_list)
 
-            if (v=='true' and personid != last_personid):
-                pangles = memory_service.getData(pmemkey_angles)
-                ppos    = memory_service.getData(pmemkey_pos)
-                print 'personhere: ',str(personid),' dist: ', pdist, ' angle: ',pangles
-                print 'personhere: ',str(personid),' Position (local): ',ppos
-                memory_service.insertData('Actions/personhere/PersonAngleYaw',                    
-                                          str(pangles[0]))
-                memory_service.insertData('Actions/personhere/PersonAngleTurn',                    
-                                          str((int)(pangles[0]/math.pi*180.0))+"_REL")
-                memory_service.insertData('Actions/personhere/PersonID', personid)
-                last_personid = personid
+            print "[Person: ", personid, "]"
+            print "[Distance: ", data_list[0], "]"
+            print "[AnglesYawPitch: ", data_list[1], "]"
+            print "[PositionInRobotFrame: ", data_list[2], "]"
+            print "[IsSitting: ", data_list[3], "]"
+            print "[IsWaving: ", data_list[4], "]"
+            print "[RealHeight: ", data_list[5], "]"
+            print "[ShirtColor: ", data_list[6], "]"
+            print "\n"
 
-        #print plist
-        #print "personhere", v
-        set_condition(memory_service,'personhere',v)
-        
+                    
         time.sleep(0.5)
-    print "personhere thread quit"
+        
+    print "fullpeopleperception thread quit"
 
 
 
@@ -83,9 +72,11 @@ def init(session):
     zones_service = session.service("ALEngagementZones")
     people_service = session.service("ALPeoplePerception")
     people_service.resetPopulation()
-    
-    #waving_service = session.service("ALWavingDetection")
-    #movement_service = session.service("ALMovementDetection")
+    people_service.setMovementDetectionEnabled(True)
+    print "movement detection enabled: ", people_service.isMovementDetectionEnabled()
+    waving_service = session.service("ALWavingDetection")
+    sitting_service = session.service("ALSittingPeopleDetection")
+    movement_service = session.service("ALMovementDetection")
 
     # PARAMETERS
     zones_service.setFirstLimitDistance(1.5)

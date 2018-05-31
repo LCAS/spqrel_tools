@@ -79,5 +79,9 @@ echo "  PEPPER_TOOLS_HOME=$PEPPER_TOOLS_HOME" >& 2
 echo "  LD_LIBRARY_PATH=$LD_LIBRARY_PATH"  >& 2
 echo "  PYTHONPATH=$PYTHONPATH" >& 2
 
-export GIT_EXEC_PATH=${SPQREL_HOME}/libexec/git-core
+if [ -d ${SPQREL_HOME}/libexec/git-core ]; then
+    export GIT_EXEC_PATH=${SPQREL_HOME}/libexec/git-core
+    echo "using git-core at $GIT_EXEC_PATH" >& 2    
+fi
+
 

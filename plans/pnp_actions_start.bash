@@ -23,8 +23,8 @@ tmux split-window -h
 tmux select-pane -t 1
 tmux send-keys "cd $SPQREL_PREFIX/actions; python init_actions.py" C-m
 tmux select-pane -t 2
-tmux send-keys "cd $SPQREL_PREFIX/actions" C-m
-tmux send-keys "./action_cmd.py -a   -p   -c start"
+tmux send-keys "cd $SPQREL_PREFIX/../PetriNetPlans/PNPnaoqi/py" C-m
+tmux send-keys "python pnp_cmd_naoqi.py -a     -p     -c start"
 tmux split-window -h
 tmux select-pane -t 3
 tmux send-keys "cd $SPQREL_PREFIX/plans" C-m

@@ -323,8 +323,8 @@ def actionThread_exec (params):
             
         time.sleep(0.3)
         
-    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
-    print "Action "+actionName+" "+params+" terminated"
+    # action end
+    action_success(actionName,params)
 
 
 

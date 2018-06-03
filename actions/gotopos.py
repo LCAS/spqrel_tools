@@ -94,12 +94,10 @@ def actionThread_exec(params):
             headpose.moveHead(motion_service, headYaw, headPitch, headtime)
         # action exec
         
-    print "Action "+actionName+" "+params+" terminated"
     # action end
     memory_service.raiseEvent(mem_key_reset,True);
     # TODO acb. disconnect...
-    # action end
-    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+    action_success(actionName,params)
 
 
 def init(session):

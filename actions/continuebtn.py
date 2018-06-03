@@ -18,10 +18,9 @@ def actionThread_exec(params):
     else:
         memory_service.raiseEvent('ContinueButton', 'continuebtn_hide')
 
-    print "Action " + actionName + " " + params + " terminated"
     # action end
     sleep(.5)
-    memory_service.raiseEvent("PNP_action_result_" + actionName, "success")
+    action_success(actionName,params)
 
 
 def init(session):

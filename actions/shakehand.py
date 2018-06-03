@@ -83,12 +83,8 @@ def actionThread_exec (params):
         count -= 1
         # action exec
 
-    print "Action "+actionName+" "+params+" terminated"
     # action end
-
-    
-    # action end
-    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+    action_success(actionName,params)
 
 
 def init(session):

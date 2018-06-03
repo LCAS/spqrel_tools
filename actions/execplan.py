@@ -273,13 +273,11 @@ def actionThread_exec (params):
         memory_service.raiseEvent('DialogueVequest',"say_GIVEUP")
 
 
-    print "Action "+actionName+" "+params+" terminated"
     # action end
     #cmd = "cd ../plans; ./run_plan.py --plan GPSR2"
     #os.system(cmd)
     memory_service.raiseEvent("ASR_enable","0")
-    # action end
-    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+    action_success(actionName,params)
 
 
 def init(session):

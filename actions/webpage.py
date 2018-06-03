@@ -40,7 +40,7 @@ def actionThread_exec (params):
 
 
     # action end
-    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+    action_success(actionName,params)
 
 
 def init(session):

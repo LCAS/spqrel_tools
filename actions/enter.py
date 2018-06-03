@@ -51,12 +51,9 @@ def actionThread_exec (params):
         motion_service.setExternalCollisionProtectionEnabled('Move', True)
         count = 0		
         
+    # action end
     motion_service.stopMove()
-    print "Action "+actionName+" "+params+" terminated"
-    # action end
-
-    # action end
-    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+    action_success(actionName,params)
 
 
 def init(session):

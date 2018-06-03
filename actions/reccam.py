@@ -24,14 +24,12 @@ def actionThread_exec (params):
     else:
         memory_service.raiseEvent(logkey,0.5)
         print "  -- Recording data enabled --"
-    # action init
-    
 
+    # action exec
     time.sleep(1.0)
 
-    print "Action "+actionName+" "+params+" terminated"
-
-    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+    # action end
+    action_success(actionName,params)
 
 
 def init(session):

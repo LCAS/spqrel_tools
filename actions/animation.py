@@ -48,9 +48,8 @@ def actionThread_exec (params):
     # execute the animation
     animation = animation_service.run(animation_name, _async=async)
   
-    #finish the action
-    print "Action "+actionName+" "+params+" terminated"
-    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+    # action end
+    action_success(actionName,params)
 
 
 def init(session):

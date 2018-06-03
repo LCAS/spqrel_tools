@@ -69,9 +69,9 @@ def actionThread_exec(params):
     print "Action " + actionName + " " + params + " terminated"
     # action end
     if goal_reached:
-        memory_service.raiseEvent("PNP_action_result_" + actionName, "success")
+        action_success(actionName,params)
     else:
-        memory_service.raiseEvent("PNP_action_result_" + actionName, "failed")
+        action_failed(actionName,params)
 
 
 def init(session):

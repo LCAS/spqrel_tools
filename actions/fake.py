@@ -25,11 +25,9 @@ def actionThread_exec(params):
         count = count - 1
         # action exec
         time.sleep(dt)
-    print "FAKING " + params + " terminated"
     # action end
     count = 0
-    # action end
-    memory_service.raiseEvent("PNP_action_result_" + actionName, "success");
+    action_success(actionName,params)
 
 
 def init(session):

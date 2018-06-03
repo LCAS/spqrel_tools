@@ -49,12 +49,10 @@ def actionThread_exec (params):
         # action exec
         time.sleep(0.25)
 
-    print "Action "+actionName+" "+params+" terminated"
     # action end
     tracker_service.stopTracker()
     tracker_service.unregisterAllTargets()
-    # action end
-    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+    action_success(actionName,params)
 
 
 def init(session):

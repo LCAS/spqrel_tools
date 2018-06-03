@@ -76,8 +76,7 @@ def actionThread_exec (params):
     #print motion_service.getSummary()
 
     # action end
-    print "Action "+actionName+" "+params+" terminated"
-    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+    action_success(actionName,params)
 
 
 def init(session):

@@ -54,10 +54,9 @@ def actionThread_exec (params):
         except:
             print "Not a valid JSON file"
 
-    # TODO acb. disconnect...
     # action end
-
-    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+    # TODO acb. disconnect...
+    action_success(actionName,params)
 
 
 def init(session):

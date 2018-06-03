@@ -46,27 +46,25 @@ def actionThread_exec (params):
     else:
         lang = "English"
 
-    count = 1
-        
     # action init
+    count = 1
+
+    # action exec
     while (getattr(t, "do_run", True) and count > 0): 
         #print "Action "+actionName+" "+params+" exec..."
         # action exec
         what_to_say = greet(lang)
-	print what_to_say
-	tts_service.say(what_to_say)
-	count -= 1
+        print what_to_say
+        tts_service.say(what_to_say)
+        count -= 1
 
-        # action exec
-
-    print "Action "+actionName+" "+params+" terminated"
-    # action end
+    
 
     if len(params) > 0:
         tts_service.setLanguage("English")
 
     # action end
-    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+    action_success(actionName,params)
 
 
 def init(session):

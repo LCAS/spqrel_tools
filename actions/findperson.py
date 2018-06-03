@@ -308,9 +308,9 @@ def actionThread_exec (params):
 
     # action end
 
-    print idgoal              
-    print "Action "+actionName+" "+params+" terminated"
+    print idgoal
 
+    action_success(actionName,params)
 
 
 

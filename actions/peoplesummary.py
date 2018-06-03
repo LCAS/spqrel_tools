@@ -275,12 +275,9 @@ def actionThread_exec (params):
                 memory_service.insertData('Humans/Peoplesummary',str_result)
                                         
         b_completed=True                   
-                    
 
     # action end
-
-    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
-    print "Action "+actionName+" "+params+" terminated"
+    action_success(actionName,params)
 
 
 

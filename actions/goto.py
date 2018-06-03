@@ -94,13 +94,11 @@ def actionThread_exec (params):
         time.sleep(0.5)
         # action exec
         
-    print "Action "+actionName+" "+params+" terminated"
     # action end
     memory_service.raiseEvent(mem_key_reset,True);
     memory_service.raiseEvent(mem_key_headcontrol,False);
     acb.signal.disconnect(acb_connect)
-    # action end
-    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+    action_success(actionName,params)
 
 
 def init(session):

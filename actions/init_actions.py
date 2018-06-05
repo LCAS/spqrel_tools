@@ -6,6 +6,8 @@ import sys
 import os
 import time
 
+from naoqi import ALProxy
+
 import action_base
 from action_base import *
 
@@ -23,7 +25,63 @@ import trackface
 import modiminit, interact
 import fullpeopleperception
 
+
+def start_behaviors():
+    global pip, pport
+
+    print "==================================="
+    print "   Starting background behaviors   "
+    print "==================================="
+
+
+    facedetectionProxy = ALProxy("ALFaceDetection",pip,pport)
+    facecharacteristicsProxy = ALProxy("ALFaceCharacteristics",pip,pport)
+    peopledetectionProxy = ALProxy("ALPeoplePerception",pip,pport)
+    peoplesittingProxy = ALProxy("ALSittingPeopleDetection",pip,pport)
+    soundlocalizationProxy = ALProxy("ALSoundLocalization",pip,pport)
+    motionProxy = ALProxy("ALMotion",pip,pport)
+    wavingdetectionProxy = ALProxy("ALWavingDetection",pip,pport)
+    animationProxy = ALProxy("ALAnimationPlayer",pip,pport)
+
+
+    facedetectionProxy.subscribe("Face_Behavior", 500, 0.0)
+    facecharacteristicsProxy.subscribe("Char_Behavior", 500, 0.0)
+    peopledetectionProxy.subscribe("People_Behavior", 500, 0.0)
+    peoplesittingProxy.subscribe("Sitting_Behavior", 500, 0.0)
+    soundlocalizationProxy.subscribe("Sound_Behavior", 500, 0.0)
+    wavingdetectionProxy.subscribe("Waving_Behavior",500,0.0)
+    #motionProxy.subscribe("Motion_Behavior", 500, 0.0)
+
+
+def quit_behaviors():
+    global pip, pport
+
+    print "==================================="
+    print "   Quitting background behaviors   "
+    print "==================================="
+
+    facedetectionProxy = ALProxy("ALFaceDetection",pip,pport)
+    facecharacteristicsProxy = ALProxy("ALFaceCharacteristics",pip,pport)    
+    peopledetectionProxy = ALProxy("ALPeoplePerception",pip,pport)
+    peoplesittingProxy = ALProxy("ALSittingPeopleDetection",pip,pport)
+    soundlocalizationProxy = ALProxy("ALSoundLocalization",pip,pport)
+    motionProxy = ALProxy("ALMotion",pip,pport)
+    wavingdetectionProxy = ALProxy("ALWavingDetection",pip,pport)
+    animationProxy = ALProxy("ALAnimationPlayer", pip, pport)
+
+    
+    
+    facedetectionProxy.unsubscribe("Face_Behavior")
+    facecharacteristicsProxy.unsubscribe("Char_Behavior")    
+    peopledetectionProxy.unsubscribe("People_Behavior")
+    peoplesittingProxy.unsubscribe("Sitting_Behavior")
+    soundlocalizationProxy.unsubscribe("Sound_Behavior")
+    wavingdetectionProxy.unsubscribe("Waving_Behavior")
+    #motionProxy.unsubscribe("Motion_Behavior")
+
+
 def init(session):
+    start_behaviors()
     screentouched.init(session)
     dooropen.init(session)
     obstaclehere.init(session)
@@ -78,6 +136,7 @@ def init(session):
     fullpeopleperception.init(session)
     
 def quit():
+    quit_behaviors()
     screentouched.quit()
     dooropen.quit()
     obstaclehere.quit()
@@ -130,9 +189,10 @@ def quit():
     modiminit.quit() 
     interact.quit()
     fullpeopleperception.quit()
-    
+
+
 def main():
-    global memory_service
+    global memory_service, pip, pport
     parser = argparse.ArgumentParser()
     parser.add_argument("--pip", type=str, default=os.environ['PEPPER_IP'],
                         help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")

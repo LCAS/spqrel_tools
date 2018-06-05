@@ -19,7 +19,7 @@ function wsrobot_connected() {
 }
 
 function wsrobot_init(ip, port) {
-    var url = "ws://"+ip+":"+port+"/websocketserver";
+    var url = "ws://"+ip+":"+port+"/modimwebsocketserver";
     console.log(url);
     websocket = new WebSocket(url);
 

@@ -18,7 +18,7 @@ tmux new-window -t $SESSION:0 -n 'plans'
 tmux select-window -t $SESSION:0
 tmux split-window -v
 tmux select-pane -t 0
-tmux send-keys "cd $SPQREL_PREFIX; ../PetriNetPlans/PNPnaoqi/build-linux64/sdk/bin/pnp_naoqi" C-m
+tmux send-keys "pnp_naoqi" C-m
 tmux split-window -h
 tmux select-pane -t 1
 tmux send-keys "cd $SPQREL_PREFIX/actions; python init_actions.py" C-m

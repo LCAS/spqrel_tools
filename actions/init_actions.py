@@ -133,7 +133,7 @@ def init(session):
     trackface.init(session)
     modiminit.init(session)
     interact.init(session)
-    fullpeopleperception.init(session)
+    #fullpeopleperception.init(session)
     
 def quit():
     quit_behaviors()
@@ -188,7 +188,7 @@ def quit():
     trackface.quit()
     modiminit.quit() 
     interact.quit()
-    fullpeopleperception.quit()
+    #fullpeopleperception.quit()
 
 
 def main():

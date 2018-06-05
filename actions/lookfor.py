@@ -45,6 +45,7 @@ def actionThread_exec (params):
         # action exec
         time.sleep(dt)
         
+    headpose.moveHead(motion_service, headYaw[0], headPitch[0], headtime)  
     # action end
     action_success(actionName,params)
 

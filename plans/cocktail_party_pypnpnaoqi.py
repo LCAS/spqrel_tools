@@ -24,9 +24,15 @@ p.exec_action('enter', '30_0_0_4_true')
 
 p.exec_action('goto', 'partyroom', interrupt='aborted', recovery='skip_action')
 
-while (not p.get_condition('personhere')):
-    time.sleep(1)
-    
+#while (not p.get_condition('personhere')):
+#    time.sleep(1)
+
+p.exec_action('lookfor', 'personhere')
+#print p.memory_service.getData('Actions/personhere/PersonAngleYaw')
+#print p.memory_service.getData('Actions/personhere/PersonAngleTurn')
+
+p.exec_action('turn', '^Actions/personhere/PersonAngleTurn')
+
 p.exec_action('say', 'hello')
 
 p.exec_action('goto', 'bar', interrupt='aborted', recovery='skip_action')

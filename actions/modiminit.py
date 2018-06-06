@@ -22,8 +22,8 @@ actionName = "modiminit"
 
 def demopath(params):
     demo_path = os.getenv('DEMO_PATH')
-    if demo_path == None:
-        demo_path = os.getcwd()
+    if demo_path == None or demo_path == '':
+        demo_path = os.path.join(os.getenv('SPQREL_TOOLS'), 'modim')
         print "DEMO_PATH not set. Using " + demo_path + "."
         
     if (params=='cocktailparty'):

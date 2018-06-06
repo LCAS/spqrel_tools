@@ -1,6 +1,3 @@
-#! /usr/bin/env python
-# -*- encoding: UTF-8 -*-
-
 # DOCUMENTATION
 # http://doc.aldebaran.com/2-5/naoqi/peopleperception/alengagementzones-api.html#alengagementzones-api
 
@@ -11,6 +8,7 @@ import os
 import time
 import threading
 import math
+import almath
 
 from naoqi import ALProxy
 
@@ -26,21 +24,35 @@ def rhMonitorThread (memory_service,motion_service):
     while getattr(t, "do_run", True):
         v = 'false'
         #print "testing sound"
-        try:
-            sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
-            if len(sound_value)>1:
-                #print "confidence: ", sound_value[1][2]
-                confidence = sound_value[1][2]
-                if (confidence > 0.2):
-                    v = 'true'
-                    time.sleep(5)
-                    sound_azimuth = sound_value[1][0]
-                    head_yaw = sound_value[2][5]
-                    turn_angle = sound_azimuth + head_yaw
-                    turn_angle = int(turn_angle / math.pi * 180)
-                    memory_service.insertData('AngleSound', str(turn_angle) + "_REL")
-        except:
-            v = 'false'
+        
+        sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
+        print "\n"
+        print "[time(sec), time(usec)]", sound_value[0]
+        print "[azimuth(rad), elevation(rad), confidence, energy]", sound_value[1]
+        #print "[Head Position[6D]] in FRAME_TORSO", sound_value[2]
+        print "[Head Position[6D]] in FRAME_ROBOT", sound_value[3]
+        head_pose6d = almath.Position6D(sound_value[3][0],sound_value[3][1],sound_value[3][2],
+                                           sound_value[3][3],sound_value[3][4],sound_value[3][5])
+        print head_pose6d
+        head_transform = almath.transformFromPosition6D(head_pose6d)
+        print "[Head Transform] in FRAME_ROBOT"
+        print head_transform
+
+        print "\n"
+
+        v = 'false'
+        if len(sound_value)>1:
+            #print "confidence: ", sound_value[1][2]
+            confidence = sound_value[1][2]
+            if (confidence > 0.2):
+                v = 'true'
+                time.sleep(5)
+                sound_azimuth = sound_value[1][0]
+                head_yaw = sound_value[2][5]
+                turn_angle = sound_azimuth #+ head_yaw
+                turn_angle = int(turn_angle / math.pi * 180)
+                memory_service.insertData('AngleSound', str(turn_angle) + "_REL")
+           
 
         set_condition(memory_service,'sounddetected',v)
         time.sleep(0.25)

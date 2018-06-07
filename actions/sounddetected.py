@@ -39,7 +39,7 @@ def rhMonitorThread (memory_service,motion_service):
         #print head_transform
         #print "\n"
 
-        if len(sound_value)>1 and prev_time != sound_value[0][0]:
+        if sound_value != None and len(sound_value)>1 and prev_time != sound_value[0][0]:
             prev_time = sound_value[0][0]
             #print "confidence: ", sound_value[1][2]
             confidence = sound_value[1][2]

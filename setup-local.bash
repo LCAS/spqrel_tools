@@ -1,6 +1,6 @@
 # define your own SPQReL Home:
 
-SPQREL_HOME="$HOME/spqrel/spqrel_launch"
+SPQREL_HOME="$HOME/workspaces/@home/spqrel_launch"
 
 # define your local SDK location (only needed for when you run naoqi NOT on pepper)
 

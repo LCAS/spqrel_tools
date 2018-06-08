@@ -15,6 +15,7 @@ class DialogueManager(EventAbstractClass):
     RANKED_EVENT = "VRanked"
     TABLET_ANSWER_EVENT = "TabletAnswer"
     DIALOGUE_REQUEST_EVENT = "DialogueVequest"
+    PARSE_AIML_REQUEST_EVENT = "ParseAIMLRequest"
     cocktail_data = {}
     location = {}
     order_counter = 0
@@ -47,6 +48,10 @@ class DialogueManager(EventAbstractClass):
             event=DialogueManager.TABLET_ANSWER_EVENT,
             callback=self.tablet_callback
         )
+        self.subscribe(
+            event=DialogueManager.PARSE_AIML_REQUEST_EVENT,
+            callback=self.parse_aiml
+        )
 
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             DialogueManager.RANKED_EVENT)
@@ -54,12 +59,15 @@ class DialogueManager(EventAbstractClass):
             DialogueManager.DIALOGUE_REQUEST_EVENT)
         print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             DialogueManager.TABLET_ANSWER_EVENT)
+        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
+            DialogueManager.PARSE_AIML_REQUEST_EVENT)
 
         self._spin()
 
         self.unsubscribe(DialogueManager.RANKED_EVENT)
         self.unsubscribe(DialogueManager.DIALOGUE_REQUEST_EVENT)
         self.unsubscribe(DialogueManager.TABLET_ANSWER_EVENT)
+        self.unsubscribe(DialogueManager.PARSE_AIML_REQUEST_EVENT)
         self.broker.shutdown()
 
     def ranked_callback(self, *args, **kwargs):
@@ -447,11 +455,19 @@ class DialogueManager(EventAbstractClass):
             else:
                 print submessage
 
+    def parse_aiml(self, *args, **kwargs):
+        splitted = args[1].split('_')
+        to_send = ' '.join(splitted)
+
+        reply = self.kernel.respond(to_send)
+        print "AIML response:", reply
+        self.memory.raiseEvent("DialogueVesponse", reply)
+
 
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-i", "--pip", type=str, default="127.0.0.1",
+    parser.add_argument("-i", "--pip", type=str, default=os.environ['PEPPER_IP'],
                         help="Robot ip address")
     parser.add_argument("-p", "--pport", type=int, default=9559,
                         help="Robot port number")

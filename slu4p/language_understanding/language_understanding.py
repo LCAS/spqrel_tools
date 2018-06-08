@@ -1,3 +1,4 @@
+import os
 import argparse
 import signal
 from naoqi import ALProxy, ALBroker, ALModule
@@ -54,11 +55,11 @@ class LanguageUnderstanding(EventAbstractClass):
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-i", "--pip", type=str, default="127.0.0.1",
+    parser.add_argument("-i", "--pip", type=str, default=os.environ['PEPPER_IP'],
                         help="Robot ip address")
     parser.add_argument("-p", "--pport", type=int, default=9559,
                         help="Robot port number")
-    parser.add_argument("-l", "--luar-ip", type=str, default="127.0.0.1",
+    parser.add_argument("-l", "--luar-ip", type=str, os.environ['LU4R_IP'],
                         help="The LU4R ip address")
     parser.add_argument("-o", "--luar-port", type=int, default=9001,
                         help="The LU4R listening port")

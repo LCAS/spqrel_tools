@@ -196,7 +196,7 @@ class SpeechRecognition(EventAbstractClass):
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-i", "--pip", type=str, default="127.0.0.1",
+    parser.add_argument("-i", "--pip", type=str, default=os.environ['PEPPER_IP'],
                         help="Robot ip address")
     parser.add_argument("-p", "--pport", type=int, default=9559,
                         help="Robot port number")

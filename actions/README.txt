@@ -25,7 +25,7 @@ $ export PYTHONPATH=$PYTHONPATH:$HOME/src/PetriNetPlans/PNPnaoqi/actions
 
 == Conditions ==
 
-Condition <phi> is implemented with the AL key "PNP_cond_"+<phi> 
+Condition <phi> is implemented with the AL key "PNP_cond_"+<phi>
 whose value can be 0/1 or false/true
 
 * Command line
@@ -49,7 +49,7 @@ Getting condition:
     memory_service  = app.session.service("ALMemory")
 
     cond = 'condition'
-    val = 'true' 
+    val = 'true'
     conditions.set_condition(memory_service,cond,val)
     conditions.get_condition(memory_service,cond)
 
@@ -62,6 +62,7 @@ SPQReL actions/conditions implemented
 
 SPQReL actions
 
+aimlsay.py          generates a sentence to be spoken using AIML  param: <pattern> the pattern to be matched in the aiml kbs 
 asrenable.py        enables ASR (off to disable)     param: [on|off]  default:on
 assign.py           assign a value to a key     params: <key>_<value>
 continuebtn.py 		continuebtn_show shows the continue button, continuebtn_hide hide it
@@ -94,12 +95,10 @@ webpage.py          (NOT USED) displays a web page
 SPQReL conditions implemented
 
 dooropen.py         true if laser detects free space in front
-movementdetected.py true when a continous movement (around 3-4 sec) is detected 
+movementdetected.py true when a continous movement (around 3-4 sec) is detected
 obstaclehere.py     true if laser detects obstance in front
 personbehind.py     true when person something is behind the robot within a distance of 0.9m
-persondetected.py   true when People list is bigger than 1 
+persondetected.py   true when People list is bigger than 1
 personhere.py       true when a person is in front of the robot within a distance of 1.5m
 personsitting.py    true when a person is found sittin (threshold now at 1.4m heigh)
 screentouched.py    true if screen is touched
-
-

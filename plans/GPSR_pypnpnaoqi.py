@@ -2,11 +2,14 @@ import os
 import sys
 
 try:
-	from pnp_cmd_naoqi import *
+    sys.path.insert(0, os.getenv('PNP_HOME')+'/PNPnaoqi/py')
 except:
     print "Please set PNP_HOME environment variable to PetriNetPlans folder."
     sys.exit(1)
 
+
+import pnp_cmd_naoqi
+from pnp_cmd_naoqi import *
 
 p = PNPCmd()
 
@@ -20,29 +23,37 @@ p.exec_action("recdata", "on")
 p.exec_action("headpose", "0_-10")
 
 #vsay_starting;
-p.exec_action("vsay", "starting")
+p.exec_action("aimlsay", "starting")
 
-#wait_2;
-p.exec_action("wait", "2")
+# "The robot enters the arena and drives to a designated position..."
+# TODO
 
 #turn_-90_ABS; # mayte check
 
-### RUN ###
-for _ in range(10):
-	#vsay_nextquestion;
-	p.exec_action("vsay", "nextquestion")
-	#execplan;
-	p.exec_action("execplan")
+###
+# "The robot can work on at most three commands. After the third command, it has to leave the arena."
+###
+for _ in range(3):
+	# "...it has to wait for further commands."
+	p.exec_action("aimlsay", "requestcommand")
+	# TODO wait
+
+	# understand the command
+	#p.plan_cmd("understandcommand") NOTE not possible yet :(
+	p.exec_plan("execplan")
+
 	#GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
 	p.exec_action("GPSRtask", interrupt="timeout_execplan_180", recovery="skip_action")
+
+	# "..the robot has to move back to the operator to retrieve the next command."
 	#navigateto_backdoorin;
-	p.exec_action("navigateto_backdoorin")
+	p.exec_action("navigateto_backdoorin") # TODO navigate to operator
 	#asrenable;
-	p.exec_action("asrenable")
+	p.exec_action("asrenable") # TODO why here?
 
 ### exit the arena ###
-#vsay_farewell;
-p.exec_action("vsay", "farewell")
+# "After the third command, it has to leave the arena."
+p.exec_action("aimlsay", "farewell")
 
 #recdata_off;
 p.exec_action("rec_data", "off")

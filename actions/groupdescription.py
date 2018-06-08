@@ -41,7 +41,7 @@ def actionThread_exec (params):
     resolution = 3
     colorSpace = 11
     fps = 5
-    
+
     videoClient = video_service.subscribe("python_client", resolution, colorSpace, fps)
     image = video_service.getImageRemote(videoClient)
     video_service.unsubscribe(videoClient)
@@ -52,19 +52,19 @@ def actionThread_exec (params):
     image_string = str(bytearray(array))
 
     img = Image.frombytes("RGB", (imageWidth, imageHeight), image_string)
-    img.save("camImage.png") 
+    img.save("camImage.png")
 
     # comment when it is not needed anymore
     img.show()
     ###########
 
-    with open('/home/sergi/workspaces/spqrel/spqrel_ws/spqrel_launch/worktree/spqrel_tools/actions/camImage.png', 'rb') as f:
+    with open('camImage.png', 'rb') as f:
         img_data = f.read()
 
     response = requests.post(face_api_url, data = img_data, params=api_params, headers=headers)
     faces = response.json()
 
-    # check the result obtained 
+    # check the result obtained
     num_people = 0
     num_male = 0
     num_female = 0
@@ -87,7 +87,7 @@ def actionThread_exec (params):
     memory_service.insertData('Actions/groupdescription/NumPeople',num_people)
     memory_service.insertData('Actions/groupdescription/NumMale',num_male)
     memory_service.insertData('Actions/groupdescription/NumFemale',num_female)
-    memory_service.insertData('Actions/groupdescription/NumChildren',num_children) 
+    memory_service.insertData('Actions/groupdescription/NumChildren',num_children)
 
 
     tts_service.say("There are ")
@@ -97,7 +97,7 @@ def actionThread_exec (params):
     tts_service.say("of them are male and the other")
     tts_service.say(str(num_female))
     tts_service.say("are female")
-    
+
 
     # action end
     print "Action "+actionName+" "+params+" terminated"
@@ -118,12 +118,10 @@ def quit():
 if __name__ == "__main__":
 
     app = action_base.initApp(actionName)
-    	
+
     init(app.session)
 
     #Program stays at this point until we stop it
     app.run()
 
     quit()
-
-

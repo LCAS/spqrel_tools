@@ -1,13 +1,12 @@
+import qi
 import os
 import argparse
 import signal
-from naoqi import ALProxy, ALBroker, ALModule
-from event_abstract import *
 from lu4r_client import LU4RClient
 import slu_utils
 
 
-class LanguageUnderstanding(EventAbstractClass):
+class LanguageUnderstanding(object):
     PATH = ''
     RANKED_EVENT = "VRanked"
 
@@ -15,7 +14,7 @@ class LanguageUnderstanding(EventAbstractClass):
         super(LanguageUnderstanding, self).__init__()
 
         app.start()
-        session.app.session()
+        session = app.session
 
         self.__shutdown_requested = False
         signal.signal(signal.SIGINT, self.signal_handler)
@@ -56,7 +55,7 @@ def main():
                         help="Robot ip address")
     parser.add_argument("-p", "--pport", type=int, default=9559,
                         help="Robot port number")
-    parser.add_argument("-l", "--luar-ip", type=str, os.environ['LU4R_IP'],
+    parser.add_argument("-l", "--luar-ip", type=str, default=os.environ['LU4R_IP'],
                         help="The LU4R ip address")
     parser.add_argument("-o", "--luar-port", type=int, default=9001,
                         help="The LU4R listening port")
@@ -74,7 +73,8 @@ def main():
 
     lu = LanguageUnderstanding(
         lip=args.luar_ip,
-        lport=args.luar_port
+        lport=args.luar_port,
+        app=app
     )
 
     lu.start()

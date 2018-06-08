@@ -24,7 +24,7 @@ import personlost, peoplesummary, arm, bow, headpitch, greet, animation, shakeha
 import trackface
 import modiminit, interact, interactq
 import fullpeopleperception
-import aimlsay
+import aimlsay, understandcommand, commandunderstood
 
 def start_behaviors():
     global pip, pport
@@ -61,7 +61,7 @@ def quit_behaviors():
     print "==================================="
 
     facedetectionProxy = ALProxy("ALFaceDetection",pip,pport)
-    facecharacteristicsProxy = ALProxy("ALFaceCharacteristics",pip,pport)    
+    facecharacteristicsProxy = ALProxy("ALFaceCharacteristics",pip,pport)
     peopledetectionProxy = ALProxy("ALPeoplePerception",pip,pport)
     peoplesittingProxy = ALProxy("ALSittingPeopleDetection",pip,pport)
     soundlocalizationProxy = ALProxy("ALSoundLocalization",pip,pport)
@@ -69,10 +69,10 @@ def quit_behaviors():
     wavingdetectionProxy = ALProxy("ALWavingDetection",pip,pport)
     animationProxy = ALProxy("ALAnimationPlayer", pip, pport)
 
-    
-    
+
+
     facedetectionProxy.unsubscribe("Face_Behavior")
-    facecharacteristicsProxy.unsubscribe("Char_Behavior")    
+    facecharacteristicsProxy.unsubscribe("Char_Behavior")
     peopledetectionProxy.unsubscribe("People_Behavior")
     peoplesittingProxy.unsubscribe("Sitting_Behavior")
     soundlocalizationProxy.unsubscribe("Sound_Behavior")
@@ -136,6 +136,8 @@ def init(session):
     interactq.init(session)
     #fullpeopleperception.init(session)
     aimlsay.init(session)
+    understandcommand.init(session)
+    commandunderstood.init(session)
 def quit():
     quit_behaviors()
     screentouched.quit()
@@ -187,11 +189,13 @@ def quit():
     analyseperson.quit()
     #tvsay.quit()
     trackface.quit()
-    modiminit.quit() 
+    modiminit.quit()
     interact.quit()
     interactq.quit()
     #fullpeopleperception.quit()
     aimlsay.quit()
+    understandcommand.quit(session)
+    commandunderstood.quit(session)
 
 def main():
     global memory_service, pip, pport
@@ -228,4 +232,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

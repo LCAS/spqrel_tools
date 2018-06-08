@@ -86,6 +86,7 @@ soundtrack.py       moves the body towards the sound detected
 speechbtn.py        ???
 trackface.py        coninuouly tracks the face of the person in front with the head - param: termination condition
 turn.py             turns the robot     params: <angle_DEG>_[<REL|ABS>] REL default
+understandcommand.py uses lu4r to interpret the command pronounced by the operator	params: none
 vsay.py             say with Andrea tool    param: label of what to say
 waitfor.py          waits until condition   param: termination condition
 wait.py             waits n seconds         param: seconds to wait
@@ -94,6 +95,7 @@ webpage.py          (NOT USED) displays a web page
 
 SPQReL conditions implemented
 
+commandunderstood.py true if lu4r was able to interpret the command pronounced by the operator
 dooropen.py         true if laser detects free space in front
 movementdetected.py true when a continous movement (around 3-4 sec) is detected
 obstaclehere.py     true if laser detects obstance in front

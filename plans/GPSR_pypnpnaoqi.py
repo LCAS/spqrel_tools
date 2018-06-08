@@ -45,7 +45,7 @@ for _ in range(3):
 
     p.exec_action("understandcommand", "")
 
-    if p.get_condition("command_understood"):
+    if p.get_condition("commandunderstood"):
         p.exec_action("executecommand")
 
         #GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !

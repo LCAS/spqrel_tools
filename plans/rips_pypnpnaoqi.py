@@ -16,19 +16,19 @@ p.begin()
 
 p.exec_action('modiminit', 'rips')
 p.exec_action('interact', 'ready')
-while (not p.get_condition('dooropen')):
-    time.sleep(1)
+#while (not p.get_condition('dooropen')):
+#    time.sleep(1)
     
-p.exec_action('interact', 'inspection')
-p.exec_action('enter', '30_0_0_4_true')
+p.exec_action('interact', 'rips')
+#p.exec_action('enter', '30_0_0_4_true')
 
-p.exec_action('goto', 'rips', interrupt='obstaclehere', recovery='say_hello; waitfor_not_obstaclehere; restart_action')
+#p.exec_action('goto', 'rips', interrupt='obstaclehere', recovery='say_hello; waitfor_not_obstaclehere; restart_action')
 
 p.exec_action('interact', 'inspectme')
 
 p.exec_action('say', 'goodbye')
 
-p.exec_action('goto', 'door', interrupt='aborted', recovery='restart_action')
+#p.exec_action('goto', 'door', interrupt='aborted', recovery='restart_action')
 
 p.end()
 

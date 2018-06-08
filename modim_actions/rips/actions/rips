@@ -2,9 +2,9 @@ IMAGE
 <*, *, *, *>:  "img/inspection.jpg"
 ----
 #TEXT
-#<*,*,*,*>: "Let's party"
-----
-#GESTURE
+#<*,*,*,*>: "Let's go!"
+#----
+GESTURE
 #<*,*,*,*>: animations/Stand/Gestures/Excited_1
 ----
 TTS

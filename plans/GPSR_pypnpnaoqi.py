@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 
 try:
     sys.path.insert(0, os.getenv('PNP_HOME')+'/PNPnaoqi/py')
@@ -34,22 +35,27 @@ p.exec_action("aimlsay", "starting")
 # "The robot can work on at most three commands. After the third command, it has to leave the arena."
 ###
 for _ in range(3):
-	# "...it has to wait for further commands."
-	p.exec_action("aimlsay", "requestcommand")
-	# TODO wait
+    # "...it has to wait for further commands."
+    p.exec_action("aimlsay", "requestcommand")
+    # TODO wait
 
-	# understand the command
-	#p.plan_cmd("understandcommand") NOTE not possible yet :(
-	p.exec_plan("execplan")
+    # understand the command
+    #p.plan_cmd("understandcommand", "start")
+    #p.exec_plan("execplan") NOPE
 
-	#GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
-	p.exec_action("GPSRtask", interrupt="timeout_execplan_180", recovery="skip_action")
+    p.exec_action("understandcommand", "")
 
-	# "..the robot has to move back to the operator to retrieve the next command."
-	#navigateto_backdoorin;
-	p.exec_action("navigateto_backdoorin") # TODO navigate to operator
-	#asrenable;
-	p.exec_action("asrenable") # TODO why here?
+    if p.get_condition("command_understood"):
+        p.exec_action("executecommand")
+
+        #GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
+        #p.exec_action("GPSRtask", interrupt="timeout_execplan_180", recovery="skip_action")
+
+        # "..the robot has to move back to the operator to retrieve the next command."
+        #navigateto_backdoorin;
+        p.exec_action("navigateto_backdoorin") # TODO navigate to operator
+        #asrenable;
+        #p.exec_action("asrenable") # TODO why here?
 
 ### exit the arena ###
 # "After the third command, it has to leave the arena."

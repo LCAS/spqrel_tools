@@ -1,53 +1,52 @@
 import os
+import qi
+import time
 import argparse
 import signal
-from naoqi import ALProxy, ALBroker, ALModule
-from event_abstract import *
 
 
-class TextToSpeech(EventAbstractClass):
+class TextToSpeech(object):
     PATH = ''
     EVENT_NAME = "Veply"
 
-    def __init__(self, ip, port, body_language_mode, speed, pitch):
-        super(self.__class__, self).__init__(self, ip, port)
+    def __init__(self, body_language_mode, speed, pitch, app):
+        super(TextToSpeech, self).__init__()
+
+        app.start()
+        session = app.session
+
         self.__shutdown_requested = False
         signal.signal(signal.SIGINT, self.signal_handler)
-        self.tts = ALProxy("ALTextToSpeech")
+
+        self.memory = session.service("ALMemory")
+
+        self.tts = session.service("ALTextToSpeech")
         self.tts.setParameter("speed", speed)
         self.tts.setParameter("pitchShift", pitch)
         #self.body_language_mode = body_language_mode
         #if self.body_language_mode != "disabled":
         #    self.breathing = ALProxy("ALMotion")
         #    self.breathing.setBreathEnabled('Arms', True)
-        #    self.configuration = {"bodyLanguageMode": self.body_language_mode}
+        #    self.configuration = {"bodyLanguageMode": self.body_language_modess}
 
-    def start(self, *args, **kwargs):
-        self.subscribe(
-            event=TextToSpeech.EVENT_NAME,
-            callback=self.callback
-        )
+    def start(self):
+        self.tts_sub = self.memory.subscriber(TextToSpeech.EVENT_NAME)
+        self.tts_sub_id = self.tts_sub.signal.connect(self.callback)
 
-        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(TextToSpeech.EVENT_NAME)
 
-        self._spin()
+        print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(TextToSpeech.EVENT_NAME)
 
-        self.unsubscribe(TextToSpeech.EVENT_NAME)
-        self.broker.shutdown()
 
-    def callback(self, *args, **kwargs):
-        sentence = str(args[1])
+    def quit(self):
+        self.tts_sub.signal.disconnect(self.tts_sub_id)
+        #self.broker.shutdown()
+        pass
+
+    def callback(self, msg):
+        sentence = str(msg)
         print "Saying:", sentence
         self.tts.say(sentence)
         #self.tts.say(args[1], self.configuration)
-
-    def _spin(self, *args):
-        while not self.__shutdown_requested:
-            for f in args:
-                f()
-            time.sleep(.1)
-            #if self.body_language_mode != "disabled":
-            #self.breathing.setBreathEnabled("Arms", False)
 
     def signal_handler(self, signal, frame):
         print "[" + self.inst.__class__.__name__ + "] Caught Ctrl+C, stopping."
@@ -72,15 +71,27 @@ def main():
 
     args = parser.parse_args()
 
+    try:
+        # Initialize qi framework.
+        connection_url = "tcp://" + args.pip + ":" + str(args.pport)
+        app = qi.Application(["text_to_speech", "--qi-url=" + connection_url])#, autoExit=False)
+    except RuntimeError:
+        print ("Can't connect to Naoqi at ip \"" + args.ip + "\" on port " + str(args.port) +".\n"
+               "Please check your script arguments. Run with -h option for help.")
+        sys.exit(1)
+
     tts = TextToSpeech(
-        ip=args.pip,
-        port=args.pport,
         body_language_mode=args.language_mode,
         speed=args.speed,
-        pitch=args.pitch
+        pitch=args.pitch,
+        app=app
     )
-    tts.update_globals(globals())
+
     tts.start()
+
+    app.run()
+
+    tts.quit()
 
 
 if __name__ == "__main__":

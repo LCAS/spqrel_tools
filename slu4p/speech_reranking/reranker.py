@@ -1,19 +1,23 @@
+import qi
 import os
 import argparse
 import signal
 from slu_utils import *
-from event_abstract import *
 
 
-class ReRanker(EventAbstractClass):
+class ReRanker(object):
     PATH = ''
     LOCAL_EVENT_NAME = "LocalVordRecognized"
     REMOTE_EVENT_NAME = "RemoteVordRecognized"
 
-    def __init__(self, ip, port, alpha, noun_cost, verb_cost, drinks_cost, persons_cost, grammar_cost, nuance_cost,
+    def __init__(self, alpha, noun_cost, verb_cost, drinks_cost, persons_cost, grammar_cost, nuance_cost,
                  noun_dictionary,
-                 verb_dictionary, drinks_dictionary, persons_dictionary, nuance_grammar):
-        super(self.__class__, self).__init__(self, ip, port)
+                 verb_dictionary, drinks_dictionary, persons_dictionary, nuance_grammar, app):
+        super(ReRanker, self).__init__()
+
+        app.start()
+        session = app.session
+
         self.alpha = alpha
         self.noun_cost = noun_cost
         self.verb_cost = verb_cost
@@ -26,33 +30,31 @@ class ReRanker(EventAbstractClass):
         self.drinks_dictionary = lines_to_list(drinks_dictionary)
         self.persons_dictionary = lines_to_list(persons_dictionary)
         self.nuance_grammar = lines_to_list(nuance_grammar)
+
+        self.memory = session.service("ALMemory")
+
         self.__shutdown_requested = False
         signal.signal(signal.SIGINT, self.signal_handler)
 
-    def start(self, *args, **kwargs):
-        self.subscribe(
-            event=ReRanker.LOCAL_EVENT_NAME,
-            callback=self.local_callback
-        )
-        self.subscribe(
-            event=ReRanker.REMOTE_EVENT_NAME,
-            callback=self.remote_callback
-        )
+    def start(self):
+        self.local_sub = self.memory.subscriber(ReRanker.LOCAL_EVENT_NAME)
+        self.local_sub_id = self.local_sub.signal.connect(self.local_callback)
 
-        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
+        self.remote_sub = self.memory.subscriber(ReRanker.REMOTE_EVENT_NAME)
+        self.remote_sub_id = self.remote_sub.signal.connect(self.remote_callback)
+
+        print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             ReRanker.LOCAL_EVENT_NAME)
-        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
+        print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             ReRanker.REMOTE_EVENT_NAME)
 
-        self._spin()
+    def quit(self):
+        self.local_sub.signal.disconnect(self.local_sub_id)
+        self.remote_sub.signal.disconnect(self.remote_sub_id)
 
-        self.unsubscribe(ReRanker.LOCAL_EVENT_NAME)
-        self.unsubscribe(ReRanker.REMOTE_EVENT_NAME)
-        self.broker.shutdown()
-
-    def local_callback(self, *args, **kwargs):
+    def local_callback(self, msg):
         print "[" + self.inst.__class__.__name__ + "] Local ReRanking.."
-        temp = args[1]
+        temp = msg
         transcriptions = list_to_dict(temp)
         if 'GoogleASR' in transcriptions:
             transcriptions = self.__re_rank(transcriptions)
@@ -61,9 +63,9 @@ class ReRanker(EventAbstractClass):
         print transcriptions
         self.memory.raiseEvent("VRanked", transcriptions)
 
-    def remote_callback(self, *args, **kwargs):
+    def remote_callback(self, msg):
         print "[" + self.inst.__class__.__name__ + "] Remote ReRanking.."
-        temp = args[1]
+        temp = msg
         transcriptions = list_to_dict(temp)
         if 'GoogleASR' in transcriptions:
             transcriptions = self.__re_rank(transcriptions)
@@ -75,12 +77,6 @@ class ReRanker(EventAbstractClass):
     def stop(self):
         self.__shutdown_requested = True
         print '[' + self.inst.__class__.__name__ + '] Good-bye'
-
-    def _spin(self, *args):
-        while not self.__shutdown_requested:
-            for f in args:
-                f()
-            time.sleep(.1)
 
     def signal_handler(self, signal, frame):
         print "[" + self.inst.__class__.__name__ + "] Caught Ctrl+C, stopping."
@@ -215,9 +211,16 @@ def main():
 
     args = parser.parse_args()
 
+    try:
+        # Initialize qi framework.
+        connection_url = "tcp://" + args.pip + ":" + str(args.pport)
+        app = qi.Application(["dialogue_manager", "--qi-url=" + connection_url])
+    except RuntimeError:
+        print ("Can't connect to Naoqi at ip \"" + args.ip + "\" on port " + str(args.port) +".\n"
+               "Please check your script arguments. Run with -h option for help.")
+        sys.exit(1)
+
     rr = ReRanker(
-        ip=args.pip,
-        port=args.pport,
         alpha=args.alpha,
         noun_cost=args.noun_cost,
         verb_cost=args.verb_cost,
@@ -229,11 +232,15 @@ def main():
         verb_dictionary=args.verb_dictionary,
         drinks_dictionary=args.drinks_dictionary,
         persons_dictionary=args.persons_dictionary,
-        nuance_grammar=args.nuance_grammar
+        nuance_grammar=args.nuance_grammar,
+        app=app
     )
-    rr.update_globals(globals())
+
     rr.start()
 
+    app.run()
+
+    rr.quit()
 
 if __name__ == "__main__":
     main()

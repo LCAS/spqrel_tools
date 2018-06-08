@@ -1,16 +1,16 @@
 import os
+import qi
+import time
 from Kernel import Kernel
-from naoqi import ALProxy, ALBroker, ALModule
 import argparse
 import signal
 import slu_utils
-from event_abstract import *
 import datetime
 import json
 from conditions import set_condition
 
 
-class DialogueManager(EventAbstractClass):
+class DialogueManager(object):
     PATH = ''
     RANKED_EVENT = "VRanked"
     TABLET_ANSWER_EVENT = "TabletAnswer"
@@ -21,13 +21,16 @@ class DialogueManager(EventAbstractClass):
     order_counter = 0
     restaurant_order_counter = 0
 
-    def __init__(self, ip, port, aiml_path, drinks_path):
-        super(self.__class__, self).__init__(self, ip, port)
+    def __init__(self, aiml_path, drinks_path, app):
+        super(DialogueManager, self).__init__()
+
+        app.start()
+        session = app.session
 
         self.__shutdown_requested = False
         signal.signal(signal.SIGINT, self.signal_handler)
 
-        self.memory = ALProxy("ALMemory")
+        self.memory = session.service("ALMemory")
 
         self.kernel = Kernel()
         self.__learn(aiml_path)
@@ -35,50 +38,46 @@ class DialogueManager(EventAbstractClass):
         self.possible_drinks = slu_utils.lines_to_list(drinks_path)
         #self.food = slu_utils.lines_to_list(drinks_path)
 
-    def start(self, *args, **kwargs):
-        self.subscribe(
-            event=DialogueManager.RANKED_EVENT,
-            callback=self.ranked_callback
-        )
-        self.subscribe(
-            event=DialogueManager.DIALOGUE_REQUEST_EVENT,
-            callback=self.request_callback
-        )
-        self.subscribe(
-            event=DialogueManager.TABLET_ANSWER_EVENT,
-            callback=self.tablet_callback
-        )
-        self.subscribe(
-            event=DialogueManager.PARSE_AIML_REQUEST_EVENT,
-            callback=self.parse_aiml
-        )
 
-        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
+    def start(self):
+        self.ranked_sub = self.memory.subscriber(DialogueManager.RANKED_EVENT)
+        self.ranked_sub_id = self.ranked_sub.signal.connect(self.ranked_callback)
+
+        self.dialogue_sub = self.memory.subscriber(DialogueManager.DIALOGUE_REQUEST_EVENT)
+        self.dialogue_sub_id = self.dialogue_sub.signal.connect(self.request_callback)
+
+        self.tablet_sub = self.memory.subscriber(DialogueManager.TABLET_ANSWER_EVENT)
+        self.tablet_sub_id = self.tablet_sub.signal.connect(self.tablet_callback)
+
+        self.aiml_sub = self.memory.subscriber(DialogueManager.PARSE_AIML_REQUEST_EVENT)
+        self.aiml_sub_id = self.aiml_sub.signal.connect(self.parse_aiml)
+
+        time.sleep(1)
+
+        print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             DialogueManager.RANKED_EVENT)
-        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
+        print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             DialogueManager.DIALOGUE_REQUEST_EVENT)
-        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
+        print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             DialogueManager.TABLET_ANSWER_EVENT)
-        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
+        print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             DialogueManager.PARSE_AIML_REQUEST_EVENT)
 
-        self._spin()
+    def quit(self):
+        self.ranked_sub.signal.disconnect(self.ranked_sub_id)
+        self.dialogue_sub.signal.disconnect(self.dialogue_sub_id)
+        self.tablet_sub.signal.disconnect(self.tablet_sub_id)
+        self.aiml_sub.signal.disconnect(self.aiml_sub_id)
 
-        self.unsubscribe(DialogueManager.RANKED_EVENT)
-        self.unsubscribe(DialogueManager.DIALOGUE_REQUEST_EVENT)
-        self.unsubscribe(DialogueManager.TABLET_ANSWER_EVENT)
-        self.unsubscribe(DialogueManager.PARSE_AIML_REQUEST_EVENT)
-        self.broker.shutdown()
-
-    def ranked_callback(self, *args, **kwargs):
-        transcriptions_dict = slu_utils.list_to_dict_w_probabilities(args[1])
+    def ranked_callback(self, msg):
+        transcriptions_dict = slu_utils.list_to_dict_w_probabilities(msg)
         best_transcription = slu_utils.pick_best(transcriptions_dict)
-        print "[" + self.inst.__class__.__name__ + "] User says: " + best_transcription
+        print "[" + self.__class__.__name__ + "] User says: " + best_transcription
         reply = self.kernel.respond(best_transcription)
         self.do_something(reply)
 
-    def request_callback(self, *args, **kwargs):
-        splitted = args[1].split('_')
+    def request_callback(self, msg):
+        splitted = msg.split('_')
         to_send = ' '.join(splitted)
         print 'to_send: ' + to_send
         if 'start' in splitted:
@@ -196,36 +195,30 @@ class DialogueManager(EventAbstractClass):
         reply = self.kernel.respond(to_send)
         self.do_something(reply)
 
-    def tablet_callback(self, *args, **kwargs):
-        best_transcription = args[1]
-        print "[" + self.inst.__class__.__name__ + "] User says: " + best_transcription
+    def tablet_callback(self, msg):
+        best_transcription = msg
+        print "[" + self.__class__.__name__ + "] User says: " + best_transcription
         reply = self.kernel.respond(best_transcription)
         self.do_something(reply)
 
-    def _spin(self, *args):
-        while not self.__shutdown_requested:
-            for f in args:
-                f()
-            time.sleep(.1)
-
     def signal_handler(self, signal, frame):
-        print "[" + self.inst.__class__.__name__ + "] Caught Ctrl+C, stopping."
+        print "[" + self.__class__.__name__ + "] Caught Ctrl+C, stopping."
         self.__shutdown_requested = True
-        print "[" + self.inst.__class__.__name__ + "] Good-bye"
+        print "[" + self.__class__.__name__ + "] Good-bye"
 
     def __learn(self, path):
         for root, directories, file_names in os.walk(path):
             for filename in file_names:
                 if filename.endswith('.aiml'):
                     self.kernel.learn(os.path.join(root, filename))
-        print "[" + self.inst.__class__.__name__ + "] Number of categories: " + str(self.kernel.num_categories())
+        print "[" + self.__class__.__name__ + "] Number of categories: " + str(self.kernel.num_categories())
 
     def do_something(self, message):
         splitted = message.split('|')
         for submessage in splitted:
             if '[SAY]' in submessage:
                 reply = submessage.replace('[SAY]', '').strip()
-                print "[" + self.inst.__class__.__name__ + "] Robot says: " + reply
+                print "[" + self.__class__.__name__ + "] Robot says: " + reply
                 self.memory.raiseEvent("Veply", reply)
             elif '[TAKEORDERDATA]' in submessage:
                 data = submessage.replace('[TAKEORDERDATA]', '').replace(')', '').strip()
@@ -325,7 +318,7 @@ class DialogueManager(EventAbstractClass):
             elif '[WHATSTHETIME]' in submessage:
                 now = datetime.datetime.now()
                 reply = "It's " + str(now.hour) + " " + str(now.minute)
-                print "[" + self.inst.__class__.__name__ + "] Robot says: " + reply
+                print "[" + self.__class__.__name__ + "] Robot says: " + reply
                 self.memory.raiseEvent("DialogueVesponse", '[WHATSTHETIME]')
                 self.memory.raiseEvent("Veply", reply)
             elif '[STOP]' in submessage:
@@ -455,8 +448,8 @@ class DialogueManager(EventAbstractClass):
             else:
                 print submessage
 
-    def parse_aiml(self, *args, **kwargs):
-        splitted = args[1].split('_')
+    def parse_aiml(self, msg):
+        splitted = msg.split('_')
         to_send = ' '.join(splitted)
 
         reply = self.kernel.respond(to_send)
@@ -477,14 +470,26 @@ def main():
                         help="Path to a file containing the list of drinks")
     args = parser.parse_args()
 
+    try:
+        # Initialize qi framework.
+        connection_url = "tcp://" + args.pip + ":" + str(args.pport)
+        app = qi.Application(["dialogue_manager", "--qi-url=" + connection_url])#, autoExit=False)
+    except RuntimeError:
+        print ("Can't connect to Naoqi at ip \"" + args.ip + "\" on port " + str(args.port) +".\n"
+               "Please check your script arguments. Run with -h option for help.")
+        sys.exit(1)
+
     dm = DialogueManager(
-        ip=args.pip,
-        port=args.pport,
         aiml_path=args.aiml_path,
-        drinks_path=args.drinks_path
+        drinks_path=args.drinks_path,
+        app=app
     )
-    dm.update_globals(globals())
+
     dm.start()
+
+    app.run()
+
+    dm.quit()
 
 
 if __name__ == "__main__":

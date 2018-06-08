@@ -11,40 +11,37 @@ class LanguageUnderstanding(EventAbstractClass):
     PATH = ''
     RANKED_EVENT = "VRanked"
 
-    def __init__(self, ip, port, lip, lport):
-        super(self.__class__, self).__init__(self, ip, port)
+    def __init__(self, lip, lport, app):
+        super(LanguageUnderstanding, self).__init__()
+
+        app.start()
+        session.app.session()
+
         self.__shutdown_requested = False
         signal.signal(signal.SIGINT, self.signal_handler)
+
         self.lu4r_client = LU4RClient(lip, lport)
-        self.memory_proxy = ALProxy('ALMemory')
+        self.memory = session.service('ALMemory')
 
     def start(self, *args, **kwargs):
-        self.subscribe(
-            event=LanguageUnderstanding.RANKED_EVENT,
-            callback=self.callback
-        )
+        self.ranked_sub = self.memory.subscriber(LanguageUnderstanding.RANKED_EVENT)
+        self.ranked_sub_id = self.ranked_sub.signal.connect(self.callback)
 
-        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(LanguageUnderstanding.RANKED_EVENT)
+        print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(LanguageUnderstanding.RANKED_EVENT)
 
-        self._spin()
 
-        self.unsubscribe(LanguageUnderstanding.RANKED_EVENT)
-        self.broker.shutdown()
+    def quit(self):
+        self.ranked_sub.signal.disconnect(self.ranked_sub_id)
 
-    def callback(self, *args, **kwargs):
+    def callback(self, msg):
         transcriptions_dict = slu_utils.list_to_dict_w_probabilities(args[1])
         best_transcription = slu_utils.pick_best(transcriptions_dict)
         print "[" + self.inst.__class__.__name__ + "] User says: " + best_transcription
         interpretation = str(self.lu4r_client.parse_sentence(best_transcription))
         print "[" + self.inst.__class__.__name__ + "] Interpretation: " + interpretation
-        self.memory_proxy.raiseEvent("CommandInterpretations", interpretation)
+        self.memory.raiseEvent("CommandInterpretations", interpretation)
 
 
-    def _spin(self, *args):
-        while not self.__shutdown_requested:
-            for f in args:
-                f()
-            time.sleep(.1)
 
     def signal_handler(self, signal, frame):
         print "[" + self.inst.__class__.__name__ + "] Caught Ctrl+C, stopping."
@@ -66,14 +63,25 @@ def main():
 
     args = parser.parse_args()
 
+    try:
+        # Initialize qi framework.
+        connection_url = "tcp://" + args.pip + ":" + str(args.pport)
+        app = qi.Application(["dialogue_manager", "--qi-url=" + connection_url])
+    except RuntimeError:
+        print ("Can't connect to Naoqi at ip \"" + args.ip + "\" on port " + str(args.port) +".\n"
+               "Please check your script arguments. Run with -h option for help.")
+        sys.exit(1)
+
     lu = LanguageUnderstanding(
-        ip=args.pip,
-        port=args.pport,
         lip=args.luar_ip,
         lport=args.luar_port
     )
-    lu.update_globals(globals())
+
     lu.start()
+
+    app.run()
+
+    lu.quit()
 
 
 if __name__ == "__main__":

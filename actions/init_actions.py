@@ -22,7 +22,7 @@ import posture, personhere, headpose, followuntil, movementdetected, webpage, pe
 import execplan, saveposition, soundtrack, navigateto, memorizepeople, memorizeface, sounddetected, continuebtn, enter, recdata, assign, reccam, gotopos, storecentralperson, fake
 import personlost, peoplesummary, arm, bow, headpitch, greet, animation, shakehand, selectpersonmemory, analyseperson #tvsay,
 import trackface
-import modiminit, interact
+import modiminit, interact, interactq
 import fullpeopleperception
 
 
@@ -133,6 +133,7 @@ def init(session):
     trackface.init(session)
     modiminit.init(session)
     interact.init(session)
+    interactq.init(session)
     #fullpeopleperception.init(session)
     
 def quit():
@@ -188,6 +189,7 @@ def quit():
     trackface.quit()
     modiminit.quit() 
     interact.quit()
+    interactq.quit()
     #fullpeopleperception.quit()
 
 

@@ -58,7 +58,7 @@ def actionThread_exec (params):
     img.show()
     ###########
 
-    with open('/home/sergi/workspaces/spqrel/spqrel_ws/spqrel_launch/worktree/spqrel_tools/actions/camImage.png', 'rb') as f:
+    with open('camImage.png', 'rb') as f:
         img_data = f.read()
 
     response = requests.post(face_api_url, data = img_data, params=api_params, headers=headers)

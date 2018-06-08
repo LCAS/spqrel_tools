@@ -18,7 +18,10 @@ except Exception as e:
 import ws_client
 from ws_client import *
 
-actionName = "interact"
+import conditions
+from conditions import set_condition
+
+actionName = "interactq"
 
 #pepper_ip = '192.168.1.134' # ethernet
 pepper_ip = '127.0.0.1'
@@ -36,14 +39,16 @@ def actionThread_exec (params):
         print "Action "+actionName+" "+params+" exec..."
         # action exec
         #csend
-        data_str = "im.execute('"+params+"')"+"\n###ooo###\n\n"
+        data_str = "im.ask('"+params+"')"+"\n###ooo###\n\n"
 
         rdata = csend(data_str)
-        
+
         count = count - 1
         # action exec
         time.sleep(0.1)
 
+    print "Interactq rdata= ", rdata.encode('ascii')
+    set_condition(memory_service, str(rdata.encode('ascii')), 'true')
     # action end
     action_success(actionName,params)
 

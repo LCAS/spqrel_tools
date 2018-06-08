@@ -1,0 +1,16 @@
+IMAGE
+<*, *, *, *>:  "img/inspection.jpg"
+----
+TEXT
+<*,*,*,*>: "I'm ready for inspection."
+----
+#GESTURE
+#<*,*,*,*>: animations/Stand/Gestures/Excited_1
+----
+TTS
+<*,*,*,*>: "I'm ready for inspection!"
+----
+BUTTONS
+continue
+<*,*,*,*>: Continue
+----

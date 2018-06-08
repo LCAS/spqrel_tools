@@ -24,7 +24,7 @@ import personlost, peoplesummary, arm, bow, headpitch, greet, animation, shakeha
 import trackface
 import modiminit, interact
 import fullpeopleperception
-
+import aimlsay
 
 def start_behaviors():
     global pip, pport
@@ -134,7 +134,7 @@ def init(session):
     modiminit.init(session)
     interact.init(session)
     #fullpeopleperception.init(session)
-    
+    aimlsay.init(session)
 def quit():
     quit_behaviors()
     screentouched.quit()
@@ -189,7 +189,7 @@ def quit():
     modiminit.quit() 
     interact.quit()
     #fullpeopleperception.quit()
-
+    aimlsay.quit()
 
 def main():
     global memory_service, pip, pport

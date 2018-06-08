@@ -432,6 +432,17 @@
     </category>
 
     <category>
+        <pattern>REQUESTCOMMAND</pattern>
+        <template>
+            <random>
+                <li>I am ready to take your command.</li>
+                <li>I am ready, give me a command!</li>
+                <li>Hi there! Ask me to do something!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
         <pattern>NEXTQUESTION</pattern>
         <template>
             <random>

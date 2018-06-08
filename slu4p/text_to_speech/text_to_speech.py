@@ -1,3 +1,4 @@
+import os
 import argparse
 import signal
 from naoqi import ALProxy, ALBroker, ALModule
@@ -35,7 +36,9 @@ class TextToSpeech(EventAbstractClass):
         self.broker.shutdown()
 
     def callback(self, *args, **kwargs):
-        self.tts.say(args[1])
+        sentence = str(args[1])
+        print "Saying:", sentence
+        self.tts.say(sentence)
         #self.tts.say(args[1], self.configuration)
 
     def _spin(self, *args):
@@ -55,7 +58,7 @@ class TextToSpeech(EventAbstractClass):
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-i", "--pip", type=str, default="127.0.0.1",
+    parser.add_argument("-i", "--pip", type=str, default=os.environ['PEPPER_IP'],
                         help="Robot ip address")
     parser.add_argument("-p", "--pport", type=int, default=9559,
                         help="Robot port number")

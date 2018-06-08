@@ -23,11 +23,13 @@ actionName = "modiminit"
 def demopath(params):
     demo_path = os.getenv('DEMO_PATH')
     if demo_path == None or demo_path == '':
-        demo_path = os.path.join(os.getenv('SPQREL_TOOLS'), 'modim')
+        demo_path = os.path.join(os.getenv('SPQREL_TOOLS'), 'modim_actions')
         print "DEMO_PATH not set. Using " + demo_path + "."
         
     if (params=='cocktailparty'):
         return os.path.join(demo_path, "cocktail_party")
+    if (params=='rips'):
+        return os.path.join(demo_path, "rips")
 
 def actionThread_exec (params):
     t = threading.currentThread()

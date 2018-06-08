@@ -36,7 +36,7 @@ def coords(params):
         person_x,person_y = memory_service.getData("center_person/pose")
         return [person_x,person_y]
     elif (params=='rips'):
-        return [1.1, -2.0]
+        return [16, 10, 0]
     elif (params=='corridor2'):
         return [6.0, 2.95]
     elif (params=='backdoorin'):

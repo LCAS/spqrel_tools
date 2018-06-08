@@ -1,0 +1,13 @@
+IMAGE
+<*, *, *, *>:  "img/door.jpg"
+----
+TEXT
+<*,*,*,*>: "I am ready"
+----
+GESTURE
+#<*,*,*,*>: animations/Stand/Gestures/Excited_1
+----
+TTS
+<*,*,*,*>: "Knock, knock"
+----
+

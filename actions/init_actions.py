@@ -33,24 +33,26 @@ def start_behaviors():
     print "   Starting background behaviors   "
     print "==================================="
 
+    try:
+        facedetectionProxy = ALProxy("ALFaceDetection",pip,pport)
+        facecharacteristicsProxy = ALProxy("ALFaceCharacteristics",pip,pport)
+        peopledetectionProxy = ALProxy("ALPeoplePerception",pip,pport)
+        peoplesittingProxy = ALProxy("ALSittingPeopleDetection",pip,pport)
+        soundlocalizationProxy = ALProxy("ALSoundLocalization",pip,pport)
+        motionProxy = ALProxy("ALMotion",pip,pport)
+        wavingdetectionProxy = ALProxy("ALWavingDetection",pip,pport)
+        animationProxy = ALProxy("ALAnimationPlayer",pip,pport)
 
-    facedetectionProxy = ALProxy("ALFaceDetection",pip,pport)
-    facecharacteristicsProxy = ALProxy("ALFaceCharacteristics",pip,pport)
-    peopledetectionProxy = ALProxy("ALPeoplePerception",pip,pport)
-    peoplesittingProxy = ALProxy("ALSittingPeopleDetection",pip,pport)
-    soundlocalizationProxy = ALProxy("ALSoundLocalization",pip,pport)
-    motionProxy = ALProxy("ALMotion",pip,pport)
-    wavingdetectionProxy = ALProxy("ALWavingDetection",pip,pport)
-    animationProxy = ALProxy("ALAnimationPlayer",pip,pport)
 
-
-    facedetectionProxy.subscribe("Face_Behavior", 500, 0.0)
-    facecharacteristicsProxy.subscribe("Char_Behavior", 500, 0.0)
-    peopledetectionProxy.subscribe("People_Behavior", 500, 0.0)
-    peoplesittingProxy.subscribe("Sitting_Behavior", 500, 0.0)
-    soundlocalizationProxy.subscribe("Sound_Behavior", 500, 0.0)
-    wavingdetectionProxy.subscribe("Waving_Behavior",500,0.0)
-    #motionProxy.subscribe("Motion_Behavior", 500, 0.0)
+        facedetectionProxy.subscribe("Face_Behavior", 500, 0.0)
+        facecharacteristicsProxy.subscribe("Char_Behavior", 500, 0.0)
+        peopledetectionProxy.subscribe("People_Behavior", 500, 0.0)
+        peoplesittingProxy.subscribe("Sitting_Behavior", 500, 0.0)
+        soundlocalizationProxy.subscribe("Sound_Behavior", 500, 0.0)
+        wavingdetectionProxy.subscribe("Waving_Behavior",500,0.0)
+        #motionProxy.subscribe("Motion_Behavior", 500, 0.0)
+    except:
+        pass
 
 
 def quit_behaviors():
@@ -60,24 +62,28 @@ def quit_behaviors():
     print "   Quitting background behaviors   "
     print "==================================="
 
-    facedetectionProxy = ALProxy("ALFaceDetection",pip,pport)
-    facecharacteristicsProxy = ALProxy("ALFaceCharacteristics",pip,pport)
-    peopledetectionProxy = ALProxy("ALPeoplePerception",pip,pport)
-    peoplesittingProxy = ALProxy("ALSittingPeopleDetection",pip,pport)
-    soundlocalizationProxy = ALProxy("ALSoundLocalization",pip,pport)
-    motionProxy = ALProxy("ALMotion",pip,pport)
-    wavingdetectionProxy = ALProxy("ALWavingDetection",pip,pport)
-    animationProxy = ALProxy("ALAnimationPlayer", pip, pport)
+    try:
+
+        facedetectionProxy = ALProxy("ALFaceDetection",pip,pport)
+        facecharacteristicsProxy = ALProxy("ALFaceCharacteristics",pip,pport)
+        peopledetectionProxy = ALProxy("ALPeoplePerception",pip,pport)
+        peoplesittingProxy = ALProxy("ALSittingPeopleDetection",pip,pport)
+        soundlocalizationProxy = ALProxy("ALSoundLocalization",pip,pport)
+        motionProxy = ALProxy("ALMotion",pip,pport)
+        wavingdetectionProxy = ALProxy("ALWavingDetection",pip,pport)
+        animationProxy = ALProxy("ALAnimationPlayer", pip, pport)
 
 
 
-    facedetectionProxy.unsubscribe("Face_Behavior")
-    facecharacteristicsProxy.unsubscribe("Char_Behavior")
-    peopledetectionProxy.unsubscribe("People_Behavior")
-    peoplesittingProxy.unsubscribe("Sitting_Behavior")
-    soundlocalizationProxy.unsubscribe("Sound_Behavior")
-    wavingdetectionProxy.unsubscribe("Waving_Behavior")
-    #motionProxy.unsubscribe("Motion_Behavior")
+        facedetectionProxy.unsubscribe("Face_Behavior")
+        facecharacteristicsProxy.unsubscribe("Char_Behavior")
+        peopledetectionProxy.unsubscribe("People_Behavior")
+        peoplesittingProxy.unsubscribe("Sitting_Behavior")
+        soundlocalizationProxy.unsubscribe("Sound_Behavior")
+        wavingdetectionProxy.unsubscribe("Waving_Behavior")
+        #motionProxy.unsubscribe("Motion_Behavior")
+    except:
+        pass
 
 
 def init(session):
@@ -194,8 +200,8 @@ def quit():
     interactq.quit()
     #fullpeopleperception.quit()
     aimlsay.quit()
-    understandcommand.quit(session)
-    commandunderstood.quit(session)
+    understandcommand.quit()
+    commandunderstood.quit()
 
 def main():
     global memory_service, pip, pport

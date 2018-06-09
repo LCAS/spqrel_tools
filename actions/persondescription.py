@@ -19,13 +19,13 @@ headers = { 'Content-Type': 'application/octet-stream',
 
 api_params = {
     'returnFaceId': 'true',
-    'returnFaceLandmarks': 'false',
+    'returnFaceLandmarks': 'true',
     'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,' +
                             'emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
 }
 
 
-actionName = "groupdescription"
+actionName = "persondescription"
 
 
 def actionThread_exec (params):
@@ -40,7 +40,7 @@ def actionThread_exec (params):
     resolution = 3
     colorSpace = 11
     fps = 5
-
+    
     videoClient = video_service.subscribe("python_client", resolution, colorSpace, fps)
     image = video_service.getImageRemote(videoClient)
     video_service.unsubscribe(videoClient)
@@ -51,52 +51,58 @@ def actionThread_exec (params):
     image_string = str(bytearray(array))
 
     img = Image.frombytes("RGB", (imageWidth, imageHeight), image_string)
-    img.save("GroupImage.png") 
-
+    img.save("PersonImage.png") 
 
     # comment when it is not needed anymore
     #img.show()
     ###########
-    with open('GroupImage.png', 'rb') as f:
+
+    with open('PersonImage.png', 'rb') as f:
         img_data = f.read()
 
     response = requests.post(face_api_url, data = img_data, params=api_params, headers=headers)
     faces = response.json()
 
-    # check the result obtained
-    num_people = 0
-    num_male = 0
-    num_female = 0
-    num_children = 0
+    # Look for the face closest to the center
+    min_distance = 100000000
+    for f in range(len(faces)):
+        #print 'Half Image:', imageWidth/2
+        #print 'Center Face:', faces[f]["faceLandmarks"]["noseTip"]["x"]
+        if abs(imageWidth/2 - faces[f]["faceLandmarks"]["noseTip"]["x"]) < min_distance:
+            f_center = f
 
-    for face in faces:
-        num_people += 1
-        if face["faceAttributes"]["gender"] == "male":
-            num_male += 1
-        if face["faceAttributes"]["gender"] == "female":
-            num_female += 1
-        if face["faceAttributes"]["age"] < 10:
-           num_children += 1
-
-    print "Num people: " , num_people
-    print "Num male: " , num_male
-    print "Num female: " , num_female
-    print "Num children: " , num_children
-
-    memory_service.insertData('Actions/groupdescription/NumPeople',num_people)
-    memory_service.insertData('Actions/groupdescription/NumMale',num_male)
-    memory_service.insertData('Actions/groupdescription/NumFemale',num_female)
-    memory_service.insertData('Actions/groupdescription/NumChildren',num_children)
-
-
-    tts_service.say("There are ")
-    tts_service.say(str(num_people))
-    tts_service.say("people in total in this group.")
-    tts_service.say(str(num_male))
-    tts_service.say("of them are male and the other")
-    tts_service.say(str(num_female))
-    tts_service.say("are female")
-
+    # Save the face closest to the center
+    #Gender
+    print "Gender: " , faces[f_center]["faceAttributes"]["gender"]
+    memory_service.insertData("Actions/persondescription/"+params+"/gender",faces[f_center]["faceAttributes"]["gender"])
+    #Age
+    print "Age: " , faces[f_center]["faceAttributes"]["age"]
+    memory_service.insertData("Actions/persondescription/"+params+"/age",faces[f_center]["faceAttributes"]["age"])
+    #Hair
+    print "Hair: " , faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"]
+    memory_service.insertData("Actions/persondescription/"+params+"/hair",faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"])
+    #Beard
+    if float(faces[f_center]["faceAttributes"]["facialHair"]["beard"]) >= 0.2:
+        print "Beard: yes"
+        memory_service.insertData("Actions/persondescription/"+params+"/Beard","yes")
+    else:
+        print "Beard: no"
+        memory_service.insertData("Actions/persondescription/"+params+"/Beard","no")  
+    # Makeup
+    if faces[f_center]["faceAttributes"]["makeup"]["eyeMakeup"] == "true":
+        print "Make up: yes"
+        memory_service.insertData("Actions/persondescription/"+params+"/makeup","yes")
+    else:
+        print "Make up: no"
+        memory_service.insertData("Actions/persondescription/"+params+"/makeup","no")
+    #Glasses
+    if faces[f_center]["faceAttributes"]["glasses"] == "NoGlasses":
+        print "Glasses: no"
+        memory_service.insertData("Actions/persondescription/"+params+"/glasses","yes")
+    else:
+        print "Glasses: yes"
+        memory_service.insertData("Actions/persondescription/"+params+"/glasses","no")
+    
 
     # action end
     print "Action "+actionName+" "+params+" terminated"
@@ -117,11 +123,10 @@ def quit():
 if __name__ == "__main__":
 
     app = action_base.initApp(actionName)
-
+    	
     init(app.session)
 
     #Program stays at this point until we stop it
     app.run()
 
     quit()
-

@@ -54,9 +54,6 @@ def actionThread_exec (params):
 
         # action exec
         time.sleep(1)
-        if tracker_service.isTargetLost():
-            print "Lost:", tracker_service.isTargetLost()
-            val = True
 
     # action end
     tracker_service.stopTracker()

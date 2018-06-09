@@ -53,35 +53,35 @@ class ReRanker(object):
         self.remote_sub.signal.disconnect(self.remote_sub_id)
 
     def local_callback(self, msg):
-        print "[" + self.inst.__class__.__name__ + "] Local ReRanking.."
+        print "[" + self.__class__.__name__ + "] Local ReRanking.."
         temp = msg
         transcriptions = list_to_dict(temp)
         if 'GoogleASR' in transcriptions:
             transcriptions = self.__re_rank(transcriptions)
             self.memory.raiseEvent("ASR_transcription", pick_best(transcriptions))
-            print "[" + self.inst.__class__.__name__ + "] " + str(transcriptions)
+            print "[" + self.__class__.__name__ + "] " + str(transcriptions)
         print transcriptions
         self.memory.raiseEvent("VRanked", transcriptions)
 
     def remote_callback(self, msg):
-        print "[" + self.inst.__class__.__name__ + "] Remote ReRanking.."
+        print "[" + self.__class__.__name__ + "] Remote ReRanking.."
         temp = msg
         transcriptions = list_to_dict(temp)
         if 'GoogleASR' in transcriptions:
             transcriptions = self.__re_rank(transcriptions)
             #self.memory.raiseEvent("ASR_transcription", pick_best(transcriptions))
-            print "[" + self.inst.__class__.__name__ + "] " + str(transcriptions)
+            print "[" + self.__class__.__name__ + "] " + str(transcriptions)
             # self.memory.raiseEvent("VRanked", transcriptions)
         print transcriptions
 
     def stop(self):
         self.__shutdown_requested = True
-        print '[' + self.inst.__class__.__name__ + '] Good-bye'
+        print '[' + self.__class__.__name__ + '] Good-bye'
 
     def signal_handler(self, signal, frame):
-        print "[" + self.inst.__class__.__name__ + "] Caught Ctrl+C, stopping."
+        print "[" + self.__class__.__name__ + "] Caught Ctrl+C, stopping."
         self.__shutdown_requested = True
-        print "[" + self.inst.__class__.__name__ + "] Good-bye"
+        print "[" + self.__class__.__name__ + "] Good-bye"
 
     def __re_rank(self, transcriptions):
         """

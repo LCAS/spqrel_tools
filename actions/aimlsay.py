@@ -1,5 +1,6 @@
 ### generate the sentence using AIML and pronounce it ###
 import qi
+import re
 import argparse
 import sys
 import time
@@ -17,6 +18,10 @@ response = None
 def response_cb(msg):
     global response
     #print "RESPONSE received", msg
+    regex = re.compile("(\[.*?\])")
+    commands = re.findall(regex, msg)
+    for command in commands:
+        msg = msg.replace(command, "")
     response = msg
 
 def actionThread_exec (params):

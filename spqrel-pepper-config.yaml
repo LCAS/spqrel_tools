@@ -18,13 +18,16 @@ windows:
 - name: speech
   panes:
   - cd $SPQREL_HOME/slu4p; python speech_to_text/local_speech_recognition.py -v resources/nuance_grammar.txt
-    -k resources/google_keys.txt
+    -k resources/cloud_google_keys.txt
   - sleep 3; cd $SPQREL_HOME/slu4p; python speech_reranking/reranker.py --noun-dictionary
     resources/noun_dictionary.txt --verb-dictionary resources/verb_dictionary.txt
     --nuance-grammar resources/nuance_grammar.txt
   - sleep 6; cd $SPQREL_HOME/slu4p; python dialogue_management/dialogue_manager.py
     -a resources/aiml_kbs/spqrel
   - sleep 9; cd $SPQREL_HOME/slu4p; python text_to_speech/text_to_speech.py
+- name: lu4r
+  panes:
+  - cd $SPQREL_HOME/slu4p; python language_understanding/language_understanding.py
 - name: pnp
   panes:
   - cd $SPQREL_HOME; bin/pnp_naoqi

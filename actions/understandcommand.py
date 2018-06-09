@@ -28,7 +28,7 @@ def LU4R_callback(data):
     print "LU4R callback: ", lu4r_command
 
 def actionThread_exec (params):
-    global response
+    global response, lu4r_command
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
 
@@ -40,6 +40,7 @@ def actionThread_exec (params):
     #tts_service = getattr(t, "session", None).service("ALTextToSpeech")
     print "Action "+actionName+" started with params "+params
 
+    lu4r_command = ""
     memory_service.raiseEvent("ASR_enable","1")
 
     while (getattr(t, "do_run", True) and lu4r_command == ""):
@@ -56,9 +57,11 @@ def actionThread_exec (params):
     # action end
     action_success(actionName,params)
 
-    sub1.signal.disconnect(idsub1)
-    sub2.signal.disconnect(idsub2)
+    memory_service.raiseEvent("ASR_enable","0")
+    lu4r_command = ""
 
+    #sub1.signal.disconnect(idsub1)
+    sub2.signal.disconnect(idsub2)
 
 def init(session):
     print actionName+" init"

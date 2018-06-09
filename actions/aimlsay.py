@@ -37,6 +37,7 @@ def actionThread_exec (params):
     print "Subscriber connected!"
 
     # action init
+    response = None
     memory_service.raiseEvent('ParseAIMLRequest', params)
     print "  -- aimlsay: "+params
 

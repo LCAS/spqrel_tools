@@ -32,15 +32,11 @@ class TextToSpeech(object):
     def start(self):
         self.tts_sub = self.memory.subscriber(TextToSpeech.EVENT_NAME)
         self.tts_sub_id = self.tts_sub.signal.connect(self.callback)
-
-
         print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(TextToSpeech.EVENT_NAME)
-
 
     def quit(self):
         self.tts_sub.signal.disconnect(self.tts_sub_id)
         #self.broker.shutdown()
-        pass
 
     def callback(self, msg):
         sentence = str(msg)

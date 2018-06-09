@@ -22,7 +22,7 @@ class LanguageUnderstanding(object):
         self.lu4r_client = LU4RClient(lip, lport)
         self.memory = session.service('ALMemory')
 
-    def start(self, *args, **kwargs):
+    def start(self):
         self.ranked_sub = self.memory.subscriber(LanguageUnderstanding.RANKED_EVENT)
         self.ranked_sub_id = self.ranked_sub.signal.connect(self.callback)
 
@@ -33,19 +33,19 @@ class LanguageUnderstanding(object):
         self.ranked_sub.signal.disconnect(self.ranked_sub_id)
 
     def callback(self, msg):
-        transcriptions_dict = slu_utils.list_to_dict_w_probabilities(args[1])
+        transcriptions_dict = slu_utils.list_to_dict_w_probabilities(msg)
         best_transcription = slu_utils.pick_best(transcriptions_dict)
-        print "[" + self.inst.__class__.__name__ + "] User says: " + best_transcription
+        print "[" + self.__class__.__name__ + "] User says: " + best_transcription
         interpretation = str(self.lu4r_client.parse_sentence(best_transcription))
-        print "[" + self.inst.__class__.__name__ + "] Interpretation: " + interpretation
+        print "[" + self.__class__.__name__ + "] Interpretation: " + interpretation
         self.memory.raiseEvent("CommandInterpretations", interpretation)
 
 
 
     def signal_handler(self, signal, frame):
-        print "[" + self.inst.__class__.__name__ + "] Caught Ctrl+C, stopping."
+        print "[" + self.__class__.__name__ + "] Caught Ctrl+C, stopping."
         self.__shutdown_requested = True
-        print "[" + self.inst.__class__.__name__ + "] Good-bye"
+        print "[" + self.__class__.__name__ + "] Good-bye"
 
 
 def main():
@@ -65,7 +65,7 @@ def main():
     try:
         # Initialize qi framework.
         connection_url = "tcp://" + args.pip + ":" + str(args.pport)
-        app = qi.Application(["dialogue_manager", "--qi-url=" + connection_url])
+        app = qi.Application(["dialogue_manager", "--qi-url=" + connection_url], autoExit=False)
     except RuntimeError:
         print ("Can't connect to Naoqi at ip \"" + args.ip + "\" on port " + str(args.port) +".\n"
                "Please check your script arguments. Run with -h option for help.")

@@ -11,7 +11,7 @@ import action_base
 from action_base import *
 
 # define the variable to comunicate with the Microsoft API server
-subscription_key = "c408cc35149f41d998c6ceea328ad2b1"
+subscription_key = "aab6d4045abc47c1942b7a57f97fc1e5"
 assert subscription_key
 face_api_url = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect'
 
@@ -22,7 +22,7 @@ api_params = {
     'returnFaceId': 'true',
     'returnFaceLandmarks': 'false',
     'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,' +
-    'emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
+                            'emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
 }
 
 
@@ -52,13 +52,21 @@ def actionThread_exec (params):
     image_string = str(bytearray(array))
 
     img = Image.frombytes("RGB", (imageWidth, imageHeight), image_string)
+<<<<<<< HEAD
+    img.save("GroupImage.png") 
+=======
     img.save("camImage.png")
+>>>>>>> 796e0f85b65d0f1e5292324b238b30bf3f6b1525
 
     # comment when it is not needed anymore
-    img.show()
+    #img.show()
     ###########
 
+<<<<<<< HEAD
+    with open('GroupImage.png', 'rb') as f:
+=======
     with open('camImage.png', 'rb') as f:
+>>>>>>> 796e0f85b65d0f1e5292324b238b30bf3f6b1525
         img_data = f.read()
 
     response = requests.post(face_api_url, data = img_data, params=api_params, headers=headers)
@@ -125,3 +133,4 @@ if __name__ == "__main__":
     app.run()
 
     quit()
+

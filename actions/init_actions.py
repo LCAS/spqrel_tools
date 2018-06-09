@@ -25,6 +25,7 @@ import trackface
 import modiminit, interact, interactq
 import fullpeopleperception
 import aimlsay, understandcommand, commandunderstood
+import persondescription, groupdescription, updatefollowpersoncoord
 
 def start_behaviors():
     global pip, pport
@@ -144,6 +145,10 @@ def init(session):
     aimlsay.init(session)
     understandcommand.init(session)
     commandunderstood.init(session)
+    persondescription.ini(session)
+    groupdescription.init(session)
+    updatefollowpersoncoord.init(session)
+
 def quit():
     quit_behaviors()
     screentouched.quit()
@@ -202,6 +207,9 @@ def quit():
     aimlsay.quit()
     understandcommand.quit()
     commandunderstood.quit()
+    persondescription.quit()
+    groupdescription.quit()
+    updatefollowpersoncoord.quit()
 
 def main():
     global memory_service, pip, pport

@@ -52,21 +52,13 @@ def actionThread_exec (params):
     image_string = str(bytearray(array))
 
     img = Image.frombytes("RGB", (imageWidth, imageHeight), image_string)
-<<<<<<< HEAD
     img.save("GroupImage.png") 
-=======
-    img.save("camImage.png")
->>>>>>> 796e0f85b65d0f1e5292324b238b30bf3f6b1525
+
 
     # comment when it is not needed anymore
     #img.show()
     ###########
-
-<<<<<<< HEAD
     with open('GroupImage.png', 'rb') as f:
-=======
-    with open('camImage.png', 'rb') as f:
->>>>>>> 796e0f85b65d0f1e5292324b238b30bf3f6b1525
         img_data = f.read()
 
     response = requests.post(face_api_url, data = img_data, params=api_params, headers=headers)

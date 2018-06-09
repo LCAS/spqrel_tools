@@ -15,12 +15,19 @@ p = PNPCmd()
 p.begin()
 
 
-p.exec_action("say", "hello")
-p.exec_action('headpose', '0_-30')
+p.exec_action("aimlsay", "greetings")
+
+p.exec_action('headpose', '0_-10')
+
+p.exec_action("wait","5")
+
+p.exec_action('turn', '180')
 
 p.exec_action("groupdescription", "")
 
-p.exec_action("say", "goodbye")
+p.exec_action("wait","5")
+
+p.exec_action("aimlsay", "farewell")
 
 #p.exec_action("groupdescription","")
 

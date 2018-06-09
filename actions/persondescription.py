@@ -5,7 +5,6 @@ import time
 import threading
 import Image
 import requests
-from IPython.display import HTML
 
 import action_base
 from action_base import *

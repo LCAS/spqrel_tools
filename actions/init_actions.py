@@ -10,7 +10,8 @@ from naoqi import ALProxy
 
 # list all files in here you don't want autoloaded
 # (without .py at the end, just the name)
-blacklisted_actions = ['personhere']
+# blacklisted_actions = ['personhere']
+blacklisted_actions = []
 
 # this is a list of tuples (Proxy, Subscriber) to 
 # initialise services at the beginning

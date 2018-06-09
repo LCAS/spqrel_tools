@@ -106,8 +106,8 @@ class SpeechRecognition(EventAbstractClass):
         """
         if os.path.exists(self.AUDIO_FILE + '.wav'):
             if os.path.getsize(self.AUDIO_FILE + '.wav') > 0:
-                # os.system(self.FLAC_COMM + self.AUDIO_FILE + '.wav') # we can actually use the wav directly...
-                f = open(self.AUDIO_FILE + '.wav', 'rb')
+                os.system(self.FLAC_COMM + self.AUDIO_FILE + '.wav')
+                f = open(self.AUDIO_FILE + '.flac', 'rb')
                 flac_cont = f.read()
                 f.close()
                 results = {}

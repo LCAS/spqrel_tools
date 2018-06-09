@@ -145,7 +145,7 @@ def init(session):
     aimlsay.init(session)
     understandcommand.init(session)
     commandunderstood.init(session)
-    persondescription.ini(session)
+    persondescription.init(session)
     groupdescription.init(session)
     updatefollowpersoncoord.init(session)
 

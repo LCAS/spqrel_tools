@@ -14,24 +14,25 @@ def rhMonitorThread (memory_service):
     t = threading.currentThread()
     while getattr(t, "do_run", True):
         try:
-            value =  memory_service.getData("lu4r_command_understood")
+            value =  memory_service.getData("tasks_to_confirm")
         except RuntimeError:
             # the variable is not declared yet, so it is false
-            value = 0
+            #print "ERROR retrieving value"
+            value = 1
 
         if (value):
-            v = 'true'
-        else:
             v = 'false'
-        set_condition(memory_service,'commandunderstood',v)
+        else:
+            v = 'true'
+        set_condition(memory_service,'alltasksconfirmed',v)
 
-    print "commandunderstood thread quit"
+    print "alltasksconfirmed thread quit"
 
 
 def init(session):
     global monitorThread
 
-    print "commandunderstood init"
+    print "alltasksconfirmed init"
 
     #Starting services
     memory_service  = session.service("ALMemory")
@@ -42,7 +43,7 @@ def init(session):
 
 def quit():
     global monitorThread
-    print "commandunderstood quit"
+    print "alltasksconfirmed quit"
     monitorThread.do_run = False
 
 def main():
@@ -58,7 +59,7 @@ def main():
     #Starting application
     try:
         connection_url = "tcp://" + pip + ":" + str(pport)
-        app = qi.Application(["commandunderstood", "--qi-url=" + connection_url ])
+        app = qi.Application(["alltasksconfirmed", "--qi-url=" + connection_url ])
     except RuntimeError:
         print ("Can't connect to Naoqi at ip \"" + pip + "\" on port " + str(pport) +".\n"
                "Please check your script arguments. Run with -h option for help.")

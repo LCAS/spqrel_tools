@@ -40,6 +40,8 @@ def actionThread_exec (params):
     #tts_service = getattr(t, "session", None).service("ALTextToSpeech")
     print "Action "+actionName+" started with params "+params
 
+    memory_service.insertData("lu4r_command_understood", 0)
+
     lu4r_command = ""
     memory_service.raiseEvent("ASR_enable","1")
 
@@ -47,18 +49,17 @@ def actionThread_exec (params):
         print "Waiting lu4r interpretation"
         time.sleep(0.5)
 
-    if (lu4r_command=='NO FRAME(S) FOUND'):
-        memory_service.insertData("lu4r_command_understood", 0)
-    else:
+    memory_service.raiseEvent("ASR_enable","0")
+
+    if (lu4r_command != 'NO FRAME(S) FOUND'):
         memory_service.insertData("lu4r_command_understood", 1)
         memory_service.insertData("lu4r_command", lu4r_command)
+        time.sleep(1)
 
 
     # action end
     action_success(actionName,params)
 
-    memory_service.raiseEvent("ASR_enable","0")
-    lu4r_command = ""
 
     #sub1.signal.disconnect(idsub1)
     sub2.signal.disconnect(idsub2)
@@ -69,6 +70,9 @@ def init(session):
 
 def quit():
     print actionName+" quit"
+    t = threading.currentThread()
+    memory_service = getattr(t, "mem_serv", None)
+    memory_service.raiseEvent("ASR_enable","0")
     actionThread_exec.do_run = False
 
 

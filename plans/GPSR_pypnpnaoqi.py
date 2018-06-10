@@ -43,18 +43,22 @@ time.sleep(2)
 
 for n in range(3):
     # understand the command
-    #p.plan_cmd("understandcommand", "start")
-    #p.exec_plan("execplan") NOPE
-
     p.exec_action("understandcommand", "")
 
     if p.get_condition("commandunderstood"):
-        p.exec_action("extractscommands", "")
+        p.exec_action("extracttasks", "")
 
-        p.exec_action("askcommandsconfirmation", "")
+        # repeat the commands understood to the operator
+        # and ask when not sure
+        while not p.get_condition("alltasksconfirmed"):
+            # repeat the command to the operator
+            p.exec_action("generatetaskdescription", "")
+
+            p.exec_action("describetask", "")
+
 
         #TODO if commands confirmed
-        p.exec_action("executecommands", "")
+        p.exec_action("executetasks", "")
         #TODO else ask to repeat
 
         #GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !

@@ -22,16 +22,19 @@ def actionThread_exec (params):
     interpretation = ""
 
     # get the lu4r command
-    interpretation = memory_service.getData("lu4r_command")
+    interpretations = memory_service.getData("command_annotations")
+    command_sentence = memory_service.getData("command_sentence")
 
     commands = {}
     to_say = ''
-    interpretation = interpretation.lower()
+    #interpretation = interpretation.lower()
     #interpretation = interpretation.replace(")", "")
     #splitted = interpretation.split('(')
     #print splitted
+    lu4r_interpretation = interpretations[0].lower()
+    ws_interpretation = interpretations[1]
 
-    int_dict = generateDict(interpretation)
+    int_dict = generateDict(lu4r_interpretation)
 
     if "and" in int_dict.keys():
         int_dict = int_dict["and"]

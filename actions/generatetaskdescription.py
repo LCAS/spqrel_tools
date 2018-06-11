@@ -21,6 +21,7 @@ def actionThread_exec (params):
 
     tasks = eval(memory_service.getData("interpreted_tasks"))
     ttc = memory_service.getData("tasks_to_confirm")
+    asr_string = memory_service.getData("command_sentence")
 
     current_task_i = len(tasks) - ttc
     current_task = tasks[current_task_i]
@@ -50,7 +51,9 @@ def getToSay(current_task, memory_service):
     action = ""
     to_say = ""
     dirty_frame = current_task.keys()[0]
-    frame = dirty_frame.split("-")[1]
+    if "-" in dirty_frame:
+        frame = dirty_frame.split("-")[1]
+    else: frame = dirty_frame
     args = {}
     for arg in current_task[dirty_frame]:
         mods = ""

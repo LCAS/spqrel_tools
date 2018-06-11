@@ -14,7 +14,7 @@ def rhMonitorThread (memory_service):
     t = threading.currentThread()
     while getattr(t, "do_run", True):
         try:
-            value =  memory_service.getData("lu4r_command_understood")
+            value =  memory_service.getData("command_understood")
         except RuntimeError:
             # the variable is not declared yet, so it is false
             value = 0

@@ -1,0 +1,18 @@
+IMAGE
+<*, *, *, *>:  "img/cocktailparty.jpg"
+----
+TEXT
+<*,*,*,*>: "Which drink do you want?"
+----
+GESTURE
+#<*,*,*,*>: animations/Stand/Gestures/Excited_1
+----
+TTS
+<*,*,*,*>: "Which drink do you want?"
+----
+BUTTONS
+drink_coke
+<*,*,*,*>: Coke
+drink_beer
+<*,*,*,*>: Beer
+----

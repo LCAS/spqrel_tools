@@ -42,13 +42,14 @@ def actionThread_exec (params):
         data_str = "im.ask('"+params+"')"+"\n###ooo###\n\n"
 
         rdata = csend(data_str)
-
+        rdata = rdata.strip()
+        
         count = count - 1
         # action exec
         time.sleep(0.1)
 
-    print "Interactq rdata= ", rdata.encode('ascii')
-    set_condition(memory_service, str(rdata.encode('ascii')), 'true')
+    print "setting condition: %s true"%rdata 
+    set_condition(memory_service, rdata, 'true')
     # action end
     action_success(actionName,params)
 

@@ -262,16 +262,16 @@ def wavingThread (params):
 
                     isEvent = (waveProb>=flow_event_thres)
                     if isEvent:
-                        memory_service.raiseEvent(mem_key_event,True)
-                    else:
-                        memory_service.raiseEvent(mem_key_event,False)
+                        memory_service.raiseEvent(mem_key_event)
+                    #else:
+                        #memory_service.raiseEvent(mem_key_event,False)
                         
                     
-                    if isEvent:
-                        print "is waving me!"
+                    #if isEvent:
+                    #    print "is waving me!"
                 cnt+=1
 
-        print ("-------------------------\n\n")
+        #print ("-------------------------\n\n")
         time.sleep(throttleInterval)
     print actionName+" thread quit"
 

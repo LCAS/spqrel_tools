@@ -16,3 +16,6 @@ drink_coke
 drink_beer
 <*,*,*,*>: Beer
 ----
+ASRCMD
+<*,*,*,*>: drinks
+----

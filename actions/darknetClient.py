@@ -115,7 +115,10 @@ def darkThread (params):
 
 
                 print ("{0}: Confidence {1}".format(name,confidence))
-                print ("\t at [{0},{1}  {2},{3}]".format(x, y, w, z))
+                print ("\t at [{0},{1}  {2},{3}]".format(pixel_list[0], 
+                                                         pixel_list[1],
+                                                         pixel_list[2],
+                                                         pixel_list[3]))
 
                 cnt+=1
 

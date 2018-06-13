@@ -135,6 +135,9 @@ def image_qi2cv(qiImg):
     cvImg = image_np2cv(npImg)
     return cvImg
 
+def module(x,y):
+    return np.sqrt((x*x)+(y*y))
+    
 def wavingThread (params):
     # This is awful....
     global actionName

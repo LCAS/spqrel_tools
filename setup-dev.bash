@@ -36,11 +36,11 @@ export PYNAOQI=`find "${NAOQI_HOME}" -path "*/pynao*/lib/python2.7/site-packages
 export PYTHONPATH=${PYNAOQI}:$PYTHONPATH
 
 export NAOQI_LIB=`find "${NAOQI_HOME}" -path "*/naoqi*/lib/libqi.*" | sed 's/libqi.*$//' |  tr "\n" ":"`
-export LD_LIBRARY_PATH=${NAOQI_LIB}:${LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH="${NAOQI_LIB}:${LD_LIBRARY_PATH}"
 export DYLD_LIBRARY_PATH=${NAOQI_LIB}:${DYLD_LIBRARY_PATH}
 
 export NAOQI_BIN=`find "${NAOQI_HOME}" -path "*/naoqi*/bin/naoqi-bin" | sed 's/naoqi-bin//'  | tr "\n" ":"`
-export PATH=${NAOQI_BIN}:${PATH}
+export PATH="${NAOQI_BIN}:${PATH}"
 
 
 

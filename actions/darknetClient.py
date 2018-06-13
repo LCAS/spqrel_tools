@@ -140,9 +140,9 @@ def darkThread (params):
         
         #print(type(result[0]))
         r = DarknetSRV.identify(result)
+        foundObjects = []
         if r != []:
             cnt = 0
-            foundObjects = []
             while cnt < len(r):
                 entry = {}
                 name = r[cnt][0]

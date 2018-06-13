@@ -1,5 +1,6 @@
 # spqrel_tools
-Development scripts from the spqrel team
+
+Development scripts from the SPQReL team.
 
 # Install on PC
 
@@ -25,12 +26,17 @@ Development scripts from the spqrel team
 1. edit the local config file [`setup-local.bash`](./setup-local.bash) so that cour SDKs are being found and your top-level SPQReL root is being set (_note_: Make sure you don't commit you local changes. run `git update-index --skip-worktree setup-local.bash` once to avoid it being accidentally committed. It's your own configuration that goes in here only.)
 1. If you are going to develop in any of the submodules (most likely in `spqrel_tools/`), you will notice that the git head is detached (don't worry if you don't know what I'm talking about). Simply check out the branch you want to work on (usually `git checkout master`) and you are good to go.
 
-# Compile and Start
+# Compile 
 
 1. go to your `spqrel_tools` directory (e.g. `cd $HOME/spqrel/workspace/spqrel_launch/worktree/spqrel_tools`)
-1. make sure you load your local development environment: `source setup-dev.bash` (to configure the paths for the SDK) and `source setup.bash` (to configure environment to work with your local worktree) 
-    * make sure you haven't sourced any other configurations, e.g. ROS workspaces etc. _Never autoload any project-specific environments in your `.bashrc`_.
 1. run `make install` in `spqrel_tools`, it should compile all binaries and translate all plans found, and install everything in the respective places. It will find all qibuild workspaces under `worktree/` (all submodules configured)
+
+Note: do not `source setup.bash` or `source setup-dev.bash` as they are needed only for running.
+
+# Run 
+
+1. make sure you load your local development environment: `source setup-dev.bash` (local computer only) and `source setup.bash` (both local computer and Pepper robot) 
+    * make sure you haven't sourced any other configurations, e.g. ROS workspaces etc. _Never autoload any project-specific environments in your `.bashrc`_.
 1. fire up TMule as either:
     * `tmule --config spqrel-local-config.yaml server` (if you want to run locally)
     * `tmule --config spqrel-pepper-config.yaml server` (this is the config usually run on Pepper)

@@ -8,6 +8,8 @@ import os
 import threading
 from naoqi import ALProxy
 import vision_definitions
+import cv2 as cv
+
 
 import action_base
 from action_base import *
@@ -102,7 +104,35 @@ def getPixelT(ri):
     pixel_tuple = (x_min, y_min, x_max, y_max)
     return (pixel_list, pixel_tuple)
 
+def isCorrectImage(result):
+    ans = False
+    if result == None:
+        print 'cannot capture.'
+    elif result[6] == None:
+        print 'no image data string.'
+    else:
+        ans = True
+    return ans
 
+def image_qi2np(dataImage):
+    image = None
+    if( dataImage != None ):
+        image = np.reshape( np.frombuffer(dataImage[6], dtype='%iuint8' % dataImage[2]), (dataImage[1], dataImage[0], dataImage[2]))
+        # image = np.fromstring(str(alImage[6]), dtype=np.uint8).reshape( alImage[1],alImage[0], dataImage[2])
+    return image    
+
+def image_np2cv(npImage):
+        # dirty way to use in cv2 or cv3
+        if cv2.__version__ == '3.3.1-dev':
+            open_cv_image = cv2.cvtColor(npImage, cv2.COLOR_BGR2RGB)
+        else:
+            open_cv_image = cv2.cvtColor(npImage, cv2.cv.CV_BGR2RGB)
+        return open_cv_image
+
+def image_qi2cv(qiImg):
+    npImg = image_qi2np(qiImg)
+    cvImg = image_np2cv(npImg)
+    return cvImg
 
 def wavingThread (params):
     # This is awful....
@@ -127,9 +157,15 @@ def wavingThread (params):
 
     while getattr(t, "do_run", True):
         # get two images with time spacing...
-        img0 = video_service.getImageRemote(imgClient)
-        time.sleep(sampleInterval)        
-        img1 = video_service.getImageRemote(imgClient)
+        isOk = False
+        while not isOk:
+            img0 = video_service.getImageRemote(imgClient)
+            time.sleep(sampleInterval)        
+            img1 = video_service.getImageRemote(imgClient)
+            isOk = isCorrectImage(img0) and isCorrectImage(img1)
+
+        img0 = image_qi2cv(img0)
+        img1 = image_qi2cv(img1)
 
         timestampSecs =  img1[4]
         timestampMicrosecs =  img1[5]
@@ -216,6 +252,8 @@ def wavingThread (params):
                     isEvent = (waveProb>=flow_event_thres)
                     memory_service.raiseEvent(mem_key_event,isEvent)
                     
+                    if isEvent:
+                        print "is waving me!"
                 cnt+=1
 
         print ("-------------------------\n\n")
@@ -234,7 +272,8 @@ def init(session):
     resolution = vision_definitions.kQVGA  # kQVGA =320 * 240  ,kVGA =640x480
     colorSpace = vision_definitions.kRGBColorSpace
 
-    imgClient = video_service.subscribe("_clienteMe", resolution, colorSpace, 5)
+    name = time.strftime('imageclient_%S')
+    imgClient = video_service.subscribe(name, resolution, colorSpace, 5)
 
     # Select camera.
     video_service.setParam(vision_definitions.kCameraSelectID, camera)
@@ -249,7 +288,7 @@ def init(session):
 def quit():
     global actionName
     print actionName+" quit"
-    actionThread_exec.do_run = False
+    wavingThread.do_run = False
     
 
 

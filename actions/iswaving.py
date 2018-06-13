@@ -254,7 +254,11 @@ def wavingThread (params):
                     memory_service.insertData(mem_key, str(timestampSecs))
 
                     isEvent = (waveProb>=flow_event_thres)
-                    memory_service.raiseEvent(mem_key_event,isEvent)
+                    if isEvent:
+                        memory_service.raiseEvent(mem_key_event,True)
+                    else:
+                        memory_service.raiseEvent(mem_key_event,False)
+                        
                     
                     if isEvent:
                         print "is waving me!"

@@ -124,10 +124,10 @@ def image_qi2np(dataImage):
 
 def image_np2cv(npImage):
         # dirty way to use in cv2 or cv3
-        if cv2.__version__ == '3.3.1-dev':
-            open_cv_image = cv2.cvtColor(npImage, cv2.COLOR_BGR2RGB)
+        if cv.__version__ == '3.3.1-dev':
+            open_cv_image = cv.cvtColor(npImage, cv.COLOR_BGR2RGB)
         else:
-            open_cv_image = cv2.cvtColor(npImage, cv2.cv.CV_BGR2RGB)
+            open_cv_image = cv.cvtColor(npImage, cv.cv.CV_BGR2RGB)
         return open_cv_image
 
 def image_qi2cv(qiImg):

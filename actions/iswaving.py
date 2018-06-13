@@ -242,7 +242,7 @@ def init(session):
     # Services
     DarknetSRV = session.service("DarknetSRV")
     
-    action_base.init(session, actionName, darkThread)
+    action_base.init(session, actionName, wavingThread)
 
 
 

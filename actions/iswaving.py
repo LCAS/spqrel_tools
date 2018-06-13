@@ -114,6 +114,26 @@ def isCorrectImage(result):
         ans = True
     return ans
 
+def image_qi2np(dataImage):
+    image = None
+    if( dataImage != None ):
+        image = np.reshape( np.frombuffer(dataImage[6], dtype='%iuint8' % dataImage[2]), (dataImage[1], dataImage[0], dataImage[2]))
+        # image = np.fromstring(str(alImage[6]), dtype=np.uint8).reshape( alImage[1],alImage[0], dataImage[2])
+    return image    
+
+def image_np2cv(npImage):
+        # dirty way to use in cv2 or cv3
+        if cv2.__version__ == '3.3.1-dev':
+            open_cv_image = cv2.cvtColor(npImage, cv2.COLOR_BGR2RGB)
+        else:
+            open_cv_image = cv2.cvtColor(npImage, cv2.cv.CV_BGR2RGB)
+        return open_cv_image
+
+def image_qi2cv(qiImg):
+    npImg = image_qi2np(qiImg)
+    cvImg = image_np2cv(npImg)
+    return cvImg
+
 def wavingThread (params):
     # This is awful....
     global actionName
@@ -143,6 +163,9 @@ def wavingThread (params):
             time.sleep(sampleInterval)        
             img1 = video_service.getImageRemote(imgClient)
             isOk = isCorrectImage(img0) and isCorrectImage(img1)
+
+        img0 = image_qi2cv(img0)
+        img1 = image_qi2cv(img1)
 
         timestampSecs =  img1[4]
         timestampMicrosecs =  img1[5]

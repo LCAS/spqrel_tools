@@ -17,10 +17,13 @@ from conditions import set_condition
 
 
 """
-This action launches the object detection framework. In order to work, it needs darknetsrv.py running in the GPU and exposing the service.
-It uses only 1 param: time between consecutive image captures/detections. The higher, the more network load I will be putting.
+This action launches the object detection framework. In order to work, it needs 
+darknetsrv.py running in the GPU and exposing the service.
+It uses only 1 param: time between consecutive image captures/detections. 
+The higher, the less network load it will be putting.
 
-Upon detection, it will be publishing into ALMemory, under the address Actions/DarknetPerception/[detected object name]
+Upon detection, it will be publishing into ALMemory, under the address 
+Actions/DarknetPerception/[detected object name] 
 
 Timestamp in seconds from the used image:
 "Actions/DarknetPerception/"+name+"/timestamp"
@@ -34,6 +37,7 @@ Bounding box data (relative to the image)
 "Actions/DarknetPerception/"+name+"/BBox/Ymax"
 
 
+detected object name can be found at darknet folder, under data/coco.data
 """
 
 actionName = "darknetClient"
@@ -43,6 +47,15 @@ memory_service = None
 video_service = None
 DarknetSRV = None
 
+def isCorrectImage(result):
+    ans = False
+    if result == None:
+        print 'cannot capture.'
+    elif result[6] == None:
+        print 'no image data string.'
+    else:
+        ans = True
+    return ans
 
 def getPixelT(ri):
     x = ri[2][0]
@@ -82,7 +95,11 @@ def darkThread (params):
 
 
     while getattr(t, "do_run", True):
-        result = video_service.getImageRemote(imgClient)
+        isOk = False
+        while not isOk:
+            result = video_service.getImageRemote(imgClient)
+            isOk = isCorrectImage(result) 
+
         timestampSecs =  result[4]
         timestampMicrosecs =  result[5]
         
@@ -103,22 +120,22 @@ def darkThread (params):
                 cnt+=1
 
                 mem_key = "Actions/DarknetPerception/"+name+"/Confidence"
-                memory_service.insertData(mem_key, confidence)
+                memory_service.insertData(mem_key, str(confidence))
 
                 mem_key = "Actions/DarknetPerception/"+name+"/BBox/Xmin"
-                memory_service.insertData(mem_key, pixel_list[0])
+                memory_service.insertData(mem_key, str(pixel_list[0]))
 
                 mem_key = "Actions/DarknetPerception/"+name+"/BBox/Ymin"
-                memory_service.insertData(mem_key, pixel_list[1])
+                memory_service.insertData(mem_key, str(pixel_list[1]))
 
                 mem_key = "Actions/DarknetPerception/"+name+"/BBox/Xmax"
-                memory_service.insertData(mem_key, pixel_list[2])
+                memory_service.insertData(mem_key, str(pixel_list[2]))
 
                 mem_key = "Actions/DarknetPerception/"+name+"/BBox/Ymax"
-                memory_service.insertData(mem_key, pixel_list[3])
+                memory_service.insertData(mem_key, str(pixel_list[3]))
 
                 mem_key = "Actions/DarknetPerception/"+name+"/timestamp"
-                memory_service.insertData(mem_key, timestampSecs)
+                memory_service.insertData(mem_key, str(timestampSecs))
 
         print ("-------------------------\n\n")
 
@@ -132,13 +149,14 @@ def init(session):
     global DarknetSRV
 
     camera = 0 # upper camera
-
+    memory_service =  session.service("ALMemory")
     video_service = session.service("ALVideoDevice")
     resolution = vision_definitions.kQVGA  # kQVGA =320 * 240  ,kVGA =640x480
     colorSpace = vision_definitions.kRGBColorSpace
 
-    imgClient = video_service.subscribe("_clienteMe", resolution, colorSpace, 5)
-
+    name = time.strftime('imageclient_%S')
+    imgClient = video_service.subscribe(name, resolution, colorSpace, 5)
+    
     # Select camera.
     video_service.setParam(vision_definitions.kCameraSelectID, camera)
 
@@ -152,7 +170,7 @@ def init(session):
 def quit():
     global actionName
     print actionName+" quit"
-    actionThread_exec.do_run = False
+    darkThread.do_run = False
     
 
 

@@ -9,6 +9,7 @@ import threading
 from naoqi import ALProxy
 import vision_definitions
 import cv2 as cv
+import numpy as np
 
 
 import action_base
@@ -123,16 +124,19 @@ def image_qi2np(dataImage):
 
 def image_np2cv(npImage):
         # dirty way to use in cv2 or cv3
-        if cv2.__version__ == '3.3.1-dev':
-            open_cv_image = cv2.cvtColor(npImage, cv2.COLOR_BGR2RGB)
+        if cv.__version__ == '3.3.1-dev':
+            open_cv_image = cv.cvtColor(npImage, cv.COLOR_BGR2RGB)
         else:
-            open_cv_image = cv2.cvtColor(npImage, cv2.cv.CV_BGR2RGB)
+            open_cv_image = cv.cvtColor(npImage, cv.cv.CV_BGR2RGB)
         return open_cv_image
 
 def image_qi2cv(qiImg):
     npImg = image_qi2np(qiImg)
     cvImg = image_np2cv(npImg)
     return cvImg
+
+def module(x,y):
+    return np.sqrt((x*x)+(y*y))
 
 def wavingThread (params):
     # This is awful....
@@ -164,15 +168,15 @@ def wavingThread (params):
             img1 = video_service.getImageRemote(imgClient)
             isOk = isCorrectImage(img0) and isCorrectImage(img1)
 
-        img0 = image_qi2cv(img0)
-        img1 = image_qi2cv(img1)
-
         timestampSecs =  img1[4]
         timestampMicrosecs =  img1[5]
         
         # detect stuff on them
         r0 = DarknetSRV.identify(img0)
         r1 = DarknetSRV.identify(img1)
+
+        img0 = image_qi2cv(img0)
+        img1 = image_qi2cv(img1)
 
         if (r0 != []) and (r1 != []):
             cnt = 0
@@ -223,7 +227,7 @@ def wavingThread (params):
                     if global_flow>global_flow_thres:
                         waveProb =  up_flow/(up_flow+down_flow) 
                     else:
-                        waveProb = 0
+                        waveProb = 0.0
 
                     peopleCounter+=1
 
@@ -232,25 +236,29 @@ def wavingThread (params):
                     mem_key0 = "Actions/PeopleWaving/"+"person{0:02}".format(peopleCounter)
                     
                     mem_key = mem_key0 + "/WaveProbability"
-                    memory_service.insertData(mem_key, waveProb)
+                    memory_service.insertData(mem_key, str(waveProb))
 
                     mem_key = mem_key0 + "/BBox/Xmin"
-                    memory_service.insertData(mem_key, x_min)
+                    memory_service.insertData(mem_key, str(x_min))
 
                     mem_key = mem_key0 + "/BBox/Ymin"
-                    memory_service.insertData(mem_key, y_min)
+                    memory_service.insertData(mem_key, str(y_min))
 
                     mem_key = mem_key0 + "/BBox/Xmax"
-                    memory_service.insertData(mem_key, x_max)
+                    memory_service.insertData(mem_key, str(x_max))
 
                     mem_key = mem_key0 + "/BBox/Ymax"
-                    memory_service.insertData(mem_key, y_max)
+                    memory_service.insertData(mem_key, str(y_max))
 
                     mem_key = mem_key0 + "/timestamp"
-                    memory_service.insertData(mem_key, timestampSecs)
+                    memory_service.insertData(mem_key, str(timestampSecs))
 
                     isEvent = (waveProb>=flow_event_thres)
-                    memory_service.raiseEvent(mem_key_event,isEvent)
+                    if isEvent:
+                        memory_service.raiseEvent(mem_key_event,True)
+                    else:
+                        memory_service.raiseEvent(mem_key_event,False)
+                        
                     
                     if isEvent:
                         print "is waving me!"
@@ -267,7 +275,7 @@ def init(session):
     global DarknetSRV
 
     camera = 0 # upper camera
-
+    memory_service =  session.service("ALMemory")
     video_service = session.service("ALVideoDevice")
     resolution = vision_definitions.kQVGA  # kQVGA =320 * 240  ,kVGA =640x480
     colorSpace = vision_definitions.kRGBColorSpace

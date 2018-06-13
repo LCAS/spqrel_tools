@@ -48,7 +48,7 @@ def actionThread_exec (params):
         print "[ TRACKING ]"
         print "     Person ID: ", personid, "]"
         print "     Distance: ", data_list[0], "]"
-        print "     Position In Robo tFrame: ", data_list[1], "]"
+        print "     Position In Robot Frame: ", data_list[1], "]"
         print "\n"
 
         val = get_condition(memory_service, params)        

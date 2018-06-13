@@ -20,22 +20,29 @@ from conditions import set_condition
 
 
 """
-This action launches the object detection framework. In order to work, it needs darknetsrv.py running in the GPU and exposing the service.
-It uses only 1 param: time between consecutive image captures/detections. The higher, the more network load I will be putting.
+This action launches the waving detection action. In order to work, it needs 
+darknetsrv.py running in the GPU and exposing the service.
 
-Upon detection, it will be publishing into ALMemory, under the address Actions/DarknetPerception/[detected object name]
+It uses 2 params: time between consecutive image captures/detections. 
+                  time between detections.
+The smaller these are, the more network load it will be putting.
 
-Timestamp in seconds from the used image:
-"Actions/DarknetPerception/"+name+"/timestamp"
-Detection probability or confidence of the NN
-"Actions/DarknetPerception/"+name+"/Confidence"
+Upon detection, it will be publishing using strings into ALMemory, 
+under the address Actions/PeopleWaving
+
+An event in "Actions/PeopleWaving/NewDetection" whenever a waving is over 50%
+
+Detection probability or confidence on the waving
+"Actions/PeopleWaving/person[2 digit number]/WaveProbability"
 
 Bounding box data (relative to the image)
-"Actions/DarknetPerception/"+name+"/BBox/Xmin"
-"Actions/DarknetPerception/"+name+"/BBox/Ymin"
-"Actions/DarknetPerception/"+name+"/BBox/Xmax"
-"Actions/DarknetPerception/"+name+"/BBox/Ymax"
+"Actions/PeopleWaving/person[2 digit number]/BBox/Xmin"
+"Actions/PeopleWaving/person[2 digit number]/BBox/Ymin"
+"Actions/PeopleWaving/person[2 digit number]/BBox/Xmax"
+"Actions/PeopleWaving/person[2 digit number]/BBox/Ymax"
 
+Timestamp in seconds from the used image:
+"Actions/PeopleWaving/person[2 digit number]/timestamp"
 
 """
 
@@ -50,10 +57,10 @@ DarknetSRV = None
 factor = 1/3.0
 
 # minimum global flow to start considering waving. Should filter small flows, as noise
-global_flow_thres = 0.4
+global_flow_thres = 0.2
 
 # minimum probability to trigger event
-flow_event_thres = 0.5
+flow_event_thres = 0.2
 
 def imcrop(img, bbox): 
     x1,y1,x2,y2 = bbox
@@ -229,6 +236,11 @@ def wavingThread (params):
                     else:
                         waveProb = 0.0
 
+                    print "Global flow is: "+str(global_flow)
+                    print "Upper part flow is: "+str(up_flow)
+                    print "Lower part flow is: "+str(down_flow)
+                    print "Waving prob is: "+str(waveProb)
+                    
                     peopleCounter+=1
 
                     mem_key_event  = "Actions/PeopleWaving/NewDetection"
@@ -255,16 +267,16 @@ def wavingThread (params):
 
                     isEvent = (waveProb>=flow_event_thres)
                     if isEvent:
-                        memory_service.raiseEvent(mem_key_event)
+                        memory_service.raiseEvent(mem_key_event,True)
                     #else:
-                        #memory_service.raiseEvent(mem_key_event,False)
+                    #    memory_service.raiseEvent(mem_key_event,False)
                         
                     
                     #if isEvent:
                     #    print "is waving me!"
                 cnt+=1
 
-        #print ("-------------------------\n\n")
+        print ("-------------------------")
         time.sleep(throttleInterval)
     print actionName+" thread quit"
 

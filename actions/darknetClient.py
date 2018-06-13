@@ -164,7 +164,11 @@ def darkThread (params):
                 entry['Xmax']=str(pixel_list[2])
                 entry['Ymax']=str(pixel_list[3])
                 entry['timestamp']=str(timestampSecs)
-                entry['location']=memory_service.getData("TopologicalNav/CurrentNode")
+                try:
+                    entry['location']=memory_service.getData("TopologicalNav/CurrentNode")
+                except RuntimeError:  
+                    entry['location']='None'
+
                 foundObjects.append(entry)
         print ("-------------------------\n\n")
         if len(foundObjects)>0:

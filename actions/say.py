@@ -47,7 +47,8 @@ def phraseToSay(memory_service,params):
         return "Please, follow me to the car"
     elif (params=='comehere'):
         return "I cannot see you, could you come here please?"
-    return "Nothing to say."
+    else:
+        return params
 
 def actionThread_exec (params):
     t = threading.currentThread()
@@ -55,18 +56,20 @@ def actionThread_exec (params):
     tts_service = getattr(t, "session", None).service("ALTextToSpeech")
     print "Action "+actionName+" started with params "+params
 
+    memory_service.raiseEvent("ASR_enable", "0")
+
     # action init
-    count = 1
+    val = 0
     tosay = phraseToSay(memory_service,params)
     tts_service.say(tosay)
     print "  -- Say: "+tosay
     # action init
-    while (getattr(t, "do_run", True) and count>0): 
-        print "Action "+actionName+" "+params+" exec..."
+    while (getattr(t, "do_run", True) and val == 0):
+        print "Wait text pronounced"
         # action exec
-        count = count - 1
+        val = memory_service.getData("ALTextToSpeech/TextDone")
         # action exec
-        time.sleep(0.1)
+        time.sleep(0.5)
 
     # action end
     action_success(actionName,params)
@@ -86,12 +89,10 @@ def quit():
 if __name__ == "__main__":
 
     app = action_base.initApp(actionName)
-        
+
     init(app.session)
 
     #Program stays at this point until we stop it
     app.run()
 
     quit()
-
-

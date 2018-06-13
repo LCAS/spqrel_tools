@@ -245,7 +245,8 @@ def init(session):
     resolution = vision_definitions.kQVGA  # kQVGA =320 * 240  ,kVGA =640x480
     colorSpace = vision_definitions.kRGBColorSpace
 
-    imgClient = video_service.subscribe("_clienteMe", resolution, colorSpace, 5)
+    name = time.strftime('imageclient_%S')
+    imgClient = video_service.subscribe(name, resolution, colorSpace, 5)
 
     # Select camera.
     video_service.setParam(vision_definitions.kCameraSelectID, camera)

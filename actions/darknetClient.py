@@ -177,7 +177,7 @@ def darkThread (params):
             mem_key_event  = "Actions/DarknetPerception/DetectionEvent"
 
             memory_service.insertData(mem_key,str(foundObjects))
-            memory_service.raiseEvent(mem_key_event)
+            memory_service.raiseEvent(mem_key_event,True)
 
         time.sleep(period)
     print actionName+" thread quit"

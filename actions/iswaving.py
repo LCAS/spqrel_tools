@@ -255,7 +255,7 @@ def wavingThread (params):
 
                     isEvent = (waveProb>=flow_event_thres)
                     if isEvent:
-                        memory_service.raiseEvent(mem_key_event,True)
+                        memory_service.raiseEvent(mem_key_event)
                     #else:
                         #memory_service.raiseEvent(mem_key_event,False)
                         

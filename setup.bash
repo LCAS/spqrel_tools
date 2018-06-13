@@ -90,7 +90,7 @@ if [ -d ${SPQREL_HOME}/libexec/git-core ]; then
 fi
 
 # display environment changes if we are running interactively.
-if [ "$PS1" ]; then
+if [ "$PS1" -a `uname -n` != "Pepper" ] ; then
     echo "configured ENV changes:"
     env | sort| diff --unchanged-line-format= --old-line-format= --new-line-format='%L' "$ENVFILE" -  | sed 's/^/  /'
 fi

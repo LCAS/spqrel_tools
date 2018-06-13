@@ -44,26 +44,31 @@ def waving_callback(data):
     for personid in plist:
         
         pmemkey_isface   = "PeoplePerception/Person/"+str(personid)+"/IsFaceDetected"
-        data = memory_service.getData(pmemkey_isface)
+        try:
+            data = memory_service.getData(pmemkey_isface)
+            if data == 0:
+                print "       Person ID: ",personid , "- NO Face detected "       
 
-        if data == 0:
-            print "       Person ID: ",personid , "- NO Face detected "       
+            else:
+                pmemkey_face   = "PeoplePerception/Person/"+str(personid)+"/FacialPartsProperties"
+                data = memory_service.getData(pmemkey_face)
 
-        else:
-            pmemkey_face   = "PeoplePerception/Person/"+str(personid)+"/FacialPartsProperties"
-            data = memory_service.getData(pmemkey_face)
+                # Upper mouth coordinates
+                y_person_mouth = data[11][0][1]
+                x_person_mouth = data[11][0][0]
 
-            # Upper mouth coordinates
-            y_person_mouth = data[11][0][1]
-            x_person_mouth = data[11][0][0]
+                distance = math.sqrt(math.pow(x_wave-x_person_mouth,2) + math.pow(y_wave-y_person_mouth,2))
+                print "       Person ID: ",personid , "- Pixel Dist: ",distance, "- Confidence: ", confidence  
 
-            distance = math.sqrt(math.pow(x_wave-x_person_mouth,2) + math.pow(y_wave-y_person_mouth,2))
-            print "       Person ID: ",personid , "- Pixel Dist: ",distance, "- Confidence: ", confidence  
+                if distance < max_distance:
+                    closest_waving_person_id = personid
+                    max_distance = distance
 
-            if distance < max_distance:
-                closest_waving_person_id = personid
-                max_distance = distance
 
+        except:
+            print "       Person ID: ",personid , "- NO Face detected "
+
+        
     if closest_waving_person_id == 0:
         print "\n"
         print "       [  NO PERSON ID WAVING fOUND ]"

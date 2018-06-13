@@ -137,7 +137,7 @@ def image_qi2cv(qiImg):
 
 def module(x,y):
     return np.sqrt((x*x)+(y*y))
-    
+
 def wavingThread (params):
     # This is awful....
     global actionName
@@ -271,7 +271,7 @@ def init(session):
     global DarknetSRV
 
     camera = 0 # upper camera
-
+    memory_service =  session.service("ALMemory")
     video_service = session.service("ALVideoDevice")
     resolution = vision_definitions.kQVGA  # kQVGA =320 * 240  ,kVGA =640x480
     colorSpace = vision_definitions.kRGBColorSpace

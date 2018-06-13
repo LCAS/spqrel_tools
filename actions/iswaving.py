@@ -227,7 +227,7 @@ def wavingThread (params):
                     if global_flow>global_flow_thres:
                         waveProb =  up_flow/(up_flow+down_flow) 
                     else:
-                        waveProb = 0
+                        waveProb = 0.0
 
                     peopleCounter+=1
 
@@ -236,22 +236,22 @@ def wavingThread (params):
                     mem_key0 = "Actions/PeopleWaving/"+"person{0:02}".format(peopleCounter)
                     
                     mem_key = mem_key0 + "/WaveProbability"
-                    memory_service.insertData(mem_key, waveProb)
+                    memory_service.insertData(mem_key, str(waveProb))
 
                     mem_key = mem_key0 + "/BBox/Xmin"
-                    memory_service.insertData(mem_key, x_min)
+                    memory_service.insertData(mem_key, str(x_min))
 
                     mem_key = mem_key0 + "/BBox/Ymin"
-                    memory_service.insertData(mem_key, y_min)
+                    memory_service.insertData(mem_key, str(y_min))
 
                     mem_key = mem_key0 + "/BBox/Xmax"
-                    memory_service.insertData(mem_key, x_max)
+                    memory_service.insertData(mem_key, str(x_max))
 
                     mem_key = mem_key0 + "/BBox/Ymax"
-                    memory_service.insertData(mem_key, y_max)
+                    memory_service.insertData(mem_key, str(y_max))
 
                     mem_key = mem_key0 + "/timestamp"
-                    memory_service.insertData(mem_key, timestampSecs)
+                    memory_service.insertData(mem_key, str(timestampSecs))
 
                     isEvent = (waveProb>=flow_event_thres)
                     memory_service.raiseEvent(mem_key_event,isEvent)

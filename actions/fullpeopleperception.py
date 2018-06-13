@@ -14,13 +14,6 @@ from naoqi import ALProxy
 import conditions
 from conditions import set_condition
 
-# function called when the signal "EngagementZones/PersonEnteredZone1" is triggered
-def zone1_callback(data):
-    global memory_service
-    print "Person has entered Zone 1"
-    set_condition(memory_service,'personhere','true')
-    time.sleep(1)
-    set_condition(memory_service,'personhere','false')
 
 
 def rhMonitorThread (memory_service):
@@ -28,6 +21,7 @@ def rhMonitorThread (memory_service):
     print "fullpeopleperception thread started"
 
     while getattr(t, "do_run", True):
+        
         plist = memory_service.getData("PeoplePerception/PeopleList")
 
         for personid in plist:
@@ -38,21 +32,25 @@ def rhMonitorThread (memory_service):
             pmemkey_wave   = "PeoplePerception/Person/"+str(personid)+"/IsWaving"
             pmemkey_height = "PeoplePerception/Person/"+str(personid)+"/RealHeight"
             pmemkey_shirt  = "PeoplePerception/Person/"+str(personid)+"/ShirtColor"
+            pmemkey_face   = "PeoplePerception/Person/"+str(personid)+"/FacialPartsProperties"
 
             key_list = [pmemkey_dist, pmemkey_angles, pmemkey_pos, pmemkey_sit,
-                        pmemkey_wave, pmemkey_height, pmemkey_shirt]
+                        pmemkey_wave, pmemkey_height, pmemkey_shirt, pmemkey_face]
             
             data_list = memory_service.getListData(key_list)
 
-            print "[Person: ", personid, "]"
-            print "[Distance: ", data_list[0], "]"
-            print "[AnglesYawPitch: ", data_list[1], "]"
-            print "[PositionInRobotFrame: ", data_list[2], "]"
-            print "[IsSitting: ", data_list[3], "]"
-            print "[IsWaving: ", data_list[4], "]"
-            print "[RealHeight: ", data_list[5], "]"
-            print "[ShirtColor: ", data_list[6], "]"
             print "\n"
+            print "[Person: ", personid, "]"
+            #print "[Distance: ", data_list[0], "]"
+            #print "[AnglesYawPitch: ", data_list[1], "]"
+            #print "[PositionInRobotFrame: ", data_list[2], "]"
+            #print "[IsSitting: ", data_list[3], "]"
+            #print "[IsWaving: ", data_list[4], "]"
+            #print "[RealHeight: ", data_list[5], "]"
+            #print "[ShirtColor: ", data_list[6], "]"
+            print  "[Mouth Coord (x,y): ", data_list[7][11][0][0], data_list[7][11][0][1] ,"]"
+            #print "\n"
+
 
                     
         time.sleep(0.5)
@@ -65,7 +63,7 @@ def init(session):
     global memory_service
     global monitorThread
 
-    print "Person here init"
+    print "full perception init"
 
     #Starting services
     memory_service  = session.service("ALMemory")
@@ -82,12 +80,6 @@ def init(session):
     zones_service.setFirstLimitDistance(1.5)
     zones_service.setSecondLimitDistance(2.5)
     zones_service.setLimitAngle(45)
-    
-    try:
-        zoneDetection = memory_service.subscriber("EngagementZones/PersonEnteredZone1")
-        idAnyDetection = zoneDetection.signal.connect(zone1_callback)   
-    except RuntimeError:
-        print "Cannot find ALEngagementZones service. Condition personhere not available"
 
     print "Creating the thread"
 

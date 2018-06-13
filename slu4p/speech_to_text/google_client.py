@@ -19,12 +19,12 @@ class GoogleClient:
             print "[" + self.__class__.__name__ + "] [GOOGLE] Recognizing file.."
             transcriptions = []
             data = open(file_path, "rb").read()
-	    base64_data = base64.b64encode(data)
-	    audio_json = {"content": base64_data}
-	    config_json = {"languageCode": self.language}
-	    json_data = {"config": config_json, "audio": audio_json}
-	    response = requests.post(self.url, json=json_data, headers=self.headers, timeout=self.timeout)
-	    json_res = json.loads(response.text)
+            base64_data = base64.b64encode(data)
+            audio_json = {"content": base64_data}
+            config_json = {"languageCode": self.language}
+            json_data = {"config": config_json, "audio": audio_json}
+            response = requests.post(self.url, json=json_data, headers=self.headers, timeout=self.timeout)
+            json_res = json.loads(response.text)
             if "results" in json_res.keys() and "alternatives" in json_res["results"][0].keys():
                 for alternative in json_res["results"][0]["alternatives"]:
                     transcriptions.append(alternative["transcript"].lower())
@@ -42,15 +42,16 @@ class GoogleClient:
         try:
             print "[" + self.__class__.__name__ + "] [GOOGLE] Recognizing data.."
             transcriptions = []
-	    base64_data = base64.b64encode(data)
-	    audio_json = {"content": base64_data}
-	    config_json = {"languageCode": self.language}
-	    json_data = {"config": config_json, "audio": audio_json}
-	    response = requests.post(self.url, json=json_data, headers=self.headers, timeout=self.timeout)
+            base64_data = base64.b64encode(data)
+            audio_json = {"content": base64_data}
+            config_json = {"languageCode": self.language}
+            json_data = {"config": config_json, "audio": audio_json}
+            response = requests.post(self.url, json=json_data, headers=self.headers, timeout=self.timeout)
             json_res = json.loads(response.text)
-	    if "results" in json_res.keys() and "alternatives" in json_res["results"][0].keys():
-	        for alternative in json_res["results"][0]["alternatives"]:
-		    transcriptions.append(alternative["transcript"].lower())
+            print json_res
+            if "results" in json_res.keys() and "alternatives" in json_res["results"][0].keys():
+                for alternative in json_res["results"][0]["alternatives"]:
+                    transcriptions.append(alternative["transcript"].lower())
             return transcriptions
         except ValueError as ve:
             print ve.message

@@ -8,24 +8,91 @@ import time
 
 from naoqi import ALProxy
 
-import action_base
-from action_base import *
+# list all files in here you don't want autoloaded
+# (without .py at the end, just the name)
+# blacklisted_actions = ['personhere']
+blacklisted_actions = []
 
-# For each new action, add the following:
-# import actionname
-# actionname.init(session) in init function
-# actionname.quit() in quit function
+# this is a list of tuples (Proxy, Subscriber) to 
+# initialise services at the beginning
+behaviours = [
+    ('ALFaceDetection', 'Face_Behavior'),
+    ('ALFaceCharacteristics', 'Char_Behavior'),
+    ('ALPeoplePerception', 'People_Behavior'),
+    ('ALSittingPeopleDetection', 'Sitting_Behavior'),
+    ('ALSoundLocalization', 'Sound_Behavior'),
+    ('ALMotion', 'Motion_Behavior'),
+    ('ALWavingDetection', 'Waving_Behavior'),
+    ('ALAnimationPlayer', None)
+]
 
-import dooropen, obstaclehere, screentouched
-import say, vsay, wait, waitfor, goto, turn, lookfor, dialogue, dialoguestart, dialoguestop, asrenable
-import posture, personhere, headpose, followuntil, movementdetected, webpage, personbehind, persondetected, speechbtn
-import execplan, saveposition, soundtrack, navigateto, memorizepeople, memorizeface, sounddetected, continuebtn, enter, recdata, assign, reccam, gotopos, storecentralperson, fake
-import personlost, peoplesummary, arm, bow, headpitch, greet, animation, shakehand, selectpersonmemory, analyseperson #tvsay,
-import trackface
-import modiminit, interact, interactq
-import fullpeopleperception
-import aimlsay, understandcommand, commandunderstood
-import persondescription, groupdescription, updatefollowpersoncoord
+actions_running = []
+
+
+def find_and_import():
+    """
+    find all python files in the same directory as
+    this file and loads them dynamically
+    """
+    import pkgutil
+
+    p = os.path.realpath(__file__)
+    print p
+    modules = []
+    failed_loads = []
+    for loader, name, is_pkg in pkgutil.walk_packages(p):
+        if name == "init_actions" or name in blacklisted_actions:
+            continue
+        try:
+            modules.append(loader.find_module(name).load_module(name))
+        except Exception as e:
+            print("*** exception importing module %s: %s ***"
+                  % (name, str(e)))
+            failed_loads.append(name)
+    if len(failed_loads) > 0:
+        print "*** failed loads: \n  ! %s" % '\n  ! '.join(failed_loads)
+
+    return modules
+
+
+def init_actions(modules, session=None):
+    """
+    initialises all modules by calling the init functions.
+    Important: Crashes gracefully should one action not be initialised,
+    but summarises the failed ones at the end
+    """
+    # Later in the code when processing is required:
+    failed_inits = []
+    for module in modules:
+        # if it has an init function, call it:
+        if "init" in module.__dict__:
+            try:
+                module.init(session)
+                actions_running.append(module.__name__)
+            except Exception as e:
+                print("*** exception quitting action %s: %s ***"
+                      % (module.__name__, str(e)))
+                failed_inits.append(module.__name__)
+    if len(failed_inits) > 0:
+        print("*** failed initialisations: \n  ! %s" %
+              '\n  ! '.join(failed_inits))
+    return failed_inits
+
+
+def quit_actions(modules):
+    """
+    quit all actions, crash gracefully if some don't work
+    """
+    # Later in the code when processing is required:
+    for module in modules:
+        # if it has an init function, call it:
+        if "quit" in module.__dict__:
+            try:
+                module.quit()
+            except Exception as e:
+                print("*** exception initialising action %s: %s ***"
+                      % (module.__name__, str(e)))
+
 
 def start_behaviors():
     global pip, pport
@@ -34,26 +101,16 @@ def start_behaviors():
     print "   Starting background behaviors   "
     print "==================================="
 
-    try:
-        facedetectionProxy = ALProxy("ALFaceDetection",pip,pport)
-        facecharacteristicsProxy = ALProxy("ALFaceCharacteristics",pip,pport)
-        peopledetectionProxy = ALProxy("ALPeoplePerception",pip,pport)
-        peoplesittingProxy = ALProxy("ALSittingPeopleDetection",pip,pport)
-        soundlocalizationProxy = ALProxy("ALSoundLocalization",pip,pport)
-        motionProxy = ALProxy("ALMotion",pip,pport)
-        wavingdetectionProxy = ALProxy("ALWavingDetection",pip,pport)
-        animationProxy = ALProxy("ALAnimationPlayer",pip,pport)
-
-
-        facedetectionProxy.subscribe("Face_Behavior", 500, 0.0)
-        facecharacteristicsProxy.subscribe("Char_Behavior", 500, 0.0)
-        peopledetectionProxy.subscribe("People_Behavior", 500, 0.0)
-        peoplesittingProxy.subscribe("Sitting_Behavior", 500, 0.0)
-        soundlocalizationProxy.subscribe("Sound_Behavior", 500, 0.0)
-        wavingdetectionProxy.subscribe("Waving_Behavior",500,0.0)
-        #motionProxy.subscribe("Motion_Behavior", 500, 0.0)
-    except:
-        pass
+    for b in behaviours:
+        proxy_name = b[0]
+        subscriber_name = b[1]
+        try:
+            proxy = ALProxy(proxy_name, pip, pport)
+            if subscriber_name is not None:
+                proxy.subscribe(subscriber_name, 500, 0.0)
+        except Exception as e:
+            print("*** exception starting behaviour %s: %s ***"
+                  % (proxy_name, str(e)))
 
 
 def quit_behaviors():
@@ -63,153 +120,27 @@ def quit_behaviors():
     print "   Quitting background behaviors   "
     print "==================================="
 
-    try:
-
-        facedetectionProxy = ALProxy("ALFaceDetection",pip,pport)
-        facecharacteristicsProxy = ALProxy("ALFaceCharacteristics",pip,pport)
-        peopledetectionProxy = ALProxy("ALPeoplePerception",pip,pport)
-        peoplesittingProxy = ALProxy("ALSittingPeopleDetection",pip,pport)
-        soundlocalizationProxy = ALProxy("ALSoundLocalization",pip,pport)
-        motionProxy = ALProxy("ALMotion",pip,pport)
-        wavingdetectionProxy = ALProxy("ALWavingDetection",pip,pport)
-        animationProxy = ALProxy("ALAnimationPlayer", pip, pport)
-
-
-
-        facedetectionProxy.unsubscribe("Face_Behavior")
-        facecharacteristicsProxy.unsubscribe("Char_Behavior")
-        peopledetectionProxy.unsubscribe("People_Behavior")
-        peoplesittingProxy.unsubscribe("Sitting_Behavior")
-        soundlocalizationProxy.unsubscribe("Sound_Behavior")
-        wavingdetectionProxy.unsubscribe("Waving_Behavior")
-        #motionProxy.unsubscribe("Motion_Behavior")
-    except:
-        pass
+    for b in behaviours:
+        proxy_name = b[0]
+        subscriber_name = b[1]
+        try:
+            proxy = ALProxy(proxy_name, pip, pport)
+            if subscriber_name is not None:
+                proxy.unsubscribe(subscriber_name)
+        except Exception as e:
+            print("*** exception starting behaviour %s: %s ***"
+                  % (proxy_name, str(e)))
 
 
-def init(session):
+def init(session, modules):
     start_behaviors()
-    screentouched.init(session)
-    dooropen.init(session)
-    obstaclehere.init(session)
-    say.init(session)
-    vsay.init(session)
-    wait.init(session)
-    waitfor.init(session)
-    goto.init(session)
-    turn.init(session)
-    headpose.init(session)
-    lookfor.init(session)
-    dialogue.init(session)
-    dialoguestart.init(session)
-    dialoguestop.init(session)
-    asrenable.init(session)
-    posture.init(session)
-    personhere.init(session)
-    movementdetected.init(session)
-    followuntil.init(session)
-    personbehind.init(session)
-    persondetected.init(session)
-    execplan.init(session)
-    saveposition.init(session)
-    soundtrack.init(session)
-    speechbtn.init(session)
-    navigateto.init(session)
-    memorizepeople.init(session)
-    memorizeface.init(session)
-    selectpersonmemory.init(session)
-    sounddetected.init(session)
-    continuebtn.init(session)
-    enter.init(session)
-    recdata.init(session)
-    assign.init(session)
-    personlost.init(session)
-    peoplesummary.init(session)
-    reccam.init(session)
-    gotopos.init(session)
-    arm.init(session)
-    bow.init(session)
-    storecentralperson.init(session)
-    fake.init(session)
-    headpitch.init(session)
-    greet.init(session)
-    animation.init(session)
-    shakehand.init(session)
-    analyseperson.init(session)
-    #tvsay.init(session)
-    trackface.init(session)
-    modiminit.init(session)
-    interact.init(session)
-    interactq.init(session)
-    #fullpeopleperception.init(session)
-    aimlsay.init(session)
-    understandcommand.init(session)
-    commandunderstood.init(session)
-    persondescription.init(session)
-    groupdescription.init(session)
-    updatefollowpersoncoord.init(session)
+    init_actions(modules, session)
 
-def quit():
+
+def quit(modules):
+    quit_actions(modules)
     quit_behaviors()
-    screentouched.quit()
-    dooropen.quit()
-    obstaclehere.quit()
-    say.quit()
-    vsay.quit()
-    wait.quit()
-    waitfor.quit()
-    goto.quit()
-    turn.quit()
-    headpose.quit()
-    lookfor.quit()
-    dialogue.quit()
-    dialoguestart.quit()
-    dialoguestop.quit()
-    asrenable.quit()
-    posture.quit()
-    personhere.quit()
-    movementdetected.quit()
-    followuntil.quit()
-    personbehind.quit()
-    persondetected.quit()
-    execplan.quit()
-    saveposition.quit()
-    selectpersonmemory.quit()
-    soundtrack.quit()
-    speechbtn.quit()
-    navigateto.quit()
-    memorizepeople.quit()
-    memorizeface.quit()
-    sounddetected.quit()
-    enter.quit()
-    continuebtn.quit()
-    recdata.quit()
-    assign.quit()
-    personlost.quit()
-    peoplesummary.quit()
-    reccam.quit()
-    gotopos.quit()
-    arm.quit()
-    bow.quit()
-    storecentralperson.quit()
-    fake.quit()
-    headpitch.quit()
-    greet.quit()
-    animation.quit()
-    shakehand.quit()
-    analyseperson.quit()
-    #tvsay.quit()
-    trackface.quit()
-    modiminit.quit()
-    interact.quit()
-    interactq.quit()
-    #fullpeopleperception.quit()
-    aimlsay.quit()
-    understandcommand.quit()
-    commandunderstood.quit()
-    persondescription.quit()
-    groupdescription.quit()
-    updatefollowpersoncoord.quit()
+
 
 def main():
     global memory_service, pip, pport
@@ -222,10 +153,10 @@ def main():
     pip = args.pip
     pport = args.pport
 
-    #Starting application
+    # Starting application
     try:
         connection_url = "tcp://" + pip + ":" + str(pport)
-        print "Connecting to ",    connection_url
+        print "Connecting to ", connection_url
         app = qi.Application(["StartActions", "--qi-url=" + connection_url ])
     except RuntimeError:
         print ("Can't connect to Naoqi at ip \"" + pip + "\" on port " + str(pport) +".\n"
@@ -234,15 +165,20 @@ def main():
 
     app.start()
     session = app.session
-
-    init(session)
+    modules = find_and_import()
+    time.sleep(1)
+    init(session, modules)
+    if len(actions_running) > 0:
+        print("+++ actions running:: \n  + %s" %
+              '\n  + '.join(actions_running))
 
     app.run()
 
-    quit()
+    quit(modules)
 
     time.sleep(1)
     sys.exit(0)
+
 
 if __name__ == "__main__":
     main()

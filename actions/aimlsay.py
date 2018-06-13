@@ -32,11 +32,15 @@ def actionThread_exec (params):
     #tts_service = getattr(t, "session", None).service("ALTextToSpeech")
     print "Action "+actionName+" started with params "+params
 
+
+    memory_service.raiseEvent("ASR_enable", "0")
+
     acb = memory_service.subscriber("DialogueVesponse")
     acb.signal.connect(response_cb)
     print "Subscriber connected!"
 
     # action init
+    response = None
     memory_service.raiseEvent('ParseAIMLRequest', params)
     print "  -- aimlsay: "+params
 

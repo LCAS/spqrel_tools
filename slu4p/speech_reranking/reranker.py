@@ -214,7 +214,7 @@ def main():
     try:
         # Initialize qi framework.
         connection_url = "tcp://" + args.pip + ":" + str(args.pport)
-        app = qi.Application(["dialogue_manager", "--qi-url=" + connection_url])
+        app = qi.Application(["dialogue_manager", "--qi-url=" + connection_url], autoExit=False)
     except RuntimeError:
         print ("Can't connect to Naoqi at ip \"" + args.ip + "\" on port " + str(args.port) +".\n"
                "Please check your script arguments. Run with -h option for help.")

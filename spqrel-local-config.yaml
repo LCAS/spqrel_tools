@@ -30,7 +30,7 @@ windows:
 - name: lu4r
   panes:
   - cd $LU4R_HOME; java -Xmx1G -jar lu4r-server-0.2.4.jar -c simple -o amr -l en -p 9001
-  - sleep 20; cd $SPQREL_HOME/slu4p; python language_understanding/language_understanding.py
+  - cd $SPQREL_HOME/slu4p; python language_understanding/language_understanding.py
 - name: pnp
   panes:
   - cd $SPQREL_HOME; bin/pnp_naoqi

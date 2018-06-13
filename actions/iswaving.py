@@ -102,7 +102,15 @@ def getPixelT(ri):
     pixel_tuple = (x_min, y_min, x_max, y_max)
     return (pixel_list, pixel_tuple)
 
-
+def isCorrectImage(result):
+    ans = False
+    if result == None:
+        print 'cannot capture.'
+    elif result[6] == None:
+        print 'no image data string.'
+    else:
+        ans = True
+    return ans
 
 def wavingThread (params):
     # This is awful....
@@ -127,9 +135,12 @@ def wavingThread (params):
 
     while getattr(t, "do_run", True):
         # get two images with time spacing...
-        img0 = video_service.getImageRemote(imgClient)
-        time.sleep(sampleInterval)        
-        img1 = video_service.getImageRemote(imgClient)
+        isOk = False
+        while not isOk:
+            img0 = video_service.getImageRemote(imgClient)
+            time.sleep(sampleInterval)        
+            img1 = video_service.getImageRemote(imgClient)
+            isOk = isCorrectImage(img0) and isCorrectImage(img1)
 
         timestampSecs =  img1[4]
         timestampMicrosecs =  img1[5]

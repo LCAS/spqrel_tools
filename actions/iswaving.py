@@ -165,15 +165,15 @@ def wavingThread (params):
             img1 = video_service.getImageRemote(imgClient)
             isOk = isCorrectImage(img0) and isCorrectImage(img1)
 
-        img0 = image_qi2cv(img0)
-        img1 = image_qi2cv(img1)
-
         timestampSecs =  img1[4]
         timestampMicrosecs =  img1[5]
         
         # detect stuff on them
         r0 = DarknetSRV.identify(img0)
         r1 = DarknetSRV.identify(img1)
+
+        img0 = image_qi2cv(img0)
+        img1 = image_qi2cv(img1)
 
         if (r0 != []) and (r1 != []):
             cnt = 0

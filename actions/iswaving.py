@@ -8,6 +8,8 @@ import os
 import threading
 from naoqi import ALProxy
 import vision_definitions
+import cv2 as cv
+
 
 import action_base
 from action_base import *
@@ -227,6 +229,8 @@ def wavingThread (params):
                     isEvent = (waveProb>=flow_event_thres)
                     memory_service.raiseEvent(mem_key_event,isEvent)
                     
+                    if isEvent:
+                        print "is waving me!"
                 cnt+=1
 
         print ("-------------------------\n\n")
@@ -261,7 +265,7 @@ def init(session):
 def quit():
     global actionName
     print actionName+" quit"
-    actionThread_exec.do_run = False
+    wavingThread.do_run = False
     
 
 

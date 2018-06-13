@@ -50,10 +50,10 @@ DarknetSRV = None
 factor = 1/3.0
 
 # minimum global flow to start considering waving. Should filter small flows, as noise
-global_flow_thres = 0.4
+global_flow_thres = 0.2
 
 # minimum probability to trigger event
-flow_event_thres = 0.5
+flow_event_thres = 0.2
 
 def imcrop(img, bbox): 
     x1,y1,x2,y2 = bbox
@@ -229,6 +229,11 @@ def wavingThread (params):
                     else:
                         waveProb = 0.0
 
+                    print "Global flow is: "+str(global_flow)
+                    print "Upper part flow is: "+str(up_flow)
+                    print "Lower part flow is: "+str(down_flow)
+                    print "Waving prob is: "+str(waveProb)
+                    
                     peopleCounter+=1
 
                     mem_key_event  = "Actions/PeopleWaving/NewDetection"
@@ -255,16 +260,16 @@ def wavingThread (params):
 
                     isEvent = (waveProb>=flow_event_thres)
                     if isEvent:
-                        memory_service.raiseEvent(mem_key_event)
+                        memory_service.raiseEvent(mem_key_event,True)
                     #else:
-                        #memory_service.raiseEvent(mem_key_event,False)
+                    #    memory_service.raiseEvent(mem_key_event,False)
                         
                     
                     #if isEvent:
                     #    print "is waving me!"
                 cnt+=1
 
-        #print ("-------------------------\n\n")
+        print ("-------------------------")
         time.sleep(throttleInterval)
     print actionName+" thread quit"
 

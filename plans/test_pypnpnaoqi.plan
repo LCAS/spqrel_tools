@@ -1,0 +1,18 @@
+
+
+
+say_starting;
+lookfor_personhere; ! *if* timeout_lookfor_15 *do* skip_action !
+<personhere ? turn_^Actions/personhere/PersonAngleTurn : (not personhere) ? say_comehere>;
+say_hello
+
+
+
+
+
+
+
+
+
+
+

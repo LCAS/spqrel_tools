@@ -9,7 +9,7 @@ windows:
   - naoqi-bin
 - name: config
   panes:
-  - $SPQREL_TOOLS/scripts/config_manager.py --file $SPQREL_CONFIG
+  - $SPQREL_TOOLS/scripts/config_manager.py
 - name: navigation
   panes:
   - "#cd $SPQREL_HOME/bin; ./pepper_localizer --map $MAP --initial_pose_x 0 --initial_pose_y

@@ -14,18 +14,46 @@ p = PNPCmd()
 
 p.begin()
 
+#p.exec_action('turn', '180')
 
 p.exec_action("aimlsay", "greetings")
 
-p.exec_action('headpose', '0_-10')
+p.exec_action('headpose', '0_0')
 
-p.exec_action("wait","5")
+p.exec_action("wait","10")
 
 p.exec_action('turn', '180')
 
-p.exec_action("groupdescription", "")
-
 p.exec_action("wait","5")
+
+p.exec_action("say","lookatme")
+
+p.exec_action("wait","1")
+
+
+# I dont understand why this action never ends, Ive tried putting the interruption but not sure how to do it
+#p.exec_action("groupdescription", "" ,interrupt='timeout_groupdescription_10')
+
+#Question 1
+while (not p.get_condition('sounddetected')):
+    time.sleep(0.5)
+
+p.exec_action('turn', '^AngleSound')
+
+p.exec_action("wait","2")
+
+
+#Question 2
+
+while (not p.get_condition('sounddetected')):
+    time.sleep(0.5)
+
+p.exec_action('turn', '^AngleSound')
+
+p.exec_action("wait","2")
+
+
+# 
 
 p.exec_action("aimlsay", "farewell")
 

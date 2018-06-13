@@ -29,6 +29,7 @@ def actionThread_exec (params):
     tracker_service.setMaximumAcceleration(3)
     tracker_service.setMaximumVelocity(2)
 
+
     tracker_service.registerTarget("People",personid)
     tracker_service.track("People")
     val = False
@@ -81,4 +82,5 @@ if __name__ == "__main__":
     app.run()
 
     quit()
+
 

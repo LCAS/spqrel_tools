@@ -26,9 +26,13 @@ def rhMonitorThread (memory_service,motion_service):
         #print "testing sound"
         
         sound_value = memory_service.getData("ALSoundLocalization/SoundLocated")
+        #print sound_value
         #print "\n"
-        #print "[time(sec), time(usec)]", sound_value[0]
-        #print "[azimuth(rad), elevation(rad), confidence, energy]", sound_value[1]
+        #print "[ SOUND ]"
+        #print "    time(s):", sound_value[0][0]
+        #print "    confidence: ", sound_value[1][2]
+        #print "    energy: ", sound_value[1][3]
+
         #print "[Head Position[6D]] in FRAME_TORSO", sound_value[2]
         #print "[Head Position[6D]] in FRAME_ROBOT", sound_value[3]
         #head_pose6d = almath.Position6D(sound_value[3][0],sound_value[3][1],sound_value[3][2],
@@ -50,11 +54,13 @@ def rhMonitorThread (memory_service,motion_service):
                 turn_angle = sound_azimuth + head_yaw
                 turn_angle = int(turn_angle / math.pi * 180)
                 memory_service.insertData('AngleSound', str(turn_angle) + "_REL")
+                #print "\n"
+                #print str(turn_angle)
                 print "[SoundDetected] time: ", sound_value[0][0], "azimuth(rad): ", sound_azimuth
                 
         set_condition(memory_service,'sounddetected',v)
         if v:
-            time.sleep(5) #if true we give time to process the condition
+            time.sleep(2) #if true we give time to process the condition
 
         time.sleep(0.25)
 

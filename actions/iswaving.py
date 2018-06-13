@@ -219,7 +219,7 @@ def wavingThread (params):
                 cnt+=1
 
         print ("-------------------------\n\n")
-        time.sleep(period)
+        time.sleep(throttleInterval)
     print actionName+" thread quit"
 
 def init(session):
@@ -242,7 +242,7 @@ def init(session):
     # Services
     DarknetSRV = session.service("DarknetSRV")
     
-    action_base.init(session, actionName, darkThread)
+    action_base.init(session, actionName, wavingThread)
 
 
 

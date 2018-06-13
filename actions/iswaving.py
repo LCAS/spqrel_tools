@@ -9,6 +9,7 @@ import threading
 from naoqi import ALProxy
 import vision_definitions
 import cv2 as cv
+import np
 
 
 import action_base

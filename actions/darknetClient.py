@@ -24,7 +24,11 @@ The higher, the less network load it will be putting.
 
 
 Upon detection, it will be publishing an array of dicts into ALMemory, under the address 
-"Actions/DarknetPerception/"
+"Actions/DarknetPerception/Detection"
+
+And an event on "Actions/DarknetPerception/DetectionEvent"
+
+
 
 Each dict will contain the following entries:
             object name in coco dataset
@@ -164,8 +168,12 @@ def darkThread (params):
                 foundObjects.append(entry)
         print ("-------------------------\n\n")
         if len(foundObjects)>0:
-            mem_key = "Actions/DarknetPerception/"
+
+            mem_key = "Actions/DarknetPerception/Detection"
+            mem_key_event  = "Actions/DarknetPerception/DetectionEvent"
+
             memory_service.insertData(mem_key,str(foundObjects))
+            memory_service.raiseEvent(mem_key_event)
 
         time.sleep(period)
     print actionName+" thread quit"

@@ -43,7 +43,21 @@ Development scripts from the spqrel team
 
     respectively
 
-# General Desing Considerations about environment setup and making:
+
+# Installation on Pepper:
+
+## Initial git setup (only once):
+
+1. initial SSH setup for git: 
+    1. `ssh-keygen -t rsa` if `~/.ssh/id_rsa.pub` doesn't exist yet.
+	  1. configure the public key in `~/.ssh/id_rsa.pub` with [github](https://github.com/settings/keys) and [bitbucket](https://bitbucket.org/account/ssh-keys/)
+1. create local workspace dir `mkdir -p ~/spqrel` and change into it `cd ~/spqrel`
+1. Download snapshot of `pepper` branch of `spqrel_launch` to get initial binaries: `wget https://github.com/LCAS/spqrel_launch/archive/pepper.zip` and unzip it (will give you directory `spqrel_launch-pepper`).
+1. `export GIT_EXEC_PATH=~/spqrel/spqrel_launch-pepper/libexec/git-core` to make sure git finds its helpers
+1. still in `~/spqrel` run `~/spqrel/spqrel_launch-pepper/bin/git clone --recurse-submodules --depth 1 -b pepper git@github.com:LCAS/spqrel_launch.git` to clone the repository (only shallow clone, we don't need the entire history here)
+
+
+# General Design Considerations about environment setup and making:
 
 * all *general* configurations (applying to both local installation on your computer and on pepper should you into `setup.bash`. This file loads `setup-local.bash` if it exists and must respect the variables defined in `spqrel-local.bash`. They must always take precendence. `setup.bash` is the place to set all required environment variables
 * all *development* configurations (e.g. where the find the SDK, etc.) are configured in `setup-dev.bash`. This file also reads `setup-local.bash`, but should only be `source`-d on development machines (i.e. `linux64`) and _not_ on Pepper.

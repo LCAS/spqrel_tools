@@ -150,11 +150,11 @@ def darkThread (params):
                 (pixel_list, pixel_tuple) = getPixelT(r[cnt])
                 cnt+=1
 
-                print ("{0}: Confidence {1}".format(name,confidence))
-                print ("\t at [{0},{1}  {2},{3}]".format(pixel_list[0], 
-                                                         pixel_list[1],
-                                                         pixel_list[2],
-                                                         pixel_list[3]))
+                #print ("{0}: Confidence {1}".format(name,confidence))
+                #print ("\t at [{0},{1}  {2},{3}]".format(pixel_list[0], 
+                #                                         pixel_list[1],
+                #                                         pixel_list[2],
+                #                                         pixel_list[3]))
 
                 #oldStore()
                 entry['name'] = name
@@ -170,7 +170,7 @@ def darkThread (params):
                     entry['location']='None'
 
                 foundObjects.append(entry)
-        print ("-------------------------\n\n")
+        #print ("-------------------------\n\n")
         if len(foundObjects)>0:
 
             mem_key = "Actions/DarknetPerception/Detection"

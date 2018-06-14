@@ -47,14 +47,14 @@ class ALSubscriber():
         #self.configuration = {"bodyLanguageMode": body_language_mode}
 
 
-class SPQReLUIServer(webnsock.ControlServer):
+class SPQReLUIServer(webnsock.WebServer):
 
     __plan_dir = os.path.realpath(os.getenv("PLAN_DIR", default=os.getcwd()))
     _ip = os.getenv("PEPPER_IP", default="127.0.0.1")
 
     def __init__(self):
 
-        webnsock.ControlServer.__init__(self)
+        webnsock.WebServer.__init__(self)
 
         TEMPLATE_DIR = path.realpath(
             path.join(
@@ -82,7 +82,8 @@ class SPQReLUIServer(webnsock.ControlServer):
             path = '/tmux'
 
             def GET(self):
-                return render.tmux()
+                ip = web.ctx.host.split(':')[0]
+                return render.tmux(ip)
 
         class blockly(self.page):
             path = '/blockly'
@@ -90,6 +91,13 @@ class SPQReLUIServer(webnsock.ControlServer):
             def GET(self):
                 ip = web.ctx.host.split(':')[0]
                 return render.blockly(ip)
+
+        class modim(self.page):
+            path = '/modim'
+
+            def GET(self):
+                ip = web.ctx.host.split(':')[0]
+                return render.modim(ip)
 
         class spqrel(self.page):
             path = '/spqrel'
@@ -280,7 +288,7 @@ if __name__ == "__main__":
     session = qi_init()
 
     ip = os.getenv("PEPPER_IP", default="127.0.0.1")
-    webserver = webnsock.Webserver(SPQReLUIServer())
+    webserver = webnsock.WebserverThread(SPQReLUIServer())
     backend = webnsock.WSBackend(SQPReLProtocol)
     signal(SIGINT,
            lambda s, f: webnsock.signal_handler(webserver, backend, s, f))

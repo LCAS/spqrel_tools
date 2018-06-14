@@ -27,6 +27,7 @@ windows:
   - sleep 9; cd $SPQREL_HOME/slu4p; python text_to_speech/text_to_speech.py
 - name: lu4r
   panes:
+  - cd $LU4R_HOME; java -Xmx1G -jar lu4r-server-0.2.4.jar -c simple -o amr -l en -p 9001
   - cd $SPQREL_HOME/slu4p; python language_understanding/language_understanding.py
 - name: pnp
   panes:
@@ -35,8 +36,10 @@ windows:
 - name: ui
   panes:
   - cd $SPQREL_HOME/worktree/spqrel_tools/ui; python ./spqrel_ui.py
-  - cd $SPQREL_HOME/worktree/robot_blockly; python scripts/pywebserver.py
-  - cd $SPQREL_HOME/worktree/robot_blockly; python scripts/robot_blockly_backend.py
+  - cd $SPQREL_HOME/worktree/spqrel_tools/modim_actions/cocktail_party; python -m SimpleHTTPServer 8000
+  - cd $SPQREL_HOME/worktree/modim/src/GUI; python ws_server.py
+  #- cd $SPQREL_HOME/worktree/robot_blockly; python scripts/pywebserver.py
+  #- cd $SPQREL_HOME/worktree/robot_blockly; python scripts/robot_blockly_backend.py
 - name: dataset
   panes:
   - cd $SPQREL_HOME/worktree/spqrel_tools/naoqibag; python ./naoqibag.py --pause True

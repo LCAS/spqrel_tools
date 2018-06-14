@@ -1,0 +1,144 @@
+$def with (plans, actions, host)
+$var title: SPQReL@RoboCup ADMIN
+$var jsfiles: static/js/main.js
+
+
+
+
+<script>
+document.onready = function() {
+ init();
+}
+</script>
+
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Robot Status</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-condensed table-striped">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-3">Speech Recognition:</td>
+                                    <td class="col-md-9"><p id="ASR_transcription">-</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">Speech Understanding:</td>
+                                    <td class="col-md-9"><p id="CommandInterpretations">-</p></td>
+                                </tr>
+
+                                <tr>
+                                    <td class="col-md-3">Current Plan:</td>
+                                    <td class="col-md-9"><p id="PNP_CurrentPlan">-</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">Current Action:</td>
+                                    <td class="col-md-9"><p id="PNP_CurrentAction">-</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">Current Node:</td>
+                                    <td class="col-md-9"><p id="TopologicalNav_CurrentNode">XXX</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">Closest Node:</td>
+                                    <td class="col-md-9"><p id="TopologicalNav_ClosestNode">XXX</p></td>
+                                </tr>
+<!--                                 <tr>
+                                    <td class="col-md-3">Current PNP Places:</td>
+                                    <td class="col-md-9"><p id="PNP_active_places">-</p></td>
+                                </tr> -->
+                                <tr>
+                                    <td class="col-md-3">Battery:</td>
+                                    <td class="col-md-9"><p id="BatteryChargeChanged">xx%</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">Current Navgoal:</td>
+                                    <td class="col-md-9"><p id="NAOqiPlanner/Goal">XXX</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">Current Nav Status:</td>
+                                    <td class="col-md-9"><p id="NAOqiPlanner_Status">XXX</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">last notification:</td>
+                                    <td class="col-md-9"><p id="notificationAdded">-</p></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Plans</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="btn-group" role="group">
+                        <button id="btn_stop" 
+                            onclick="send({
+                                'method':'plan_start_button', 
+                                'plan': 'stop',
+                            });" 
+                            class="btn-lg btn-danger">STOP!</button>
+                        </div><p>&nbsp;</p>
+                            $code:
+                                keys = plans.keys()
+                                keys.sort(key=lambda s: s.lower())        
+                            $for p in keys:
+                                <div class="btn-group" role="group">
+                                        <button id="$p" 
+                                                onclick="send({
+                                                    'method':'plan_start_button', 
+                                                    'plan': '$p',
+                                                });" 
+                                                class=" btn-lg btn-primary">$p</button><p>&nbsp;</p>
+                                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Actions</h3>
+                    </div>
+                    <div class="panel-body">
+                        $code:
+                            keys = actions
+                            keys.sort(key=lambda s: s.lower())        
+
+                        $for a in keys:
+                            <button id="$a" class="btn btn-sm btn-default">$a</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal_dlg">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Notfall-Progamm aktivieren?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Soll das Notfall-Programm aktiviert werden? Der Roboter wird zur naechsten Sicherheitszone fahren und sich dort abschalten. Sollte er dort im Weg sein, kann er einfach weg geschoben werden. Bitte informieren Sie nach der Aktivierung das Roboter-Admin Team, damit zu einem späteren Zeitpunkt der Betrieb wieder aufgenommen werden kann.</p>
+      </div>
+      <div class="modal-footer">
+        <button onclick="emergency_stop();" type="button" class="btn btn-danger btn-default" data-dismiss="modal">Notfall auslösen</button>
+        <button type="button" class="btn" data-dismiss="modal">Zurück zum Normalbetrieb</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -53,6 +53,10 @@ class SPQReLUIServer(webnsock.WebServer):
     _ip = os.getenv("PEPPER_IP", default="127.0.0.1")
 
     def __init__(self):
+        global memory_service
+        global session
+        self.memory_service = memory_service
+        self.session = session
 
         webnsock.WebServer.__init__(self)
 
@@ -76,7 +80,8 @@ class SPQReLUIServer(webnsock.WebServer):
 
             def GET(self):
                 plans = serv_self.find_plans()
-                return render.index(plans.keys())
+                ip = web.ctx.host.split(':')[0]
+                return render.index(plans.keys(), ip)
 
         class tmux(self.page):
             path = '/tmux'
@@ -91,6 +96,15 @@ class SPQReLUIServer(webnsock.WebServer):
             def GET(self):
                 ip = web.ctx.host.split(':')[0]
                 return render.blockly(ip)
+
+        class admin(self.page):
+            path = '/admin'
+
+            def GET(self):
+                ip = web.ctx.host.split(':')[0]
+                plans = serv_self.find_plans()
+                actions = serv_self.find_actions()
+                return render.admin(plans, actions, ip)
 
         class modim(self.page):
             path = '/modim'
@@ -112,6 +126,17 @@ class SPQReLUIServer(webnsock.WebServer):
             if f.endswith('.plan'):
                 plans[f.replace('.plan', '')] = f
         return plans
+
+    def find_actions(self):
+        services = self.session.services()
+        srv_names = [s['name'] for s in services]
+        action_names = []
+        for s in srv_names:
+            if s.startswith('init_actions_'):
+                label = s[len('init_actions_'):]
+                if len(label) > 0:
+                    action_names.append(label)
+        return action_names
 
 
 class SQPReLProtocol(webnsock.JsonWSProtocol):

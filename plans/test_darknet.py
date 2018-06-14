@@ -124,7 +124,9 @@ while True:
 				p.memory_service.insertData('Action/UpdateHeadPose/HeadYaw/Value',str(newYaw))
 				p.memory_service.insertData('Action/UpdateHeadPose/HeadPitch/Value',str(newPitch))
 
-			time.sleep(0.5)
+	time.sleep(0.5)
+	p.memory_service.insertData('Actions/DarknetPerception/Detection','[]')
+
 
 # finish
 p.action_cmd('darknetClient', '0.2', 'stop')

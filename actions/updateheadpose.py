@@ -12,10 +12,12 @@ jointsNames = ["HeadYaw", "HeadPitch"]
 
 actionName = "updateheadpose"
 
+motion_service = None
+memory_service = None
 # yaw, pitch in radians
 def moveHead(motion_service, yaw, pitch, headtime):
     # we move head to center
-    #print "Moving head to ", yaw, pitch
+    print "Moving head to yaw {0}, pitch {1}".format(yaw, pitch) 
     finalAngles = [yaw, pitch]
     timeLists  = [headtime, headtime]
     isAbsolute = True
@@ -30,9 +32,12 @@ def moveHead(motion_service, yaw, pitch, headtime):
 #
 
 def actionThread_exec (params):
+    global motion_service
+    global memory_service
+
     t = threading.currentThread()
-    memory_service = getattr(t, "mem_serv", None)
-    motion_service = getattr(t, "session", None).service("ALMotion")
+    #memory_service = getattr(t, "mem_serv", None)
+    #motion_service = getattr(t, "session", None).service("ALMotion")
     print "Action "+actionName+" started with params "+params
     # action init
 
@@ -86,7 +91,18 @@ def actionThread_exec (params):
 
 
 def init(session):
+    global motion_service
+    global memory_service
+    
+
     print actionName+" init"
+    motion_service = session.service("ALMotion")
+    memory_service= session.service("ALMemory")
+
+    memory_service.insertData('Action/UpdateHeadPose/HeadYaw/Value',str(0))
+    memory_service.insertData('Action/UpdateHeadPose/HeadPitch/Value',str(0))
+    
+    
     action_base.init(session, actionName, actionThread_exec)
 
 

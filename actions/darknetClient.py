@@ -140,9 +140,9 @@ def darkThread (params):
         
         #print(type(result[0]))
         r = DarknetSRV.identify(result)
+        foundObjects = []
         if r != []:
             cnt = 0
-            foundObjects = []
             while cnt < len(r):
                 entry = {}
                 name = r[cnt][0]
@@ -164,7 +164,11 @@ def darkThread (params):
                 entry['Xmax']=str(pixel_list[2])
                 entry['Ymax']=str(pixel_list[3])
                 entry['timestamp']=str(timestampSecs)
-                entry['location']=memory_service.getData("TopologicalNav/CurrentNode")
+                try:
+                    entry['location']=memory_service.getData("TopologicalNav/CurrentNode")
+                except RuntimeError:  
+                    entry['location']='None'
+
                 foundObjects.append(entry)
         print ("-------------------------\n\n")
         if len(foundObjects)>0:
@@ -173,7 +177,7 @@ def darkThread (params):
             mem_key_event  = "Actions/DarknetPerception/DetectionEvent"
 
             memory_service.insertData(mem_key,str(foundObjects))
-            memory_service.raiseEvent(mem_key_event)
+            memory_service.raiseEvent(mem_key_event,True)
 
         time.sleep(period)
     print actionName+" thread quit"

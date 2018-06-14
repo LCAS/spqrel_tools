@@ -36,9 +36,16 @@ def actionThread_exec (params):
     memory_service = getattr(t, "mem_serv", None)
     print "Action "+actionName+" started with params "+params
 
+    v = params.split('_')
+    dpath = v[0]
+    pepper_ip = ''
+    if len(v) > 1:
+        pepper_ip = v[1]
+    else:
+        pepper_ip = os.getenv('PEPPER_IP')   
+        
     # action init
     count = 1
-    pepper_ip = os.getenv('PEPPER_IP')
     pepper_port = 9101
     setServerAddr(pepper_ip, pepper_port)
     # action init
@@ -46,7 +53,7 @@ def actionThread_exec (params):
         print "Action "+actionName+" "+params+" exec..."
         # action exec
         data_str = "im.setProfile(['*', '*', 'en', '*'])"+"\n"
-        data_str += "im.setPath('"+ demopath(params) +"')"+"\n###ooo###\n\n"
+        data_str += "im.setPath('"+ demopath(dpath) +"')"+"\n###ooo###\n\n"
         csend(data_str)
         
         count = count - 1

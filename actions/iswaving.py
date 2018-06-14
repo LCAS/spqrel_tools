@@ -57,10 +57,10 @@ DarknetSRV = None
 factor = 1/3.0
 
 # minimum global flow to start considering waving. Should filter small flows, as noise
-global_flow_thres = 0.2
+global_flow_thres = 0.4
 
 # minimum probability to trigger event
-flow_event_thres = 0.2
+flow_event_thres = 0.5
 
 def imcrop(img, bbox): 
     x1,y1,x2,y2 = bbox

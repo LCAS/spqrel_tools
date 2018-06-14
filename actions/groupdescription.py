@@ -95,7 +95,7 @@ def actionThread_exec (params):
     tts_service.say(str(num_male))
     tts_service.say("of them are male and ")
     tts_service.say(str(num_female))
-    tts_service.say("are female")
+    tts_service.say("are female.")
 
 
     # action end

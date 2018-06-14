@@ -41,8 +41,8 @@ def rhMonitorThread (memory_service):
                         print "person sitting"
                         print "X: " + str(px) + "  Y: " + str(py)
                         w_px, w_py = point2world(memory_service,[px,py])
-                        memory_service.insertData("personsitting/coordinates",[w_px,w_py])
-                        memory_service.insertData("personsitting/id",personid)
+                        memory_service.insertData("Condition/personsitting/coordinates",[w_px,w_py])
+                        memory_service.insertData("Condition/personsitting/id",personid)
                         v = 'true'
         except:
             v = 'false'

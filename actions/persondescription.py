@@ -104,6 +104,13 @@ def actionThread_exec (params):
         memory_service.insertData("Actions/persondescription/"+params+"/glasses","no")
     
 
+    tts_service.say(faces[f_center]["faceAttributes"]["gender"])
+    tts_service.say(faces[f_center]["faceAttributes"]["age"])
+    tts_service.say("years old")
+    tts_service.say(tts_service.say(faces[f_center]["faceAttributes"]["gender"]))
+
+
+
     # action end
     print "Action "+actionName+" "+params+" terminated"
     memory_service.raiseEvent("PNP_action_result_"+actionName,"success");

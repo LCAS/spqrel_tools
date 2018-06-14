@@ -12,6 +12,7 @@ from action_base import *
 actionName = "say"
 
 def phraseToSay(memory_service,params):
+    print params
     if (params=='hello'):
         return "Hello!"
     elif (params=='greetperson'):
@@ -47,8 +48,10 @@ def phraseToSay(memory_service,params):
         return "Please, follow me to the car"
     elif (params=='comehere'):
         return "I cannot see you, could you come here please?"
-    else:
-        return params
+    elif (params=='bringcoke'):
+        return "I will bring you a coke!"
+    elif (params=='bringbeer'):
+        return "I will bring you a beer!"
 
 def actionThread_exec (params):
     t = threading.currentThread()

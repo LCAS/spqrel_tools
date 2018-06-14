@@ -10,7 +10,7 @@ import action_base
 from action_base import *
 
 # define the variable to comunicate with the Microsoft API server
-subscription_key = "aab6d4045abc47c1942b7a57f97fc1e5"
+subscription_key = "c97e9f020dea42118bf8739b18c0ae76"
 assert subscription_key
 face_api_url = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect'
 

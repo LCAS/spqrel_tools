@@ -5,12 +5,13 @@ import time
 import threading
 import Image
 import requests
+import math
 
 import action_base
 from action_base import *
 
 # define the variable to comunicate with the Microsoft API server
-subscription_key = "aab6d4045abc47c1942b7a57f97fc1e5"
+subscription_key = "c97e9f020dea42118bf8739b18c0ae76"
 assert subscription_key
 face_api_url = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect'
 
@@ -65,49 +66,60 @@ def actionThread_exec (params):
 
     # Look for the face closest to the center
     min_distance = 100000000
-    for f in range(len(faces)):
-        #print 'Half Image:', imageWidth/2
-        #print 'Center Face:', faces[f]["faceLandmarks"]["noseTip"]["x"]
-        if abs(imageWidth/2 - faces[f]["faceLandmarks"]["noseTip"]["x"]) < min_distance:
-            f_center = f
 
-    # Save the face closest to the center
-    #Gender
-    print "Gender: " , faces[f_center]["faceAttributes"]["gender"]
-    memory_service.insertData("Actions/persondescription/"+params+"/gender",faces[f_center]["faceAttributes"]["gender"])
-    #Age
-    print "Age: " , faces[f_center]["faceAttributes"]["age"]
-    memory_service.insertData("Actions/persondescription/"+params+"/age",faces[f_center]["faceAttributes"]["age"])
-    #Hair
-    print "Hair: " , faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"]
-    memory_service.insertData("Actions/persondescription/"+params+"/hair",faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"])
-    #Beard
-    if float(faces[f_center]["faceAttributes"]["facialHair"]["beard"]) >= 0.2:
-        print "Beard: yes"
-        memory_service.insertData("Actions/persondescription/"+params+"/Beard","yes")
-    else:
-        print "Beard: no"
-        memory_service.insertData("Actions/persondescription/"+params+"/Beard","no")  
-    # Makeup
-    if faces[f_center]["faceAttributes"]["makeup"]["eyeMakeup"] == "true":
-        print "Make up: yes"
-        memory_service.insertData("Actions/persondescription/"+params+"/makeup","yes")
-    else:
-        print "Make up: no"
-        memory_service.insertData("Actions/persondescription/"+params+"/makeup","no")
-    #Glasses
-    if faces[f_center]["faceAttributes"]["glasses"] == "NoGlasses":
-        print "Glasses: no"
-        memory_service.insertData("Actions/persondescription/"+params+"/glasses","yes")
-    else:
-        print "Glasses: yes"
-        memory_service.insertData("Actions/persondescription/"+params+"/glasses","no")
-    
+    if (len(faces)) > 0:
 
-    tts_service.say(faces[f_center]["faceAttributes"]["gender"])
-    tts_service.say(faces[f_center]["faceAttributes"]["age"])
-    tts_service.say("years old")
-    tts_service.say(tts_service.say(faces[f_center]["faceAttributes"]["gender"]))
+        for f in range(len(faces)):
+            print 'Half Image:', imageWidth/2
+            print 'Center Face:', faces[f]["faceLandmarks"]["noseTip"]["x"]
+            distance = math.fabs(imageWidth/2 - faces[f]["faceLandmarks"]["noseTip"]["x"])
+
+            if math.fabs(imageWidth/2 - faces[f]["faceLandmarks"]["noseTip"]["x"]) < min_distance:
+                min_distance = distance
+                f_center = f
+
+        # Save the face closest to the center
+        #Gender
+        print "Gender: " , faces[f_center]["faceAttributes"]["gender"]
+        memory_service.insertData("Actions/persondescription/"+params+"/gender",faces[f_center]["faceAttributes"]["gender"])
+        #Age
+        print "Age: " , faces[f_center]["faceAttributes"]["age"]
+        memory_service.insertData("Actions/persondescription/"+params+"/age",faces[f_center]["faceAttributes"]["age"])
+        #Hair
+        print "Hair: " , faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"]
+        memory_service.insertData("Actions/persondescription/"+params+"/hair",faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"])
+        #Beard
+        if float(faces[f_center]["faceAttributes"]["facialHair"]["beard"]) >= 0.2:
+            print "Beard: yes"
+            memory_service.insertData("Actions/persondescription/"+params+"/Beard","yes")
+        else:
+            print "Beard: no"
+            memory_service.insertData("Actions/persondescription/"+params+"/Beard","no")  
+        # Makeup
+        if faces[f_center]["faceAttributes"]["makeup"]["eyeMakeup"] == "true":
+            print "Make up: yes"
+            memory_service.insertData("Actions/persondescription/"+params+"/makeup","yes")
+        else:
+            print "Make up: no"
+            memory_service.insertData("Actions/persondescription/"+params+"/makeup","no")
+        #Glasses
+        if faces[f_center]["faceAttributes"]["glasses"] == "NoGlasses":
+            print "Glasses: no"
+            memory_service.insertData("Actions/persondescription/"+params+"/glasses","yes")
+        else:
+            print "Glasses: yes"
+            memory_service.insertData("Actions/persondescription/"+params+"/glasses","no")
+        
+
+        tts_service.say("I see a ")
+        tts_service.say(faces[f_center]["faceAttributes"]["gender"])
+        tts_service.say(str(int(faces[f_center]["faceAttributes"]["age"])))
+        tts_service.say("years old")
+        tts_service.say(faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"])
+        tts_service.say("hair")
+    else:
+        tts_service.say("I'm sorry, I see no faces in the image")
+
 
 
 

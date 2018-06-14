@@ -5,6 +5,7 @@ import argparse
 import sys
 import os
 import time
+from pprint import pprint
 
 from naoqi import ALProxy
 
@@ -40,6 +41,19 @@ behaviours = [
 
 actions_running = []
 
+
+def check_service_semaphor(session):
+    _this_name = "init_actions"
+    class Foo:
+        pass
+    
+    service_names = {i['name']: i for i in session.services()}
+    if _this_name in service_names:
+        pprint(service_names[_this_name])
+        return False
+    else:
+        session.registerService(_this_name, Foo())
+        return True
 
 def find_and_import():
     """
@@ -180,15 +194,21 @@ def main():
 
     app.start()
     session = app.session
-    modules = find_and_import()
-    time.sleep(1)
-    init(session, modules)
 
-    app.run()
 
-    quit(modules)
+    if check_service_semaphor(session):
 
-    time.sleep(1)
+        modules = find_and_import()
+        time.sleep(1)
+        init(session, modules)
+
+        app.run()
+
+        quit(modules)
+        time.sleep(1)
+    else:
+        print('%s*** service "init_actions" already running (see above for endpoints) ***%s' %
+            (tcol.FAIL, tcol.ENDC))
     sys.exit(0)
 
 

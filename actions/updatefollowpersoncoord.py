@@ -16,6 +16,8 @@ actionName = "updatefollowpersoncoord"
 def actionThread_exec (params):
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
+    tts_service = getattr(t, "session", None).service("ALTextToSpeech")
+
     session = getattr(t, "session", None)
 
     print "Action "+actionName+" started with params "+params
@@ -26,8 +28,8 @@ def actionThread_exec (params):
     personid = memory_service.getData('Actions/personhere/PersonID')
 
     tracker_service.setMode("Head")
-    tracker_service.setMaximumAcceleration(3)
-    tracker_service.setMaximumVelocity(2)
+    #racker_service.setMaximumAcceleration(3)
+    #tracker_service.setMaximumVelocity(2)
 
 
     tracker_service.registerTarget("People",personid)
@@ -50,6 +52,10 @@ def actionThread_exec (params):
         print "     Distance: ", data_list[0], "]"
         print "     Position In Robot Frame: ", data_list[1], "]"
         print "\n"
+
+        if data_list[0] > 2:
+            tts_service.say("You are too far, please could you slow down a bit? I'm a slow robot")
+    
 
         val = get_condition(memory_service, params)        
 

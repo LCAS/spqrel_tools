@@ -93,7 +93,7 @@ def actionThread_exec (params):
     tts_service.say(str(num_people))
     tts_service.say("people in total in this group.")
     tts_service.say(str(num_male))
-    tts_service.say("of them are male and the other")
+    tts_service.say("of them are male and ")
     tts_service.say(str(num_female))
     tts_service.say("are female")
 

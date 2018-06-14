@@ -31,7 +31,7 @@ p.action_cmd("updateheadpose", "0_0", 'start')
 
 # start detecting objects
 p.action_cmd('darknetClient', '0.1', 'start')
-
+lastT = 0
 #main loop
 while True:
 	#print "."
@@ -50,7 +50,11 @@ while True:
 
 	for item in detection:
 		# get tracked object
-		if item['name'] == target:
+		print item['name'] +" "+str(item['timestamp']) 
+		if (item['name'] == target) and (item['timestamp'] > lastT):
+
+			# to prevent reusing the same detection
+			lastT=item['timestamp']
 
 			# get x,y as integers, they are pixels?
 			x = int( (  int(item['Xmax']) + int(item['Xmin']) ) / 2.0 )
@@ -124,7 +128,8 @@ while True:
 				p.memory_service.insertData('Action/UpdateHeadPose/HeadYaw/Value',str(newYaw))
 				p.memory_service.insertData('Action/UpdateHeadPose/HeadPitch/Value',str(newPitch))
 
-			time.sleep(0.5)
+	time.sleep(0.5)
+
 
 # finish
 p.action_cmd('darknetClient', '0.2', 'stop')

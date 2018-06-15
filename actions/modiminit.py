@@ -28,8 +28,10 @@ def demopath(params):
         
     if (params=='cocktailparty'):
         return os.path.join(demo_path, "cocktail_party")
-    if (params=='rips'):
+    elif (params=='rips'):
         return os.path.join(demo_path, "rips")
+    else:
+        return '.'
 
 def actionThread_exec (params):
     t = threading.currentThread()

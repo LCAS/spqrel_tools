@@ -86,13 +86,13 @@ function wsrobot_init(ip, port) {
 
     websocket.onopen = function(){
       append("connection received");
-      document.getElementById("status").innerHTML = "<font color='green'>o</font>";
+      document.getElementById("status").innerHTML = "<font color='green'>OK</font>";
 
     } 
 
     websocket.onclose = function(){
       append("connection closed");
-      document.getElementById("status").innerHTML = "<font color='red'>o</font>";
+      document.getElementById("status").innerHTML = "<font color='red'>NOT CONNECTED</font>";
     }
 
     websocket.onerror = function(){

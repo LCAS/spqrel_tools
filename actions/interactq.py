@@ -19,7 +19,7 @@ import ws_client
 from ws_client import *
 
 import conditions
-from conditions import set_condition
+from conditions import *
 
 actionName = "interactq"
 
@@ -38,11 +38,21 @@ def actionThread_exec (params):
     while (getattr(t, "do_run", True) and count>0): 
         print "Action "+actionName+" "+params+" exec..."
         # action exec
-        #csend
-        data_str = "im.ask('"+params+"')"+"\n###ooo###\n\n"
 
+        # set to false all the conditions in the action
+        data_str = "im.listConditions('"+params+"')"+"\n###ooo###\n\n"
         rdata = csend(data_str)
         rdata = rdata.strip()
+        ldata = eval(rdata) # rdata is the string representation of a list of strings
+        # ldata is a list of conditions to set to false
+        for cc in ldata:
+            set_condition(memory_service, cc, 'false')
+            #print "Condition: ",cc,get_condition(memory_service, cc)
+
+        # now wait for the actual answer
+        data_str = "im.ask('"+params+"')"+"\n###ooo###\n\n"
+        rdata = csend(data_str)
+        rdata = rdata.strip() # rdata is the answer of the ask action
         
         count = count - 1
         # action exec
@@ -53,9 +63,11 @@ def actionThread_exec (params):
     # action end
     action_success(actionName,params)
 
+
 def init(session):
     print actionName+" init"
     action_base.init(session, actionName, actionThread_exec)
+
 
 def quit():
     print actionName+" quit"

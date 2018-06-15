@@ -198,17 +198,19 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
                 'id': 'notificationAdded',
                 'html': d
             }))
+
         self.als_active_action = ALSubscriber(
-            memory_service, "PNP/CurrentAction",
+            memory_service, "PNP/RunningActions/",
             lambda d: self.sendJSON({
                 'method': 'choose_action',
-                'id': 'action_%d' % d
+                'ids': d
             }))
+
 
         # all the ones that are just HTML updates
         als_names = [
             "CommandInterpretations",
-            "ASR_transcription", 
+            "ASR_transcription",
             "TopologicalNav/Goal",
             "TopologicalNav/CurrentNode",
             "TopologicalNav/ClosestNode",

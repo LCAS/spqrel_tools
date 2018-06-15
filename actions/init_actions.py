@@ -5,6 +5,7 @@ import argparse
 import sys
 import os
 import time
+from pprint import pprint
 
 from naoqi import ALProxy
 
@@ -41,7 +42,22 @@ behaviours = [
 actions_running = []
 
 
-def find_and_import():
+def check_service_semaphor(session, name=''):
+    _this_name = "init_actions_%s" % name
+
+    class Foo:
+        pass
+
+    service_names = {i['name']: i for i in session.services()}
+    if _this_name in service_names:
+        #pprint(service_names[_this_name])
+        return False
+    else:
+        session.registerService(_this_name, Foo())
+        return True
+
+
+def find_and_import(session, whitelist):
     """
     find all python files in the same directory as
     this file and loads them dynamically
@@ -55,14 +71,22 @@ def find_and_import():
     for loader, name, is_pkg in pkgutil.walk_packages(p):
         if name == "init_actions" or name in blacklisted_actions:
             continue
+        if len(whitelist) > 0 and name not in whitelist:
+            continue
         try:
-            modules.append(loader.find_module(name).load_module(name))
+            if check_service_semaphor(session, name):
+                modules.append(loader.find_module(name).load_module(name))
+            else:
+                print("%s*** action %s is already running. Skipping it. ***%s" %
+                      (tcol.FAIL, name, tcol.ENDC))
+                failed_loads.append(name)
         except Exception as e:
             print("*** exception importing module %s: %s ***"
                   % (name, str(e)))
             failed_loads.append(name)
     if len(failed_loads) > 0:
-        print "*** failed loads: \n  ! %s" % '\n  ! '.join(failed_loads)
+        print("%s*** failed loads: \n  ! %s%s" %
+              (tcol.FAIL, '\n  ! '.join(failed_loads), tcol.ENDC))
 
     return modules
 
@@ -164,9 +188,14 @@ def main():
                         help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
     parser.add_argument("--pport", type=int, default=9559,
                         help="Naoqi port number")
+
+    parser.add_argument("--action", "-a", action='append', default=[],
+                        help="only launch these actions")
+
     args = parser.parse_args()
     pip = args.pip
     pport = args.pport
+    whitelist = args.action
 
     # Starting application
     try:
@@ -180,14 +209,19 @@ def main():
 
     app.start()
     session = app.session
-    modules = find_and_import()
+
+    if not check_service_semaphor(session):
+        print('%s*** service "init_actions" already running'
+              ' (this MAY be ok if you are testing) ***%s' %
+              (tcol.WARNING, tcol.ENDC))
+
+    modules = find_and_import(session, whitelist)
     time.sleep(1)
     init(session, modules)
 
     app.run()
 
     quit(modules)
-
     time.sleep(1)
     sys.exit(0)
 

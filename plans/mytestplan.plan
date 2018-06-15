@@ -1,7 +1,6 @@
-waitfor_screentouched;
-say_hello;
-navigateto_bed;
-navigateto_fridge;
-waitfor_personhere;
-followuntil_personhere_persondetectedid;
+say_hello|5;
+navigateto_bed|6;
+navigateto_fridge|3;
+waitfor_personhere|3;
+followuntil_personhere_persondetectedid|3;
 

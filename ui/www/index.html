@@ -1,4 +1,4 @@
-$def with (plans)
+$def with (plans, host)
 $var title: SPQReL@RoboCup
 $var jsfiles: static/js/main.js
 
@@ -10,6 +10,7 @@ document.onready = function() {
  init();
 }
 </script>
+<!--
 <div class="section" id="continue_panel">
     <div class="container">
         <div class="row">
@@ -28,10 +29,42 @@ document.onready = function() {
         </div>
     </div>
 </div> 
+-->
+
+
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-3">
+                <div  style="background-color: #333333; min-height: 500px; max-height: 400px;" class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">I last said:</h3>
+                    </div>
+                    
+                    <div class="panel-body">
+                        <p style="color: #ffffff; font-size:12pt" id="Veply">my last words</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div style="background-color: #333333; min-height: 500px; max-height: 400px;" class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Interaction Manager</h3>
+                    </div>
+                    
+                    <div class="panel-body">
+                        <iframe width="100%" height="400px" src="http://$host:8000/"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+<!--             <div class="col-md-6">
                 <div  style="background-color: #333333; min-height: 400px; max-height: 400px;" class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">I last said:</h3>
@@ -42,9 +75,9 @@ document.onready = function() {
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+ -->            <div class="col-md-12">
 	            <div class="row">
-                    <div  style="background-color: #333333; min-height: 400px; max-height: 400px;" class="panel panel-primary">
+                    <div  style="background-color: #333333; min-height: 200px; max-height: 200px;" class="panel panel-primary">
                         <div class="panel-heading">
 	                        <h3 class="panel-title">Quick Replies</h3>
 	                    </div>
@@ -56,115 +89,6 @@ document.onready = function() {
 	            </div>
 
 
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Robot Status</h3>
-                    </div>
-                    <div class="panel-body">
-                        <table class="table table-condensed table-striped">
-                            <tbody>
-                                <tr>
-                                    <td class="col-md-3">Speech Recognition:</td>
-                                    <td class="col-md-9"><p id="ASR_transcription">-</p></td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3">Speech Understanding:</td>
-                                    <td class="col-md-9"><p id="CommandInterpretations">-</p></td>
-                                </tr>
-
-                                <tr>
-                                    <td class="col-md-3">Current Plan:</td>
-                                    <td class="col-md-9"><p id="PNP_CurrentPlan">-</p></td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3">Current Action:</td>
-                                    <td class="col-md-9"><p id="PNP_CurrentAction">-</p></td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3">Current Node:</td>
-                                    <td class="col-md-9"><p id="TopologicalNav_CurrentNode">XXX</p></td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3">Closest Node:</td>
-                                    <td class="col-md-9"><p id="TopologicalNav_ClosestNode">XXX</p></td>
-                                </tr>
-<!--                                 <tr>
-                                    <td class="col-md-3">Current PNP Places:</td>
-                                    <td class="col-md-9"><p id="PNP_active_places">-</p></td>
-                                </tr> -->
-                                <tr>
-                                    <td class="col-md-3">Battery:</td>
-                                    <td class="col-md-9"><p id="BatteryChargeChanged">xx%</p></td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3">Current Navgoal:</td>
-                                    <td class="col-md-9"><p id="NAOqiPlanner/Goal">XXX</p></td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3">Current Nav Status:</td>
-                                    <td class="col-md-9"><p id="NAOqiPlanner_Status">XXX</p></td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3">last notification:</td>
-                                    <td class="col-md-9"><p id="notificationAdded">-</p></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-
-            <!--<div class="col-md-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">GPSR actions</h3>
-                    </div>
-                    <div class="panel-body">
-                        I have interpreted this mission:
-                        <ul id="gprs_plan" class="list-group">
-                            <div id="gpsr_plan">
-                            </div>
-                        </ul>                                             
-                   </div>
-                </div>
-            </div>
--->
-
-            <div class="col-md-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Plans</h3>
-                    </div>
-                    <div class="panel-body">
-                            $for p in plans:
-                                <div class="btn-group" role="group">
-                                        <button id="$p" 
-                                                onclick="send({
-                                                    'method':'plan_start_button', 
-                                                    'plan': '$p',
-                                                });" 
-                                                class=" btn-lg btn-primary">$p</button><p>&nbsp;</p>
-                                </div>
-                        <p>&nbsp;</p>        
-                        <button id="$p" 
-                            onclick="send({
-                                'method':'plan_start_button', 
-                                'plan': 'stop',
-                            });" 
-                            class=" btn-lg btn-danger">STOP!</button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

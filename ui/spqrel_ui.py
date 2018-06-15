@@ -47,14 +47,18 @@ class ALSubscriber():
         #self.configuration = {"bodyLanguageMode": body_language_mode}
 
 
-class SPQReLUIServer(webnsock.ControlServer):
+class SPQReLUIServer(webnsock.WebServer):
 
     __plan_dir = os.path.realpath(os.getenv("PLAN_DIR", default=os.getcwd()))
     _ip = os.getenv("PEPPER_IP", default="127.0.0.1")
 
     def __init__(self):
+        global memory_service
+        global session
+        self.memory_service = memory_service
+        self.session = session
 
-        webnsock.ControlServer.__init__(self)
+        webnsock.WebServer.__init__(self)
 
         TEMPLATE_DIR = path.realpath(
             path.join(
@@ -76,13 +80,15 @@ class SPQReLUIServer(webnsock.ControlServer):
 
             def GET(self):
                 plans = serv_self.find_plans()
-                return render.index(plans.keys())
+                ip = web.ctx.host.split(':')[0]
+                return render.index(plans.keys(), ip)
 
         class tmux(self.page):
             path = '/tmux'
 
             def GET(self):
-                return render.tmux()
+                ip = web.ctx.host.split(':')[0]
+                return render.tmux(ip)
 
         class blockly(self.page):
             path = '/blockly'
@@ -90,6 +96,22 @@ class SPQReLUIServer(webnsock.ControlServer):
             def GET(self):
                 ip = web.ctx.host.split(':')[0]
                 return render.blockly(ip)
+
+        class admin(self.page):
+            path = '/admin'
+
+            def GET(self):
+                ip = web.ctx.host.split(':')[0]
+                plans = serv_self.find_plans()
+                actions = serv_self.find_actions()
+                return render.admin(plans, actions, ip)
+
+        class modim(self.page):
+            path = '/modim'
+
+            def GET(self):
+                ip = web.ctx.host.split(':')[0]
+                return render.modim(ip)
 
         class spqrel(self.page):
             path = '/spqrel'
@@ -104,6 +126,17 @@ class SPQReLUIServer(webnsock.ControlServer):
             if f.endswith('.plan'):
                 plans[f.replace('.plan', '')] = f
         return plans
+
+    def find_actions(self):
+        services = self.session.services()
+        srv_names = [s['name'] for s in services]
+        action_names = []
+        for s in srv_names:
+            if s.startswith('init_actions_'):
+                label = s[len('init_actions_'):]
+                if len(label) > 0:
+                    action_names.append(label)
+        return action_names
 
 
 class SQPReLProtocol(webnsock.JsonWSProtocol):
@@ -166,16 +199,24 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
                 'html': d
             }))
 
+        self.als_active_action = ALSubscriber(
+            memory_service, "PNP/RunningActions/",
+            lambda d: self.sendJSON({
+                'method': 'choose_action',
+                'ids': d
+            }))
+
+
         # all the ones that are just HTML updates
         als_names = [
             "CommandInterpretations",
-            "ASR_transcription", 
+            "ASR_transcription",
             "TopologicalNav/Goal",
             "TopologicalNav/CurrentNode",
             "TopologicalNav/ClosestNode",
             "NAOqiPlanner/Status",
             "NAOqiPlanner/Goal",
-            "PNP/CurrentAction",
+            "PNP/RunningActions/",
             "PNP/CurrentPlan",
             "Veply",
             "BatteryChargeChanged"
@@ -190,7 +231,7 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
                     lambda d, id=clean_name: self.sendJSON({
                         'method': 'update_html',
                         'id': id,
-                        'html': d
+                        'html': str(d)
                     }))
             except Exception as e:
                 error(str(e))
@@ -280,7 +321,7 @@ if __name__ == "__main__":
     session = qi_init()
 
     ip = os.getenv("PEPPER_IP", default="127.0.0.1")
-    webserver = webnsock.Webserver(SPQReLUIServer())
+    webserver = webnsock.WebserverThread(SPQReLUIServer())
     backend = webnsock.WSBackend(SQPReLProtocol)
     signal(SIGINT,
            lambda s, f: webnsock.signal_handler(webserver, backend, s, f))

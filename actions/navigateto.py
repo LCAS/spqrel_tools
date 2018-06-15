@@ -69,9 +69,9 @@ def actionThread_exec(params):
     print "Action " + actionName + " " + params + " terminated"
     # action end
     if goal_reached:
-        action_success(actionName,params)
+        action_base.action_success(actionName, params)
     else:
-        action_failed(actionName,params)
+        action_base.action_failed(actionName, params)
 
 
 def init(session):

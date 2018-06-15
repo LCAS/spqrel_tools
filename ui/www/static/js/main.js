@@ -37,6 +37,14 @@ function _update_html(payload) {
   $('#'+payload['id']).html(payload['html'])
 }
 
+function _choose_action(payload) {
+  console.log('choose action for id=' + payload['id']);
+  $('.action_btn').attr("class", "action_btn btn btn-sm btn-default");
+  $('.action_btn#'+payload['id']).attr(
+      "class",
+      "action_btn btn btn-sm btn-success");
+}
+
 function _send_btn_text(text) {
   console.log('_send_btn_text: ' + text);
   msg = {

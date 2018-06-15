@@ -198,6 +198,12 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
                 'id': 'notificationAdded',
                 'html': d
             }))
+        self.als_active_action = ALSubscriber(
+            memory_service, "PNP/CurrentAction",
+            lambda d: self.sendJSON({
+                'method': 'choose_action',
+                'id': 'action_%d' % d
+            }))
 
         # all the ones that are just HTML updates
         als_names = [
@@ -208,7 +214,7 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
             "TopologicalNav/ClosestNode",
             "NAOqiPlanner/Status",
             "NAOqiPlanner/Goal",
-            "PNP/CurrentAction",
+            "PNP/RunningActions/",
             "PNP/CurrentPlan",
             "Veply",
             "BatteryChargeChanged"
@@ -223,7 +229,7 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
                     lambda d, id=clean_name: self.sendJSON({
                         'method': 'update_html',
                         'id': id,
-                        'html': d
+                        'html': str(d)
                     }))
             except Exception as e:
                 error(str(e))

@@ -38,7 +38,7 @@ document.onready = function() {
                                 </tr>
                                 <tr>
                                     <td class="col-md-3">Current Action:</td>
-                                    <td class="col-md-9"><p id="PNP_CurrentAction">-</p></td>
+                                    <td class="col-md-9"><p id="PNP_RunningActions_">-</p></td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-3">Current Node:</td>
@@ -116,7 +116,7 @@ document.onready = function() {
                             keys.sort(key=lambda s: s.lower())        
 
                         $for a in keys:
-                            <button id="$a" class="btn btn-sm btn-default">$a</button>
+                            <button id="$a" class="action_btn btn btn-sm btn-default">$a</button>
                     </div>
                 </div>
             </div>

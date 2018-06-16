@@ -59,7 +59,7 @@ document.onready = function() {
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <div  style="background-color: #333333; min-height: 500px; max-height: 400px;" class="panel panel-primary">
+                <div  style="background-color: #333333; min-height: 350px; max-height: 350px;" class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">I last said:</h3>
                     </div>
@@ -68,15 +68,25 @@ document.onready = function() {
                         <p style="color: #ffffff; font-size:12pt" id="Veply">my last words</p>
                     </div>
                 </div>
+               <div  style="background-color: #333333; min-height: 200px; max-height: 200px;" class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Quick Replies</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id="dialog-buttons">
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="col-md-9">
-                <div style="background-color: #333333; min-height: 500px; max-height: 400px;" class="panel panel-primary">
+                <div style="background-color: #333333; min-height: 600px; max-height: 600px;" class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Interaction Manager</h3>
                     </div>
                     
                     <div class="panel-body">
-                        <iframe width="100%" height="400px" src="http://$host:8000/"></iframe>
+                        <iframe width="100%" height="530px" src="http://$host:8000/"></iframe>
                     </div>
                 </div>
             </div>
@@ -84,38 +94,6 @@ document.onready = function() {
     </div>
 </div>
 
-<div class="section">
-    <div class="container">
-        <div class="row">
-<!--             <div class="col-md-6">
-                <div  style="background-color: #333333; min-height: 400px; max-height: 400px;" class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">I last said:</h3>
-                    </div>
-                    
-                    <div class="panel-body">
-                        <h1 style="color: #ffffff;" id="Veply">my last words</h1>
-                    </div>
-                </div>
-            </div>
- -->            <div class="col-md-12">
-	            <div class="row">
-                    <div  style="background-color: #333333; min-height: 200px; max-height: 200px;" class="panel panel-primary">
-                        <div class="panel-heading">
-	                        <h3 class="panel-title">Quick Replies</h3>
-	                    </div>
-	                    <div class="panel-body">
-                            <div id="dialog-buttons">
-                            </div>
-	                    </div>
-	                </div>
-	            </div>
-
-
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <div class="modal fade" id="modal_dlg">

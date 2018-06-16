@@ -32,9 +32,6 @@ def actionThread_exec (params):
     memory_service = getattr(t, "mem_serv", None)
     print "Action "+actionName+" started with params "+params
 
-    set_condition(memory_service, 'drink_coke', "false")
-    set_condition(memory_service, 'drink_beer', "false")
-
     # action init
     count = 1
     # action init
@@ -55,6 +52,7 @@ def actionThread_exec (params):
 
         # now wait for the actual answer
         data_str = "im.ask('"+params+"')"+"\n###ooo###\n\n"
+        #TODO make it interruptible !!!
         rdata = csend(data_str)
         rdata = rdata.strip() # rdata is the answer of the ask action
         

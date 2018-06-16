@@ -1,0 +1,98 @@
+## actions commands
+#
+
+taking:
+    requires:
+      - object:
+          lu4r_name: ["theme"]
+          necessary: 1
+      - location:
+          lu4r_name: ["source"]
+          necessary: 0
+    possible_verbs: ["get", "grasp", "take", "retrieve", "pick up"]
+    lu4r_name: ["taking", "manipulation"]
+
+locating:
+    requires:
+      - object:
+          lu4r_name: ["phenomenon"]
+          necessary: 0
+      - location:
+          lu4r_name: ["ground", "entity"]
+          necessary: 0
+      - name:
+          lu4r_name: ["phenomenon"]
+          necessary: 0
+    possible_verbs: ["find", "locate", "spot", "pinpoint", "look for"]
+    lu4r_name: ["locating"]
+
+bringing:
+    requires:
+      - object:
+          lu4r_name: ["theme"]
+          necessary: 1
+      - location:
+          lu4r_name: ["goal", "source"]
+          necessary: 0
+      - name:
+          lu4r_name: ["beneficiary", "recipient"]
+          necessary: 1
+    possible_verbs:  ["bring", "deliver", "give", "hand", "hand over"]
+    lu4r_name: ["bringing", "giving"]
+
+cotheme:
+    requires:
+      - name:
+          lu4r_name: ["cotheme"]
+          necessary: 1
+    possible_verbs: ["follow", "come behind", "go behind", "come after", "go after", "accompany"]
+    lu4r_name: ["cotheme"]
+
+motion:
+    requires:
+      - location:
+          lu4r_name: ["goal"]
+          necessary: 1
+    possible_verbs: ["go to", "navigate to", "enter"]
+    lu4r_name: ["motion", "arriving"]
+
+tell:
+    requires:
+      - name:
+        lu4r_name: []
+        necessary: 0
+      - whattosay:
+        lu4r_name: []
+        necessary: 1
+    possible_verbs: ["tell", "say"]
+    lu4r_name: ["tell", "say"]
+
+placing:
+    requires:
+      - object:
+        lu4r_name: []
+        necessary: 1
+      - location:
+        lu4r_name: []
+        necessary: 1
+    possible_verbs: ["put", "place", "leave", "set"]
+    lu4r_name: []
+
+guide:
+    requires:
+      - name:
+        lu4r_name: []
+        necessary: 1
+      - location:
+        lu4r_name: []
+        necessary: 1
+    possible_verbs: ["guide", "escort", "take", "lead", "accompany", "conduct"]
+    lu4r_name: []
+
+answer:
+    requires:
+      - question:
+        lu4r_name: []
+        necessary: 0
+    possible_verbs: ["answer"]
+    lu4r_name: []

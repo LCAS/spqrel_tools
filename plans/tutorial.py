@@ -17,19 +17,6 @@ p = PNPCmd()
 
 p.begin()
 
-p.exec_action("asrenable", "")
-
 p.exec_action("understandCommand", "")
-
-p.exec_action("asrenable", "off")
-
-p.exec_action("modiminit", "cocktailparty")
-
-p.exec_action('interactq', 'whichdrink')
-
-if p.get_condition('drink_coke'):
-    p.exec_action("say", "bringcoke")
-if p.get_condition('drink_beer'):
-    p.exec_action("say", "bringbeer")
 
 p.end()

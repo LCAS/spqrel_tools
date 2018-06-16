@@ -35,7 +35,7 @@ def actionThread_exec (params):
     ws_interpretation = interpretations[1]
 
     int_dict = generateDict(lu4r_interpretation)
-
+    print "LU4r DICTIONARY:", int_dict
     if "and" in int_dict.keys():
         int_dict = int_dict["and"]
     else:
@@ -49,6 +49,8 @@ def actionThread_exec (params):
 
     print int_dict
     print "Num tasks:", str(num_tasks)
+
+    time.sleep(2)
 
     action_success(actionName,params)
 

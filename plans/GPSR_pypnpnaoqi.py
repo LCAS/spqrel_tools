@@ -12,6 +12,7 @@ except:
 import pnp_cmd_naoqi
 from pnp_cmd_naoqi import *
 
+
 p = PNPCmd()
 
 p.begin()

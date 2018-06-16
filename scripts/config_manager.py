@@ -20,10 +20,23 @@ class config_manager(object):
             [config_name, ext] = config_file.split(".")
             if ext == "xml":
                 memory_key = "/semantic_info/"+ config_name.lower()
-                print "Loading config for", config_name, "into [" + memory_key + "] ...",
+                print "Loading config for", config_file, "into [" + memory_key + "] ...",
                 try:
                     xml_root = ET.parse(os.path.join(config_folder, config_file)).getroot()
                     info = self.decode_xml(xml_root, config_name)
+                    self.memProxy.insertData(memory_key, str(info))
+                    memory_keys.append(memory_key)
+                    print "DONE"
+                except Exception, e:
+                    print "Error parsing xml file", config_file
+                    print e
+                    exit(1)
+            elif ext == "yaml":
+                memory_key = "/semantic_info/"+ config_name.lower()
+                print "Loading config for", config_file, "into [" + memory_key + "] ...",
+                try:
+                    yf = open(os.path.join(config_folder, config_file))
+                    info = self.decode_yaml(yf, config_name)
                     self.memProxy.insertData(memory_key, str(info))
                     memory_keys.append(memory_key)
                     print "DONE"
@@ -35,6 +48,10 @@ class config_manager(object):
         #for key in memory_keys:
         #    print key, ":"
         #    pp.pprint(eval(self.memProxy.getData(key)))
+
+    def decode_yaml(self, yaml_file, config_name):
+        content = yaml.load(yaml_file)
+        return content
 
     def decode_xml(self, xml_root, config_name):
         config_name = config_name.lower()
@@ -56,7 +73,7 @@ class config_manager(object):
                 locations = []
                 for loc in locroom.findall("location"):
                     locations.append({"name": loc.get("name")})
-                rooms.append({"name": locroomname, "locationsList": locations})
+                rooms.append({"name": locroomname, "locationList": locations})
             return rooms
         elif config_name == "names":
             names = []
@@ -106,8 +123,8 @@ if __name__ == '__main__':
                         help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
     parser.add_argument("--pport", type=int, default=9559,
                         help="Naoqi port number")
-    parser.add_argument("--file", type=str, default="spqrel-config.yaml",
-                        help="path to config file")
+    #parser.add_argument("--file", type=str, default="spqrel-config.yaml",
+    #                    help="path to config file")
     args = parser.parse_args()
     pip = args.pip
     pport = args.pport

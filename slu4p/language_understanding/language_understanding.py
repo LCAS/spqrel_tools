@@ -5,13 +5,15 @@ import signal
 from lu4r_client import LU4RClient
 import slu_utils
 import xml.etree.ElementTree as ET
+import pprint as pp
 
 
 class LanguageUnderstanding(object):
     PATH = ''
     RANKED_EVENT = "VRanked"
+    SEMANTIC_INFO_MEM = "/semantic_info"
 
-    def __init__(self, lip, lport, gpsrgen, app):
+    def __init__(self, lip, lport, app):
         super(LanguageUnderstanding, self).__init__()
 
         app.start()
@@ -20,10 +22,11 @@ class LanguageUnderstanding(object):
         self.__shutdown_requested = False
         signal.signal(signal.SIGINT, self.signal_handler)
 
-        self.load_gpsr_xmls(gpsrgen)
+        self.memory = session.service('ALMemory')
+
+        self.load_gpsr_xmls()
 
         self.lu4r_client = LU4RClient(lip, lport)
-        self.memory = session.service('ALMemory')
 
     def start(self):
         self.ranked_sub = self.memory.subscriber(LanguageUnderstanding.RANKED_EVENT)
@@ -31,13 +34,13 @@ class LanguageUnderstanding(object):
 
         print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(LanguageUnderstanding.RANKED_EVENT)
 
-    def load_gpsr_xmls(self, gpsrgen):
+    def load_gpsr_xmls(self):
         # NOTE only parsing the GPSR tasks definitions
-        self.objectsxml = ET.parse(gpsrgen + "/GPSRCmdGen/Resources/Objects.xml").getroot()
-        self.namesxml = ET.parse(gpsrgen + "/GPSRCmdGen/Resources/Names.xml").getroot()
-        self.questionsxml = ET.parse(gpsrgen + "/GPSRCmdGen/Resources/Questions.xml").getroot()
-        self.locationsxml = ET.parse(gpsrgen + "/GPSRCmdGen/Resources/Locations.xml").getroot()
-        self.gesturesxml = ET.parse(gpsrgen + "/GPSRCmdGen/Resources/Gestures.xml").getroot()
+        self.tasks_definition = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/gpsr_tasks_definition") )
+        self.objects = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/objects") )
+        self.names = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/names") )
+        self.locations = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/locations") )
+        self.questions = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/questions") )
 
     def quit(self):
         self.ranked_sub.signal.disconnect(self.ranked_sub_id)
@@ -46,55 +49,138 @@ class LanguageUnderstanding(object):
         transcriptions_dict = slu_utils.list_to_dict_w_probabilities(msg)
         best_transcription = slu_utils.pick_best(transcriptions_dict)
         print "[" + self.__class__.__name__ + "] User says: " + best_transcription
+
+        # get lu4r interpretation
         lu4r_interpretation = str(self.lu4r_client.parse_sentence(best_transcription))
 
+        # get ws interpretation
         ws_interpretation = self.doWordSpotting(best_transcription)
+
+        # merge interpretations TODO
+        merged_interpretation = self.mergeInterpretations(lu4r_interpretation, ws_interpretation)
+
 
         print "[" + self.__class__.__name__ + "] LU4R Interpretation: " + str(lu4r_interpretation)
         print "[" + self.__class__.__name__ + "] Word spotting: " + str(ws_interpretation)
+        #print "[" + self.__class__.__name__ + "] Merged: " + str(merged_interpretation)
+
         interpretations = [lu4r_interpretation, ws_interpretation]
         self.memory.raiseEvent("CommandInterpretations", interpretations)
 
-    def  doWordSpotting(self, transcription):
+    def mergeInterpretations(self, lu4r_interpretation, ws_interpretation):
+        lu4rDict = self.generateLu4rDict(lu4lu4r_interpretation)
+
+        for task in ws_interpretation:
+            for lu4r_name in task["lu4r_name"]:
+                for lu4rkey in lu4rDict.keys():
+                    if lu4r_name == lu4rkey:
+                        print "found match:", lu4r_name, lu4rkey
+                        mergedTask = self.mergeLu4rWsTasks(lu4rDict[lu4rkey], task)
+
+    def mergeLu4rWsTasks(self, lu4rTask, wsTask):
+        for requirement in task["requires"]:
+            for lnreq in requirement["lu4r_name"]:
+                for lu4rArg in lu4rTask:
+                    if lu4rArg.keys()[0] == lnreq:
+                        print "aaaaaaaaaaa:", lu4rArg.keys()[0], lnreq
+                ##TODO
+                ##TODO
+
+
+    def generateLu4rDict(self, inter, depth=1):
+        frames_dict = {}
+
+        start_fi = inter.find(" / ") + 3
+        end_fi = inter.find("\n")
+        frame, rest = inter[start_fi:end_fi], inter[end_fi:]
+
+        if frame == "and":
+            ops = rest.split("\n" + "\t"*depth + ":op")[1:]
+            frame_ops_list = []
+            for op in ops:
+                frame_ops_list.append(self.generateLu4rDict(op, depth+1))
+
+            frames_dict.update({frame: frame_ops_list})
+        else:
+            frame = frame.split("-")[1]
+            args = rest.split("\n" + "\t"*depth + ":")[1:]
+            args_list = []
+            for arg in args:
+                end_ani = arg.find(" (")
+                start_avi = arg.find(" / ") + 3
+                arg_name, arg_value = arg[:end_ani], arg[start_avi:]
+                if ":mod" in arg_value:
+                    splitted = arg_value.split("\t"*(depth+1) + ":mod")
+                    print splitted, arg_value
+                    arg_value = splitted[0][:splitted[0].find("\n")]
+                    mod_list = []
+                    for split in splitted[1:]:
+                        start_mi, end_mi = split.find(" / ") + 3, split.find(")")
+                        arg_value = split[start_mi:end_mi] + arg_value
+                    args_list.append({arg_name: arg_value})
+                else:
+                    arg_value = arg_value[:arg_value.find(")")]
+                    args_list.append({arg_name : arg_value})
+
+            frames_dict.update({frame: args_list})
+
+        return frames_dict
+
+    def doWordSpotting(self, transcription):
+        spotted_tasks = []
+
         # look for verbs
-        vb_spotted = []
-        for vbcat in self.verbs.keys():
-            for vb in self.verbs[vbcat]:
+        for task in self.tasks_definition.keys():
+            for vb in self.tasks_definition[task]["possible_verbs"]:
                 if vb in transcription:
                     vb_index = transcription.find(vb)
-                    vb_spotted.append({"verbcat" : vbcat, "index": vb_index, "verb": vb})
+                    spotted_tasks.append({"task": task, "index": vb_index, "verb": vb, "requires": self.tasks_definition[task]["requires"]})
         # look for objects
         obj_spotted = []
-        for objcat in self.objectsxml.findall("category"):
-            objcatname = objcat.get("name")
-            for obj in objcat.findall("object"):
-                objname = obj.get("name")
+        for objcat in self.objects:
+            objcatname = objcat["name"]
+            if objcatname in transcription:
+                objcat_index = transcription.find(objcatname)
+                obj_spotted.append({"objcat": objcatname, "index": objcat_index})
+            for obj in objcat["objectList"]:
+                objname = obj["name"]
                 if objname in transcription:
                     obj_index = transcription.find(objname)
                     obj_spotted.append({"objcat": objcatname, "index": obj_index, "obj": objname})
+        for obj in self.objects_to_guess:
+            if obj in transcription:
+                obj_index = transcription.find(obj)
+                obj_spotted.append({"obj": obj, "index": obj_index, "toguess": "object"})
         # look for persons
         psn_spotted = []
-        for nametag in self.namesxml.findall("name"):
-            name = nametag.text
+        for nametag in self.names:
+            name = nametag["name"]
             if name in transcription:
                 name_index = transcription.find(name)
                 psn_spotted.append({"index": name_index, "person": name})
+        for name in self.names_to_guess:
+            if name in transcription:
+                name_index = transcription.find(name)
+                psn_spotted.append({"person": name, "index": name_index, "toguess": "name"})
         # look for locations
         loc_spotted = []
-        for room in self.locationsxml.findall("room"):
-            roomname = room.get("name")
-            for location in room.findall("location"):
-                locname = location.get("name")
+        for room in self.locations:
+            roomname = room["name"]
+            if roomname in transcription:
+                room_index = transcription.find(roomname)
+                loc_spotted.append({"room": roomname, "index": room_index})
+            for location in room["locationList"]:
+                locname = location["name"]
                 if locname in transcription:
                     loc_index = transcription.find(locname)
                     loc_spotted.append({"room": roomname, "index": loc_index, "loc": locname})
         # look for gestures
-        gest_spotted = []
-        for gest in self.gesturesxml.findall("gesture"):
-            gestname = gest.get("name")
-            if gestname in transcription:
-                gest_index = transcription.find(gestname)
-                gest_spotted.append({"gest": gestname, "index": gest_index})
+        #gest_spotted = []
+        #for gest in self.gesturesxml.findall("gesture"):
+        #    gestname = gest.get("name")
+        #    if gestname in transcription:
+        #        gest_index = transcription.find(gestname)
+        #        gest_spotted.append({"gest": gestname, "index": gest_index})
         # TODO look for questions?
         # look for whattosay
         wts_spotted = []
@@ -104,28 +190,38 @@ class LanguageUnderstanding(object):
                 wts_spotted.append({"wts": wts, "index": wts_index})
 
         # sort the complete list by index
-        complete_list = vb_spotted + obj_spotted + psn_spotted + loc_spotted + gest_spotted + wts_spotted
-        complete_list = sorted(complete_list, key=lambda k: k['index'])
+        #complete_list = obj_spotted + psn_spotted + loc_spotted + wts_spotted
+        #complete_list = sorted(complete_list, key=lambda k: k['index'])
 
-        return complete_list
+        # complete dict
+        attr_spotted = {
+                    "object": obj_spotted,
+                    "name": psn_spotted,
+                    "location": loc_spotted,
+                    "whattosay": wts_spotted,
+                    "question": []
+                    }
+
+        # fill the requirements with the complete spotted list
+        vb_indexes = sorted([t["index"] for t in spotted_tasks])
+        # for attcat in attr_spotted.keys():
+        #     for att in attr_spotted[attcat]:
+        #         if att["index"]
+
+        for i in range(len(spotted_tasks)):
+            for requirement in spotted_tasks[i]["requires"]:
+                for attr in attr_spotted[requirement]:
+                    #if attr["index"] > vb_indexes[i] and len(vb_indexes) > i and attr["index"] < vb_indexes[i + 1]:
+                    spotted_tasks[i].update({requirement: attr})
+
+        pp.pprint (spotted_tasks)
+
+        return spotted_tasks
 
     def signal_handler(self, signal, frame):
         print "[" + self.__class__.__name__ + "] Caught Ctrl+C, stopping."
         self.__shutdown_requested = True
         print "[" + self.__class__.__name__ + "] Good-bye"
-
-    ## where possible uses the same categories of lu4r
-    verbs = {
-        "taking" : ["get", "grasp", "take", "retrieve", "pick up"],   #"$vbtake"
-        "place" : ["put", "place", "leave", "set"],   #"$vbplace"
-        "speak" : ["tell", "say"],   #"$vbspeak"
-        "motion" : ["go to", "navigate to"],   #"$vbgopl"
-        "motion" : ["go to", "navigate to", "enter"],   #"$vbgor"
-        "locating" : ["find", "locate", "spot", "pinpoint", "look for"],   #"$vbfind"
-        "guide" : ["guide", "escort", "take", "lead", "accompany", "conduct"],   #"$vbguide"
-        "cotheme" : ["follow", "come behind", "go behind", "come after", "go after", "accompany"],   #"$vbfollow"
-        "bringing" : ["bring", "deliver", "give", "hand", "hand over"]   #"$vbdeliver"
-    }
 
     whattosay = [
      "something about yourself",
@@ -140,6 +236,16 @@ class LanguageUnderstanding(object):
      "a joke"
     ]
 
+    objects_to_guess = [
+        " it "
+    ]
+
+    names_to_guess = [
+        " me ",
+        " him ",
+        " her "
+    ]
+
 def main():
     parser = argparse.ArgumentParser()
 
@@ -151,8 +257,6 @@ def main():
                         help="The LU4R ip address")
     parser.add_argument("-o", "--luar-port", type=int, default=9001,
                         help="The LU4R listening port")
-    parser.add_argument("-g", "--gpsr-gen", type=str, default=os.environ['SPQREL_HOME'] + "/../GPSRCmdGen",
-                        help="The GPSRCmdGen folder path")
 
 
     args = parser.parse_args()
@@ -169,7 +273,6 @@ def main():
     lu = LanguageUnderstanding(
         lip=args.luar_ip,
         lport=args.luar_port,
-        gpsrgen=args.gpsr_gen,
         app=app
     )
 

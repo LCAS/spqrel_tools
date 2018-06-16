@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- <?xml version=1.0 encoding=utf-8?> -->
 <questions>
   <question>
     <q>Who's the most handsome person in Canada?</q>
@@ -14,7 +14,7 @@
   </question>
   <question>
     <q>How long is Yonge Street in Ontario?</q>
-    <a>"Yonge street is almost 2,000 km, starting at Lake Ontario, and running north to the Minnesota border."</a>
+    <a>Yonge street is almost 2,000 km, starting at Lake Ontario, and running north to the Minnesota border.</a>
   </question>
   <question>
     <q>What's the name of the bear cub exported from Canada to the London Zoo in 1915?</q>
@@ -22,11 +22,11 @@
   </question>
   <question>
     <q>Where was the Blackberry Smartphone developed?</q>
-    <a>"It was developed in Ontario, at Research In Motion's Waterloo offices."</a>
+    <a>It was developed in Ontario, at Research In Motion's Waterloo offices.</a>
   </question>
   <question>
     <q>What is the world's largest coin?</q>
-    <a>"The Big Nickel in Sudbury, Ontario. It is nine meters in diameter."</a>
+    <a>The Big Nickel in Sudbury, Ontario. It is nine meters in diameter.</a>
   </question>
   <question>
     <q>In what year was Canada invaded by the USA for the first time?</q>
@@ -42,11 +42,11 @@
   </question>
   <question>
     <q>Who coined the term Beatlemania?</q>
-    <a>"Sandy Gardiner, a journalist of the Ottawa Journal."</a>
+    <a>Sandy Gardiner, a journalist of the Ottawa Journal.</a>
   </question>
   <question>
     <q>Why is Canada named Canada?</q>
-    <a>"French explorers misunderstood the local native word ""Kanata"", which means village."</a>
+    <a>French explorers misunderstood the local native word Kanata, which means village.</a>
   </question>
   <question>
     <q>When was The Mounted Police formed?</q>
@@ -54,11 +54,11 @@
   </question>
   <question>
     <q>When was The Royal Canadian Mounted Police formed?</q>
-    <a>"In 1920, when The Mounted Police merged with the Dominion Police."</a>
+    <a>In 1920, when The Mounted Police merged with the Dominion Police.</a>
   </question>
   <question>
     <q>How big is the RCMP?</q>
-    <a>"Today, the RCMP has close to 30,000 members."</a>
+    <a>Today, the RCMP has close to 30,000 members.</a>
   </question>
   <question>
     <q>What else is Montreal called?</q>
@@ -74,11 +74,11 @@
   </question>
   <question>
     <q>How many tons of snow are required to build The Hotel de Glace?</q>
-    <a>"Every year, 12000 tons of snow are used for The Hotel de Glace."</a>
+    <a>Every year, 12000 tons of snow are used for The Hotel de Glace.</a>
   </question>
   <question>
     <q>Can I visit the Hotel de Glace in summer?</q>
-    <a>"No. Every summer it melts away, only to be rebuilt the following winter."</a>
+    <a>No. Every summer it melts away, only to be rebuilt the following winter.</a>
   </question>
   <question>
     <q>Where is Canada's only desert?</q>
@@ -89,10 +89,14 @@
     <a>The British Columbia desert is only 15 miles long.</a>
   </question>
   <question>
-    <q>Name 3 famous male Canadians.,"Leonard Cohen, Keanu Reeves, and Jim Carrey."
-    <question>
-    <q>Name 3 famous female Canadians.,"Celine Dion, Pamela Anderson, and Avril Lavigne."
-    <question>
+    <q>Name 3 famous male Canadians.</q>
+    <a>Leonard Cohen, Keanu Reeves, and Jim Carrey.</a>
+  </question>
+  <question>
+    <q>Name 3 famous female Canadians.</q>
+    <a>Celine Dion, Pamela Anderson, and Avril Lavigne.</a>
+  </question>
+  <question>
     <q>What's the origin of the Comic Sans font?</q>
     <a>Comic Sans is based on Dave Gibbons' lettering in the Watchmen comic books.</a>
   </question>
@@ -122,17 +126,19 @@
   </question>
   <question>
     <q>What does CAPTCHA stands for?</q>
-    <a>CAPTCHA is an acronym for Completely Automated Public Turing test to tell Computers and Humans Apart""</a>
+    <a>CAPTCHA is an acronym for Completely Automated Public Turing test to tell Computers and Humans Apart</a>
   </question>
   <question>
     <q>What was the first computer bug?</q>
     <a>The first actual computer bug was a dead moth stuck in a Harvard Mark II.</a>
   </question>
   <question>
-    <q>Name all of the robots on Mars.,"There are four robots on Mars: Sojourner, Spirit, Opportunity, and Curiosity. Three more crashed on landing."
-    <question>
+    <q>Name all of the robots on Mars.</q>
+    <a>There are four robots on Mars: Sojourner, Spirit, Opportunity, and Curiosity. Three more crashed on landing.</a>
+  </question>
+  <question>
     <q>Who is the world's first android?</q>
-    <a>"Professor Kevin Warwick uses chips in his arm to operate doors, a robotic hand, and a wheelchair."</a>
+    <a>Professor Kevin Warwick uses chips in his arm to operate doors, a robotic hand, and a wheelchair.</a>
   </question>
   <question>
     <q>What is a Mechanical Knight?</q>
@@ -140,11 +146,11 @@
   </question>
   <question>
     <q>What was the first computer in pass the Turing test?</q>
-    <a>"Some people think it was IBM Watson, but it was Eugene, a computer designed at England's University of Reading."</a>
+    <a>Some people think it was IBM Watson, but it was Eugene, a computer designed at England's University of Reading.</a>
   </question>
   <question>
     <q>What does Moravec's paradox state?</q>
-    <a>"Moravec's paradox states that a computer can crunch numbers like Bernoulli, but lacks a toddler's motor skills."</a>
+    <a>Moravec's paradox states that a computer can crunch numbers like Bernoulli, but lacks a toddler's motor skills.</a>
   </question>
   <question>
     <q>What is the AI knowledge engineering bottleneck?</q>

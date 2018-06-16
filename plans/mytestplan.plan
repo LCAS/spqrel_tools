@@ -1,6 +1,9 @@
+taskstep_welcoming;
 say_hello|5;
 navigateto_bed|6;
+taskstep_navigating_now;
 navigateto_fridge|3;
+taskstep_look_for_person;
 waitfor_personhere|3;
 followuntil_personhere_persondetectedid|3;
 

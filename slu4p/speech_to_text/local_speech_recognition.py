@@ -32,13 +32,15 @@ class SpeechRecognition(EventAbstractClass):
 
         dialogP = ALProxy("ALDialog")
         try:
+            print dialogP.getAllLoadedTopics()
+            print dialogP.getActivatedTopics()
             dialogP.unloadTopic("modifiable_grammar") # hack to avoid error on ALSpeechRecognition
         except:
             print "Topic modifable_grammar not set, trying with resetAll"
             try:
                 dialogP.resetAll()
             except:
-                print "Error while resetAll"
+                print "Error while  resetAll"
 
             # or change language and put it back
 

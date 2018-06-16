@@ -56,10 +56,21 @@ clean:
 BINS:=$(shell find $(QIBUILDS_BUILD_DIRS) -type f  | xargs -r file | grep -G "LSB *executable" | cut -f1 -d: | grep -v CMakeFiles)
 LIBS:=$(shell find $(QIBUILDS_BUILD_DIRS) -type f -a -name "*.so" | xargs -r file | grep -G "LSB *shared object" | cut -f1 -d: | grep -v CMakeFiles)
 
+PYTHON_SCRIPTS:=$(shell find $(QIBUILDS_DIRS) -type f -executable -name "*.py")
+
+
 bins: build $(BINS) $(LIBS)
 	@echo $(QIBUILDS_BUILD_DIRS)
 	@echo $(BINS)
 	@echo $(LIBS)
+
+python_scripts: $(PYTHON_SCRIPTS)
+	@echo $(PYTHON_SCRIPTS)
+
+install_python_scripts: $(PYTHON_SCRIPTS)
+	install -d $(INSTALL_TREE)/bin
+	install $(PYTHON_SCRIPTS) $(INSTALL_TREE)/bin
+
 
 pnp_trans: $(WORKTREE)/PetriNetPlans/PNPgen/bin/pnpgen_translator
 
@@ -94,7 +105,7 @@ plans/%.pnml: plans/%.plan $(PNPTRANS)
 # 	(cd $(INSTALL_TREE); \
 # 		git pull && git checkout $(TOOLCHAIN))
 
-install: install_bins
+install: install_bins install_python_scripts
 #	rsync -a --exclude '.git' --exclude '.gitignore' $(WORKTREE)/* $(INSTALL_TREE)
 #	rsync -a --exclude '.git' --exclude '.gitignore' $(AUX_DIRS) $(INSTALL_TREE)
 	# (cd $(INSTALL_TREE); \

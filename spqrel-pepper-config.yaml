@@ -10,9 +10,11 @@ windows:
   - $SPQREL_TOOLS/scripts/config_manager.py
 - name: navigation
   panes:
+  - cd $SPQREL_HOME/bin; ./pepper_head_control --head_pitch 0.2
+  - cd $SPQREL_HOME/bin; ./depth2laser_naoqi --angle_min -0.6 --angle_max 0.6 --range_max 8 --num_ranges 1000 --laser_z 0.6
   - cd $SPQREL_HOME/bin; ./pepper_localizer --map $MAP --initial_pose_x 0 --initial_pose_y
-    0 --initial_pose_theta 0
-  - sleep 5; cd $SPQREL_HOME/bin; ./pepper_planner --map $MAP
+    0 --initial_pose_theta 0 --use_d2l 1
+  - sleep 5; cd $SPQREL_HOME/bin; ./pepper_planner --map $MAP --use_d2l 1
   - sleep 5; cd $SPQREL_HOME/worktree/spqrel_navigation/src/topological_navigation/scripts/;
     ./topological_navigation.py --tmap $TMAP
 - name: speech

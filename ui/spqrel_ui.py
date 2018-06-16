@@ -206,9 +206,9 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
                 'ids': d
             }))
 
-
         # all the ones that are just HTML updates
         als_names = [
+            "current_task_step",
             "CommandInterpretations",
             "ASR_transcription",
             "TopologicalNav/Goal",

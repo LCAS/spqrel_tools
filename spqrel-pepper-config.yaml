@@ -1,6 +1,6 @@
 ---
 init_cmd: 
-  source setup.bash;
+  source $HOME/spqrel/spqrel_launch/worktree/spqrel_tools/setup.bash;
 windows:
 - name: init
   panes:

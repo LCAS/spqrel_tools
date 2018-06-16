@@ -1,0 +1,707 @@
+Get the  kobject  and put it on the  placement 2
+Grasp the  kobject  and put it on the  placement 2
+Take the  kobject  and put it on the  placement 2
+Pick up the  kobject  and put it on the  placement 2
+Get the  kobject  and place it on the  placement 2
+Grasp the  kobject  and place it on the  placement 2
+Take the  kobject  and place it on the  placement 2
+Pick up the  kobject  and place it on the  placement 2
+Put the  kobject  on the  placement 2
+Place the  kobject  on the  placement 2
+Bring me the  kobject
+Give me the  kobject
+Bring the  kobject  to me
+Give the  kobject  to me
+Deliver the  kobject  to me
+Bring the  kobject  to  name  at the  beacon 1
+Give the  kobject  to  name  at the  beacon 1
+Deliver the  kobject  to  name  at the  beacon 1
+Get the  kobject  from the  placement 1  and put it on the  placement 2
+Grasp the  kobject  from the  placement 1  and put it on the  placement 2
+Take the  kobject  from the  placement 1  and put it on the  placement 2
+Pick up the  kobject  from the  placement 1  and put it on the  placement 2
+Get the  kobject  from the  placement 1  and place it on the  placement 2
+Grasp the  kobject  from the  placement 1  and place it on the  placement 2
+Take the  kobject  from the  placement 1  and place it on the  placement 2
+Pick up the  kobject  from the  placement 1  and place it on the  placement 2
+Go to the  placement 1 , find the  kobject , and bring it to me
+Navigate to the  placement 1 , find the  kobject , and bring it to me
+Go to the  placement 1 , locate the  kobject , and bring it to me
+Navigate to the  placement 1 , locate the  kobject , and bring it to me
+Go to the  placement 1 , look for the  kobject , and bring it to me
+Navigate to the  placement 1 , look for the  kobject , and bring it to me
+Go to the  placement 1 , find the  kobject , and give it to me
+Navigate to the  placement 1 , find the  kobject , and give it to me
+Go to the  placement 1 , locate the  kobject , and give it to me
+Navigate to the  placement 1 , locate the  kobject , and give it to me
+Go to the  placement 1 , look for the  kobject , and give it to me
+Navigate to the  placement 1 , look for the  kobject , and give it to me
+Go to the  placement 1 , find the  kobject , and deliver it to me
+Navigate to the  placement 1 , find the  kobject , and deliver it to me
+Go to the  placement 1 , locate the  kobject , and deliver it to me
+Navigate to the  placement 1 , locate the  kobject , and deliver it to me
+Go to the  placement 1 , look for the  kobject , and deliver it to me
+Navigate to the  placement 1 , look for the  kobject , and deliver it to me
+Go to the  placement 1 , find the  kobject , and bring it to  name  at the  beacon
+Navigate to the  placement 1 , find the  kobject , and bring it to  name  at the  beacon
+Go to the  placement 1 , locate the  kobject , and bring it to  name  at the  beacon
+Navigate to the  placement 1 , locate the  kobject , and bring it to  name  at the  beacon
+Go to the  placement 1 , look for the  kobject , and bring it to  name  at the  beacon
+Navigate to the  placement 1 , look for the  kobject , and bring it to  name  at the  beacon
+Go to the  placement 1 , find the  kobject , and give it to  name  at the  beacon
+Navigate to the  placement 1 , find the  kobject , and give it to  name  at the  beacon
+Go to the  placement 1 , locate the  kobject , and give it to  name  at the  beacon
+Navigate to the  placement 1 , locate the  kobject , and give it to  name  at the  beacon
+Go to the  placement 1 , look for the  kobject , and give it to  name  at the  beacon
+Navigate to the  placement 1 , look for the  kobject , and give it to  name  at the  beacon
+Go to the  placement 1 , find the  kobject , and deliver it to  name  at the  beacon
+Navigate to the  placement 1 , find the  kobject , and deliver it to  name  at the  beacon
+Go to the  placement 1 , locate the  kobject , and deliver it to  name  at the  beacon
+Navigate to the  placement 1 , locate the  kobject , and deliver it to  name  at the  beacon
+Go to the  placement 1 , look for the  kobject , and deliver it to  name  at the  beacon
+Navigate to the  placement 1 , look for the  kobject , and deliver it to  name  at the  beacon
+Go to the  placement 1 , find the  kobject , and put it on the  placement 2
+Navigate to the  placement 1 , find the  kobject , and put it on the  placement 2
+Go to the  placement 1 , locate the  kobject , and put it on the  placement 2
+Navigate to the  placement 1 , locate the  kobject , and put it on the  placement 2
+Go to the  placement 1 , look for the  kobject , and put it on the  placement 2
+Navigate to the  placement 1 , look for the  kobject , and put it on the  placement 2
+Go to the  placement 1 , find the  kobject , and place it on the  placement 2
+Navigate to the  placement 1 , find the  kobject , and place it on the  placement 2
+Go to the  placement 1 , locate the  kobject , and place it on the  placement 2
+Navigate to the  placement 1 , locate the  kobject , and place it on the  placement 2
+Go to the  placement 1 , look for the  kobject , and place it on the  placement 2
+Navigate to the  placement 1 , look for the  kobject , and place it on the  placement 2
+Bring me the  kobject  from the  placement
+Give me the  kobject  from the  placement
+Bring to  name  at the  beacon 1  the  kobject  from the  placement
+Give to  name  at the  beacon 1  the  kobject  from the  placement
+Get the  kobject  from the  placement 1  and bring it to me
+Grasp the  kobject  from the  placement 1  and bring it to me
+Take the  kobject  from the  placement 1  and bring it to me
+Pick up the  kobject  from the  placement 1  and bring it to me
+Get the  kobject  from the  placement 1  and give it to me
+Grasp the  kobject  from the  placement 1  and give it to me
+Take the  kobject  from the  placement 1  and give it to me
+Pick up the  kobject  from the  placement 1  and give it to me
+Get the  kobject  from the  placement 1  and deliver it to me
+Grasp the  kobject  from the  placement 1  and deliver it to me
+Take the  kobject  from the  placement 1  and deliver it to me
+Pick up the  kobject  from the  placement 1  and deliver it to me
+Get the  kobject  from the  placement 1  and bring it to  name  at the  beacon
+Grasp the  kobject  from the  placement 1  and bring it to  name  at the  beacon
+Take the  kobject  from the  placement 1  and bring it to  name  at the  beacon
+Pick up the  kobject  from the  placement 1  and bring it to  name  at the  beacon
+Get the  kobject  from the  placement 1  and give it to  name  at the  beacon
+Grasp the  kobject  from the  placement 1  and give it to  name  at the  beacon
+Take the  kobject  from the  placement 1  and give it to  name  at the  beacon
+Pick up the  kobject  from the  placement 1  and give it to  name  at the  beacon
+Get the  kobject  from the  placement 1  and deliver it to  name  at the  beacon
+Grasp the  kobject  from the  placement 1  and deliver it to  name  at the  beacon
+Take the  kobject  from the  placement 1  and deliver it to  name  at the  beacon
+Pick up the  kobject  from the  placement 1  and deliver it to  name  at the  beacon
+Get the  kobject  from the  placement 1  and put it on the  placement 2
+Grasp the  kobject  from the  placement 1  and put it on the  placement 2
+Take the  kobject  from the  placement 1  and put it on the  placement 2
+Pick up the  kobject  from the  placement 1  and put it on the  placement 2
+Get the  kobject  from the  placement 1  and place it on the  placement 2
+Grasp the  kobject  from the  placement 1  and place it on the  placement 2
+Take the  kobject  from the  placement 1  and place it on the  placement 2
+Pick up the  kobject  from the  placement 1  and place it on the  placement 2
+Answer a  question  to  name  at the  beacon 1
+Tell something about yourself to  name  at the  beacon 1 
+Say something about yourself to  name  at the  beacon 1
+Tell the time to  name  at the  beacon 1
+Say the time to  name  at the  beacon 1
+Tell what day is today to  name  at the  beacon 1
+Say what day is today to  name  at the  beacon 1
+Tell what day is tomorrow to  name  at the  beacon 1
+Say what day is tomorrow to  name  at the  beacon 1
+Tell your team's name to  name  at the  beacon 1
+Say your team's name to  name  at the  beacon 1
+Tell your team's country to  name  at the  beacon 1
+Say your team's country to  name  at the  beacon 1
+Tell your team's affiliation to  name  at the  beacon 1
+Say your team's affiliation to  name  at the  beacon 1
+Tell the day of the week to  name  at the  beacon 1
+Say the day of the week to  name  at the  beacon 1
+Tell the day of the month to  name  at the  beacon 1
+Say the day of the month to  name  at the  beacon 1
+Tell a joke to  name  at the  beacon 1
+Say a joke to  name  at the  beacon 1
+Find  name  in the  room  and answer a  question
+Locate  name  in the  room  and answer a  question
+Look for  name  in the  room  and answer a  question
+Find a person in the  room  and answer a  question
+Locate a person in the  room  and answer a  question
+Look for a person in the  room  and answer a  question
+Find someone in the  room  and answer a  question
+Locate someone in the  room  and answer a  question
+Look for someone in the  room  and answer a  question
+Find  name  in the  room  and tell something about yourself
+Locate  name  in the  room  and tell something about yourself
+Look for  name  in the  room  and tell something about yourself
+Find a person in the  room  and tell something about yourself
+Locate a person in the  room  and tell something about yourself
+Look for a person in the  room  and tell something about yourself
+Find someone in the  room  and tell something about yourself
+Locate someone in the  room  and tell something about yourself
+Look for someone in the  room  and tell something about yourself
+Find  name  in the  room  and say something about yourself
+Locate  name  in the  room  and say something about yourself
+Look for  name  in the  room  and say something about yourself
+Find a person in the  room  and say something about yourself
+Locate a person in the  room  and say something about yourself
+Look for a person in the  room  and say something about yourself
+Find someone in the  room  and say something about yourself
+Locate someone in the  room  and say something about yourself
+Look for someone in the  room  and say something about yourself
+Find  name  in the  room  and tell the time
+Locate  name  in the  room  and tell the time
+Look for  name  in the  room  and tell the time
+Find a person in the  room  and tell the time
+Locate a person in the  room  and tell the time
+Look for a person in the  room  and tell the time
+Find someone in the  room  and tell the time
+Locate someone in the  room  and tell the time
+Look for someone in the  room  and tell the time
+Find  name  in the  room  and say the time
+Locate  name  in the  room  and say the time
+Look for  name  in the  room  and say the time
+Find a person in the  room  and say the time
+Locate a person in the  room  and say the time
+Look for a person in the  room  and say the time
+Find someone in the  room  and say the time
+Locate someone in the  room  and say the time
+Look for someone in the  room  and say the time
+Find  name  in the  room  and tell what day is today
+Locate  name  in the  room  and tell what day is today
+Look for  name  in the  room  and tell what day is today
+Find a person in the  room  and tell what day is today
+Locate a person in the  room  and tell what day is today
+Look for a person in the  room  and tell what day is today
+Find someone in the  room  and tell what day is today
+Locate someone in the  room  and tell what day is today
+Look for someone in the  room  and tell what day is today
+Find  name  in the  room  and say what day is today
+Locate  name  in the  room  and say what day is today
+Look for  name  in the  room  and say what day is today
+Find a person in the  room  and say what day is today
+Locate a person in the  room  and say what day is today
+Look for a person in the  room  and say what day is today
+Find someone in the  room  and say what day is today
+Locate someone in the  room  and say what day is today
+Look for someone in the  room  and say what day is today
+Find  name  in the  room  and tell what day is tomorrow
+Locate  name  in the  room  and tell what day is tomorrow
+Look for  name  in the  room  and tell what day is tomorrow
+Find a person in the  room  and tell what day is tomorrow
+Locate a person in the  room  and tell what day is tomorrow
+Look for a person in the  room  and tell what day is tomorrow
+Find someone in the  room  and tell what day is tomorrow
+Locate someone in the  room  and tell what day is tomorrow
+Look for someone in the  room  and tell what day is tomorrow
+Find  name  in the  room  and say what day is tomorrow
+Locate  name  in the  room  and say what day is tomorrow
+Look for  name  in the  room  and say what day is tomorrow
+Find a person in the  room  and say what day is tomorrow
+Locate a person in the  room  and say what day is tomorrow
+Look for a person in the  room  and say what day is tomorrow
+Find someone in the  room  and say what day is tomorrow
+Locate someone in the  room  and say what day is tomorrow
+Look for someone in the  room  and say what day is tomorrow
+Find  name  in the  room  and tell your team's name
+Locate  name  in the  room  and tell your team's name
+Look for  name  in the  room  and tell your team's name
+Find a person in the  room  and tell your team's name
+Locate a person in the  room  and tell your team's name
+Look for a person in the  room  and tell your team's name
+Find someone in the  room  and tell your team's name
+Locate someone in the  room  and tell your team's name
+Look for someone in the  room  and tell your team's name
+Find  name  in the  room  and say your team's name
+Locate  name  in the  room  and say your team's name
+Look for  name  in the  room  and say your team's name
+Find a person in the  room  and say your team's name
+Locate a person in the  room  and say your team's name
+Look for a person in the  room  and say your team's name
+Find someone in the  room  and say your team's name
+Locate someone in the  room  and say your team's name
+Look for someone in the  room  and say your team's name
+Find  name  in the  room  and tell your team's country
+Locate  name  in the  room  and tell your team's country
+Look for  name  in the  room  and tell your team's country
+Find a person in the  room  and tell your team's country
+Locate a person in the  room  and tell your team's country
+Look for a person in the  room  and tell your team's country
+Find someone in the  room  and tell your team's country
+Locate someone in the  room  and tell your team's country
+Look for someone in the  room  and tell your team's country
+Find  name  in the  room  and say your team's country
+Locate  name  in the  room  and say your team's country
+Look for  name  in the  room  and say your team's country
+Find a person in the  room  and say your team's country
+Locate a person in the  room  and say your team's country
+Look for a person in the  room  and say your team's country
+Find someone in the  room  and say your team's country
+Locate someone in the  room  and say your team's country
+Look for someone in the  room  and say your team's country
+Find  name  in the  room  and tell your team's affiliation
+Locate  name  in the  room  and tell your team's affiliation
+Look for  name  in the  room  and tell your team's affiliation
+Find a person in the  room  and tell your team's affiliation
+Locate a person in the  room  and tell your team's affiliation
+Look for a person in the  room  and tell your team's affiliation
+Find someone in the  room  and tell your team's affiliation
+Locate someone in the  room  and tell your team's affiliation
+Look for someone in the  room  and tell your team's affiliation
+Find  name  in the  room  and say your team's affiliation
+Locate  name  in the  room  and say your team's affiliation
+Look for  name  in the  room  and say your team's affiliation
+Find a person in the  room  and say your team's affiliation
+Locate a person in the  room  and say your team's affiliation
+Look for a person in the  room  and say your team's affiliation
+Find someone in the  room  and say your team's affiliation
+Locate someone in the  room  and say your team's affiliation
+Look for someone in the  room  and say your team's affiliation
+Find  name  in the  room  and tell the day of the week
+Locate  name  in the  room  and tell the day of the week
+Look for  name  in the  room  and tell the day of the week
+Find a person in the  room  and tell the day of the week
+Locate a person in the  room  and tell the day of the week
+Look for a person in the  room  and tell the day of the week
+Find someone in the  room  and tell the day of the week
+Locate someone in the  room  and tell the day of the week
+Look for someone in the  room  and tell the day of the week
+Find  name  in the  room  and say the day of the week
+Locate  name  in the  room  and say the day of the week
+Look for  name  in the  room  and say the day of the week
+Find a person in the  room  and say the day of the week
+Locate a person in the  room  and say the day of the week
+Look for a person in the  room  and say the day of the week
+Find someone in the  room  and say the day of the week
+Locate someone in the  room  and say the day of the week
+Look for someone in the  room  and say the day of the week
+Find  name  in the  room  and tell the day of the month
+Locate  name  in the  room  and tell the day of the month
+Look for  name  in the  room  and tell the day of the month
+Find a person in the  room  and tell the day of the month
+Locate a person in the  room  and tell the day of the month
+Look for a person in the  room  and tell the day of the month
+Find someone in the  room  and tell the day of the month
+Locate someone in the  room  and tell the day of the month
+Look for someone in the  room  and tell the day of the month
+Find  name  in the  room  and say the day of the month
+Locate  name  in the  room  and say the day of the month
+Look for  name  in the  room  and say the day of the month
+Find a person in the  room  and say the day of the month
+Locate a person in the  room  and say the day of the month
+Look for a person in the  room  and say the day of the month
+Find someone in the  room  and say the day of the month
+Locate someone in the  room  and say the day of the month
+Look for someone in the  room  and say the day of the month
+Find  name  in the  room  and tell a joke
+Locate  name  in the  room  and tell a joke
+Look for  name  in the  room  and tell a joke
+Find a person in the  room  and tell a joke
+Locate a person in the  room  and tell a joke
+Look for a person in the  room  and tell a joke
+Find someone in the  room  and tell a joke
+Locate someone in the  room  and tell a joke
+Look for someone in the  room  and tell a joke
+Find  name  in the  room  and say a joke
+Locate  name  in the  room  and say a joke
+Look for  name  in the  room  and say a joke
+Find a person in the  room  and say a joke
+Locate a person in the  room  and say a joke
+Look for a person in the  room  and say a joke
+Find someone in the  room  and say a joke
+Locate someone in the  room  and say a joke
+Look for someone in the  room  and say a joke
+Go to the  room 1 , find  name , and answer a  question
+Navigate to the  room 1 , find  name , and answer a  question
+Go to the  room 1 , locate  name , and answer a  question
+Navigate to the  room 1 , locate  name , and answer a  question
+Go to the  room 1 , look for  name , and answer a  question
+Navigate to the  room 1 , look for  name , and answer a  question
+Go to the  room 1 , find a person, and answer a  question
+Navigate to the  room 1 , find a person, and answer a  question
+Go to the  room 1 , locate a person, and answer a  question
+Navigate to the  room 1 , locate a person, and answer a  question
+Go to the  room 1 , look for a person, and answer a  question
+Navigate to the  room 1 , look for a person, and answer a  question
+Go to the  room 1 , find someone, and answer a  question
+Navigate to the  room 1 , find someone, and answer a  question
+Go to the  room 1 , locate someone, and answer a  question
+Navigate to the  room 1 , locate someone, and answer a  question
+Go to the  room 1 , look for someone, and answer a  question
+Navigate to the  room 1 , look for someone, and answer a  question
+Go to the  room 1 , find  name , and tell something about yourself
+Navigate to the  room 1 , find  name , and tell something about yourself
+Go to the  room 1 , locate  name , and tell something about yourself
+Navigate to the  room 1 , locate  name , and tell something about yourself
+Go to the  room 1 , look for  name , and tell something about yourself
+Navigate to the  room 1 , look for  name , and tell something about yourself
+Go to the  room 1 , find a person, and tell something about yourself
+Navigate to the  room 1 , find a person, and tell something about yourself
+Go to the  room 1 , locate a person, and tell something about yourself
+Navigate to the  room 1 , locate a person, and tell something about yourself
+Go to the  room 1 , look for a person, and tell something about yourself
+Navigate to the  room 1 , look for a person, and tell something about yourself
+Go to the  room 1 , find someone, and tell something about yourself
+Navigate to the  room 1 , find someone, and tell something about yourself
+Go to the  room 1 , locate someone, and tell something about yourself
+Navigate to the  room 1 , locate someone, and tell something about yourself
+Go to the  room 1 , look for someone, and tell something about yourself
+Navigate to the  room 1 , look for someone, and tell something about yourself
+Go to the  room 1 , find  name , and say something about yourself
+Navigate to the  room 1 , find  name , and say something about yourself
+Go to the  room 1 , locate  name , and say something about yourself
+Navigate to the  room 1 , locate  name , and say something about yourself
+Go to the  room 1 , look for  name , and say something about yourself
+Navigate to the  room 1 , look for  name , and say something about yourself
+Go to the  room 1 , find a person, and say something about yourself
+Navigate to the  room 1 , find a person, and say something about yourself
+Go to the  room 1 , locate a person, and say something about yourself
+Navigate to the  room 1 , locate a person, and say something about yourself
+Go to the  room 1 , look for a person, and say something about yourself
+Navigate to the  room 1 , look for a person, and say something about yourself
+Go to the  room 1 , find someone, and say something about yourself
+Navigate to the  room 1 , find someone, and say something about yourself
+Go to the  room 1 , locate someone, and say something about yourself
+Navigate to the  room 1 , locate someone, and say something about yourself
+Go to the  room 1 , look for someone, and say something about yourself
+Navigate to the  room 1 , look for someone, and say something about yourself
+Go to the  room 1 , find  name , and tell the time
+Navigate to the  room 1 , find  name , and tell the time
+Go to the  room 1 , locate  name , and tell the time
+Navigate to the  room 1 , locate  name , and tell the time
+Go to the  room 1 , look for  name , and tell the time
+Navigate to the  room 1 , look for  name , and tell the time
+Go to the  room 1 , find a person, and tell the time
+Navigate to the  room 1 , find a person, and tell the time
+Go to the  room 1 , locate a person, and tell the time
+Navigate to the  room 1 , locate a person, and tell the time
+Go to the  room 1 , look for a person, and tell the time
+Navigate to the  room 1 , look for a person, and tell the time
+Go to the  room 1 , find someone, and tell the time
+Navigate to the  room 1 , find someone, and tell the time
+Go to the  room 1 , locate someone, and tell the time
+Navigate to the  room 1 , locate someone, and tell the time
+Go to the  room 1 , look for someone, and tell the time
+Navigate to the  room 1 , look for someone, and tell the time
+Go to the  room 1 , find  name , and say the time
+Navigate to the  room 1 , find  name , and say the time
+Go to the  room 1 , locate  name , and say the time
+Navigate to the  room 1 , locate  name , and say the time
+Go to the  room 1 , look for  name , and say the time
+Navigate to the  room 1 , look for  name , and say the time
+Go to the  room 1 , find a person, and say the time
+Navigate to the  room 1 , find a person, and say the time
+Go to the  room 1 , locate a person, and say the time
+Navigate to the  room 1 , locate a person, and say the time
+Go to the  room 1 , look for a person, and say the time
+Navigate to the  room 1 , look for a person, and say the time
+Go to the  room 1 , find someone, and say the time
+Navigate to the  room 1 , find someone, and say the time
+Go to the  room 1 , locate someone, and say the time
+Navigate to the  room 1 , locate someone, and say the time
+Go to the  room 1 , look for someone, and say the time
+Navigate to the  room 1 , look for someone, and say the time
+Go to the  room 1 , find  name , and tell what day is today
+Navigate to the  room 1 , find  name , and tell what day is today
+Go to the  room 1 , locate  name , and tell what day is today
+Navigate to the  room 1 , locate  name , and tell what day is today
+Go to the  room 1 , look for  name , and tell what day is today
+Navigate to the  room 1 , look for  name , and tell what day is today
+Go to the  room 1 , find a person, and tell what day is today
+Navigate to the  room 1 , find a person, and tell what day is today
+Go to the  room 1 , locate a person, and tell what day is today
+Navigate to the  room 1 , locate a person, and tell what day is today
+Go to the  room 1 , look for a person, and tell what day is today
+Navigate to the  room 1 , look for a person, and tell what day is today
+Go to the  room 1 , find someone, and tell what day is today
+Navigate to the  room 1 , find someone, and tell what day is today
+Go to the  room 1 , locate someone, and tell what day is today
+Navigate to the  room 1 , locate someone, and tell what day is today
+Go to the  room 1 , look for someone, and tell what day is today
+Navigate to the  room 1 , look for someone, and tell what day is today
+Go to the  room 1 , find  name , and say what day is today
+Navigate to the  room 1 , find  name , and say what day is today
+Go to the  room 1 , locate  name , and say what day is today
+Navigate to the  room 1 , locate  name , and say what day is today
+Go to the  room 1 , look for  name , and say what day is today
+Navigate to the  room 1 , look for  name , and say what day is today
+Go to the  room 1 , find a person, and say what day is today
+Navigate to the  room 1 , find a person, and say what day is today
+Go to the  room 1 , locate a person, and say what day is today
+Navigate to the  room 1 , locate a person, and say what day is today
+Go to the  room 1 , look for a person, and say what day is today
+Navigate to the  room 1 , look for a person, and say what day is today
+Go to the  room 1 , find someone, and say what day is today
+Navigate to the  room 1 , find someone, and say what day is today
+Go to the  room 1 , locate someone, and say what day is today
+Navigate to the  room 1 , locate someone, and say what day is today
+Go to the  room 1 , look for someone, and say what day is today
+Navigate to the  room 1 , look for someone, and say what day is today
+Go to the  room 1 , find  name , and tell what day is tomorrow
+Navigate to the  room 1 , find  name , and tell what day is tomorrow
+Go to the  room 1 , locate  name , and tell what day is tomorrow
+Navigate to the  room 1 , locate  name , and tell what day is tomorrow
+Go to the  room 1 , look for  name , and tell what day is tomorrow
+Navigate to the  room 1 , look for  name , and tell what day is tomorrow
+Go to the  room 1 , find a person, and tell what day is tomorrow
+Navigate to the  room 1 , find a person, and tell what day is tomorrow
+Go to the  room 1 , locate a person, and tell what day is tomorrow
+Navigate to the  room 1 , locate a person, and tell what day is tomorrow
+Go to the  room 1 , look for a person, and tell what day is tomorrow
+Navigate to the  room 1 , look for a person, and tell what day is tomorrow
+Go to the  room 1 , find someone, and tell what day is tomorrow
+Navigate to the  room 1 , find someone, and tell what day is tomorrow
+Go to the  room 1 , locate someone, and tell what day is tomorrow
+Navigate to the  room 1 , locate someone, and tell what day is tomorrow
+Go to the  room 1 , look for someone, and tell what day is tomorrow
+Navigate to the  room 1 , look for someone, and tell what day is tomorrow
+Go to the  room 1 , find  name , and say what day is tomorrow
+Navigate to the  room 1 , find  name , and say what day is tomorrow
+Go to the  room 1 , locate  name , and say what day is tomorrow
+Navigate to the  room 1 , locate  name , and say what day is tomorrow
+Go to the  room 1 , look for  name , and say what day is tomorrow
+Navigate to the  room 1 , look for  name , and say what day is tomorrow
+Go to the  room 1 , find a person, and say what day is tomorrow
+Navigate to the  room 1 , find a person, and say what day is tomorrow
+Go to the  room 1 , locate a person, and say what day is tomorrow
+Navigate to the  room 1 , locate a person, and say what day is tomorrow
+Go to the  room 1 , look for a person, and say what day is tomorrow
+Navigate to the  room 1 , look for a person, and say what day is tomorrow
+Go to the  room 1 , find someone, and say what day is tomorrow
+Navigate to the  room 1 , find someone, and say what day is tomorrow
+Go to the  room 1 , locate someone, and say what day is tomorrow
+Navigate to the  room 1 , locate someone, and say what day is tomorrow
+Go to the  room 1 , look for someone, and say what day is tomorrow
+Navigate to the  room 1 , look for someone, and say what day is tomorrow
+Go to the  room 1 , find  name , and tell your team's name
+Navigate to the  room 1 , find  name , and tell your team's name
+Go to the  room 1 , locate  name , and tell your team's name
+Navigate to the  room 1 , locate  name , and tell your team's name
+Go to the  room 1 , look for  name , and tell your team's name
+Navigate to the  room 1 , look for  name , and tell your team's name
+Go to the  room 1 , find a person, and tell your team's name
+Navigate to the  room 1 , find a person, and tell your team's name
+Go to the  room 1 , locate a person, and tell your team's name
+Navigate to the  room 1 , locate a person, and tell your team's name
+Go to the  room 1 , look for a person, and tell your team's name
+Navigate to the  room 1 , look for a person, and tell your team's name
+Go to the  room 1 , find someone, and tell your team's name
+Navigate to the  room 1 , find someone, and tell your team's name
+Go to the  room 1 , locate someone, and tell your team's name
+Navigate to the  room 1 , locate someone, and tell your team's name
+Go to the  room 1 , look for someone, and tell your team's name
+Navigate to the  room 1 , look for someone, and tell your team's name
+Go to the  room 1 , find  name , and say your team's name
+Navigate to the  room 1 , find  name , and say your team's name
+Go to the  room 1 , locate  name , and say your team's name
+Navigate to the  room 1 , locate  name , and say your team's name
+Go to the  room 1 , look for  name , and say your team's name
+Navigate to the  room 1 , look for  name , and say your team's name
+Go to the  room 1 , find a person, and say your team's name
+Navigate to the  room 1 , find a person, and say your team's name
+Go to the  room 1 , locate a person, and say your team's name
+Navigate to the  room 1 , locate a person, and say your team's name
+Go to the  room 1 , look for a person, and say your team's name
+Navigate to the  room 1 , look for a person, and say your team's name
+Go to the  room 1 , find someone, and say your team's name
+Navigate to the  room 1 , find someone, and say your team's name
+Go to the  room 1 , locate someone, and say your team's name
+Navigate to the  room 1 , locate someone, and say your team's name
+Go to the  room 1 , look for someone, and say your team's name
+Navigate to the  room 1 , look for someone, and say your team's name
+Go to the  room 1 , find  name , and tell your team's country
+Navigate to the  room 1 , find  name , and tell your team's country
+Go to the  room 1 , locate  name , and tell your team's country
+Navigate to the  room 1 , locate  name , and tell your team's country
+Go to the  room 1 , look for  name , and tell your team's country
+Navigate to the  room 1 , look for  name , and tell your team's country
+Go to the  room 1 , find a person, and tell your team's country
+Navigate to the  room 1 , find a person, and tell your team's country
+Go to the  room 1 , locate a person, and tell your team's country
+Navigate to the  room 1 , locate a person, and tell your team's country
+Go to the  room 1 , look for a person, and tell your team's country
+Navigate to the  room 1 , look for a person, and tell your team's country
+Go to the  room 1 , find someone, and tell your team's country
+Navigate to the  room 1 , find someone, and tell your team's country
+Go to the  room 1 , locate someone, and tell your team's country
+Navigate to the  room 1 , locate someone, and tell your team's country
+Go to the  room 1 , look for someone, and tell your team's country
+Navigate to the  room 1 , look for someone, and tell your team's country
+Go to the  room 1 , find  name , and say your team's country
+Navigate to the  room 1 , find  name , and say your team's country
+Go to the  room 1 , locate  name , and say your team's country
+Navigate to the  room 1 , locate  name , and say your team's country
+Go to the  room 1 , look for  name , and say your team's country
+Navigate to the  room 1 , look for  name , and say your team's country
+Go to the  room 1 , find a person, and say your team's country
+Navigate to the  room 1 , find a person, and say your team's country
+Go to the  room 1 , locate a person, and say your team's country
+Navigate to the  room 1 , locate a person, and say your team's country
+Go to the  room 1 , look for a person, and say your team's country
+Navigate to the  room 1 , look for a person, and say your team's country
+Go to the  room 1 , find someone, and say your team's country
+Navigate to the  room 1 , find someone, and say your team's country
+Go to the  room 1 , locate someone, and say your team's country
+Navigate to the  room 1 , locate someone, and say your team's country
+Go to the  room 1 , look for someone, and say your team's country
+Navigate to the  room 1 , look for someone, and say your team's country
+Go to the  room 1 , find  name , and tell your team's affiliation
+Navigate to the  room 1 , find  name , and tell your team's affiliation
+Go to the  room 1 , locate  name , and tell your team's affiliation
+Navigate to the  room 1 , locate  name , and tell your team's affiliation
+Go to the  room 1 , look for  name , and tell your team's affiliation
+Navigate to the  room 1 , look for  name , and tell your team's affiliation
+Go to the  room 1 , find a person, and tell your team's affiliation
+Navigate to the  room 1 , find a person, and tell your team's affiliation
+Go to the  room 1 , locate a person, and tell your team's affiliation
+Navigate to the  room 1 , locate a person, and tell your team's affiliation
+Go to the  room 1 , look for a person, and tell your team's affiliation
+Navigate to the  room 1 , look for a person, and tell your team's affiliation
+Go to the  room 1 , find someone, and tell your team's affiliation
+Navigate to the  room 1 , find someone, and tell your team's affiliation
+Go to the  room 1 , locate someone, and tell your team's affiliation
+Navigate to the  room 1 , locate someone, and tell your team's affiliation
+Go to the  room 1 , look for someone, and tell your team's affiliation
+Navigate to the  room 1 , look for someone, and tell your team's affiliation
+Go to the  room 1 , find  name , and say your team's affiliation
+Navigate to the  room 1 , find  name , and say your team's affiliation
+Go to the  room 1 , locate  name , and say your team's affiliation
+Navigate to the  room 1 , locate  name , and say your team's affiliation
+Go to the  room 1 , look for  name , and say your team's affiliation
+Navigate to the  room 1 , look for  name , and say your team's affiliation
+Go to the  room 1 , find a person, and say your team's affiliation
+Navigate to the  room 1 , find a person, and say your team's affiliation
+Go to the  room 1 , locate a person, and say your team's affiliation
+Navigate to the  room 1 , locate a person, and say your team's affiliation
+Go to the  room 1 , look for a person, and say your team's affiliation
+Navigate to the  room 1 , look for a person, and say your team's affiliation
+Go to the  room 1 , find someone, and say your team's affiliation
+Navigate to the  room 1 , find someone, and say your team's affiliation
+Go to the  room 1 , locate someone, and say your team's affiliation
+Navigate to the  room 1 , locate someone, and say your team's affiliation
+Go to the  room 1 , look for someone, and say your team's affiliation
+Navigate to the  room 1 , look for someone, and say your team's affiliation
+Go to the  room 1 , find  name , and tell the day of the week
+Navigate to the  room 1 , find  name , and tell the day of the week
+Go to the  room 1 , locate  name , and tell the day of the week
+Navigate to the  room 1 , locate  name , and tell the day of the week
+Go to the  room 1 , look for  name , and tell the day of the week
+Navigate to the  room 1 , look for  name , and tell the day of the week
+Go to the  room 1 , find a person, and tell the day of the week
+Navigate to the  room 1 , find a person, and tell the day of the week
+Go to the  room 1 , locate a person, and tell the day of the week
+Navigate to the  room 1 , locate a person, and tell the day of the week
+Go to the  room 1 , look for a person, and tell the day of the week
+Navigate to the  room 1 , look for a person, and tell the day of the week
+Go to the  room 1 , find someone, and tell the day of the week
+Navigate to the  room 1 , find someone, and tell the day of the week
+Go to the  room 1 , locate someone, and tell the day of the week
+Navigate to the  room 1 , locate someone, and tell the day of the week
+Go to the  room 1 , look for someone, and tell the day of the week
+Navigate to the  room 1 , look for someone, and tell the day of the week
+Go to the  room 1 , find  name , and say the day of the week
+Navigate to the  room 1 , find  name , and say the day of the week
+Go to the  room 1 , locate  name , and say the day of the week
+Navigate to the  room 1 , locate  name , and say the day of the week
+Go to the  room 1 , look for  name , and say the day of the week
+Navigate to the  room 1 , look for  name , and say the day of the week
+Go to the  room 1 , find a person, and say the day of the week
+Navigate to the  room 1 , find a person, and say the day of the week
+Go to the  room 1 , locate a person, and say the day of the week
+Navigate to the  room 1 , locate a person, and say the day of the week
+Go to the  room 1 , look for a person, and say the day of the week
+Navigate to the  room 1 , look for a person, and say the day of the week
+Go to the  room 1 , find someone, and say the day of the week
+Navigate to the  room 1 , find someone, and say the day of the week
+Go to the  room 1 , locate someone, and say the day of the week
+Navigate to the  room 1 , locate someone, and say the day of the week
+Go to the  room 1 , look for someone, and say the day of the week
+Navigate to the  room 1 , look for someone, and say the day of the week
+Go to the  room 1 , find  name , and tell the day of the month
+Navigate to the  room 1 , find  name , and tell the day of the month
+Go to the  room 1 , locate  name , and tell the day of the month
+Navigate to the  room 1 , locate  name , and tell the day of the month
+Go to the  room 1 , look for  name , and tell the day of the month
+Navigate to the  room 1 , look for  name , and tell the day of the month
+Go to the  room 1 , find a person, and tell the day of the month
+Navigate to the  room 1 , find a person, and tell the day of the month
+Go to the  room 1 , locate a person, and tell the day of the month
+Navigate to the  room 1 , locate a person, and tell the day of the month
+Go to the  room 1 , look for a person, and tell the day of the month
+Navigate to the  room 1 , look for a person, and tell the day of the month
+Go to the  room 1 , find someone, and tell the day of the month
+Navigate to the  room 1 , find someone, and tell the day of the month
+Go to the  room 1 , locate someone, and tell the day of the month
+Navigate to the  room 1 , locate someone, and tell the day of the month
+Go to the  room 1 , look for someone, and tell the day of the month
+Navigate to the  room 1 , look for someone, and tell the day of the month
+Go to the  room 1 , find  name , and say the day of the month
+Navigate to the  room 1 , find  name , and say the day of the month
+Go to the  room 1 , locate  name , and say the day of the month
+Navigate to the  room 1 , locate  name , and say the day of the month
+Go to the  room 1 , look for  name , and say the day of the month
+Navigate to the  room 1 , look for  name , and say the day of the month
+Go to the  room 1 , find a person, and say the day of the month
+Navigate to the  room 1 , find a person, and say the day of the month
+Go to the  room 1 , locate a person, and say the day of the month
+Navigate to the  room 1 , locate a person, and say the day of the month
+Go to the  room 1 , look for a person, and say the day of the month
+Navigate to the  room 1 , look for a person, and say the day of the month
+Go to the  room 1 , find someone, and say the day of the month
+Navigate to the  room 1 , find someone, and say the day of the month
+Go to the  room 1 , locate someone, and say the day of the month
+Navigate to the  room 1 , locate someone, and say the day of the month
+Go to the  room 1 , look for someone, and say the day of the month
+Navigate to the  room 1 , look for someone, and say the day of the month
+Go to the  room 1 , find  name , and tell a joke
+Navigate to the  room 1 , find  name , and tell a joke
+Go to the  room 1 , locate  name , and tell a joke
+Navigate to the  room 1 , locate  name , and tell a joke
+Go to the  room 1 , look for  name , and tell a joke
+Navigate to the  room 1 , look for  name , and tell a joke
+Go to the  room 1 , find a person, and tell a joke
+Navigate to the  room 1 , find a person, and tell a joke
+Go to the  room 1 , locate a person, and tell a joke
+Navigate to the  room 1 , locate a person, and tell a joke
+Go to the  room 1 , look for a person, and tell a joke
+Navigate to the  room 1 , look for a person, and tell a joke
+Go to the  room 1 , find someone, and tell a joke
+Navigate to the  room 1 , find someone, and tell a joke
+Go to the  room 1 , locate someone, and tell a joke
+Navigate to the  room 1 , locate someone, and tell a joke
+Go to the  room 1 , look for someone, and tell a joke
+Navigate to the  room 1 , look for someone, and tell a joke
+Go to the  room 1 , find  name , and say a joke
+Navigate to the  room 1 , find  name , and say a joke
+Go to the  room 1 , locate  name , and say a joke
+Navigate to the  room 1 , locate  name , and say a joke
+Go to the  room 1 , look for  name , and say a joke
+Navigate to the  room 1 , look for  name , and say a joke
+Go to the  room 1 , find a person, and say a joke
+Navigate to the  room 1 , find a person, and say a joke
+Go to the  room 1 , locate a person, and say a joke
+Navigate to the  room 1 , locate a person, and say a joke
+Go to the  room 1 , look for a person, and say a joke
+Navigate to the  room 1 , look for a person, and say a joke
+Go to the  room 1 , find someone, and say a joke
+Navigate to the  room 1 , find someone, and say a joke
+Go to the  room 1 , locate someone, and say a joke
+Navigate to the  room 1 , locate someone, and say a joke
+Go to the  room 1 , look for someone, and say a joke
+Navigate to the  room 1 , look for someone, and say a joke
+Tell me the name of the person at the  beacon
+Tell me the name of the person in the  room
+Tell me how many  kobject  there are on the  placement
+Find the  kobject  in the  room
+Locate the  kobject  in the  room
+Look for the  kobject  in the  room
+Find the  kobject?  in the  room
+Locate the  kobject?  in the  room
+Look for the  kobject?  in the  room

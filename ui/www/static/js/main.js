@@ -76,6 +76,34 @@ function _show_buttons(json) {
 
 }
 
+function _update_map(json) {
+  console.log("map_update" + json['data'].length);
+  document.getElementById("map").src = "data:image/jpg;base64, " + json['data'];
+  //var data = JSON.parse(json);
+
+}
+
+function _update_map_props(json) {
+  console.log("map_update_props: " + json['data']);
+  document.map_props = JSON.parse(json['data']);
+  //var data = JSON.parse(json);
+
+}
+
+function _update_pose(json) {
+  const res = (document.map_props['resolution']);
+  const pose_x = json['data'][0] / res + document.map_props.origin[0]-4;
+  const pose_y = json['data'][1] / res + document.map_props.origin[1]-4;
+  const pose_t = json['data'][2];
+  //console.log("pose_update " + pose_x + " " + pose_y + " " + document.map_props['origin']);
+
+  //document.getElementById("map").src = "data:image/jpg;base64, " + json['data'];
+  //var data = JSON.parse(json);
+  const style = "color: red; position: absolute; bottom: " + String(pose_y) + "px; left: " + String(pose_x) + "px;";
+  console.log("style: " + style);  
+  document.getElementById("map_marker").style=style;
+}
+
 function _show_continue_button(json) {
   console.log('show continue button');
   //var data = JSON.parse(json);

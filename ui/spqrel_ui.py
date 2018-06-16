@@ -166,6 +166,27 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
     def onOpen(self):
         info("Client opened")
 
+        self.als_map_jpg = ALSubscriber(
+            memory_service, "/map/jpg",
+            lambda data: self.sendJSON({
+                'method': 'update_map',
+                'data': data
+            }))
+
+        self.als_map_props = ALSubscriber(
+            memory_service, "/map/props",
+            lambda data: self.sendJSON({
+                'method': 'update_map_props',
+                'data': data
+            }))
+
+        self.als_pose = ALSubscriber(
+            memory_service, "NAOqiLocalizer/RobotPose",
+            lambda data: self.sendJSON({
+                'method': 'update_pose',
+                'data': data
+            }))
+
         self.answeroptions = ALSubscriber(
             memory_service, "AnswerOptions",
             lambda actstr: self.sendJSON({

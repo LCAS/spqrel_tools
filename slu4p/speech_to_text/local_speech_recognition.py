@@ -105,16 +105,19 @@ class SpeechRecognition(EventAbstractClass):
 
     def configure(self, sensitivity, word_spotting, nuance_language, audio, visual, vocabulary):
         self.nuance_asr.pause(True)
+        print "pause"
         self.nuance_asr.setParameter("Sensitivity", sensitivity)
         self.nuance_asr.setVocabulary(vocabulary, word_spotting)
         self.nuance_asr.setLanguage(nuance_language)
         self.nuance_asr.setAudioExpression(audio)
         self.nuance_asr.setVisualExpression(visual)
         self.nuance_asr.pause(False)
+        print "un-pause"
 
     def word_recognized_callback(self, *args, **kwargs):
         self.audio_recorder.stopMicrophonesRecording()
         self.nuance_asr.pause(True)
+        print "pause"
         """
         Convert Wave file into Flac file
         """
@@ -131,6 +134,7 @@ class SpeechRecognition(EventAbstractClass):
                 self.memory.raiseEvent("LocalVordRecognized", results)
         self.timeout = 0
         self.nuance_asr.pause(False)
+        print "pause"
         self.audio_recorder.stopMicrophonesRecording()
         self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
         self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
@@ -141,11 +145,13 @@ class SpeechRecognition(EventAbstractClass):
                 if args[1] == 0:
                     self.audio_recorder.stopMicrophonesRecording()
                     self.nuance_asr.pause(True)
+                    print "pause"
                 else:
                     self.audio_recorder.stopMicrophonesRecording()
                     self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
                     self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
                     self.nuance_asr.pause(False)
+                    print "un-pause"
         except Exception as e:
             print e.message
 

@@ -52,6 +52,9 @@ def phraseToSay(memory_service,params):
         return "I will bring you a coke!"
     elif (params=='bringbeer'):
         return "I will bring you a beer!"
+    else: 
+        phrase = params.replace('_',' ')
+        return phrase
 
 def actionThread_exec (params):
     t = threading.currentThread()

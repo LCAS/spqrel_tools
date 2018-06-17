@@ -1,9 +1,9 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: start_WayPoint2
+      edge_id: WayPoint1_WayPoint2
       node: WayPoint2
-    name: start
+    name: WayPoint1
     pointset: NA
     pose:
       orientation:
@@ -12,8 +12,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 28.05
-        y: 13.8
+        x: 2.35
+        y: 10.15
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -46,8 +46,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 28.900000000000002
-        y: 13.75
+        x: 3.25
+        y: 10.05
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -80,8 +80,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 30.0
-        y: 13.399999999999999
+        x: 6.7
+        y: 9.65
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -103,8 +103,11 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint4_WayPoint5
-      node: WayPoint5
+      edge_id: WayPoint4_WayPoint7
+      node: WayPoint7
+    - action: NAOqiPlanner/Goal
+      edge_id: WayPoint4_WayPoint8
+      node: WayPoint8
     name: WayPoint4
     pointset: NA
     pose:
@@ -114,8 +117,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 31.75
-        y: 13.45
+        x: 9.0
+        y: 9.05
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -137,45 +140,8 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint5_WayPoint6
-      node: WayPoint6
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint5_WayPoint15
-      node: WayPoint15
-    name: WayPoint5
-    pointset: NA
-    pose:
-      orientation:
-        w: 1.0
-        x: 0.0
-        y: 0.0
-        z: 0.0
-      position:
-        x: 33.65
-        y: 13.399999999999999
-        z: 0.0
-    verts:
-    - x: 0.689999997616
-      y: 0.287000000477
-    - x: 0.287000000477
-      y: 0.689999997616
-    - x: -0.287000000477
-      y: 0.689999997616
-    - x: -0.689999997616
-      y: 0.287000000477
-    - x: -0.689999997616
-      y: -0.287000000477
-    - x: -0.287000000477
-      y: -0.689999997616
-    - x: 0.287000000477
-      y: -0.689999997616
-    - x: 0.689999997616
-      y: -0.287000000477
-- node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint6_WayPoint7
-      node: WayPoint7
+      edge_id: WayPoint6_WayPoint10
+      node: WayPoint10
     name: WayPoint6
     pointset: NA
     pose:
@@ -185,8 +151,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 35.85
-        y: 13.349999999999998
+        x: 11.350000000000001
+        y: 9.7
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -208,8 +174,8 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint7_WayPoint8
-      node: WayPoint8
+      edge_id: WayPoint7_WayPoint6
+      node: WayPoint6
     name: WayPoint7
     pointset: NA
     pose:
@@ -219,8 +185,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 37.15
-        y: 13.349999999999998
+        x: 10.4
+        y: 9.75
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -253,8 +219,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 37.800000000000004
-        y: 11.95
+        x: 9.8
+        y: 6.1
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -276,8 +242,8 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint9_WayPoint10
-      node: WayPoint10
+      edge_id: WayPoint9_WayPoint13
+      node: WayPoint13
     name: WayPoint9
     pointset: NA
     pose:
@@ -287,8 +253,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 38.550000000000004
-        y: 10.849999999999998
+        x: 11.700000000000001
+        y: 3.8499999999999996
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -321,8 +287,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 38.6
-        y: 9.95
+        x: 12.350000000000001
+        y: 8.1
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -355,8 +321,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 36.550000000000004
-        y: 9.25
+        x: 12.850000000000001
+        y: 7.1
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -378,8 +344,8 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint12_WayPoint13
-      node: WayPoint13
+      edge_id: WayPoint12_WayPoint9
+      node: WayPoint9
     name: WayPoint12
     pointset: NA
     pose:
@@ -389,8 +355,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 37.2
-        y: 7.299999999999997
+        x: 12.850000000000001
+        y: 6.3
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -423,8 +389,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 38.95
-        y: 5.849999999999998
+        x: 13.25
+        y: 2.1999999999999993
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -454,42 +420,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 38.95
-        y: 4.699999999999999
-        z: 0.0
-    verts:
-    - x: 0.689999997616
-      y: 0.287000000477
-    - x: 0.287000000477
-      y: 0.689999997616
-    - x: -0.287000000477
-      y: 0.689999997616
-    - x: -0.689999997616
-      y: 0.287000000477
-    - x: -0.689999997616
-      y: -0.287000000477
-    - x: -0.287000000477
-      y: -0.689999997616
-    - x: 0.287000000477
-      y: -0.689999997616
-    - x: 0.689999997616
-      y: -0.287000000477
-- node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint15_WayPoint11
-      node: WayPoint11
-    name: WayPoint15
-    pointset: NA
-    pose:
-      orientation:
-        w: 1.0
-        x: 0.0
-        y: 0.0
-        z: 0.0
-      position:
-        x: 34.9
-        y: 11.3
+        x: 13.3
+        y: 1.1500000000000004
         z: 0.0
     verts:
     - x: 0.689999997616

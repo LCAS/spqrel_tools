@@ -50,7 +50,7 @@ def actionThread_exec (params):
         try:
             pmemkey_visible = "PeoplePerception/Person/"+str(personid)+"/NotSeenSince"
             notseensince = memory_service.getData(pmemkey_visible)
-        except ValueError:
+        except:
             print "Memory position doesnt exist!!!!"
             val = True
 

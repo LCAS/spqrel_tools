@@ -38,27 +38,27 @@ def actionThread_exec (params):
     while (getattr(t, "do_run", True) and count>0):
         print "Action "+actionName+" "+params+" exec..."
         # action exec
+	try:
+            # set to false all the conditions in the action
+            data_str = "im.listConditions('"+params+"')"+"\n###ooo###\n\n"
+            rdata = csend(data_str)
+            rdata = rdata.strip()
 
-        # set to false all the conditions in the action
-        data_str = "im.listConditions('"+params+"')"+"\n###ooo###\n\n"
-        rdata = csend(data_str)
-        rdata = rdata.strip()
-
-        ldata = eval(rdata) # rdata is the string representation of a list of strings
-        # ldata is a list of conditions to set to false
-        for cc in ldata:
-            set_condition(memory_service, cc, 'false')
-            #print "Condition: ",cc,get_condition(memory_service, cc)
-
-        # now wait for the actual answer
-        data_str = "im.ask('"+params+"')"+"\n###ooo###\n\n"
-        #TODO make it interruptible !!!
-        rdata = csend(data_str)
-        rdata = rdata.strip() # rdata is the answer of the ask action
+            ldata = eval(rdata) # rdata is the string representation of a list of strings
+            # ldata is a list of conditions to set to false
+            for cc in ldata:
+                set_condition(memory_service, cc, 'false')
+                #print "Condition: ",cc,get_condition(memory_service, cc)
+        except:
+            # now wait for the actual answer
+            data_str = "im.ask('"+params+"')"+"\n###ooo###\n\n"
+            #TODO make it interruptible !!!
+            rdata = csend(data_str)
+            rdata = rdata.strip() # rdata is the answer of the ask action
         
-        count = count - 1
-        # action exec
-        time.sleep(0.1)
+            count = count - 1
+            # action exec
+            time.sleep(0.1)
 
     print "setting condition: %s true"%rdata
     set_condition(memory_service, rdata, 'true')

@@ -50,16 +50,15 @@ class SpeechRecognition(object):
 
         #subscribe to event WordRecognized
         self.subWordRecognized = self.memory_service.subscriber("WordRecognized")
-        idSubWordRecognized = self.subWordRecognized.signal.connect(self.onWordRecognized)
+        #self.idSubWordRecognized = self.subWordRecognized.signal.connect(self.onWordRecognized)
 
         # speech detected
         self.subSpeechDet = self.memory_service.subscriber("SpeechDetected")
-        self.idSubSpeechDet = self.subSpeechDet.signal.connect(self.onSpeechDetected)
+        #self.idSubSpeechDet = self.subSpeechDet.signal.connect(self.onSpeechDetected)
 
         # enable
         self.subEnable = self.memory_service.subscriber("ASR_enable")
         self.idSubEnable = self.subEnable.signal.connect(self.onEnable)
-
 
         #subscribe to google asr transcription
         if USE_GOOGLE:
@@ -75,6 +74,7 @@ class SpeechRecognition(object):
         self.asr_service.unsubscribe("Test_ASR")
         self.subWordRecognized.signal.disconnect(self.idSubWordRecognized)
         self.subSpeechDet.signal.disconnect(self.idSubSpeechDet)
+        self.subEnable.signal.disconnect(self.isSubEnable)
         if USE_GOOGLE:
             self.googleAsrRecognized.signal.disconnect(self.idGoogleAsrRecognized)
 
@@ -115,12 +115,14 @@ class SpeechRecognition(object):
                     if not os.path.exists(self.AUDIO_FILE_DIR):
                         os.makedirs(self.AUDIO_FILE_DIR)
                     self.AUDIO_FILE_PATH = self.AUDIO_FILE_DIR + 'SPQReL_mic_'
-                self.is_enabled = True
 
-                if self.USE_GOOGLE:
                     self.audio_recorder.stopMicrophonesRecording()
                     self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
                     self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+
+                self.is_enabled = True
+                self.idSubWordRecognized = self.subWordRecognized.signal.connect(self.onWordRecognized)
+                self.idSubSpeechDet = self.subSpeechDet.signal.connect(self.onSpeechDetected)
 
                 # TODO move it here!!
                 #self.subscribe(

@@ -1,4 +1,5 @@
 #http://doc.aldebaran.com/2-5/naoqi/audio/alspeechrecognition-api.html
+import signal
 import qi
 import argparse
 import sys

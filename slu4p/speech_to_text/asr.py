@@ -25,7 +25,7 @@ def main():
                         help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
     parser.add_argument("--pport", type=int, default=9559,
                         help="Naoqi port number")
-    parser.add_argument("--vocab", type=string, default="Allsenteces_1.txt",
+    parser.add_argument("--vocab", type=str, default="resources/Allsenteces_1.txt",
                         help="The nuance vocabulary")
 
     args = parser.parse_args()
@@ -56,7 +56,7 @@ def main():
     #establishing test vocabulary
     #vocabulary = ["yes", "no", "please", "hello", "goodbye", "hi, there", "go to the kitchen"]
     with open(vocab) as f:
-        vocabulary = f.readlines()
+        content = f.readlines()
     # you may also want to remove whitespace characters like `\n` at the end of each line
     vocabulary = [x.strip() for x in content]
     print "Vocabulary read", vocabulary
@@ -75,7 +75,7 @@ def main():
     print 'Speech recognition engine started'
 
 
-    audio_recorder.startMicrophonesRecording("utterance" + ".wav", "wav", 44100, [0, 0, 1, 0])
+    audio_recorder.startMicrophonesRecording("utterance" + ".wav", "wav", 44100, [1, 1, 1, 1])
     print 'Audio recorder engine started'
 
     #subscribe to event WordRecognized

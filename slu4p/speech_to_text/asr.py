@@ -6,20 +6,90 @@ import os
 
 USE_GOOGLE = False
 
-audio_recorder = None
-
-def onWordRecognized(value):
-    global audio_recorder
-    print "value=",value
-    audio_recorder.stopMicrophonesRecording()
-    print "Audio recorder stopped reconrding"
 
 
-def onGoogleASR(value):
-    print "googleasr=", value
+class SpeechRecognition(object):
+
+    audio_recorder = None
+
+    def __init__(self, vocab, app):
+        super(SpeechRecognition, self).__init__()
+
+        app.start()
+        session = app.session
+
+        #Starting services
+        self.asr_service = session.service("ALSpeechRecognition")
+        self.asr_service.setLanguage("English")
+
+        self.self.audio_recorder = session.service("ALAudioRecorder")
+
+        self.memory_service  = session.service("ALMemory")
+
+        #establishing test vocabulary
+        #vocabulary = ["yes", "no", "please", "hello", "goodbye", "hi, there", "go to the kitchen"]
+        with open(vocab) as f:
+            content = f.readlines()
+        # you may also want to remove whitespace characters like `\n` at the end of each line
+        vocabulary = [x.strip() for x in content]
+        print "Vocabulary read", vocabulary
+
+        self.asr_service.pause(True)
+        self.asr_service.removeAllContext()
+        try:
+            self.asr_service.setVocabulary(vocabulary, False)
+            self.asr_service.setParameter("Sensitivity", 0.1)
+            self.asr_service.setParameter("NbHypotheses", 3)
+        except:
+            print "error setting vocabulary"
+        self.asr_service.pause(False)
+
+        # Start the speech recognition engine with user Test_ASR
+        self.asr_service.subscribe("Test_ASR")
+        print 'Speech recognition engine started'
+
+        #subscribe to event WordRecognized
+        self.subWordRecognized = memory_service.subscriber("WordRecognized")
+        idSubWordRecognized = self.subWordRecognized.signal.connect(self.onWordRecognized)
+
+        # speech detected
+        self.subSpeechDet = memory_service.subscriber("SpeechDetected")
+        self.id_sd = self.subSpeechDet.signal.connect(self.onSpeechDetected)
+
+
+        #subscribe to google asr transcription
+        if USE_GOOGLE:
+            self.googleAsrRecognized = memory_service.subscriber("GoogleAsrRecognized")
+            self.idGoogleAsrRecognized = self.googleAsrRecognized.signal.connect(self.onGoogleASR)
+
+            self.audio_recorder.startMicrophonesRecording("utterance" + ".wav", "wav", 44100, [1, 1, 1, 1])
+            print 'Audio recorder engine started'
+
+
+    def quit(self):
+        #Disconnecting callbacks and subscribers
+        self.asr_service.unsubscribe("Test_ASR")
+        self.subWordRecognized.signal.disconnect(self.idSubWordRecognized)
+        self.subSpeechDet.signal.disconnect(self.id_sd)
+        if USE_GOOGLE:
+            self.googleAsrRecognized.signal.disconnect(self.idGoogleAsrRecognized)
+
+    def onSpeechDetected(value):
+        print "speech detected!", value
+
+
+    def onWordRecognized(self, value):
+        global self.audio_recorder
+        print "value=",value
+        self.audio_recorder.stopMicrophonesRecording()
+        print "Audio recorder stopped reconrding"
+
+
+    def onGoogleASR(self, value):
+        print "googleasr=", value
 
 def main():
-    global audio_recorder
+    global self.audio_recorder
     parser = argparse.ArgumentParser()
     parser.add_argument("--pip", type=str, default=os.environ['PEPPER_IP'],
                         help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
@@ -36,66 +106,21 @@ def main():
     #Starting application
     try:
         connection_url = "tcp://" + pip + ":" + str(pport)
-        app = qi.Application(["ReactToTouch", "--qi-url=" + connection_url ])
+        app = qi.Application(["asr", "--qi-url=" + connection_url ])
     except RuntimeError:
         print ("Can't connect to Naoqi at ip \"" + pip + "\" on port " + str(pport) +".\n"
                "Please check your script arguments. Run with -h option for help.")
         sys.exit(1)
 
-    app.start()
-    session = app.session
-
-    #Starting services
-    asr_service = session.service("ALSpeechRecognition")
-    asr_service.setLanguage("English")
-
-    audio_recorder = session.service("ALAudioRecorder")
-
-    memory_service  = session.service("ALMemory")
-
-    #establishing test vocabulary
-    #vocabulary = ["yes", "no", "please", "hello", "goodbye", "hi, there", "go to the kitchen"]
-    with open(vocab) as f:
-        content = f.readlines()
-    # you may also want to remove whitespace characters like `\n` at the end of each line
-    vocabulary = [x.strip() for x in content]
-    print "Vocabulary read", vocabulary
-
-    asr_service.pause(True)
-    asr_service.removeAllContext()
-    try:
-        asr_service.setVocabulary(vocabulary, False)
-        asr_service.setParameter("Sensitivity", 0.1)
-    except:
-        print "error setting vocabulary"
-    asr_service.pause(False)
-
-    # Start the speech recognition engine with user Test_ASR
-    asr_service.subscribe("Test_ASR")
-    print 'Speech recognition engine started'
-
-
-    audio_recorder.startMicrophonesRecording("utterance" + ".wav", "wav", 44100, [1, 1, 1, 1])
-    print 'Audio recorder engine started'
-
-    #subscribe to event WordRecognized
-    subWordRecognized = memory_service.subscriber("WordRecognized")
-    idSubWordRecognized = subWordRecognized.signal.connect(onWordRecognized)
-
-    #subscribe to google asr transcription
-    if USE_GOOGLE:
-        googleAsrRecognized = memory_service.subscriber("GoogleAsrRecognized")
-        idGoogleAsrRecognized = googleAsrRecognized.signal.connect(onGoogleASR)
+    sr = SpeechRecognition(
+        vocab=vocab,
+        app=app
+    )
 
 
     #let it run
     app.run()
 
-    #Disconnecting callbacks and subscribers
-    asr_service.unsubscribe("Test_ASR")
-    subWordRecognized.signal.disconnect(idSubWordRecognized)
-    if USE_GOOGLE:
-        googleAsrRecognized.signal.disconnect(idGoogleAsrRecognized)
 
 if __name__ == "__main__":
     main()

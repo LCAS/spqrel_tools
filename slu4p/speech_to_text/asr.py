@@ -61,7 +61,7 @@ class SpeechRecognition(object):
         self.idSubEnable = self.subEnable.signal.connect(self.onEnable)
 
         #subscribe to google asr transcription
-        if USE_GOOGLE:
+        if self.USE_GOOGLE:
             self.googleAsrRecognized = self.memory_service.subscriber("GoogleAsrRecognized")
             self.idGoogleAsrRecognized = self.googleAsrRecognized.signal.connect(self.onGoogleASR)
 
@@ -79,7 +79,7 @@ class SpeechRecognition(object):
 	    self.subSpeechDet.signal.disconnect(self.idSubSpeechDet)
         if self.idSubEnable is not None:
 	    self.subEnable.signal.disconnect(self.idSubEnable)
-        if USE_GOOGLE:
+        if self.USE_GOOGLE:
             self.googleAsrRecognized.signal.disconnect(self.idGoogleAsrRecognized)
 
     def onSpeechDetected(self, value):

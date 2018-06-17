@@ -4,11 +4,11 @@ import argparse
 import sys
 import os
 
-USE_GOOGLE = False
 
 
 
 class SpeechRecognition(object):
+    USE_GOOGLE = True
 
     audio_recorder = None
 
@@ -68,7 +68,7 @@ class SpeechRecognition(object):
             self.audio_recorder.startMicrophonesRecording("utterance" + ".wav", "wav", 44100, [1, 1, 1, 1])
             print 'Audio recorder engine started'
 
-	self.is_enabled = False	
+	self.is_enabled = False
 
     def quit(self):
         #Disconnecting callbacks and subscribers
@@ -87,7 +87,8 @@ class SpeechRecognition(object):
         self.audio_recorder.stopMicrophonesRecording()
         print "Audio recorder stopped recording"
 
-        self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
+        if self.USE_GOOGLE:
+            self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
 
 
     def onWordRecognized(self, value):
@@ -95,7 +96,8 @@ class SpeechRecognition(object):
         self.audio_recorder.stopMicrophonesRecording()
         print "Audio recorder stopped recording"
 
-        self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
+        if self.USE_GOOGLE:
+            self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
 
     def onGoogleASR(self, value):
         print "googleasr=", value

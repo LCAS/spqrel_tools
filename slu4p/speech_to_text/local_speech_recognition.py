@@ -77,6 +77,7 @@ class SpeechRecognition(object):
         self.wr_sub = self.memory.subscriber(SpeechRecognition.WR_EVENT)
         self.wr_sub_id = self.wr_sub.signal.connect(self.word_recognized_callback)
         #self.wr_sub_id = None
+        time.sleep(3)
 
         print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             SpeechRecognition.WR_EVENT)
@@ -85,9 +86,9 @@ class SpeechRecognition(object):
         print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             SpeechRecognition.ASR_ENABLE)
 
-        self.is_enabled = False
+        #self.is_enabled = False
 
-        print "[" + self.__class__.__name__ + "] ASR disabled"
+        #print "[" + self.__class__.__name__ + "] ASR disabled"
 
         if USE_GOOGLE:
             if self.logging:
@@ -273,7 +274,7 @@ def main():
     try:
         # Initialize qi framework.
         connection_url = "tcp://" + args.pip + ":" + str(args.pport)
-        app = qi.Application(["local_speech_recognition", "--qi-url=" + connection_url], autoExit=False)
+        app = qi.Application(["local_speech_recognition", "--qi-url=" + connection_url])
     except RuntimeError:
         print ("Can't connect to Naoqi at ip \"" + args.ip + "\" on port " + str(args.port) +".\n"
                "Please check your script arguments. Run with -h option for help.")

@@ -80,8 +80,8 @@ def actionThread_exec (params):
             print "\n"
 
             kw = 0.5
-            kx = 1
-            ky = 1
+            kx = 0.5
+            ky = 0.5
             w = kw * Theta
             vx = kx * Xpos
             vy = ky * Ypos

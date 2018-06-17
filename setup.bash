@@ -59,8 +59,8 @@ export PLAN_DIR="$SPQREL_TOOLS/plans"
 # meaningfull default which may already have been set in setup-local.bash
 
 export PEPPER_IP="${PEPPER_IP:-localhost}"
-export MAP="${MAP:-$SPQREL_HOME/maps/montreal/montreal-empty.yaml}"
-export TMAP="${TMAP:-$SPQREL_HOME/maps/montreal/montreal-empty.tpg}"
+export MAP="${MAP:-$SPQREL_HOME/maps/montreal/montreal_final.yaml}"
+export TMAP="${TMAP:-$SPQREL_HOME/maps/montreal/montreal_final.tpg}"
 export LU4R_IP="${LU4R_IP:-192.168.127.16}"
 
 export MODIM_HOME="$SPQREL_HOME/worktree/modim"

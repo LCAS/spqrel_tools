@@ -10,6 +10,7 @@ class GoogleClient(object):
     timeout = 20
     url = ''
     headers = {"Content-Type": "application/json"}
+    FLAC_COMM = 'flac -f '
 
     def __init__(self, language, key_file, app):
         super(GoogleClient, self).__init__()
@@ -29,11 +30,23 @@ class GoogleClient(object):
 
     def quit(self):
         self.subGR.signal.disconnect(self.idsubGR)
-        
+
 
     def onGoogleRequest(self, value):
         print "onGoogleRequest:", value
         file_path = str(value) + ".wav"
+
+        """
+        Convert Wave file into Flac file
+        """
+        if os.path.exists(file_path):
+            print "file exists"
+            if os.path.getsize(file_path) > 0:
+                os.system(self.FLAC_COMM + file_path)
+                f = open(value + '.flac', 'rb')
+                flac_cont = f.read()
+                f.close()
+                res = [r.encode('ascii', 'ignore').lower() for r in self.recognize_data(flac_cont)]
 
         transcriptions = self.recognize_file(file_path)
 

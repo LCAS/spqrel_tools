@@ -19,16 +19,17 @@ p.begin()
 
 p.exec_action("say", "hello")
 
-p.exec_action("headpose", "0_-10")
+p.exec_action("headpose", "0_-20")
 
 #p.exec_action("groupdescription", "")
 
-#while (not p.get_condition('personhere')):
-#    time.sleep(0.1)
+while (not p.get_condition('personhere')):
+    print "waiting for a person..."
+    time.sleep(0.5)
 
-#p.exec_action("say",'starting')
+p.exec_action("say",'starting')
 
-#p.exec_action("updatefollowpersoncoord","screentouched")
+p.exec_action("updatefollowpersoncoord","screentouched")
 
 
 ############### COCKTAIL PARTY ######################

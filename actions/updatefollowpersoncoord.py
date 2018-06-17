@@ -20,6 +20,8 @@ def actionThread_exec (params):
     motion_service = getattr(t, "session", None).service("ALMotion")
 
     tts_service = getattr(t, "session", None).service("ALTextToSpeech")
+    people_service = getattr(t, "session", None).service("ALPeoplePerception")
+    navigation_service = getattr(t, "session", None).service("ALNavigation")
 
     session = getattr(t, "session", None)
 
@@ -31,11 +33,14 @@ def actionThread_exec (params):
     personid = memory_service.getData('Actions/personhere/PersonID')
 
     print "\n"
-    print "Followin the person ID: ",personid
+    print "Following the person ID: ",personid
 
     tracker_service.setMode("Head")
     tracker_service.setMaximumAcceleration(3)
     tracker_service.setMaximumVelocity(2)
+
+    people_service.setTimeBeforeVisiblePersonDisappears(6)
+
 
     tracker_service.registerTarget("People",personid)
     tracker_service.track("People")
@@ -47,6 +52,7 @@ def actionThread_exec (params):
         #print "Action "+actionName+" "+params+" exec..."
 
         # Check if the person is visible
+
         try:
             pmemkey_visible = "PeoplePerception/Person/"+str(personid)+"/NotSeenSince"
             notseensince = memory_service.getData(pmemkey_visible)
@@ -65,6 +71,7 @@ def actionThread_exec (params):
             key_list = [pmemkey_dist,  pmemkey_pos, pmemkey_angles]
             
             data_list = memory_service.getListData(key_list)
+            distance = data_list[0]
             Xpos = data_list[1][0]
             Ypos = data_list[1][1]
             #Xpos = 0
@@ -73,7 +80,7 @@ def actionThread_exec (params):
 
             print "[ TRACKING ]" 
             print "    Person ID: ", personid
-            print "    Distance: ", data_list[0]
+            print "    Distance: ", distance
             print "    Xpos: ", Xpos
             print "    Ypos: ", Ypos
             print "    Theta: ", Theta
@@ -83,11 +90,17 @@ def actionThread_exec (params):
             kx = 0.5
             ky = 0.5
             w = kw * Theta
-            vx = kx * Xpos
-            vy = ky * Ypos
+            #vx = kx * Xpos
+            #vy = ky * Ypos
 
             #vx = 0
-            #vy = 0
+            vy = 0
+
+
+            if distance > 0.5:
+                vx = 0.5
+            else:
+                vx = 0
 
             if w > 1:
                 w = 1
@@ -102,26 +115,38 @@ def actionThread_exec (params):
             if vy < -1:
                 vy = -1           
 
-
-            motion_service.moveToward(vx, vy, w,[ ["MaxVelXY",0.55], 
+            # angle correnction
+            motion_service.moveToward(0.2, 0, w,[ ["MaxVelXY",0.55], 
                                                    ["MaxVelTheta",2],
                                                    ["MaxAccXY",0.55],
                                                    ["MaxAccTheta",3] ])
+
+
+
+
 
             #motion_service.moveTo(Xpos, Ypos, Theta,[ ["MaxVelXY",0.55], 
             #                                          ["MaxVelTheta",2],
             #                                          ["MaxAccXY",0.55],
             #                                          ["MaxAccTheta",3] ])
+
+            #navigation_service.navigateTo(Xpos, Ypos, Theta,[ ["MaxVelXY",0.55], 
+            #                                                  ["MaxVelTheta",2],
+            #                                                  ["MaxAccXY",0.55],
+            #                                                  ["MaxAccTheta",3] ])
+
             
-            if data_list[0] > 2:
+            if data_list[0] > 1.9:
                 tts_service.say("You are too far, please could you slow down a bit? I'm a slow robot")
-            val = get_condition(memory_service, params)
+            
+
         
         else:
             print "Person not seen!!! Stopping the action"
             val = True
     
 
+        val = get_condition(memory_service, params)
 
         # action exec
         time.sleep(0.1)

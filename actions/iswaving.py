@@ -169,6 +169,12 @@ def wavingThread (params):
 
     val = False
 
+    # Services
+    try:
+        DarknetSRV = session.service("DarknetSRV")
+    except:
+        action_failed(actionName,params)
+
     while (getattr(t, "do_run", True) and (not val)): 
 
         val = False
@@ -289,7 +295,7 @@ def wavingThread (params):
 
         time.sleep(throttleInterval)
 
-
+    action_success(actionName,params)
 
 
     print actionName+" thread quit"
@@ -312,8 +318,6 @@ def init(session):
     # Select camera.
     video_service.setParam(vision_definitions.kCameraSelectID, camera)
 
-    # Services
-    DarknetSRV = session.service("DarknetSRV")
     
     action_base.init(session, actionName, wavingThread)
 

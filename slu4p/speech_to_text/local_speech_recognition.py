@@ -15,6 +15,8 @@ class SpeechRecognition(EventAbstractClass):
     CHANNELS = [0, 0, 1, 0]
     timeout = 0
 
+    busy = False
+
     def __init__(self, ip, port, language, sensitivity, word_spotting, audio, visual, vocabulary_file, google_keys, asr_logging):
         super(self.__class__, self).__init__(self, ip, port)
 
@@ -28,8 +30,6 @@ class SpeechRecognition(EventAbstractClass):
 
         self.logging = asr_logging
 
-        self.nuance_asr = ALProxy("ALSpeechRecognition")
-
         dialogP = ALProxy("ALDialog")
         try:
             print dialogP.getAllLoadedTopics()
@@ -41,8 +41,11 @@ class SpeechRecognition(EventAbstractClass):
                 dialogP.resetAll()
             except:
                 print "Error while  resetAll"
+        # or change language and put it back
 
-            # or change language and put it back
+        self.nuance_asr = ALProxy("ALSpeechRecognition")
+
+
 
         self.audio_recorder = ALProxy("ALAudioRecorder")
 
@@ -115,9 +118,12 @@ class SpeechRecognition(EventAbstractClass):
         print "un-pause"
 
     def word_recognized_callback(self, *args, **kwargs):
-        self.audio_recorder.stopMicrophonesRecording()
-        self.nuance_asr.pause(True)
         print "pause"
+        self.audio_recorder.stopMicrophonesRecording()
+        #self.nuance_asr.pause(True)
+        if self.busy:
+            return
+        self.busy = True
         """
         Convert Wave file into Flac file
         """
@@ -133,11 +139,12 @@ class SpeechRecognition(EventAbstractClass):
                 print "[" + self.inst.__class__.__name__ + "] " + str(results)
                 self.memory.raiseEvent("LocalVordRecognized", results)
         self.timeout = 0
-        self.nuance_asr.pause(False)
-        print "pause"
+        #self.nuance_asr.pause(False)
+        print "un-pause"
         self.audio_recorder.stopMicrophonesRecording()
         self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
         self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+        self.busy = False
 
     def text_done_callback(self, *args, **kwargs):
         try:

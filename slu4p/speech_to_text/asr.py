@@ -38,7 +38,7 @@ class SpeechRecognition(object):
         self.asr_service.removeAllContext()
         try:
             self.asr_service.setVocabulary(vocabulary, True)
-            self.asr_service.setParameter("Sensitivity", 0.1)
+            #self.asr_service.setParameter("Sensitivity", 0.1)
             self.asr_service.setParameter("NbHypotheses", 3)
         except:
             print "error setting vocabulary"
@@ -68,13 +68,17 @@ class SpeechRecognition(object):
             self.audio_recorder.startMicrophonesRecording("utterance" + ".wav", "wav", 44100, [1, 1, 1, 1])
             print 'Audio recorder engine started'
 
+	self.is_enabled = False	
 
     def quit(self):
         #Disconnecting callbacks and subscribers
         self.asr_service.unsubscribe("Test_ASR")
-        self.subWordRecognized.signal.disconnect(self.idSubWordRecognized)
-        self.subSpeechDet.signal.disconnect(self.idSubSpeechDet)
-        self.subEnable.signal.disconnect(self.isSubEnable)
+        if self.idSubWordRecognized is not None:
+	    self.subWordRecognized.signal.disconnect(self.idSubWordRecognized)
+        if self.idSubSpeechDet is not None:
+	    self.subSpeechDet.signal.disconnect(self.idSubSpeechDet)
+        if self.idSubEnable is not None:
+	    self.subEnable.signal.disconnect(self.idSubEnable)
         if USE_GOOGLE:
             self.googleAsrRecognized.signal.disconnect(self.idGoogleAsrRecognized)
 
@@ -97,7 +101,7 @@ class SpeechRecognition(object):
         print "googleasr=", value
 
     def onEnable(self, value):
-        print "enable=", values
+        print "enable=", value
         if value == "0":
             if self.is_enabled:
                 self.is_enabled = False
@@ -171,7 +175,6 @@ def main():
     app.run()
 
     sr.quit()
-
 
 if __name__ == "__main__":
     main()

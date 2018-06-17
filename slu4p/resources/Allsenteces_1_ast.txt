@@ -1,0 +1,707 @@
+﻿Get the * and put it on the *
+Grasp the * and put it on the *
+Take the * and put it on the *
+Pick up the * and put it on the *
+Get the * and place it on the *
+Grasp the * and place it on the *
+Take the * and place it on the *
+Pick up the * and place it on the *
+Put the * on the *
+Place the * on the *
+Bring me the *
+Give me the *
+Bring the * to me
+Give the * to me
+Deliver the * to me
+Bring the * to * at the *
+Give the * to * at the *
+Deliver the * to * at the *
+Get the * from the * and put it on the *
+Grasp the * from the * and put it on the *
+Take the * from the * and put it on the *
+Pick up the * from the * and put it on the *
+Get the * from the * and place it on the *
+Grasp the * from the * and place it on the *
+Take the * from the * and place it on the *
+Pick up the * from the * and place it on the *
+Go to the *, find the *, and bring it to me
+Navigate to the *, find the *, and bring it to me
+Go to the *, locate the *, and bring it to me
+Navigate to the *, locate the *, and bring it to me
+Go to the *, look for the *, and bring it to me
+Navigate to the *, look for the *, and bring it to me
+Go to the *, find the *, and give it to me
+Navigate to the *, find the *, and give it to me
+Go to the *, locate the *, and give it to me
+Navigate to the *, locate the *, and give it to me
+Go to the *, look for the *, and give it to me
+Navigate to the *, look for the *, and give it to me
+Go to the *, find the *, and deliver it to me
+Navigate to the *, find the *, and deliver it to me
+Go to the *, locate the *, and deliver it to me
+Navigate to the *, locate the *, and deliver it to me
+Go to the *, look for the *, and deliver it to me
+Navigate to the *, look for the *, and deliver it to me
+Go to the *, find the *, and bring it to * at the *
+Navigate to the *, find the *, and bring it to * at the *
+Go to the *, locate the *, and bring it to * at the *
+Navigate to the *, locate the *, and bring it to * at the *
+Go to the *, look for the *, and bring it to * at the *
+Navigate to the *, look for the *, and bring it to * at the *
+Go to the *, find the *, and give it to * at the *
+Navigate to the *, find the *, and give it to * at the *
+Go to the *, locate the *, and give it to * at the *
+Navigate to the *, locate the *, and give it to * at the *
+Go to the *, look for the *, and give it to * at the *
+Navigate to the *, look for the *, and give it to * at the *
+Go to the *, find the *, and deliver it to * at the *
+Navigate to the *, find the *, and deliver it to * at the *
+Go to the *, locate the *, and deliver it to * at the *
+Navigate to the *, locate the *, and deliver it to * at the *
+Go to the *, look for the *, and deliver it to * at the *
+Navigate to the *, look for the *, and deliver it to * at the *
+Go to the *, find the *, and put it on the *
+Navigate to the *, find the *, and put it on the *
+Go to the *, locate the *, and put it on the *
+Navigate to the *, locate the *, and put it on the *
+Go to the *, look for the *, and put it on the *
+Navigate to the *, look for the *, and put it on the *
+Go to the *, find the *, and place it on the *
+Navigate to the *, find the *, and place it on the *
+Go to the *, locate the *, and place it on the *
+Navigate to the *, locate the *, and place it on the *
+Go to the *, look for the *, and place it on the *
+Navigate to the *, look for the *, and place it on the *
+Bring me the * from the *
+Give me the * from the *
+Bring to * at the * the * from the *
+Give to * at the * the * from the *
+Get the * from the * and bring it to me
+Grasp the * from the * and bring it to me
+Take the * from the * and bring it to me
+Pick up the * from the * and bring it to me
+Get the * from the * and give it to me
+Grasp the * from the * and give it to me
+Take the * from the * and give it to me
+Pick up the * from the * and give it to me
+Get the * from the * and deliver it to me
+Grasp the * from the * and deliver it to me
+Take the * from the * and deliver it to me
+Pick up the * from the * and deliver it to me
+Get the * from the * and bring it to * at the *
+Grasp the * from the * and bring it to * at the *
+Take the * from the * and bring it to * at the *
+Pick up the * from the * and bring it to * at the *
+Get the * from the * and give it to * at the *
+Grasp the * from the * and give it to * at the *
+Take the * from the * and give it to * at the *
+Pick up the * from the * and give it to * at the *
+Get the * from the * and deliver it to * at the *
+Grasp the * from the * and deliver it to * at the *
+Take the * from the * and deliver it to * at the *
+Pick up the * from the * and deliver it to * at the *
+Get the * from the * and put it on the *
+Grasp the * from the * and put it on the *
+Take the * from the * and put it on the *
+Pick up the * from the * and put it on the *
+Get the * from the * and place it on the *
+Grasp the * from the * and place it on the *
+Take the * from the * and place it on the *
+Pick up the * from the * and place it on the *
+Answer a * to * at the *
+Tell something about yourself to * at the *
+Say something about yourself to * at the *
+Tell the time to * at the *
+Say the time to * at the *
+Tell what day is today to * at the *
+Say what day is today to * at the *
+Tell what day is tomorrow to * at the *
+Say what day is tomorrow to * at the *
+Tell your team's name to * at the *
+Say your team's name to * at the *
+Tell your team's country to * at the *
+Say your team's country to * at the *
+Tell your team's affiliation to * at the *
+Say your team's affiliation to * at the *
+Tell the day of the week to * at the *
+Say the day of the week to * at the *
+Tell the day of the month to * at the *
+Say the day of the month to * at the *
+Tell a joke to * at the *
+Say a joke to * at the *
+Find * in the * and answer a *
+Locate * in the * and answer a *
+Look for * in the * and answer a *
+Find a person in the * and answer a *
+Locate a person in the * and answer a *
+Look for a person in the * and answer a *
+Find someone in the * and answer a *
+Locate someone in the * and answer a *
+Look for someone in the * and answer a *
+Find * in the * and tell something about yourself
+Locate * in the * and tell something about yourself
+Look for * in the * and tell something about yourself
+Find a person in the * and tell something about yourself
+Locate a person in the * and tell something about yourself
+Look for a person in the * and tell something about yourself
+Find someone in the * and tell something about yourself
+Locate someone in the * and tell something about yourself
+Look for someone in the * and tell something about yourself
+Find * in the * and say something about yourself
+Locate * in the * and say something about yourself
+Look for * in the * and say something about yourself
+Find a person in the * and say something about yourself
+Locate a person in the * and say something about yourself
+Look for a person in the * and say something about yourself
+Find someone in the * and say something about yourself
+Locate someone in the * and say something about yourself
+Look for someone in the * and say something about yourself
+Find * in the * and tell the time
+Locate * in the * and tell the time
+Look for * in the * and tell the time
+Find a person in the * and tell the time
+Locate a person in the * and tell the time
+Look for a person in the * and tell the time
+Find someone in the * and tell the time
+Locate someone in the * and tell the time
+Look for someone in the * and tell the time
+Find * in the * and say the time
+Locate * in the * and say the time
+Look for * in the * and say the time
+Find a person in the * and say the time
+Locate a person in the * and say the time
+Look for a person in the * and say the time
+Find someone in the * and say the time
+Locate someone in the * and say the time
+Look for someone in the * and say the time
+Find * in the * and tell what day is today
+Locate * in the * and tell what day is today
+Look for * in the * and tell what day is today
+Find a person in the * and tell what day is today
+Locate a person in the * and tell what day is today
+Look for a person in the * and tell what day is today
+Find someone in the * and tell what day is today
+Locate someone in the * and tell what day is today
+Look for someone in the * and tell what day is today
+Find * in the * and say what day is today
+Locate * in the * and say what day is today
+Look for * in the * and say what day is today
+Find a person in the * and say what day is today
+Locate a person in the * and say what day is today
+Look for a person in the * and say what day is today
+Find someone in the * and say what day is today
+Locate someone in the * and say what day is today
+Look for someone in the * and say what day is today
+Find * in the * and tell what day is tomorrow
+Locate * in the * and tell what day is tomorrow
+Look for * in the * and tell what day is tomorrow
+Find a person in the * and tell what day is tomorrow
+Locate a person in the * and tell what day is tomorrow
+Look for a person in the * and tell what day is tomorrow
+Find someone in the * and tell what day is tomorrow
+Locate someone in the * and tell what day is tomorrow
+Look for someone in the * and tell what day is tomorrow
+Find * in the * and say what day is tomorrow
+Locate * in the * and say what day is tomorrow
+Look for * in the * and say what day is tomorrow
+Find a person in the * and say what day is tomorrow
+Locate a person in the * and say what day is tomorrow
+Look for a person in the * and say what day is tomorrow
+Find someone in the * and say what day is tomorrow
+Locate someone in the * and say what day is tomorrow
+Look for someone in the * and say what day is tomorrow
+Find * in the * and tell your team's name
+Locate * in the * and tell your team's name
+Look for * in the * and tell your team's name
+Find a person in the * and tell your team's name
+Locate a person in the * and tell your team's name
+Look for a person in the * and tell your team's name
+Find someone in the * and tell your team's name
+Locate someone in the * and tell your team's name
+Look for someone in the * and tell your team's name
+Find * in the * and say your team's name
+Locate * in the * and say your team's name
+Look for * in the * and say your team's name
+Find a person in the * and say your team's name
+Locate a person in the * and say your team's name
+Look for a person in the * and say your team's name
+Find someone in the * and say your team's name
+Locate someone in the * and say your team's name
+Look for someone in the * and say your team's name
+Find * in the * and tell your team's country
+Locate * in the * and tell your team's country
+Look for * in the * and tell your team's country
+Find a person in the * and tell your team's country
+Locate a person in the * and tell your team's country
+Look for a person in the * and tell your team's country
+Find someone in the * and tell your team's country
+Locate someone in the * and tell your team's country
+Look for someone in the * and tell your team's country
+Find * in the * and say your team's country
+Locate * in the * and say your team's country
+Look for * in the * and say your team's country
+Find a person in the * and say your team's country
+Locate a person in the * and say your team's country
+Look for a person in the * and say your team's country
+Find someone in the * and say your team's country
+Locate someone in the * and say your team's country
+Look for someone in the * and say your team's country
+Find * in the * and tell your team's affiliation
+Locate * in the * and tell your team's affiliation
+Look for * in the * and tell your team's affiliation
+Find a person in the * and tell your team's affiliation
+Locate a person in the * and tell your team's affiliation
+Look for a person in the * and tell your team's affiliation
+Find someone in the * and tell your team's affiliation
+Locate someone in the * and tell your team's affiliation
+Look for someone in the * and tell your team's affiliation
+Find * in the * and say your team's affiliation
+Locate * in the * and say your team's affiliation
+Look for * in the * and say your team's affiliation
+Find a person in the * and say your team's affiliation
+Locate a person in the * and say your team's affiliation
+Look for a person in the * and say your team's affiliation
+Find someone in the * and say your team's affiliation
+Locate someone in the * and say your team's affiliation
+Look for someone in the * and say your team's affiliation
+Find * in the * and tell the day of the week
+Locate * in the * and tell the day of the week
+Look for * in the * and tell the day of the week
+Find a person in the * and tell the day of the week
+Locate a person in the * and tell the day of the week
+Look for a person in the * and tell the day of the week
+Find someone in the * and tell the day of the week
+Locate someone in the * and tell the day of the week
+Look for someone in the * and tell the day of the week
+Find * in the * and say the day of the week
+Locate * in the * and say the day of the week
+Look for * in the * and say the day of the week
+Find a person in the * and say the day of the week
+Locate a person in the * and say the day of the week
+Look for a person in the * and say the day of the week
+Find someone in the * and say the day of the week
+Locate someone in the * and say the day of the week
+Look for someone in the * and say the day of the week
+Find * in the * and tell the day of the month
+Locate * in the * and tell the day of the month
+Look for * in the * and tell the day of the month
+Find a person in the * and tell the day of the month
+Locate a person in the * and tell the day of the month
+Look for a person in the * and tell the day of the month
+Find someone in the * and tell the day of the month
+Locate someone in the * and tell the day of the month
+Look for someone in the * and tell the day of the month
+Find * in the * and say the day of the month
+Locate * in the * and say the day of the month
+Look for * in the * and say the day of the month
+Find a person in the * and say the day of the month
+Locate a person in the * and say the day of the month
+Look for a person in the * and say the day of the month
+Find someone in the * and say the day of the month
+Locate someone in the * and say the day of the month
+Look for someone in the * and say the day of the month
+Find * in the * and tell a joke
+Locate * in the * and tell a joke
+Look for * in the * and tell a joke
+Find a person in the * and tell a joke
+Locate a person in the * and tell a joke
+Look for a person in the * and tell a joke
+Find someone in the * and tell a joke
+Locate someone in the * and tell a joke
+Look for someone in the * and tell a joke
+Find * in the * and say a joke
+Locate * in the * and say a joke
+Look for * in the * and say a joke
+Find a person in the * and say a joke
+Locate a person in the * and say a joke
+Look for a person in the * and say a joke
+Find someone in the * and say a joke
+Locate someone in the * and say a joke
+Look for someone in the * and say a joke
+Go to the *, find *, and answer a *
+Navigate to the *, find *, and answer a *
+Go to the *, locate *, and answer a *
+Navigate to the *, locate *, and answer a *
+Go to the *, look for *, and answer a *
+Navigate to the *, look for *, and answer a *
+Go to the *, find a person, and answer a *
+Navigate to the *, find a person, and answer a *
+Go to the *, locate a person, and answer a *
+Navigate to the *, locate a person, and answer a *
+Go to the *, look for a person, and answer a *
+Navigate to the *, look for a person, and answer a *
+Go to the *, find someone, and answer a *
+Navigate to the *, find someone, and answer a *
+Go to the *, locate someone, and answer a *
+Navigate to the *, locate someone, and answer a *
+Go to the *, look for someone, and answer a *
+Navigate to the *, look for someone, and answer a *
+Go to the *, find *, and tell something about yourself
+Navigate to the *, find *, and tell something about yourself
+Go to the *, locate *, and tell something about yourself
+Navigate to the *, locate *, and tell something about yourself
+Go to the *, look for *, and tell something about yourself
+Navigate to the *, look for *, and tell something about yourself
+Go to the *, find a person, and tell something about yourself
+Navigate to the *, find a person, and tell something about yourself
+Go to the *, locate a person, and tell something about yourself
+Navigate to the *, locate a person, and tell something about yourself
+Go to the *, look for a person, and tell something about yourself
+Navigate to the *, look for a person, and tell something about yourself
+Go to the *, find someone, and tell something about yourself
+Navigate to the *, find someone, and tell something about yourself
+Go to the *, locate someone, and tell something about yourself
+Navigate to the *, locate someone, and tell something about yourself
+Go to the *, look for someone, and tell something about yourself
+Navigate to the *, look for someone, and tell something about yourself
+Go to the *, find *, and say something about yourself
+Navigate to the *, find *, and say something about yourself
+Go to the *, locate *, and say something about yourself
+Navigate to the *, locate *, and say something about yourself
+Go to the *, look for *, and say something about yourself
+Navigate to the *, look for *, and say something about yourself
+Go to the *, find a person, and say something about yourself
+Navigate to the *, find a person, and say something about yourself
+Go to the *, locate a person, and say something about yourself
+Navigate to the *, locate a person, and say something about yourself
+Go to the *, look for a person, and say something about yourself
+Navigate to the *, look for a person, and say something about yourself
+Go to the *, find someone, and say something about yourself
+Navigate to the *, find someone, and say something about yourself
+Go to the *, locate someone, and say something about yourself
+Navigate to the *, locate someone, and say something about yourself
+Go to the *, look for someone, and say something about yourself
+Navigate to the *, look for someone, and say something about yourself
+Go to the *, find *, and tell the time
+Navigate to the *, find *, and tell the time
+Go to the *, locate *, and tell the time
+Navigate to the *, locate *, and tell the time
+Go to the *, look for *, and tell the time
+Navigate to the *, look for *, and tell the time
+Go to the *, find a person, and tell the time
+Navigate to the *, find a person, and tell the time
+Go to the *, locate a person, and tell the time
+Navigate to the *, locate a person, and tell the time
+Go to the *, look for a person, and tell the time
+Navigate to the *, look for a person, and tell the time
+Go to the *, find someone, and tell the time
+Navigate to the *, find someone, and tell the time
+Go to the *, locate someone, and tell the time
+Navigate to the *, locate someone, and tell the time
+Go to the *, look for someone, and tell the time
+Navigate to the *, look for someone, and tell the time
+Go to the *, find *, and say the time
+Navigate to the *, find *, and say the time
+Go to the *, locate *, and say the time
+Navigate to the *, locate *, and say the time
+Go to the *, look for *, and say the time
+Navigate to the *, look for *, and say the time
+Go to the *, find a person, and say the time
+Navigate to the *, find a person, and say the time
+Go to the *, locate a person, and say the time
+Navigate to the *, locate a person, and say the time
+Go to the *, look for a person, and say the time
+Navigate to the *, look for a person, and say the time
+Go to the *, find someone, and say the time
+Navigate to the *, find someone, and say the time
+Go to the *, locate someone, and say the time
+Navigate to the *, locate someone, and say the time
+Go to the *, look for someone, and say the time
+Navigate to the *, look for someone, and say the time
+Go to the *, find *, and tell what day is today
+Navigate to the *, find *, and tell what day is today
+Go to the *, locate *, and tell what day is today
+Navigate to the *, locate *, and tell what day is today
+Go to the *, look for *, and tell what day is today
+Navigate to the *, look for *, and tell what day is today
+Go to the *, find a person, and tell what day is today
+Navigate to the *, find a person, and tell what day is today
+Go to the *, locate a person, and tell what day is today
+Navigate to the *, locate a person, and tell what day is today
+Go to the *, look for a person, and tell what day is today
+Navigate to the *, look for a person, and tell what day is today
+Go to the *, find someone, and tell what day is today
+Navigate to the *, find someone, and tell what day is today
+Go to the *, locate someone, and tell what day is today
+Navigate to the *, locate someone, and tell what day is today
+Go to the *, look for someone, and tell what day is today
+Navigate to the *, look for someone, and tell what day is today
+Go to the *, find *, and say what day is today
+Navigate to the *, find *, and say what day is today
+Go to the *, locate *, and say what day is today
+Navigate to the *, locate *, and say what day is today
+Go to the *, look for *, and say what day is today
+Navigate to the *, look for *, and say what day is today
+Go to the *, find a person, and say what day is today
+Navigate to the *, find a person, and say what day is today
+Go to the *, locate a person, and say what day is today
+Navigate to the *, locate a person, and say what day is today
+Go to the *, look for a person, and say what day is today
+Navigate to the *, look for a person, and say what day is today
+Go to the *, find someone, and say what day is today
+Navigate to the *, find someone, and say what day is today
+Go to the *, locate someone, and say what day is today
+Navigate to the *, locate someone, and say what day is today
+Go to the *, look for someone, and say what day is today
+Navigate to the *, look for someone, and say what day is today
+Go to the *, find *, and tell what day is tomorrow
+Navigate to the *, find *, and tell what day is tomorrow
+Go to the *, locate *, and tell what day is tomorrow
+Navigate to the *, locate *, and tell what day is tomorrow
+Go to the *, look for *, and tell what day is tomorrow
+Navigate to the *, look for *, and tell what day is tomorrow
+Go to the *, find a person, and tell what day is tomorrow
+Navigate to the *, find a person, and tell what day is tomorrow
+Go to the *, locate a person, and tell what day is tomorrow
+Navigate to the *, locate a person, and tell what day is tomorrow
+Go to the *, look for a person, and tell what day is tomorrow
+Navigate to the *, look for a person, and tell what day is tomorrow
+Go to the *, find someone, and tell what day is tomorrow
+Navigate to the *, find someone, and tell what day is tomorrow
+Go to the *, locate someone, and tell what day is tomorrow
+Navigate to the *, locate someone, and tell what day is tomorrow
+Go to the *, look for someone, and tell what day is tomorrow
+Navigate to the *, look for someone, and tell what day is tomorrow
+Go to the *, find *, and say what day is tomorrow
+Navigate to the *, find *, and say what day is tomorrow
+Go to the *, locate *, and say what day is tomorrow
+Navigate to the *, locate *, and say what day is tomorrow
+Go to the *, look for *, and say what day is tomorrow
+Navigate to the *, look for *, and say what day is tomorrow
+Go to the *, find a person, and say what day is tomorrow
+Navigate to the *, find a person, and say what day is tomorrow
+Go to the *, locate a person, and say what day is tomorrow
+Navigate to the *, locate a person, and say what day is tomorrow
+Go to the *, look for a person, and say what day is tomorrow
+Navigate to the *, look for a person, and say what day is tomorrow
+Go to the *, find someone, and say what day is tomorrow
+Navigate to the *, find someone, and say what day is tomorrow
+Go to the *, locate someone, and say what day is tomorrow
+Navigate to the *, locate someone, and say what day is tomorrow
+Go to the *, look for someone, and say what day is tomorrow
+Navigate to the *, look for someone, and say what day is tomorrow
+Go to the *, find *, and tell your team's name
+Navigate to the *, find *, and tell your team's name
+Go to the *, locate *, and tell your team's name
+Navigate to the *, locate *, and tell your team's name
+Go to the *, look for *, and tell your team's name
+Navigate to the *, look for *, and tell your team's name
+Go to the *, find a person, and tell your team's name
+Navigate to the *, find a person, and tell your team's name
+Go to the *, locate a person, and tell your team's name
+Navigate to the *, locate a person, and tell your team's name
+Go to the *, look for a person, and tell your team's name
+Navigate to the *, look for a person, and tell your team's name
+Go to the *, find someone, and tell your team's name
+Navigate to the *, find someone, and tell your team's name
+Go to the *, locate someone, and tell your team's name
+Navigate to the *, locate someone, and tell your team's name
+Go to the *, look for someone, and tell your team's name
+Navigate to the *, look for someone, and tell your team's name
+Go to the *, find *, and say your team's name
+Navigate to the *, find *, and say your team's name
+Go to the *, locate *, and say your team's name
+Navigate to the *, locate *, and say your team's name
+Go to the *, look for *, and say your team's name
+Navigate to the *, look for *, and say your team's name
+Go to the *, find a person, and say your team's name
+Navigate to the *, find a person, and say your team's name
+Go to the *, locate a person, and say your team's name
+Navigate to the *, locate a person, and say your team's name
+Go to the *, look for a person, and say your team's name
+Navigate to the *, look for a person, and say your team's name
+Go to the *, find someone, and say your team's name
+Navigate to the *, find someone, and say your team's name
+Go to the *, locate someone, and say your team's name
+Navigate to the *, locate someone, and say your team's name
+Go to the *, look for someone, and say your team's name
+Navigate to the *, look for someone, and say your team's name
+Go to the *, find *, and tell your team's country
+Navigate to the *, find *, and tell your team's country
+Go to the *, locate *, and tell your team's country
+Navigate to the *, locate *, and tell your team's country
+Go to the *, look for *, and tell your team's country
+Navigate to the *, look for *, and tell your team's country
+Go to the *, find a person, and tell your team's country
+Navigate to the *, find a person, and tell your team's country
+Go to the *, locate a person, and tell your team's country
+Navigate to the *, locate a person, and tell your team's country
+Go to the *, look for a person, and tell your team's country
+Navigate to the *, look for a person, and tell your team's country
+Go to the *, find someone, and tell your team's country
+Navigate to the *, find someone, and tell your team's country
+Go to the *, locate someone, and tell your team's country
+Navigate to the *, locate someone, and tell your team's country
+Go to the *, look for someone, and tell your team's country
+Navigate to the *, look for someone, and tell your team's country
+Go to the *, find *, and say your team's country
+Navigate to the *, find *, and say your team's country
+Go to the *, locate *, and say your team's country
+Navigate to the *, locate *, and say your team's country
+Go to the *, look for *, and say your team's country
+Navigate to the *, look for *, and say your team's country
+Go to the *, find a person, and say your team's country
+Navigate to the *, find a person, and say your team's country
+Go to the *, locate a person, and say your team's country
+Navigate to the *, locate a person, and say your team's country
+Go to the *, look for a person, and say your team's country
+Navigate to the *, look for a person, and say your team's country
+Go to the *, find someone, and say your team's country
+Navigate to the *, find someone, and say your team's country
+Go to the *, locate someone, and say your team's country
+Navigate to the *, locate someone, and say your team's country
+Go to the *, look for someone, and say your team's country
+Navigate to the *, look for someone, and say your team's country
+Go to the *, find *, and tell your team's affiliation
+Navigate to the *, find *, and tell your team's affiliation
+Go to the *, locate *, and tell your team's affiliation
+Navigate to the *, locate *, and tell your team's affiliation
+Go to the *, look for *, and tell your team's affiliation
+Navigate to the *, look for *, and tell your team's affiliation
+Go to the *, find a person, and tell your team's affiliation
+Navigate to the *, find a person, and tell your team's affiliation
+Go to the *, locate a person, and tell your team's affiliation
+Navigate to the *, locate a person, and tell your team's affiliation
+Go to the *, look for a person, and tell your team's affiliation
+Navigate to the *, look for a person, and tell your team's affiliation
+Go to the *, find someone, and tell your team's affiliation
+Navigate to the *, find someone, and tell your team's affiliation
+Go to the *, locate someone, and tell your team's affiliation
+Navigate to the *, locate someone, and tell your team's affiliation
+Go to the *, look for someone, and tell your team's affiliation
+Navigate to the *, look for someone, and tell your team's affiliation
+Go to the *, find *, and say your team's affiliation
+Navigate to the *, find *, and say your team's affiliation
+Go to the *, locate *, and say your team's affiliation
+Navigate to the *, locate *, and say your team's affiliation
+Go to the *, look for *, and say your team's affiliation
+Navigate to the *, look for *, and say your team's affiliation
+Go to the *, find a person, and say your team's affiliation
+Navigate to the *, find a person, and say your team's affiliation
+Go to the *, locate a person, and say your team's affiliation
+Navigate to the *, locate a person, and say your team's affiliation
+Go to the *, look for a person, and say your team's affiliation
+Navigate to the *, look for a person, and say your team's affiliation
+Go to the *, find someone, and say your team's affiliation
+Navigate to the *, find someone, and say your team's affiliation
+Go to the *, locate someone, and say your team's affiliation
+Navigate to the *, locate someone, and say your team's affiliation
+Go to the *, look for someone, and say your team's affiliation
+Navigate to the *, look for someone, and say your team's affiliation
+Go to the *, find *, and tell the day of the week
+Navigate to the *, find *, and tell the day of the week
+Go to the *, locate *, and tell the day of the week
+Navigate to the *, locate *, and tell the day of the week
+Go to the *, look for *, and tell the day of the week
+Navigate to the *, look for *, and tell the day of the week
+Go to the *, find a person, and tell the day of the week
+Navigate to the *, find a person, and tell the day of the week
+Go to the *, locate a person, and tell the day of the week
+Navigate to the *, locate a person, and tell the day of the week
+Go to the *, look for a person, and tell the day of the week
+Navigate to the *, look for a person, and tell the day of the week
+Go to the *, find someone, and tell the day of the week
+Navigate to the *, find someone, and tell the day of the week
+Go to the *, locate someone, and tell the day of the week
+Navigate to the *, locate someone, and tell the day of the week
+Go to the *, look for someone, and tell the day of the week
+Navigate to the *, look for someone, and tell the day of the week
+Go to the *, find *, and say the day of the week
+Navigate to the *, find *, and say the day of the week
+Go to the *, locate *, and say the day of the week
+Navigate to the *, locate *, and say the day of the week
+Go to the *, look for *, and say the day of the week
+Navigate to the *, look for *, and say the day of the week
+Go to the *, find a person, and say the day of the week
+Navigate to the *, find a person, and say the day of the week
+Go to the *, locate a person, and say the day of the week
+Navigate to the *, locate a person, and say the day of the week
+Go to the *, look for a person, and say the day of the week
+Navigate to the *, look for a person, and say the day of the week
+Go to the *, find someone, and say the day of the week
+Navigate to the *, find someone, and say the day of the week
+Go to the *, locate someone, and say the day of the week
+Navigate to the *, locate someone, and say the day of the week
+Go to the *, look for someone, and say the day of the week
+Navigate to the *, look for someone, and say the day of the week
+Go to the *, find *, and tell the day of the month
+Navigate to the *, find *, and tell the day of the month
+Go to the *, locate *, and tell the day of the month
+Navigate to the *, locate *, and tell the day of the month
+Go to the *, look for *, and tell the day of the month
+Navigate to the *, look for *, and tell the day of the month
+Go to the *, find a person, and tell the day of the month
+Navigate to the *, find a person, and tell the day of the month
+Go to the *, locate a person, and tell the day of the month
+Navigate to the *, locate a person, and tell the day of the month
+Go to the *, look for a person, and tell the day of the month
+Navigate to the *, look for a person, and tell the day of the month
+Go to the *, find someone, and tell the day of the month
+Navigate to the *, find someone, and tell the day of the month
+Go to the *, locate someone, and tell the day of the month
+Navigate to the *, locate someone, and tell the day of the month
+Go to the *, look for someone, and tell the day of the month
+Navigate to the *, look for someone, and tell the day of the month
+Go to the *, find *, and say the day of the month
+Navigate to the *, find *, and say the day of the month
+Go to the *, locate *, and say the day of the month
+Navigate to the *, locate *, and say the day of the month
+Go to the *, look for *, and say the day of the month
+Navigate to the *, look for *, and say the day of the month
+Go to the *, find a person, and say the day of the month
+Navigate to the *, find a person, and say the day of the month
+Go to the *, locate a person, and say the day of the month
+Navigate to the *, locate a person, and say the day of the month
+Go to the *, look for a person, and say the day of the month
+Navigate to the *, look for a person, and say the day of the month
+Go to the *, find someone, and say the day of the month
+Navigate to the *, find someone, and say the day of the month
+Go to the *, locate someone, and say the day of the month
+Navigate to the *, locate someone, and say the day of the month
+Go to the *, look for someone, and say the day of the month
+Navigate to the *, look for someone, and say the day of the month
+Go to the *, find *, and tell a joke
+Navigate to the *, find *, and tell a joke
+Go to the *, locate *, and tell a joke
+Navigate to the *, locate *, and tell a joke
+Go to the *, look for *, and tell a joke
+Navigate to the *, look for *, and tell a joke
+Go to the *, find a person, and tell a joke
+Navigate to the *, find a person, and tell a joke
+Go to the *, locate a person, and tell a joke
+Navigate to the *, locate a person, and tell a joke
+Go to the *, look for a person, and tell a joke
+Navigate to the *, look for a person, and tell a joke
+Go to the *, find someone, and tell a joke
+Navigate to the *, find someone, and tell a joke
+Go to the *, locate someone, and tell a joke
+Navigate to the *, locate someone, and tell a joke
+Go to the *, look for someone, and tell a joke
+Navigate to the *, look for someone, and tell a joke
+Go to the *, find *, and say a joke
+Navigate to the *, find *, and say a joke
+Go to the *, locate *, and say a joke
+Navigate to the *, locate *, and say a joke
+Go to the *, look for *, and say a joke
+Navigate to the *, look for *, and say a joke
+Go to the *, find a person, and say a joke
+Navigate to the *, find a person, and say a joke
+Go to the *, locate a person, and say a joke
+Navigate to the *, locate a person, and say a joke
+Go to the *, look for a person, and say a joke
+Navigate to the *, look for a person, and say a joke
+Go to the *, find someone, and say a joke
+Navigate to the *, find someone, and say a joke
+Go to the *, locate someone, and say a joke
+Navigate to the *, locate someone, and say a joke
+Go to the *, look for someone, and say a joke
+Navigate to the *, look for someone, and say a joke
+Tell me the name of the person at the *
+Tell me the name of the person in the *
+Tell me how many * there are on the *
+Find the * in the *
+Locate the * in the *
+Look for the * in the *
+Find the * in the *
+Locate the * in the *
+Look for the * in the *

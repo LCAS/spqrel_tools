@@ -49,12 +49,15 @@ class SpeechRecognition(object):
         print 'Speech recognition engine started'
 
         #subscribe to event WordRecognized
-        self.subWordRecognized = memory_service.subscriber("WordRecognized")
+        self.subWordRecognized = self.memory_service.subscriber("WordRecognized")
         idSubWordRecognized = self.subWordRecognized.signal.connect(self.onWordRecognized)
 
         # speech detected
-        self.subSpeechDet = memory_service.subscriber("SpeechDetected")
-        self.id_sd = self.subSpeechDet.signal.connect(self.onSpeechDetected)
+        self.subSpeechDet = self.memory_service.subscriber("SpeechDetected")
+        self.idSubSpeechDet = self.subSpeechDet.signal.connect(self.onSpeechDetected)
+
+        # enable
+        self.subEnable = memo
 
 
         #subscribe to google asr transcription
@@ -70,23 +73,63 @@ class SpeechRecognition(object):
         #Disconnecting callbacks and subscribers
         self.asr_service.unsubscribe("Test_ASR")
         self.subWordRecognized.signal.disconnect(self.idSubWordRecognized)
-        self.subSpeechDet.signal.disconnect(self.id_sd)
+        self.subSpeechDet.signal.disconnect(self.idSubSpeechDet)
         if USE_GOOGLE:
             self.googleAsrRecognized.signal.disconnect(self.idGoogleAsrRecognized)
 
     def onSpeechDetected(value):
-        print "speech detected!", value
-
+        print "speechdetected=", value
+        self.audio_recorder.stopMicrophonesRecording()
+        print "Audio recorder stopped recording"
 
     def onWordRecognized(self, value):
         global self.audio_recorder
         print "value=",value
         self.audio_recorder.stopMicrophonesRecording()
-        print "Audio recorder stopped reconrding"
-
+        print "Audio recorder stopped recording"
 
     def onGoogleASR(self, value):
         print "googleasr=", value
+
+    def onEnable(self, value):
+        print "enable=", values
+        if value == "0":
+            if self.is_enabled:
+                self.is_enabled = False
+                if self.USE_GOOGLE:
+                    self.audio_recorder.stopMicrophonesRecording()
+                if self.subWordRecognized is not None:
+                    self.subWordRecognized.signal.disconnect(self.idSubWordRecognized)
+                if self.subSpeechDet is not None:
+                    self.subSpeechDet.signal.disconnect(self.idSubSpeechDet)
+                print "ASR disabled"
+            else:
+                print "ASR already disabled"
+        else:
+            if not self.is_enabled:
+                if self.USE_GOOGLE:
+                    #try:
+                    #    self.AUDIO_FILE_DIR = self.memory_proxy.getData("NAOqibag/CurrentLogFolder") + "/asr_logs/"
+                    #except:
+                    self.AUDIO_FILE_DIR = expanduser('~') + '/bags/no_data/asr_logs/'
+                    if not os.path.exists(self.AUDIO_FILE_DIR):
+                        os.makedirs(self.AUDIO_FILE_DIR)
+                    self.AUDIO_FILE_PATH = self.AUDIO_FILE_DIR + 'SPQReL_mic_'
+                self.is_enabled = True
+
+                if self.USE_GOOGLE:
+                    self.audio_recorder.stopMicrophonesRecording()
+                    self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
+                    self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+
+                # TODO move it here!!
+                #self.subscribe(
+                #    event=SpeechRecognition.WR_EVENT,
+                #    callback=self.word_recognized_callback
+                #)
+                print "ASR enabled"
+            else:
+                print "ASR already enabled"
 
 def main():
     global self.audio_recorder

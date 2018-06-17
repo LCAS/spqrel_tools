@@ -34,30 +34,27 @@ p.exec_action("headpose", "0_-10")
 ############### COCKTAIL PARTY ######################
 
 # GO TO SITTING PERSON
-while (not p.get_condition('personsitting')):
-    print "no sitting detected... "
-    time.sleep(0.5)
+#while (not p.get_condition('personsitting')):
+#    print "no sitting detected... "
+#    time.sleep(0.5)
 
-xsitting = p.memory_service.getData("Condition/personsitting/robot_coordinates_x")
-ysitting = p.memory_service.getData("Condition/personsitting/robot_coordinates_y")
+#xsitting = p.memory_service.getData("Condition/personsitting/robot_coordinates_x")
+#ysitting = p.memory_service.getData("Condition/personsitting/robot_coordinates_y")
 
-print "SITTING X: ",xsitting
-print "SITTING Y: ",ysitting
+#print "SITTING X: ",xsitting
+#print "SITTING Y: ",ysitting
 
-#p.exec_action("navigateto_naoqi",str(xwaving)+'_'+str(ywaving))
+#p.exec_action("navigateto_naoqi",str(xsitting)+'_'+str(ysitting))
 
 # GO TO WAVING PERSON
 
-#p.exec_action("iswaving","0.2_0.5")
-
-#while (not p.get_condition('wavingdetected')):
-#    time.sleep(0.25)
-
-
-#p.exec_action("waitfor","wavingdetected",interrupt='timeout_15',recovery='say_comehere; waifor_personhere')
+#p.exec_action("iswaving","0.2_0.5_wavingdetected")
 
 #xwaving = p.memory_service.getData('Actions/wavingdetected/wavingpersonx')
 #ywaving = p,memory_service.getData('Actions/wavingdetected/wavingpersony')
+
+#print "WAVING X: ",xwaving
+#print "WAVING Y: ",ywaving
 
 #p.exec_action("navigateto_naoqi",str(xwaving)+'_'+str(ywaving))
 

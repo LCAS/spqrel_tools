@@ -24,7 +24,7 @@ def actionThread_exec(params):
     # action init
     p = params.split('_')
     
-    navigate_service = getattr(t, "session", None).service("ALNavigation")
+    navigation_service = getattr(t, "session", None).service("ALNavigation")
     navigation_service.navigateTo(float(p[0]),float(p[1]))
 
     # action end

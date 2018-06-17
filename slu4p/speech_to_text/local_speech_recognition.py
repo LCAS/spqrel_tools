@@ -18,7 +18,7 @@ class SpeechRecognition(object):
 
     busy = False
 
-    USE_GOOGLE = True
+    USE_GOOGLE = False
 
     def __init__(self, language, sensitivity, word_spotting, num_hypo, audio, visual, vocabulary_file, google_keys, asr_logging, app):
         super(self.__class__, self).__init__()

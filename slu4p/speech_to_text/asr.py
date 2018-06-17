@@ -2,14 +2,15 @@
 import qi
 import argparse
 import sys
+from os.path import expanduser
 import os
-
+import time
 
 
 
 class SpeechRecognition(object):
     USE_GOOGLE = True
-
+    CHANNELS = [1, 1, 1, 1]
     audio_recorder = None
 
     def __init__(self, vocab, app):
@@ -62,6 +63,7 @@ class SpeechRecognition(object):
 
         #subscribe to google asr transcription
         if self.USE_GOOGLE:
+	    self.audio_recorder.stopMicrophonesRecording()
             self.googleAsrRecognized = self.memory_service.subscriber("GoogleAsrRecognized")
             self.idGoogleAsrRecognized = self.googleAsrRecognized.signal.connect(self.onGoogleASR)
 

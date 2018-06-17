@@ -97,12 +97,27 @@ class SpeechRecognition(object):
 
     def onSpeechDetected(self, value):
         print "speechdetected=", value
-        if value == 0:
-            self.audio_recorder.stopMicrophonesRecording()
-            print "Audio recorder stopped recording"
-
+        if value == 1:
             if self.USE_GOOGLE:
+                #try:
+                #    self.AUDIO_FILE_DIR = self.memory_proxy.getData("NAOqibag/CurrentLogFolder") + "/asr_logs/"
+                #except:
+                self.AUDIO_FILE_DIR = expanduser('~') + '/bags/no_data/asr_logs/'
+                if not os.path.exists(self.AUDIO_FILE_DIR):
+                    os.makedirs(self.AUDIO_FILE_DIR)
+                self.AUDIO_FILE_PATH = self.AUDIO_FILE_DIR + 'SPQReL_mic_'
+
+                self.audio_recorder.stopMicrophonesRecording()
+                self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
+                self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+
+        else:
+            if self.USE_GOOGLE:
+                self.audio_recorder.stopMicrophonesRecording()
+                print "Audio recorder stopped recording"
+
                 self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
+
 
 
     def onWordRecognized(self, value):
@@ -132,18 +147,6 @@ class SpeechRecognition(object):
                 print "ASR already disabled"
         else:
             if not self.is_enabled:
-                if self.USE_GOOGLE:
-                    #try:
-                    #    self.AUDIO_FILE_DIR = self.memory_proxy.getData("NAOqibag/CurrentLogFolder") + "/asr_logs/"
-                    #except:
-                    self.AUDIO_FILE_DIR = expanduser('~') + '/bags/no_data/asr_logs/'
-                    if not os.path.exists(self.AUDIO_FILE_DIR):
-                        os.makedirs(self.AUDIO_FILE_DIR)
-                    self.AUDIO_FILE_PATH = self.AUDIO_FILE_DIR + 'SPQReL_mic_'
-
-                    self.audio_recorder.stopMicrophonesRecording()
-                    self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
-                    self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
 
                 self.is_enabled = True
                 self.idSubWordRecognized = self.subWordRecognized.signal.connect(self.onWordRecognized)

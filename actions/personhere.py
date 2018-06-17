@@ -15,7 +15,7 @@ import conditions
 from conditions import set_condition
 
 last_personid = 0
-p_dist_thres = 1.5
+p_dist_thres = 1.2
 
 # function called when the signal "EngagementZones/PersonEnteredZone1" is triggered
 def zone1_callback(data):

@@ -57,7 +57,8 @@ class SpeechRecognition(object):
         self.idSubSpeechDet = self.subSpeechDet.signal.connect(self.onSpeechDetected)
 
         # enable
-        self.subEnable = memo
+        self.subEnable = self.memory_service.subscriber("ASR_enable")
+        self.idSubEnable = self.subEnable.signal.connect(self.onEnable)
 
 
         #subscribe to google asr transcription

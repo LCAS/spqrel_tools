@@ -51,16 +51,17 @@ class SpeechRecognition(object):
 
     def start(self):
         # Start the speech recognition engine with user Test_ASR
-        self.asr_service.subscribe("Test_ASR")
+        self.subscribe_name = "Test_ASR" + str(time.time())
+        self.asr_service.subscribe(self.subscribe_name)
         #print 'Speech recognition engine started'
 
         #subscribe to event WordRecognized
         self.subWordRecognized = self.memory_service.subscriber("WordRecognized")
-        self.idSubWordRecognized = self.subWordRecognized.signal.connect(self.onWordRecognized)
+        #self.idSubWordRecognized = self.subWordRecognized.signal.connect(self.onWordRecognized)
 
         # speech detected
         self.subSpeechDet = self.memory_service.subscriber("SpeechDetected")
-        self.idSubSpeechDet = self.subSpeechDet.signal.connect(self.onSpeechDetected)
+        #self.idSubSpeechDet = self.subSpeechDet.signal.connect(self.onSpeechDetected)
 
         # enable
         self.subEnable = self.memory_service.subscriber("ASR_enable")
@@ -79,7 +80,7 @@ class SpeechRecognition(object):
 
     def quit(self):
         #Disconnecting callbacks and subscribers
-        self.asr_service.unsubscribe("Test_ASR")
+        self.asr_service.unsubscribe(self.subscribe_name)
         if self.idSubWordRecognized is not None:
             self.subWordRecognized.signal.disconnect(self.idSubWordRecognized)
         if self.idSubSpeechDet is not None:

@@ -6,14 +6,20 @@ import os
 
 USE_GOOGLE = False
 
+audio_recorder = None
+
 def onWordRecognized(value):
+    global audio_recorder
     print "value=",value
+    audio_recorder.stopMicrophonesRecording()
+    print "Audio recorder stopped reconrding"
+
 
 def onGoogleASR(value):
     print "googleasr=", value
 
-
 def main():
+    global audio_recorder
     parser = argparse.ArgumentParser()
     parser.add_argument("--pip", type=str, default=os.environ['PEPPER_IP'],
                         help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
@@ -40,6 +46,8 @@ def main():
     asr_service = session.service("ALSpeechRecognition")
     asr_service.setLanguage("English")
 
+    rec_service = session.service("ALAudioRecorder")
+
     memory_service  = session.service("ALMemory")
 
     #establishing test vocabulary
@@ -55,6 +63,10 @@ def main():
     # Start the speech recognition engine with user Test_ASR
     asr_service.subscribe("Test_ASR")
     print 'Speech recognition engine started'
+
+
+    audio_recorder.startMicrophonesRecording("utterance" + ".wav", "wav", 44100, self.CHANNELS)
+    print 'Audio recorder engine started'
 
     #subscribe to event WordRecognized
     subWordRecognized = memory_service.subscriber("WordRecognized")
@@ -74,8 +86,6 @@ def main():
     subWordRecognized.signal.disconnect(idSubWordRecognized)
     if USE_GOOGLE:
         googleAsrRecognized.signal.disconnect(idGoogleAsrRecognized)
-
-
 
 if __name__ == "__main__":
     main()

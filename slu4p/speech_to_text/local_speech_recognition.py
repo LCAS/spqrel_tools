@@ -17,7 +17,7 @@ class SpeechRecognition(object):
 
     busy = False
 
-    def __init__(self, ip, port, language, sensitivity, word_spotting, audio, visual, vocabulary_file, google_keys, asr_logging, app):
+    def __init__(self, language, sensitivity, word_spotting, audio, visual, vocabulary_file, google_keys, asr_logging, app):
         super(self.__class__, self).__init__()
 
         app.start()

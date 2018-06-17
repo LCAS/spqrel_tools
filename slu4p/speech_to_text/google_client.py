@@ -1,3 +1,6 @@
+import qi
+import os
+import argparse
 import requests
 import json
 import slu_utils
@@ -8,7 +11,7 @@ class GoogleClient(object):
     url = ''
     headers = {"Content-Type": "application/json"}
 
-    def __init__(self, language, key_file):
+    def __init__(self, language, key_file, app):
         super(GoogleClient, self).__init__()
 
         app.start()

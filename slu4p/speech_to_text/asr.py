@@ -19,6 +19,9 @@ class SpeechRecognition(object):
         app.start()
         self.session = app.session
 
+        self.__shutdown_requested = False
+        signal.signal(signal.SIGINT, self.signal_handler)
+
         #Starting services
         self.asr_service = session.service("ALSpeechRecognition")
         self.asr_service.setLanguage("English")
@@ -85,6 +88,11 @@ class SpeechRecognition(object):
         #if self.USE_GOOGLE:
         #    self.googleAsrRecognized.signal.disconnect(self.idGoogleAsrRecognized)
 
+    def signal_handler(self, signal, frame):
+        print "[" + self.__class__.__name__ + "] Caught Ctrl+C, stopping."
+        self.__shutdown_requested = True
+        print "[" + self.__class__.__name__ + "] Good-bye"
+
     def onSpeechDetected(self, value):
         print "speechdetected=", value
         self.audio_recorder.stopMicrophonesRecording()
@@ -102,8 +110,8 @@ class SpeechRecognition(object):
         if self.USE_GOOGLE:
             self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
 
-    def onGoogleASR(self, value):
-        print "googleasr=", value
+    #def onGoogleASR(self, value):
+    #    print "googleasr=", value
 
     def onEnable(self, value):
         print "enable=", value
@@ -147,6 +155,11 @@ class SpeechRecognition(object):
             else:
                 print "ASR already enabled"
 
+    def run(self):
+        while (True):
+            time.sleep(0.1)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--pip", type=str, default=os.environ['PEPPER_IP'],
@@ -178,7 +191,7 @@ def main():
     sr.start()
 
     #let it run
-    app.run()
+    sr.run()
 
     sr.quit()
 

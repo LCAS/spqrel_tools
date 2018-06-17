@@ -88,7 +88,7 @@ class SpeechRecognition(object):
         print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             SpeechRecognition.ASR_ENABLE)
 
-        #self.is_enabled = False
+        self.is_enabled = True
 
         #print "[" + self.__class__.__name__ + "] ASR disabled"
 
@@ -294,9 +294,9 @@ def main():
                         help="Run in word spotting mode")
     parser.add_argument("--num-hypotesys", type=int, default=10,
                         help="Number of hypotesys returned by nuance")
-    parser.add_argument("--no-audio", action="store_true",
+    parser.add_argument("--no-audio", type=bool, default=False,
                         help="Turn off bip sound when recognition starts")
-    parser.add_argument("--no-visual", action="store_true",
+    parser.add_argument("--no-visual", type=bool, default=False,
                         help="Turn off blinking eyes when recognition starts")
     parser.add_argument("-v", "--vocabulary", type=str, default="resources/nuance_grammar.txt",
                         help="A txt file containing the list of sentences composing the vocabulary")

@@ -22,7 +22,7 @@ class SpeechRecognition(object):
         self.asr_service = session.service("ALSpeechRecognition")
         self.asr_service.setLanguage("English")
 
-        self.self.audio_recorder = session.service("ALAudioRecorder")
+        self.audio_recorder = session.service("ALAudioRecorder")
 
         self.memory_service  = session.service("ALMemory")
 
@@ -37,7 +37,7 @@ class SpeechRecognition(object):
         self.asr_service.pause(True)
         self.asr_service.removeAllContext()
         try:
-            self.asr_service.setVocabulary(vocabulary, False)
+            self.asr_service.setVocabulary(vocabulary, True)
             self.asr_service.setParameter("Sensitivity", 0.1)
             self.asr_service.setParameter("NbHypotheses", 3)
         except:
@@ -49,17 +49,17 @@ class SpeechRecognition(object):
         print 'Speech recognition engine started'
 
         #subscribe to event WordRecognized
-        self.subWordRecognized = memory_service.subscriber("WordRecognized")
+        self.subWordRecognized = self.memory_service.subscriber("WordRecognized")
         idSubWordRecognized = self.subWordRecognized.signal.connect(self.onWordRecognized)
 
         # speech detected
-        self.subSpeechDet = memory_service.subscriber("SpeechDetected")
+        self.subSpeechDet = self.memory_service.subscriber("SpeechDetected")
         self.id_sd = self.subSpeechDet.signal.connect(self.onSpeechDetected)
 
 
         #subscribe to google asr transcription
         if USE_GOOGLE:
-            self.googleAsrRecognized = memory_service.subscriber("GoogleAsrRecognized")
+            self.googleAsrRecognized = self.memory_service.subscriber("GoogleAsrRecognized")
             self.idGoogleAsrRecognized = self.googleAsrRecognized.signal.connect(self.onGoogleASR)
 
             self.audio_recorder.startMicrophonesRecording("utterance" + ".wav", "wav", 44100, [1, 1, 1, 1])
@@ -74,12 +74,11 @@ class SpeechRecognition(object):
         if USE_GOOGLE:
             self.googleAsrRecognized.signal.disconnect(self.idGoogleAsrRecognized)
 
-    def onSpeechDetected(value):
+    def onSpeechDetected(self, value):
         print "speech detected!", value
 
 
     def onWordRecognized(self, value):
-        global self.audio_recorder
         print "value=",value
         self.audio_recorder.stopMicrophonesRecording()
         print "Audio recorder stopped reconrding"
@@ -89,7 +88,6 @@ class SpeechRecognition(object):
         print "googleasr=", value
 
 def main():
-    global self.audio_recorder
     parser = argparse.ArgumentParser()
     parser.add_argument("--pip", type=str, default=os.environ['PEPPER_IP'],
                         help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")

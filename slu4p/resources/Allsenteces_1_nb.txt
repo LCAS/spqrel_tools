@@ -117,12 +117,12 @@ Tell what day is today to name at the beacon
 Say what day is today to name at the beacon
 Tell what day is tomorrow to name at the beacon
 Say what day is tomorrow to name at the beacon
-Tell your team's name to name at the beacon
-Say your team's name to name at the beacon
-Tell your team's country to name at the beacon
-Say your team's country to name at the beacon
-Tell your team's affiliation to name at the beacon
-Say your team's affiliation to name at the beacon
+Tell your team s name to name at the beacon
+Say your team s name to name at the beacon
+Tell your team s country to name at the beacon
+Say your team s country to name at the beacon
+Tell your team s affiliation to name at the beacon
+Say your team s affiliation to name at the beacon
 Tell the day of the week to name at the beacon
 Say the day of the week to name at the beacon
 Tell the day of the month to name at the beacon
@@ -210,60 +210,60 @@ Look for a person in the room and say what day is tomorrow
 Find someone in the room and say what day is tomorrow
 Locate someone in the room and say what day is tomorrow
 Look for someone in the room and say what day is tomorrow
-Find name in the room and tell your team's name
-Locate name in the room and tell your team's name
-Look for name in the room and tell your team's name
-Find a person in the room and tell your team's name
-Locate a person in the room and tell your team's name
-Look for a person in the room and tell your team's name
-Find someone in the room and tell your team's name
-Locate someone in the room and tell your team's name
-Look for someone in the room and tell your team's name
-Find name in the room and say your team's name
-Locate name in the room and say your team's name
-Look for name in the room and say your team's name
-Find a person in the room and say your team's name
-Locate a person in the room and say your team's name
-Look for a person in the room and say your team's name
-Find someone in the room and say your team's name
-Locate someone in the room and say your team's name
-Look for someone in the room and say your team's name
-Find name in the room and tell your team's country
-Locate name in the room and tell your team's country
-Look for name in the room and tell your team's country
-Find a person in the room and tell your team's country
-Locate a person in the room and tell your team's country
-Look for a person in the room and tell your team's country
-Find someone in the room and tell your team's country
-Locate someone in the room and tell your team's country
-Look for someone in the room and tell your team's country
-Find name in the room and say your team's country
-Locate name in the room and say your team's country
-Look for name in the room and say your team's country
-Find a person in the room and say your team's country
-Locate a person in the room and say your team's country
-Look for a person in the room and say your team's country
-Find someone in the room and say your team's country
-Locate someone in the room and say your team's country
-Look for someone in the room and say your team's country
-Find name in the room and tell your team's affiliation
-Locate name in the room and tell your team's affiliation
-Look for name in the room and tell your team's affiliation
-Find a person in the room and tell your team's affiliation
-Locate a person in the room and tell your team's affiliation
-Look for a person in the room and tell your team's affiliation
-Find someone in the room and tell your team's affiliation
-Locate someone in the room and tell your team's affiliation
-Look for someone in the room and tell your team's affiliation
-Find name in the room and say your team's affiliation
-Locate name in the room and say your team's affiliation
-Look for name in the room and say your team's affiliation
-Find a person in the room and say your team's affiliation
-Locate a person in the room and say your team's affiliation
-Look for a person in the room and say your team's affiliation
-Find someone in the room and say your team's affiliation
-Locate someone in the room and say your team's affiliation
-Look for someone in the room and say your team's affiliation
+Find name in the room and tell your team s name
+Locate name in the room and tell your team s name
+Look for name in the room and tell your team s name
+Find a person in the room and tell your team s name
+Locate a person in the room and tell your team s name
+Look for a person in the room and tell your team s name
+Find someone in the room and tell your team s name
+Locate someone in the room and tell your team s name
+Look for someone in the room and tell your team s name
+Find name in the room and say your team s name
+Locate name in the room and say your team s name
+Look for name in the room and say your team s name
+Find a person in the room and say your team s name
+Locate a person in the room and say your team s name
+Look for a person in the room and say your team s name
+Find someone in the room and say your team s name
+Locate someone in the room and say your team s name
+Look for someone in the room and say your team s name
+Find name in the room and tell your team s country
+Locate name in the room and tell your team s country
+Look for name in the room and tell your team s country
+Find a person in the room and tell your team s country
+Locate a person in the room and tell your team s country
+Look for a person in the room and tell your team s country
+Find someone in the room and tell your team s country
+Locate someone in the room and tell your team s country
+Look for someone in the room and tell your team s country
+Find name in the room and say your team s country
+Locate name in the room and say your team s country
+Look for name in the room and say your team s country
+Find a person in the room and say your team s country
+Locate a person in the room and say your team s country
+Look for a person in the room and say your team s country
+Find someone in the room and say your team s country
+Locate someone in the room and say your team s country
+Look for someone in the room and say your team s country
+Find name in the room and tell your team s affiliation
+Locate name in the room and tell your team s affiliation
+Look for name in the room and tell your team s affiliation
+Find a person in the room and tell your team s affiliation
+Locate a person in the room and tell your team s affiliation
+Look for a person in the room and tell your team s affiliation
+Find someone in the room and tell your team s affiliation
+Locate someone in the room and tell your team s affiliation
+Look for someone in the room and tell your team s affiliation
+Find name in the room and say your team s affiliation
+Locate name in the room and say your team s affiliation
+Look for name in the room and say your team s affiliation
+Find a person in the room and say your team s affiliation
+Locate a person in the room and say your team s affiliation
+Look for a person in the room and say your team s affiliation
+Find someone in the room and say your team s affiliation
+Locate someone in the room and say your team s affiliation
+Look for someone in the room and say your team s affiliation
 Find name in the room and tell the day of the week
 Locate name in the room and tell the day of the week
 Look for name in the room and tell the day of the week
@@ -480,114 +480,114 @@ Go to the room locate someone and say what day is tomorrow
 Navigate to the room locate someone and say what day is tomorrow
 Go to the room look for someone and say what day is tomorrow
 Navigate to the room look for someone and say what day is tomorrow
-Go to the room find name and tell your team's name
-Navigate to the room find name and tell your team's name
-Go to the room locate name and tell your team's name
-Navigate to the room locate name and tell your team's name
-Go to the room look for name and tell your team's name
-Navigate to the room look for name and tell your team's name
-Go to the room find a person and tell your team's name
-Navigate to the room find a person and tell your team's name
-Go to the room locate a person and tell your team's name
-Navigate to the room locate a person and tell your team's name
-Go to the room look for a person and tell your team's name
-Navigate to the room look for a person and tell your team's name
-Go to the room find someone and tell your team's name
-Navigate to the room find someone and tell your team's name
-Go to the room locate someone and tell your team's name
-Navigate to the room locate someone and tell your team's name
-Go to the room look for someone and tell your team's name
-Navigate to the room look for someone and tell your team's name
-Go to the room find name and say your team's name
-Navigate to the room find name and say your team's name
-Go to the room locate name and say your team's name
-Navigate to the room locate name and say your team's name
-Go to the room look for name and say your team's name
-Navigate to the room look for name and say your team's name
-Go to the room find a person and say your team's name
-Navigate to the room find a person and say your team's name
-Go to the room locate a person and say your team's name
-Navigate to the room locate a person and say your team's name
-Go to the room look for a person and say your team's name
-Navigate to the room look for a person and say your team's name
-Go to the room find someone and say your team's name
-Navigate to the room find someone and say your team's name
-Go to the room locate someone and say your team's name
-Navigate to the room locate someone and say your team's name
-Go to the room look for someone and say your team's name
-Navigate to the room look for someone and say your team's name
-Go to the room find name and tell your team's country
-Navigate to the room find name and tell your team's country
-Go to the room locate name and tell your team's country
-Navigate to the room locate name and tell your team's country
-Go to the room look for name and tell your team's country
-Navigate to the room look for name and tell your team's country
-Go to the room find a person and tell your team's country
-Navigate to the room find a person and tell your team's country
-Go to the room locate a person and tell your team's country
-Navigate to the room locate a person and tell your team's country
-Go to the room look for a person and tell your team's country
-Navigate to the room look for a person and tell your team's country
-Go to the room find someone and tell your team's country
-Navigate to the room find someone and tell your team's country
-Go to the room locate someone and tell your team's country
-Navigate to the room locate someone and tell your team's country
-Go to the room look for someone and tell your team's country
-Navigate to the room look for someone and tell your team's country
-Go to the room find name and say your team's country
-Navigate to the room find name and say your team's country
-Go to the room locate name and say your team's country
-Navigate to the room locate name and say your team's country
-Go to the room look for name and say your team's country
-Navigate to the room look for name and say your team's country
-Go to the room find a person and say your team's country
-Navigate to the room find a person and say your team's country
-Go to the room locate a person and say your team's country
-Navigate to the room locate a person and say your team's country
-Go to the room look for a person and say your team's country
-Navigate to the room look for a person and say your team's country
-Go to the room find someone and say your team's country
-Navigate to the room find someone and say your team's country
-Go to the room locate someone and say your team's country
-Navigate to the room locate someone and say your team's country
-Go to the room look for someone and say your team's country
-Navigate to the room look for someone and say your team's country
-Go to the room find name and tell your team's affiliation
-Navigate to the room find name and tell your team's affiliation
-Go to the room locate name and tell your team's affiliation
-Navigate to the room locate name and tell your team's affiliation
-Go to the room look for name and tell your team's affiliation
-Navigate to the room look for name and tell your team's affiliation
-Go to the room find a person and tell your team's affiliation
-Navigate to the room find a person and tell your team's affiliation
-Go to the room locate a person and tell your team's affiliation
-Navigate to the room locate a person and tell your team's affiliation
-Go to the room look for a person and tell your team's affiliation
-Navigate to the room look for a person and tell your team's affiliation
-Go to the room find someone and tell your team's affiliation
-Navigate to the room find someone and tell your team's affiliation
-Go to the room locate someone and tell your team's affiliation
-Navigate to the room locate someone and tell your team's affiliation
-Go to the room look for someone and tell your team's affiliation
-Navigate to the room look for someone and tell your team's affiliation
-Go to the room find name and say your team's affiliation
-Navigate to the room find name and say your team's affiliation
-Go to the room locate name and say your team's affiliation
-Navigate to the room locate name and say your team's affiliation
-Go to the room look for name and say your team's affiliation
-Navigate to the room look for name and say your team's affiliation
-Go to the room find a person and say your team's affiliation
-Navigate to the room find a person and say your team's affiliation
-Go to the room locate a person and say your team's affiliation
-Navigate to the room locate a person and say your team's affiliation
-Go to the room look for a person and say your team's affiliation
-Navigate to the room look for a person and say your team's affiliation
-Go to the room find someone and say your team's affiliation
-Navigate to the room find someone and say your team's affiliation
-Go to the room locate someone and say your team's affiliation
-Navigate to the room locate someone and say your team's affiliation
-Go to the room look for someone and say your team's affiliation
-Navigate to the room look for someone and say your team's affiliation
+Go to the room find name and tell your team s name
+Navigate to the room find name and tell your team s name
+Go to the room locate name and tell your team s name
+Navigate to the room locate name and tell your team s name
+Go to the room look for name and tell your team s name
+Navigate to the room look for name and tell your team s name
+Go to the room find a person and tell your team s name
+Navigate to the room find a person and tell your team s name
+Go to the room locate a person and tell your team s name
+Navigate to the room locate a person and tell your team s name
+Go to the room look for a person and tell your team s name
+Navigate to the room look for a person and tell your team s name
+Go to the room find someone and tell your team s name
+Navigate to the room find someone and tell your team s name
+Go to the room locate someone and tell your team s name
+Navigate to the room locate someone and tell your team s name
+Go to the room look for someone and tell your team s name
+Navigate to the room look for someone and tell your team s name
+Go to the room find name and say your team s name
+Navigate to the room find name and say your team s name
+Go to the room locate name and say your team s name
+Navigate to the room locate name and say your team s name
+Go to the room look for name and say your team s name
+Navigate to the room look for name and say your team s name
+Go to the room find a person and say your team s name
+Navigate to the room find a person and say your team s name
+Go to the room locate a person and say your team s name
+Navigate to the room locate a person and say your team s name
+Go to the room look for a person and say your team s name
+Navigate to the room look for a person and say your team s name
+Go to the room find someone and say your team s name
+Navigate to the room find someone and say your team s name
+Go to the room locate someone and say your team s name
+Navigate to the room locate someone and say your team s name
+Go to the room look for someone and say your team s name
+Navigate to the room look for someone and say your team s name
+Go to the room find name and tell your team s country
+Navigate to the room find name and tell your team s country
+Go to the room locate name and tell your team s country
+Navigate to the room locate name and tell your team s country
+Go to the room look for name and tell your team s country
+Navigate to the room look for name and tell your team s country
+Go to the room find a person and tell your team s country
+Navigate to the room find a person and tell your team s country
+Go to the room locate a person and tell your team s country
+Navigate to the room locate a person and tell your team s country
+Go to the room look for a person and tell your team s country
+Navigate to the room look for a person and tell your team s country
+Go to the room find someone and tell your team s country
+Navigate to the room find someone and tell your team s country
+Go to the room locate someone and tell your team s country
+Navigate to the room locate someone and tell your team s country
+Go to the room look for someone and tell your team s country
+Navigate to the room look for someone and tell your team s country
+Go to the room find name and say your team s country
+Navigate to the room find name and say your team s country
+Go to the room locate name and say your team s country
+Navigate to the room locate name and say your team s country
+Go to the room look for name and say your team s country
+Navigate to the room look for name and say your team s country
+Go to the room find a person and say your team s country
+Navigate to the room find a person and say your team s country
+Go to the room locate a person and say your team s country
+Navigate to the room locate a person and say your team s country
+Go to the room look for a person and say your team s country
+Navigate to the room look for a person and say your team s country
+Go to the room find someone and say your team s country
+Navigate to the room find someone and say your team s country
+Go to the room locate someone and say your team s country
+Navigate to the room locate someone and say your team s country
+Go to the room look for someone and say your team s country
+Navigate to the room look for someone and say your team s country
+Go to the room find name and tell your team s affiliation
+Navigate to the room find name and tell your team s affiliation
+Go to the room locate name and tell your team s affiliation
+Navigate to the room locate name and tell your team s affiliation
+Go to the room look for name and tell your team s affiliation
+Navigate to the room look for name and tell your team s affiliation
+Go to the room find a person and tell your team s affiliation
+Navigate to the room find a person and tell your team s affiliation
+Go to the room locate a person and tell your team s affiliation
+Navigate to the room locate a person and tell your team s affiliation
+Go to the room look for a person and tell your team s affiliation
+Navigate to the room look for a person and tell your team s affiliation
+Go to the room find someone and tell your team s affiliation
+Navigate to the room find someone and tell your team s affiliation
+Go to the room locate someone and tell your team s affiliation
+Navigate to the room locate someone and tell your team s affiliation
+Go to the room look for someone and tell your team s affiliation
+Navigate to the room look for someone and tell your team s affiliation
+Go to the room find name and say your team s affiliation
+Navigate to the room find name and say your team s affiliation
+Go to the room locate name and say your team s affiliation
+Navigate to the room locate name and say your team s affiliation
+Go to the room look for name and say your team s affiliation
+Navigate to the room look for name and say your team s affiliation
+Go to the room find a person and say your team s affiliation
+Navigate to the room find a person and say your team s affiliation
+Go to the room locate a person and say your team s affiliation
+Navigate to the room locate a person and say your team s affiliation
+Go to the room look for a person and say your team s affiliation
+Navigate to the room look for a person and say your team s affiliation
+Go to the room find someone and say your team s affiliation
+Navigate to the room find someone and say your team s affiliation
+Go to the room locate someone and say your team s affiliation
+Navigate to the room locate someone and say your team s affiliation
+Go to the room look for someone and say your team s affiliation
+Navigate to the room look for someone and say your team s affiliation
 Go to the room find name and tell the day of the week
 Navigate to the room find name and tell the day of the week
 Go to the room locate name and tell the day of the week
@@ -702,6 +702,6 @@ Tell me how many kobject there are on the placement
 Find the kobject in the room
 Locate the kobject in the room
 Look for the kobject in the room
-Find the kobject? in the room
-Locate the kobject? in the room
-Look for the kobject? in the room
+Find the kobject  in the room
+Locate the kobject  in the room
+Look for the kobject  in the room

@@ -50,7 +50,7 @@ class SpeechRecognition(object):
 
         self.nuance_asr = session.service("ALSpeechRecognition")
 
-        if USE_GOOGLE:
+        if self.USE_GOOGLE:
             self.audio_recorder = session.service("ALAudioRecorder")
 
             self.google_asr = GoogleClient(google_language, google_keys)
@@ -90,7 +90,7 @@ class SpeechRecognition(object):
 
         #print "[" + self.__class__.__name__ + "] ASR disabled"
 
-        if USE_GOOGLE:
+        if self.USE_GOOGLE:
             if self.logging:
                 self.AUDIO_FILE_DIR = expanduser('~') + '/bags/asr_logs/'
             else:
@@ -106,7 +106,7 @@ class SpeechRecognition(object):
         #self.broker.shutdown()
 
     def stop(self):
-        if USE_GOOGLE:
+        if self.USE_GOOGLE:
             self.audio_recorder.stopMicrophonesRecording()
         self.is_enabled = False
         self.__shutdown_requested = True
@@ -125,14 +125,14 @@ class SpeechRecognition(object):
 
     def word_recognized_callback(self, msg):
         print "word recognized"
-        if USE_GOOGLE:
+        if self.USE_GOOGLE:
             self.audio_recorder.stopMicrophonesRecording()
             self.nuance_asr.pause(True)
             print "pause"
         if self.busy:
             return
         self.busy = True
-        if USE_GOOGLE:
+        if self.USE_GOOGLE:
             """
             Convert Wave file into Flac file
             """
@@ -154,7 +154,7 @@ class SpeechRecognition(object):
             print "[" + self.__class__.__name__ + "] " + str(results)
             self.memory.raiseEvent("LocalVordRecognized", results)
 
-        if USE_GOOGLE:
+        if self.USE_GOOGLE:
             self.nuance_asr.pause(False)
             print "un-pause"
             self.audio_recorder.stopMicrophonesRecording()
@@ -166,12 +166,12 @@ class SpeechRecognition(object):
         try:
             if self.is_enabled:
                 if msg == 0:
-                    if USE_GOOGLE:
+                    if self.USE_GOOGLE:
                         self.audio_recorder.stopMicrophonesRecording()
                     self.nuance_asr.pause(True)
                     print "pause"
                 else:
-                    if USE_GOOGLE:
+                    if self.USE_GOOGLE:
                         self.audio_recorder.stopMicrophonesRecording()
                         self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
                         self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
@@ -184,7 +184,7 @@ class SpeechRecognition(object):
         if msg == "0":
             if self.is_enabled:
                 self.is_enabled = False
-                if USE_GOOGLE:
+                if self.USE_GOOGLE:
                     self.audio_recorder.stopMicrophonesRecording()
                 if self.wr_sub_id is not None:
                     self.wr_sub_id.disconnect()
@@ -193,7 +193,7 @@ class SpeechRecognition(object):
                 print "[" + self.__class__.__name__ + "] ASR already disabled"
         else:
             if not self.is_enabled:
-                if USE_GOOGLE:
+                if self.USE_GOOGLE:
                     #try:
                     #    self.AUDIO_FILE_DIR = self.memory_proxy.getData("NAOqibag/CurrentLogFolder") + "/asr_logs/"
                     #except:
@@ -203,7 +203,7 @@ class SpeechRecognition(object):
                     self.AUDIO_FILE_PATH = self.AUDIO_FILE_DIR + 'SPQReL_mic_'
                 self.is_enabled = True
 
-                if USE_GOOGLE:
+                if self.USE_GOOGLE:
                     self.audio_recorder.stopMicrophonesRecording()
                     self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
                     self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
@@ -219,7 +219,7 @@ class SpeechRecognition(object):
     def reset(self):
         if self.is_enabled:
             print "[" + self.__class__.__name__ + "] Reset recording.."
-            if USE_GOOGLE:
+            if self.USE_GOOGLE:
                 self.audio_recorder.stopMicrophonesRecording()
                 try:
                     os.remove(self.AUDIO_FILE + ".wav")
@@ -240,7 +240,7 @@ class SpeechRecognition(object):
 
     def signal_handler(self, signal, frame):
         print "[" + self.__class__.__name__ + "] Caught Ctrl+C, stopping."
-        if USE_GOOGLE:
+        if self.USE_GOOGLE:
             self.audio_recorder.stopMicrophonesRecording()
         self.__shutdown_requested = True
         print "[" + self.__class__.__name__ + "] Good-bye"

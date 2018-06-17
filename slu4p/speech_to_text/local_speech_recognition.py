@@ -69,15 +69,18 @@ class SpeechRecognition(object):
         )
 
     def start(self):
-        self.td_sub = self.memory.subscriber(SpeechRecognition.TD_EVENT)
+        self.td_sub = self.memory.subscriber(self.TD_EVENT)
         self.td_sub_id = self.td_sub.signal.connect(self.text_done_callback)
 
 
-        self.enable_sub = self.memory.subscriber(SpeechRecognition.ASR_ENABLE)
+        self.enable_sub = self.memory.subscriber(self.ASR_ENABLE)
         self.enable_sub_id = self.enable_sub.signal.connect(self.enable_callback)
 
-        self.wr_sub = self.memory.subscriber(SpeechRecognition.WR_EVENT)
+        self.wr_sub = self.memory.subscriber(self.WR_EVENT)
         self.wr_sub_id = self.wr_sub.signal.connect(self.word_recognized_callback)
+
+        self.sd_sub = self.memory.subscriber(self.SD_EVENT)
+        self.sd_sub_id = self.sd_sub.signal.connect(self.speech_detected_callback)
         #self.wr_sub_id = None
         time.sleep(3)
 
@@ -106,6 +109,13 @@ class SpeechRecognition(object):
         #self.unsubscribe(SpeechRecognition.TD_EVENT)
         #self.unsubscribe(SpeechRecognition.ASR_ENABLE)
         #self.broker.shutdown()
+
+    def quit(self):
+        self.td_sub.signal.disconnect(self.td_sub_id)
+        self.enable_sub.signal.disconnect(self.enable_sub_id)
+        self.wd_sub.signal.disconnect(self.wd_sub_id)
+        self.sd_sub.signal.disconnect(self.sd_sub_id)
+        print "DISCONNECTED"
 
     def stop(self):
         if self.USE_GOOGLE:

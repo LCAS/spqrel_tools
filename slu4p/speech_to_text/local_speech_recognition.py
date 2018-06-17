@@ -10,6 +10,7 @@ from os.path import expanduser
 class SpeechRecognition(object):
     WR_EVENT = "WordRecognized"
     TD_EVENT = "ALTextToSpeech/TextDone"
+    SD_EVENT = "SpeechDetected"
     ASR_ENABLE = "ASR_enable"
     FLAC_COMM = 'flac -f '
     CHANNELS = [0, 0, 1, 0]
@@ -19,7 +20,7 @@ class SpeechRecognition(object):
 
     USE_GOOGLE = False
 
-    def __init__(self, language, sensitivity, word_spotting, audio, visual, vocabulary_file, google_keys, asr_logging, app):
+    def __init__(self, language, sensitivity, word_spotting, num_hypo, audio, visual, vocabulary_file, google_keys, asr_logging, app):
         super(self.__class__, self).__init__()
 
         app.start()
@@ -62,20 +63,24 @@ class SpeechRecognition(object):
             vocabulary=vocabulary,
             nuance_language=nuance_language,
             word_spotting=word_spotting,
+            num_hypo=num_hypo,
             audio=audio,
             visual=visual
         )
 
     def start(self):
-        self.td_sub = self.memory.subscriber(SpeechRecognition.TD_EVENT)
+        self.td_sub = self.memory.subscriber(self.TD_EVENT)
         self.td_sub_id = self.td_sub.signal.connect(self.text_done_callback)
 
 
-        self.enable_sub = self.memory.subscriber(SpeechRecognition.ASR_ENABLE)
+        self.enable_sub = self.memory.subscriber(self.ASR_ENABLE)
         self.enable_sub_id = self.enable_sub.signal.connect(self.enable_callback)
 
-        self.wr_sub = self.memory.subscriber(SpeechRecognition.WR_EVENT)
+        self.wr_sub = self.memory.subscriber(self.WR_EVENT)
         self.wr_sub_id = self.wr_sub.signal.connect(self.word_recognized_callback)
+
+        self.sd_sub = self.memory.subscriber(self.SD_EVENT)
+        self.sd_sub_id = self.sd_sub.signal.connect(self.speech_detected_callback)
         #self.wr_sub_id = None
         time.sleep(3)
 
@@ -86,7 +91,7 @@ class SpeechRecognition(object):
         print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             SpeechRecognition.ASR_ENABLE)
 
-        #self.is_enabled = False
+        self.is_enabled = True
 
         #print "[" + self.__class__.__name__ + "] ASR disabled"
 
@@ -105,6 +110,13 @@ class SpeechRecognition(object):
         #self.unsubscribe(SpeechRecognition.ASR_ENABLE)
         #self.broker.shutdown()
 
+    def quit(self):
+        self.td_sub.signal.disconnect(self.td_sub_id)
+        self.enable_sub.signal.disconnect(self.enable_sub_id)
+        self.wd_sub.signal.disconnect(self.wd_sub_id)
+        self.sd_sub.signal.disconnect(self.sd_sub_id)
+        print "DISCONNECTED"
+
     def stop(self):
         if self.USE_GOOGLE:
             self.audio_recorder.stopMicrophonesRecording()
@@ -112,16 +124,58 @@ class SpeechRecognition(object):
         self.__shutdown_requested = True
         print '[' + self.__class__.__name__ + '] Good-bye'
 
-    def configure(self, sensitivity, word_spotting, nuance_language, audio, visual, vocabulary):
+    def configure(self, sensitivity, word_spotting, num_hypo, nuance_language, audio, visual, vocabulary):
         self.nuance_asr.pause(True)
         print "pause"
         self.nuance_asr.setParameter("Sensitivity", sensitivity)
+        self.nuance_asr.setParameter("NbHypotheses", num_hypo)
         self.nuance_asr.setVocabulary(vocabulary, word_spotting)
         self.nuance_asr.setLanguage(nuance_language)
         self.nuance_asr.setAudioExpression(audio)
         self.nuance_asr.setVisualExpression(visual)
         self.nuance_asr.pause(False)
         print "un-pause"
+
+    def collect_google_asr(self):
+        res = []
+        """
+        Convert Wave file into Flac file
+        """
+        if os.path.exists(self.AUDIO_FILE + '.wav'):
+            if os.path.getsize(self.AUDIO_FILE + '.wav') > 0:
+                os.system(self.FLAC_COMM + self.AUDIO_FILE + '.wav')
+                f = open(self.AUDIO_FILE + '.flac', 'rb')
+                flac_cont = f.read()
+                f.close()
+                res = [r.encode('ascii', 'ignore').lower() for r in self.google_asr.recognize_data(flac_cont)]
+        return res
+
+    def speech_detected_callback(self, msg):
+        print "speech detected"
+        if self.USE_GOOGLE:
+            self.audio_recorder.stopMicrophonesRecording()
+            self.nuance_asr.pause(True)
+            print "pause"
+        if self.busy:
+            return
+        self.busy = True
+        results = {'GoogleASR': [], 'NuanceASR': []}
+        if self.USE_GOOGLE:
+            google_asr = self.collect_google_asr()
+
+            results['GoogleASR'] = google_asr
+
+        print "[" + self.__class__.__name__ + "] " + str(results)
+        self.memory.raiseEvent("LocalVordRecognized", results)
+        self.timeout = 0
+
+        if self.USE_GOOGLE:
+            self.nuance_asr.pause(False)
+            print "un-pause"
+            self.audio_recorder.stopMicrophonesRecording()
+            self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
+            self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+        self.busy = False
 
     def word_recognized_callback(self, msg):
         print "word recognized"
@@ -132,27 +186,16 @@ class SpeechRecognition(object):
         if self.busy:
             return
         self.busy = True
+        results = {'GoogleASR': [], 'NuanceASR': []}
         if self.USE_GOOGLE:
-            """
-            Convert Wave file into Flac file
-            """
-            if os.path.exists(self.AUDIO_FILE + '.wav'):
-                if os.path.getsize(self.AUDIO_FILE + '.wav') > 0:
-                    os.system(self.FLAC_COMM + self.AUDIO_FILE + '.wav')
-                    f = open(self.AUDIO_FILE + '.flac', 'rb')
-                    flac_cont = f.read()
-                    f.close()
-                    results = {}
-                    results['GoogleASR'] = [r.encode('ascii', 'ignore').lower() for r in self.google_asr.recognize_data(flac_cont)]
-                    results['NuanceASR'] = [msg[0].lower()]
-                    print "[" + self.__class__.__name__ + "] " + str(results)
-                    self.memory.raiseEvent("LocalVordRecognized", results)
-            self.timeout = 0
-        else:
-            results = {}
-            results['NuanceASR'] = [msg[0].lower()]
-            print "[" + self.__class__.__name__ + "] " + str(results)
-            self.memory.raiseEvent("LocalVordRecognized", results)
+            google_asr = self.collect_google_asr()
+
+            results['GoogleASR'] = google_asr
+
+        results['NuanceASR'] = [msg[0].lower()]
+        print "[" + self.__class__.__name__ + "] " + str(results)
+        self.memory.raiseEvent("LocalVordRecognized", results)
+        self.timeout = 0
 
         if self.USE_GOOGLE:
             self.nuance_asr.pause(False)
@@ -257,11 +300,13 @@ def main():
                         help="Use one of the supported languages (only English at the moment)")
     parser.add_argument("-s", "--sensitivity", type=float, default=0.8,
                         help="Sets the sensitivity of the speech recognizer")
-    parser.add_argument("--word-spotting", action="store_true",
+    parser.add_argument("--word-spotting", type=bool, default=True,
                         help="Run in word spotting mode")
-    parser.add_argument("--no-audio", action="store_true",
+    parser.add_argument("--num-hypotesys", type=int, default=10,
+                        help="Number of hypotesys returned by nuance")
+    parser.add_argument("--no-audio", type=bool, default=False,
                         help="Turn off bip sound when recognition starts")
-    parser.add_argument("--no-visual", action="store_true",
+    parser.add_argument("--no-visual", type=bool, default=False,
                         help="Turn off blinking eyes when recognition starts")
     parser.add_argument("-v", "--vocabulary", type=str, default="resources/nuance_grammar.txt",
                         help="A txt file containing the list of sentences composing the vocabulary")
@@ -285,6 +330,7 @@ def main():
         language=args.lang,
         sensitivity=args.sensitivity,
         word_spotting=args.word_spotting,
+        num_hypo=args.num_hypotesys,
         audio=not args.no_audio,
         visual=not args.no_visual,
         vocabulary_file=args.vocabulary,

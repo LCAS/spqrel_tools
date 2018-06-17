@@ -2,29 +2,33 @@
 import qi
 import argparse
 import sys
+from os.path import expanduser
 import os
-
-USE_GOOGLE = False
+import time
 
 
 
 class SpeechRecognition(object):
-
+    USE_GOOGLE = True
+    CHANNELS = [1, 1, 1, 1]
     audio_recorder = None
 
     def __init__(self, vocab, app):
         super(SpeechRecognition, self).__init__()
 
         app.start()
-        session = app.session
+        self.session = app.session
+
+        self.__shutdown_requested = False
+        signal.signal(signal.SIGINT, self.signal_handler)
 
         #Starting services
-        self.asr_service = session.service("ALSpeechRecognition")
+        self.asr_service = self.session.service("ALSpeechRecognition")
         self.asr_service.setLanguage("English")
 
-        self.audio_recorder = session.service("ALAudioRecorder")
+        self.audio_recorder = self.session.service("ALAudioRecorder")
 
-        self.memory_service  = session.service("ALMemory")
+        self.memory_service  = self.session.service("ALMemory")
 
         #establishing test vocabulary
         #vocabulary = ["yes", "no", "please", "hello", "goodbye", "hi, there", "go to the kitchen"]
@@ -38,19 +42,20 @@ class SpeechRecognition(object):
         self.asr_service.removeAllContext()
         try:
             self.asr_service.setVocabulary(vocabulary, True)
-            self.asr_service.setParameter("Sensitivity", 0.1)
+            #self.asr_service.setParameter("Sensitivity", 0.1)
             self.asr_service.setParameter("NbHypotheses", 3)
         except:
             print "error setting vocabulary"
         self.asr_service.pause(False)
 
+    def start(self):
         # Start the speech recognition engine with user Test_ASR
         self.asr_service.subscribe("Test_ASR")
         print 'Speech recognition engine started'
 
         #subscribe to event WordRecognized
         self.subWordRecognized = self.memory_service.subscriber("WordRecognized")
-        idSubWordRecognized = self.subWordRecognized.signal.connect(self.onWordRecognized)
+        self.idSubWordRecognized = self.subWordRecognized.signal.connect(self.onWordRecognized)
 
         # speech detected
         self.subSpeechDet = self.memory_service.subscriber("SpeechDetected")
@@ -60,39 +65,56 @@ class SpeechRecognition(object):
         self.subEnable = self.memory_service.subscriber("ASR_enable")
         self.idSubEnable = self.subEnable.signal.connect(self.onEnable)
 
-
         #subscribe to google asr transcription
-        if USE_GOOGLE:
-            self.googleAsrRecognized = self.memory_service.subscriber("GoogleAsrRecognized")
-            self.idGoogleAsrRecognized = self.googleAsrRecognized.signal.connect(self.onGoogleASR)
+        #if self.USE_GOOGLE:
+            #self.audio_recorder.stopMicrophonesRecording()
+            #self.googleAsrRecognized = self.memory_service.subscriber("GoogleAsrRecognized")
+            #self.idGoogleAsrRecognized = self.googleAsrRecognized.signal.connect(self.onGoogleASR)
 
-            self.audio_recorder.startMicrophonesRecording("utterance" + ".wav", "wav", 44100, [1, 1, 1, 1])
-            print 'Audio recorder engine started'
+            #self.audio_recorder.startMicrophonesRecording("utterance" + ".wav", "wav", 44100, [1, 1, 1, 1])
+            #print 'Audio recorder engine started'
 
+        self.is_enabled = False
 
     def quit(self):
         #Disconnecting callbacks and subscribers
         self.asr_service.unsubscribe("Test_ASR")
-        self.subWordRecognized.signal.disconnect(self.idSubWordRecognized)
-        self.subSpeechDet.signal.disconnect(self.idSubSpeechDet)
-        if USE_GOOGLE:
-            self.googleAsrRecognized.signal.disconnect(self.idGoogleAsrRecognized)
+        if self.idSubWordRecognized is not None:
+            self.subWordRecognized.signal.disconnect(self.idSubWordRecognized)
+        if self.idSubSpeechDet is not None:
+            self.subSpeechDet.signal.disconnect(self.idSubSpeechDet)
+        if self.idSubEnable is not None:
+            self.subEnable.signal.disconnect(self.idSubEnable)
+        #if self.USE_GOOGLE:
+        #    self.googleAsrRecognized.signal.disconnect(self.idGoogleAsrRecognized)
+
+    def signal_handler(self, signal, frame):
+        print "[" + self.__class__.__name__ + "] Caught Ctrl+C, stopping."
+        self.__shutdown_requested = True
+        print "[" + self.__class__.__name__ + "] Good-bye"
 
     def onSpeechDetected(self, value):
         print "speechdetected=", value
         self.audio_recorder.stopMicrophonesRecording()
         print "Audio recorder stopped recording"
 
+        if self.USE_GOOGLE:
+            self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
+
+
     def onWordRecognized(self, value):
         print "value=",value
         self.audio_recorder.stopMicrophonesRecording()
         print "Audio recorder stopped recording"
 
-    def onGoogleASR(self, value):
-        print "googleasr=", value
+        if self.USE_GOOGLE:
+            self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
+
+    #def onGoogleASR(self, value):
+    #    print "googleasr=", value
 
     def onEnable(self, value):
-        print "enable=", values
+        print "enable=", value
         if value == "0":
             if self.is_enabled:
                 self.is_enabled = False
@@ -115,12 +137,14 @@ class SpeechRecognition(object):
                     if not os.path.exists(self.AUDIO_FILE_DIR):
                         os.makedirs(self.AUDIO_FILE_DIR)
                     self.AUDIO_FILE_PATH = self.AUDIO_FILE_DIR + 'SPQReL_mic_'
-                self.is_enabled = True
 
-                if self.USE_GOOGLE:
                     self.audio_recorder.stopMicrophonesRecording()
                     self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
                     self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+
+                self.is_enabled = True
+                self.idSubWordRecognized = self.subWordRecognized.signal.connect(self.onWordRecognized)
+                self.idSubSpeechDet = self.subSpeechDet.signal.connect(self.onSpeechDetected)
 
                 # TODO move it here!!
                 #self.subscribe(
@@ -130,6 +154,11 @@ class SpeechRecognition(object):
                 print "ASR enabled"
             else:
                 print "ASR already enabled"
+
+    def run(self):
+        while (True):
+            time.sleep(0.1)
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -159,10 +188,12 @@ def main():
         app=app
     )
 
+    sr.start()
 
     #let it run
-    app.run()
+    sr.run()
 
+    sr.quit()
 
 if __name__ == "__main__":
     main()

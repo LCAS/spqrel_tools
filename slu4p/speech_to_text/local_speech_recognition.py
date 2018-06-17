@@ -1,13 +1,12 @@
 import argparse
 import signal
 import os
-from naoqi import ALProxy, ALBroker, ALModule
 from google_client import *
 from event_abstract import *
 from os.path import expanduser
 
 
-class SpeechRecognition(EventAbstractClass):
+class SpeechRecognition(object):
     WR_EVENT = "WordRecognized"
     TD_EVENT = "ALTextToSpeech/TextDone"
     ASR_ENABLE = "ASR_enable"
@@ -17,8 +16,11 @@ class SpeechRecognition(EventAbstractClass):
 
     busy = False
 
-    def __init__(self, ip, port, language, sensitivity, word_spotting, audio, visual, vocabulary_file, google_keys, asr_logging):
-        super(self.__class__, self).__init__(self, ip, port)
+    def __init__(self, ip, port, language, sensitivity, word_spotting, audio, visual, vocabulary_file, google_keys, asr_logging, app):
+        super(self.__class__, self).__init__()
+
+        app.start()
+        session = app.session
 
         self.__shutdown_requested = False
         signal.signal(signal.SIGINT, self.signal_handler)
@@ -30,7 +32,7 @@ class SpeechRecognition(EventAbstractClass):
 
         self.logging = asr_logging
 
-        dialogP = ALProxy("ALDialog")
+        dialogP = session.service("ALDialog")
         try:
             print dialogP.getAllLoadedTopics()
             print dialogP.getActivatedTopics()
@@ -43,15 +45,15 @@ class SpeechRecognition(EventAbstractClass):
                 print "Error while  resetAll"
         # or change language and put it back
 
-        self.nuance_asr = ALProxy("ALSpeechRecognition")
+        self.nuance_asr = session.service("ALSpeechRecognition")
 
 
 
-        self.audio_recorder = ALProxy("ALAudioRecorder")
+        self.audio_recorder = session.service("ALAudioRecorder")
 
         self.google_asr = GoogleClient(google_language, google_keys)
 
-        self.memory_proxy = ALProxy("ALMemory")
+        self.memory_proxy = session.service("ALMemory")
 
         self.configure(
             sensitivity=sensitivity,
@@ -63,26 +65,26 @@ class SpeechRecognition(EventAbstractClass):
         )
 
     def start(self, *args, **kwargs):
-        self.subscribe(
-            event=SpeechRecognition.TD_EVENT,
-            callback=self.text_done_callback
-        )
+        self.td_sub = self.memory.subscriber(SpeechRecognition.TD_EVENT)
+        self.td_sub_id = self.td_sub.signal.connect(self.text_done_callback)
 
-        self.subscribe(
-            event=SpeechRecognition.ASR_ENABLE,
-            callback=self.enable_callback
-        )
 
-        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
+        self.enable_sub = self.memory.subscriber(SpeechRecognition.ASR_ENABLE)
+        self.enable_sub_id = self.enable_sub.signal.connect(self.enable_callback)
+
+        self.wr_sub = self.memory.subscriber(SpeechRecognition.WR_EVENT)
+        self.wr_sub_id = None
+
+        print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             SpeechRecognition.WR_EVENT)
-        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
+        print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             SpeechRecognition.TD_EVENT)
-        print "[" + self.inst.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
+        print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             SpeechRecognition.ASR_ENABLE)
 
         self.is_enabled = False
 
-        print "[" + self.inst.__class__.__name__ + "] ASR disabled"
+        print "[" + self.__class__.__name__ + "] ASR disabled"
 
         if self.logging:
             self.AUDIO_FILE_DIR = expanduser('~') + '/bags/asr_logs/'
@@ -92,19 +94,17 @@ class SpeechRecognition(EventAbstractClass):
             os.makedirs(self.AUDIO_FILE_DIR)
         self.AUDIO_FILE_PATH = self.AUDIO_FILE_DIR + 'SPQReL_mic_'
 
-        self._spin()
-
-        if self.is_enabled:
-            self.unsubscribe(SpeechRecognition.WR_EVENT)
-        self.unsubscribe(SpeechRecognition.TD_EVENT)
-        self.unsubscribe(SpeechRecognition.ASR_ENABLE)
-        self.broker.shutdown()
+        #if self.is_enabled:
+        #    self.unsubscribe(SpeechRecognition.WR_EVENT)
+        #self.unsubscribe(SpeechRecognition.TD_EVENT)
+        #self.unsubscribe(SpeechRecognition.ASR_ENABLE)
+        #self.broker.shutdown()
 
     def stop(self):
         self.audio_recorder.stopMicrophonesRecording()
         self.is_enabled = False
         self.__shutdown_requested = True
-        print '[' + self.inst.__class__.__name__ + '] Good-bye'
+        print '[' + self.__class__.__name__ + '] Good-bye'
 
     def configure(self, sensitivity, word_spotting, nuance_language, audio, visual, vocabulary):
         self.nuance_asr.pause(True)
@@ -136,7 +136,7 @@ class SpeechRecognition(EventAbstractClass):
                 results = {}
                 results['GoogleASR'] = [r.encode('ascii', 'ignore').lower() for r in self.google_asr.recognize_data(flac_cont)]
                 results['NuanceASR'] = [args[1][0].lower()]
-                print "[" + self.inst.__class__.__name__ + "] " + str(results)
+                print "[" + self.__class__.__name__ + "] " + str(results)
                 self.memory.raiseEvent("LocalVordRecognized", results)
         self.timeout = 0
         #self.nuance_asr.pause(False)
@@ -167,10 +167,11 @@ class SpeechRecognition(EventAbstractClass):
             if self.is_enabled:
                 self.is_enabled = False
                 self.audio_recorder.stopMicrophonesRecording()
-                self.unsubscribe(SpeechRecognition.WR_EVENT)
-                print "[" + self.inst.__class__.__name__ + "] ASR disabled"
+                if self.wr_sub_id is not None:
+                    self.wr_sub_id.disconnect()
+                print "[" + self.__class__.__name__ + "] ASR disabled"
             else:
-                print "[" + self.inst.__class__.__name__ + "] ASR already disabled"
+                print "[" + self.__class__.__name__ + "] ASR already disabled"
         else:
             if not self.is_enabled:
                 #try:
@@ -184,17 +185,19 @@ class SpeechRecognition(EventAbstractClass):
                 self.audio_recorder.stopMicrophonesRecording()
                 self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
                 self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
-                self.subscribe(
-                    event=SpeechRecognition.WR_EVENT,
-                    callback=self.word_recognized_callback
-                )
-                print "[" + self.inst.__class__.__name__ + "] ASR enabled"
+
+                self.wr_sub_id = self.wr_sub.signal.connect(self.word_recognized_callback)
+                #self.subscribe(
+                #    event=SpeechRecognition.WR_EVENT,
+                #    callback=self.word_recognized_callback
+                #)
+                print "[" + self.__class__.__name__ + "] ASR enabled"
             else:
-                print "[" + self.inst.__class__.__name__ + "] ASR already enabled"
+                print "[" + self.__class__.__name__ + "] ASR already enabled"
 
     def reset(self):
         if self.is_enabled:
-            print "[" + self.inst.__class__.__name__ + "] Reset recording.."
+            print "[" + self.__class__.__name__ + "] Reset recording.."
             self.audio_recorder.stopMicrophonesRecording()
             try:
                 os.remove(self.AUDIO_FILE + ".wav")
@@ -214,10 +217,10 @@ class SpeechRecognition(EventAbstractClass):
                 self.reset()
 
     def signal_handler(self, signal, frame):
-        print "[" + self.inst.__class__.__name__ + "] Caught Ctrl+C, stopping."
+        print "[" + self.__class__.__name__ + "] Caught Ctrl+C, stopping."
         self.audio_recorder.stopMicrophonesRecording()
         self.__shutdown_requested = True
-        print "[" + self.inst.__class__.__name__ + "] Good-bye"
+        print "[" + self.__class__.__name__ + "] Good-bye"
 
 
 def main():
@@ -245,9 +248,17 @@ def main():
                         help="Logs the audio files")
     args = parser.parse_args()
 
+    try:
+        # Initialize qi framework.
+        connection_url = "tcp://" + args.pip + ":" + str(args.pport)
+        app = qi.Application(["local_speech_recognition", "--qi-url=" + connection_url], autoExit=False)
+    except RuntimeError:
+        print ("Can't connect to Naoqi at ip \"" + args.ip + "\" on port " + str(args.port) +".\n"
+               "Please check your script arguments. Run with -h option for help.")
+        sys.exit(1)
+
+
     sr = SpeechRecognition(
-        ip=args.pip,
-        port=args.pport,
         language=args.lang,
         sensitivity=args.sensitivity,
         word_spotting=args.word_spotting,
@@ -255,10 +266,15 @@ def main():
         visual=not args.no_visual,
         vocabulary_file=args.vocabulary,
         google_keys=args.keys,
-        asr_logging=args.asr_logging
+        asr_logging=args.asr_logging,
+        app=app
     )
-    sr.update_globals(globals())
+
     sr.start()
+
+    app.run()
+
+    sr.quit()
 
 
 if __name__ == "__main__":

@@ -65,6 +65,7 @@ def main():
     asr_service.removeAllContext()
     try:
         asr_service.setVocabulary(vocabulary, False)
+        asr_service.setParameter("Sensitivity", 0.1)
     except:
         print "error setting vocabulary"
     asr_service.pause(False)

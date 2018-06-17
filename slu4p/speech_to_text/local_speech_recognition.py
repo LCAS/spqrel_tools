@@ -54,7 +54,7 @@ class SpeechRecognition(object):
 
         self.google_asr = GoogleClient(google_language, google_keys)
 
-        self.memory_proxy = session.service("ALMemory")
+        self.memory = session.service("ALMemory")
 
         self.configure(
             sensitivity=sensitivity,

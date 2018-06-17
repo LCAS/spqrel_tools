@@ -118,7 +118,7 @@ def rhMonitorThread (memory_service):
 
         set_condition(memory_service,'wavingdetected',v)
         
-        time.sleep(0.5)
+        time.sleep(1)
 
     print "personhere thread quit"
 

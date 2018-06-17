@@ -16,6 +16,8 @@ p.begin()
 p.exec_action('taskstep', 'waiting')
 p.exec_action('modiminit', 'rips')
 p.exec_action('interact', 'ready')
+p.set_condition('dooropen', 'false')
+
 while (not p.get_condition('dooropen')):
     time.sleep(1)
 
@@ -26,7 +28,7 @@ p.exec_action('enter', '30_0_0_4_true')
 
 p.exec_action('taskstep', 'going_to_inspection_point')
 p.exec_action(
-    'navigateto', 'wp5',
+    'navigateto', 'wp8',
     interrupt='obstaclehere',
     recovery='say_hello; waitfor_not_obstaclehere; restart_action')
 

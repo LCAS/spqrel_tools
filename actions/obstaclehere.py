@@ -122,7 +122,8 @@ def rhMonitorThread (memory_service):
         laserValues =  memory_service.getListData(laserValueList)
 #       print "Laser center: ", laserValues[42],laserValues[44],laserValues[46] # X values of central beams
         # TODO
-        if (laserValues[42]>2 and laserValues[44]>2 and laserValues[46]>2):
+        #if (laserValues[42]>2 and laserValues[44]>2 and laserValues[46]>2):
+        if (sonarValues[0] > 0.7):
             v = 'false'
         else:
             v = 'true'

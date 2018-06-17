@@ -23,33 +23,37 @@ def rhMonitorThread (memory_service):
     print "personsitting thread started"
     
     while getattr(t, "do_run", True):
-        plist = memory_service.getData("PeoplePerception/PeopleList")
+
+        plist = memory_service.getData("PeoplePerception/VisiblePeopleList")
         
         personid = 0
         IsSitting = 0
         v = 'false'
-        try:
-            if (plist!=None and len(plist)>0):
-                for i in range (0,len(plist)):
-                    personid = plist[i]
-                    IsSitting = memory_service.getData("PeoplePerception/Person/"+str(personid)+"/IsSitting")
-                    # Save person position
-                    memory_service.insertData("personsitting/test",personid)
-                    if (IsSitting == 1):
-                        px,py,pz = memory_service.getData("PeoplePerception/Person/"+str(personid)+"/PositionInRobotFrame")
-                        memory_service.setData("")
-                        print "person sitting"
-                        print "X: " + str(px) + "  Y: " + str(py)
-                        w_px, w_py = point2world(memory_service,[px,py])
-                        memory_service.insertData("Condition/personsitting/coordinates",[w_px,w_py])
-                        memory_service.insertData("Condition/personsitting/id",personid)
-                        v = 'true'
-        except:
-            v = 'false'
+
+        #print "[ Person sitting = 0 ]"
+        #try:
+        if (plist!=None and len(plist)>0):
+            for i in range (0,len(plist)):
+                personid = plist[i]
+                IsSitting = memory_service.getData("PeoplePerception/Person/"+str(personid)+"/IsSitting")
+                # Save person position
+                memory_service.insertData("personsitting/test",personid)
+                if (IsSitting == 1):
+                    px,py,pz = memory_service.getData("PeoplePerception/Person/"+str(personid)+"/PositionInRobotFrame")
+                    print "[ Person sitting ]"
+                    print "   X: " + str(px) + "  Y: " + str(py)
+                    w_px, w_py = point2world(memory_service,[px,py])
+                    memory_service.insertData("Condition/personsitting/world_coordinates",[w_px,w_py])
+                    memory_service.insertData("Condition/personsitting/robot_coordinates_x",px)
+                    memory_service.insertData("Condition/personsitting/robot_coordinates_y",py)
+                    memory_service.insertData("Condition/personsitting/id",personid)
+                    v = 'true'
+        #except:
+        #    v = 'false'
         set_condition(memory_service,'personsitting',v)
         #print 'personhere:: value ',v
 
-        time.sleep(0.5)
+        time.sleep(1)
     print "personsitting thread quit"
 
 
@@ -65,7 +69,7 @@ def init(session):
     sitting_service = session.service("ALSittingPeopleDetection")
 
     # PARAMETERS
-    sitting_service.setSittingThreshold(1.4)
+    sitting_service.setSittingThreshold(1.45)
     sitting_threshold = sitting_service.getSittingThreshold()
     print "sitting threshold: ",sitting_threshold
 

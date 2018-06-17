@@ -18,11 +18,12 @@ p.begin()
 
 p.exec_action("aimlsay", "greetings")
 
-p.exec_action('headpose', '0_0')
+p.exec_action("say", "I want to play a riddle game, I will give you some seconds to get ready.")
+#p.exec_action('headpose', '0_0')
 
 p.exec_action("wait","10")
 
-p.exec_action('turn', '180')
+#p.exec_action('turn', '180')
 
 p.exec_action("wait","5")
 
@@ -30,9 +31,11 @@ p.exec_action("say","lookatme")
 
 p.exec_action("wait","1")
 
+p.exec_action("groupdescription", "",interrupt="timeout_30")
 
-# I dont understand why this action never ends, Ive tried putting the interruption but not sure how to do it
-#p.exec_action("groupdescription", "" ,interrupt='timeout_groupdescription_10')
+p.exec_action("wait","1")
+
+p.exec_action("")
 
 #Question 1
 while (not p.get_condition('sounddetected')):
@@ -44,7 +47,6 @@ p.exec_action("wait","2")
 
 
 #Question 2
-
 while (not p.get_condition('sounddetected')):
     time.sleep(0.5)
 
@@ -57,7 +59,6 @@ p.exec_action("wait","2")
 
 p.exec_action("aimlsay", "farewell")
 
-#p.exec_action("groupdescription","")
 
 #p.exec_action("say", "hello")
 

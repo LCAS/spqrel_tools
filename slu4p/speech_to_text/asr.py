@@ -11,7 +11,7 @@ import time
 
 class SpeechRecognition(object):
     USE_GOOGLE = True
-    CHANNELS = [1, 1, 1, 1]
+    CHANNELS = [0, 0, 1, 0]
     audio_recorder = None
 
     def __init__(self, vocab, app):
@@ -164,7 +164,7 @@ def main():
                         help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
     parser.add_argument("--pport", type=int, default=9559,
                         help="Naoqi port number")
-    parser.add_argument("--vocab", type=str, default="resources/Allsenteces_1.txt",
+    parser.add_argument("--vocab", type=str, default="resources/nuance_dictionary.txt",
                         help="The nuance vocabulary")
 
     args = parser.parse_args()

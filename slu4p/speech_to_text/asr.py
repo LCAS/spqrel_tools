@@ -45,6 +45,7 @@ class SpeechRecognition(object):
             print "error setting vocabulary"
         self.asr_service.pause(False)
 
+    def start(self):
         # Start the speech recognition engine with user Test_ASR
         self.asr_service.subscribe("Test_ASR")
         print 'Speech recognition engine started'
@@ -174,6 +175,7 @@ def main():
         app=app
     )
 
+    sr.start()
 
     #let it run
     app.run()

@@ -23,12 +23,12 @@ class SpeechRecognition(object):
         signal.signal(signal.SIGINT, self.signal_handler)
 
         #Starting services
-        self.asr_service = session.service("ALSpeechRecognition")
+        self.asr_service = self.session.service("ALSpeechRecognition")
         self.asr_service.setLanguage("English")
 
-        self.audio_recorder = session.service("ALAudioRecorder")
+        self.audio_recorder = self.session.service("ALAudioRecorder")
 
-        self.memory_service  = session.service("ALMemory")
+        self.memory_service  = self.session.service("ALMemory")
 
         #establishing test vocabulary
         #vocabulary = ["yes", "no", "please", "hello", "goodbye", "hi, there", "go to the kitchen"]

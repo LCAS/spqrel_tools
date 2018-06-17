@@ -39,7 +39,7 @@ windows:
   panes:
   - cd $SPQREL_HOME/worktree/spqrel_tools/ui; python ./spqrel_ui.py
   - cd $SPQREL_HOME/worktree/spqrel_tools/modim_actions/cocktail_party; python -m SimpleHTTPServer 8000
-  - cd $SPQREL_HOME/worktree/modim/src/GUI; python ws_server.py
+  - cd $SPQREL_HOME/worktree/modim/src/GUI; python ws_server.py -robot pepper 
   #- cd $SPQREL_HOME/worktree/robot_blockly; python scripts/pywebserver.py
   #- cd $SPQREL_HOME/worktree/robot_blockly; python scripts/robot_blockly_backend.py
 - name: dataset

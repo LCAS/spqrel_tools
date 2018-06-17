@@ -17,7 +17,7 @@ class SpeechRecognition(object):
         super(SpeechRecognition, self).__init__()
 
         app.start()
-        session = app.session
+        self.session = app.session
 
         #Starting services
         self.asr_service = session.service("ALSpeechRecognition")
@@ -77,13 +77,13 @@ class SpeechRecognition(object):
         #Disconnecting callbacks and subscribers
         self.asr_service.unsubscribe("Test_ASR")
         if self.idSubWordRecognized is not None:
-	    self.subWordRecognized.signal.disconnect(self.idSubWordRecognized)
+            self.subWordRecognized.signal.disconnect(self.idSubWordRecognized)
         if self.idSubSpeechDet is not None:
-	    self.subSpeechDet.signal.disconnect(self.idSubSpeechDet)
+            self.subSpeechDet.signal.disconnect(self.idSubSpeechDet)
         if self.idSubEnable is not None:
-	    self.subEnable.signal.disconnect(self.idSubEnable)
-        if self.USE_GOOGLE:
-            self.googleAsrRecognized.signal.disconnect(self.idGoogleAsrRecognized)
+            self.subEnable.signal.disconnect(self.idSubEnable)
+        #if self.USE_GOOGLE:
+        #    self.googleAsrRecognized.signal.disconnect(self.idGoogleAsrRecognized)
 
     def onSpeechDetected(self, value):
         print "speechdetected=", value

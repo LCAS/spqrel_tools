@@ -97,20 +97,21 @@ class SpeechRecognition(object):
 
     def onSpeechDetected(self, value):
         print "speechdetected=", value
-        self.audio_recorder.stopMicrophonesRecording()
-        print "Audio recorder stopped recording"
+        if value == "1":
+            self.audio_recorder.stopMicrophonesRecording()
+            print "Audio recorder stopped recording"
 
-        if self.USE_GOOGLE:
-            self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
+            if self.USE_GOOGLE:
+                self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
 
 
     def onWordRecognized(self, value):
         print "value=",value
-        self.audio_recorder.stopMicrophonesRecording()
-        print "Audio recorder stopped recording"
+        #self.audio_recorder.stopMicrophonesRecording()
+        #print "Audio recorder stopped recording"
 
-        if self.USE_GOOGLE:
-            self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
+        #if self.USE_GOOGLE:
+        #    self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
 
     #def onGoogleASR(self, value):
     #    print "googleasr=", value

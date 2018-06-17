@@ -51,26 +51,26 @@ class SpeechRecognition(object):
 
         #subscribe to event WordRecognized
         self.subWordRecognized = self.memory_service.subscriber("WordRecognized")
-        #self.idSubWordRecognized = self.subWordRecognized.signal.connect(self.onWordRecognized)
+        self.idSubWordRecognized = self.subWordRecognized.signal.connect(self.onWordRecognized)
 
         # speech detected
         self.subSpeechDet = self.memory_service.subscriber("SpeechDetected")
-        #self.idSubSpeechDet = self.subSpeechDet.signal.connect(self.onSpeechDetected)
+        self.idSubSpeechDet = self.subSpeechDet.signal.connect(self.onSpeechDetected)
 
         # enable
         self.subEnable = self.memory_service.subscriber("ASR_enable")
         self.idSubEnable = self.subEnable.signal.connect(self.onEnable)
 
         #subscribe to google asr transcription
-        if self.USE_GOOGLE:
-	    self.audio_recorder.stopMicrophonesRecording()
-            self.googleAsrRecognized = self.memory_service.subscriber("GoogleAsrRecognized")
-            self.idGoogleAsrRecognized = self.googleAsrRecognized.signal.connect(self.onGoogleASR)
+        #if self.USE_GOOGLE:
+            #self.audio_recorder.stopMicrophonesRecording()
+            #self.googleAsrRecognized = self.memory_service.subscriber("GoogleAsrRecognized")
+            #self.idGoogleAsrRecognized = self.googleAsrRecognized.signal.connect(self.onGoogleASR)
 
-            self.audio_recorder.startMicrophonesRecording("utterance" + ".wav", "wav", 44100, [1, 1, 1, 1])
-            print 'Audio recorder engine started'
+            #self.audio_recorder.startMicrophonesRecording("utterance" + ".wav", "wav", 44100, [1, 1, 1, 1])
+            #print 'Audio recorder engine started'
 
-	self.is_enabled = False
+        self.is_enabled = False
 
     def quit(self):
         #Disconnecting callbacks and subscribers

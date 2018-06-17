@@ -3,16 +3,38 @@ import json
 import slu_utils
 import base64
 
-class GoogleClient:
+class GoogleClient(object):
     timeout = 20
     url = ''
     headers = {"Content-Type": "application/json"}
 
     def __init__(self, language, key_file):
+        super(GoogleClient, self).__init__()
+
+        app.start()
+        session = app.session
+
+        self.memory_service = session.service("ALMemory")
+
         keys = slu_utils.lines_to_list(key_file)
         self.language = language
         key = keys[0]
         self.url = "https://speech.googleapis.com/v1/speech:recognize?key=%s" % key
+
+        self.subGR = self.memory_service.subscriber("GoogleRequest")
+        self.idsubGR = self.subGR.signal.connect(self.onGoogleRequest)
+
+    def quit(self):
+        self.subGR.signal.disconnect(self.idsubGR)
+        
+
+    def onGoogleRequest(self, value):
+        print "onGoogleRequest:", value
+        file_path = str(value) + ".wav"
+
+        transcriptions = self.recognize_file(file_path)
+
+        print transcriptions
 
     def recognize_file(self, file_path):
         try:
@@ -64,9 +86,35 @@ class GoogleClient:
 
 
 def main():
-    g = GoogleClient("en-US", "resources/cloud_google_keys.txt")
-    while True:
-        print g.recognize_file('resources/recording.flac')
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--pip", type=str, default=os.environ['PEPPER_IP'],
+                        help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")
+    parser.add_argument("--pport", type=int, default=9559,
+                        help="Naoqi port number")
+
+    args = parser.parse_args()
+    pip = args.pip
+    pport = args.pport
+
+
+    #Starting application
+    try:
+        connection_url = "tcp://" + pip + ":" + str(pport)
+        app = qi.Application(["google_client", "--qi-url=" + connection_url ])
+    except RuntimeError:
+        print ("Can't connect to Naoqi at ip \"" + pip + "\" on port " + str(pport) +".\n"
+               "Please check your script arguments. Run with -h option for help.")
+        sys.exit(1)
+
+    gc = GoogleClient(
+        "en-US",
+        "resources/cloud_google_keys.txt",
+        app
+    )
+
+    app.run()
+
+    gc.quit()
 
 
 if __name__ == "__main__":

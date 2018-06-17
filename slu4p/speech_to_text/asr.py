@@ -83,10 +83,15 @@ class SpeechRecognition(object):
         self.audio_recorder.stopMicrophonesRecording()
         print "Audio recorder stopped recording"
 
+        self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
+
+
     def onWordRecognized(self, value):
         print "value=",value
         self.audio_recorder.stopMicrophonesRecording()
         print "Audio recorder stopped recording"
+
+        self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
 
     def onGoogleASR(self, value):
         print "googleasr=", value
@@ -164,6 +169,8 @@ def main():
 
     #let it run
     app.run()
+
+    sr.quit()
 
 
 if __name__ == "__main__":

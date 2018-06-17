@@ -22,7 +22,7 @@ class SpeechRecognition(object):
         self.asr_service = session.service("ALSpeechRecognition")
         self.asr_service.setLanguage("English")
 
-        self.self.audio_recorder = session.service("ALAudioRecorder")
+        self.audio_recorder = session.service("ALAudioRecorder")
 
         self.memory_service  = session.service("ALMemory")
 
@@ -37,7 +37,7 @@ class SpeechRecognition(object):
         self.asr_service.pause(True)
         self.asr_service.removeAllContext()
         try:
-            self.asr_service.setVocabulary(vocabulary, False)
+            self.asr_service.setVocabulary(vocabulary, True)
             self.asr_service.setParameter("Sensitivity", 0.1)
             self.asr_service.setParameter("NbHypotheses", 3)
         except:
@@ -62,7 +62,7 @@ class SpeechRecognition(object):
 
         #subscribe to google asr transcription
         if USE_GOOGLE:
-            self.googleAsrRecognized = memory_service.subscriber("GoogleAsrRecognized")
+            self.googleAsrRecognized = self.memory_service.subscriber("GoogleAsrRecognized")
             self.idGoogleAsrRecognized = self.googleAsrRecognized.signal.connect(self.onGoogleASR)
 
             self.audio_recorder.startMicrophonesRecording("utterance" + ".wav", "wav", 44100, [1, 1, 1, 1])
@@ -77,13 +77,12 @@ class SpeechRecognition(object):
         if USE_GOOGLE:
             self.googleAsrRecognized.signal.disconnect(self.idGoogleAsrRecognized)
 
-    def onSpeechDetected(value):
+    def onSpeechDetected(self, value):
         print "speechdetected=", value
         self.audio_recorder.stopMicrophonesRecording()
         print "Audio recorder stopped recording"
 
     def onWordRecognized(self, value):
-        global self.audio_recorder
         print "value=",value
         self.audio_recorder.stopMicrophonesRecording()
         print "Audio recorder stopped recording"
@@ -132,7 +131,6 @@ class SpeechRecognition(object):
                 print "ASR already enabled"
 
 def main():
-    global self.audio_recorder
     parser = argparse.ArgumentParser()
     parser.add_argument("--pip", type=str, default=os.environ['PEPPER_IP'],
                         help="Robot IP address.  On robot or Local Naoqi: use '127.0.0.1'.")

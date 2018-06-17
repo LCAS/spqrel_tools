@@ -97,7 +97,7 @@ class SpeechRecognition(object):
 
     def onSpeechDetected(self, value):
         print "speechdetected=", value
-        if value == 1:
+        if value == 0:
             self.audio_recorder.stopMicrophonesRecording()
             print "Audio recorder stopped recording"
 

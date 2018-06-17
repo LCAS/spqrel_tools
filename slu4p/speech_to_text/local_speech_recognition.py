@@ -34,21 +34,19 @@ class SpeechRecognition(object):
         self.logging = asr_logging
 
         dialogP = session.service("ALDialog")
-        try:
-            print dialogP.getAllLoadedTopics()
-            print dialogP.getActivatedTopics()
-            dialogP.unloadTopic("modifiable_grammar") # hack to avoid error on ALSpeechRecognition
-        except:
-            print "Topic modifable_grammar not set, trying with resetAll"
-            try:
-                dialogP.resetAll()
-            except:
-                print "Error while  resetAll"
+        #try:
+        #    print dialogP.getAllLoadedTopics()
+        #    print dialogP.getActivatedTopics()
+        #    dialogP.unloadTopic("modifiable_grammar") # hack to avoid error on ALSpeechRecognition
+        #except:
+        #    print "Topic modifable_grammar not set, trying with resetAll"
+        #    try:
+        #        dialogP.resetAll()
+        #    except:
+        #        print "Error while  resetAll"
         # or change language and put it back
 
         self.nuance_asr = session.service("ALSpeechRecognition")
-
-
 
         self.audio_recorder = session.service("ALAudioRecorder")
 
@@ -74,7 +72,8 @@ class SpeechRecognition(object):
         self.enable_sub_id = self.enable_sub.signal.connect(self.enable_callback)
 
         self.wr_sub = self.memory.subscriber(SpeechRecognition.WR_EVENT)
-        self.wr_sub_id = None
+        self.wr_sub_id = self.wr_sub.signal.connect(self.word_recognized_callback)
+        #self.wr_sub_id = None
 
         print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(
             SpeechRecognition.WR_EVENT)
@@ -152,13 +151,13 @@ class SpeechRecognition(object):
             if self.is_enabled:
                 if msg == 0:
                     self.audio_recorder.stopMicrophonesRecording()
-                    self.nuance_asr.pause(True)
+                    #self.nuance_asr.pause(True)
                     print "pause"
                 else:
                     self.audio_recorder.stopMicrophonesRecording()
                     self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
                     self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
-                    self.nuance_asr.pause(False)
+                    #self.nuance_asr.pause(False)
                     print "un-pause"
         except Exception as e:
             print e.message
@@ -187,7 +186,6 @@ class SpeechRecognition(object):
                 self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
                 self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
 
-                self.wr_sub_id = self.wr_sub.signal.connect(self.word_recognized_callback)
                 #self.subscribe(
                 #    event=SpeechRecognition.WR_EVENT,
                 #    callback=self.word_recognized_callback

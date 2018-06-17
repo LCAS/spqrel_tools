@@ -49,7 +49,7 @@ def main():
     asr_service = session.service("ALSpeechRecognition")
     asr_service.setLanguage("English")
 
-    rec_service = session.service("ALAudioRecorder")
+    audio_recorder = session.service("ALAudioRecorder")
 
     memory_service  = session.service("ALMemory")
 
@@ -75,7 +75,7 @@ def main():
     print 'Speech recognition engine started'
 
 
-    audio_recorder.startMicrophonesRecording("utterance" + ".wav", "wav", 44100, self.CHANNELS)
+    audio_recorder.startMicrophonesRecording("utterance" + ".wav", "wav", 44100, [0, 0, 1, 0])
     print 'Audio recorder engine started'
 
     #subscribe to event WordRecognized

@@ -39,7 +39,7 @@ class SpeechRecognition(object):
         print "Vocabulary read", vocabulary
 
         self.asr_service.pause(True)
-        self.asr_service.removeAllContext()
+        #self.asr_service.removeAllContext()
         try:
             self.asr_service.setVocabulary(vocabulary, True)
             #self.asr_service.setParameter("Sensitivity", 0.1)
@@ -50,8 +50,8 @@ class SpeechRecognition(object):
 
     def start(self):
         # Start the speech recognition engine with user Test_ASR
-        self.asr_service.subscribe("Test_ASR")
-        print 'Speech recognition engine started'
+        #self.asr_service.subscribe("Test_ASR")
+        #print 'Speech recognition engine started'
 
         #subscribe to event WordRecognized
         self.subWordRecognized = self.memory_service.subscriber("WordRecognized")
@@ -78,7 +78,7 @@ class SpeechRecognition(object):
 
     def quit(self):
         #Disconnecting callbacks and subscribers
-        self.asr_service.unsubscribe("Test_ASR")
+        #self.asr_service.unsubscribe("Test_ASR")
         if self.idSubWordRecognized is not None:
             self.subWordRecognized.signal.disconnect(self.idSubWordRecognized)
         if self.idSubSpeechDet is not None:
@@ -155,10 +155,6 @@ class SpeechRecognition(object):
             else:
                 print "ASR already enabled"
 
-    def run(self):
-        while (True):
-            time.sleep(0.1)
-
 
 def main():
     parser = argparse.ArgumentParser()
@@ -191,7 +187,7 @@ def main():
     sr.start()
 
     #let it run
-    sr.run()
+    app.run()
 
     sr.quit()
 

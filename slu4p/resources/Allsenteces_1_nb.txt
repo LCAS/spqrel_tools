@@ -112,6 +112,8 @@ Answer a question to name at the beacon
 Tell something about yourself to name at the beacon
 Say something about yourself to name at the beacon
 Tell the time to name at the beacon
+task_description
+
 Say the time to name at the beacon
 Tell what day is today to name at the beacon
 Say what day is today to name at the beacon
@@ -702,6 +704,7 @@ Tell me how many kobject there are on the placement
 Find the kobject in the room
 Locate the kobject in the room
 Look for the kobject in the room
-Find the kobject  in the room
-Locate the kobject  in the room
-Look for the kobject  in the room
+Find the kobject in the room
+Locate the kobject in the room
+Look for the kobject in the room
+task_description

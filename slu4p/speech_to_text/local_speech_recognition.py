@@ -64,7 +64,7 @@ class SpeechRecognition(object):
             visual=visual
         )
 
-    def start(self, *args, **kwargs):
+    def start(self):
         self.td_sub = self.memory.subscriber(SpeechRecognition.TD_EVENT)
         self.td_sub_id = self.td_sub.signal.connect(self.text_done_callback)
 
@@ -117,7 +117,7 @@ class SpeechRecognition(object):
         self.nuance_asr.pause(False)
         print "un-pause"
 
-    def word_recognized_callback(self, *args, **kwargs):
+    def word_recognized_callback(self, msg):
         print "pause"
         self.audio_recorder.stopMicrophonesRecording()
         #self.nuance_asr.pause(True)
@@ -135,7 +135,7 @@ class SpeechRecognition(object):
                 f.close()
                 results = {}
                 results['GoogleASR'] = [r.encode('ascii', 'ignore').lower() for r in self.google_asr.recognize_data(flac_cont)]
-                results['NuanceASR'] = [args[1][0].lower()]
+                results['NuanceASR'] = [msg[0].lower()]
                 print "[" + self.__class__.__name__ + "] " + str(results)
                 self.memory.raiseEvent("LocalVordRecognized", results)
         self.timeout = 0
@@ -146,10 +146,10 @@ class SpeechRecognition(object):
         self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
         self.busy = False
 
-    def text_done_callback(self, *args, **kwargs):
+    def text_done_callback(self, msg):
         try:
             if self.is_enabled:
-                if args[1] == 0:
+                if msg == 0:
                     self.audio_recorder.stopMicrophonesRecording()
                     self.nuance_asr.pause(True)
                     print "pause"
@@ -162,8 +162,8 @@ class SpeechRecognition(object):
         except Exception as e:
             print e.message
 
-    def enable_callback(self, *args, **kwargs):
-        if args[1] == "0":
+    def enable_callback(self, msg):
+        if msg == "0":
             if self.is_enabled:
                 self.is_enabled = False
                 self.audio_recorder.stopMicrophonesRecording()
@@ -206,15 +206,15 @@ class SpeechRecognition(object):
             self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
             self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
 
-    def _spin(self, *args):
-        while not self.__shutdown_requested:
-            for f in args:
-                f()
-            time.sleep(.1)
-            self.timeout = self.timeout + 1
-            if self.timeout > 300:
-                self.timeout = 0
-                self.reset()
+    #def _spin(self, *args):
+    #    while not self.__shutdown_requested:
+    #        for f in args:
+    #            f()
+    #        time.sleep(.1)
+    #        self.timeout = self.timeout + 1
+    #        if self.timeout > 300:
+    #            self.timeout = 0
+    #            self.reset()
 
     def signal_handler(self, signal, frame):
         print "[" + self.__class__.__name__ + "] Caught Ctrl+C, stopping."

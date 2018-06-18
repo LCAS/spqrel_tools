@@ -113,6 +113,7 @@ class SpeechRecognition(object):
                     self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
                     self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
                     self.recording = True
+                    print "Audio recorder started recording"
 
 
 

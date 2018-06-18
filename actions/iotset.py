@@ -21,6 +21,8 @@ import requests
 import json
 
 
+import action_base
+from action_base import *
 
 '''
 action iotset_sensor_value

@@ -40,10 +40,10 @@ def waitAndUnderstand():
     p.exec_action("asrenable", "off")
 
     try:
-        interpretations = p.memory_service.getData("CommandInterpretation")
+        interpretations = eval(p.memory_service.getData("CommandInterpretation"))
         print interpretations
     except:
-        return 
+        return
 
     tosay = get_tosay(interpretations)
 
@@ -63,34 +63,31 @@ load_semantic_info()
 
 ###### GROUP DESCRIPTION #######
 
-#
 p.exec_action("say", "hello")
-#
+
 p.exec_action("say", "I_want_to_play_a_riddle_game,_I_will_give_you_some_seconds_to_get_ready.")
-#
+
 p.exec_action('headpose', '0_-10')
-#
+
 p.exec_action("wait","10")
-#
+
 p.exec_action('turn', '180')
-#
+
 p.exec_action("wait","5")
-#
+
 p.exec_action("say","lookatme")
-#
+
 p.exec_action("wait","1")
-#
+
 p.exec_action("groupdescription", "",interrupt="timeout_30")
-#
+
 p.exec_action("wait","1")
-#
+
 p.exec_action("say","Who_wants_to_play")
-#
-#
+
+
 p.exec_action("waitfor","personhere")
 
-
-# = eval(p.memory_service.getData("CommandInterpretation"))
 
 
 p.exec_action("say","Hello._Go_for_the_question.")

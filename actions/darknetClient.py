@@ -128,6 +128,11 @@ def darkThread (params):
 
     print actionName+" thread started. Period: "+ str(period)
 
+    try:
+        internal_init(getattr(t, "session", None))
+    except:
+        action_fail(actionName,params)
+        return
 
     while getattr(t, "do_run", True):
         isOk = False
@@ -181,8 +186,10 @@ def darkThread (params):
 
         time.sleep(period)
     print actionName+" thread quit"
+    action_success(actionName,params)
 
-def init(session):
+
+def internal_init(session):
     global memory_service
     global video_service 
     global imgClient
@@ -203,6 +210,8 @@ def init(session):
     # Services
     DarknetSRV = session.service("DarknetSRV")
     
+
+def init(session):    
     action_base.init(session, actionName, darkThread)
 
 

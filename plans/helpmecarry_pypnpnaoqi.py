@@ -34,17 +34,45 @@ p.exec_action('asrenable')
 
 #previously  followuntil_stopfollowing; ! *if* (personlost) *do* vsay_waitforme; navigateto_start; waitfor_personhere; restart_action !
 
-# THIS RECOVERY WONT WORK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-p.exec_action('followuntil', 'stopfollowing', interrupt='personlost', recovery='say_waitforme; navigateto_start; waitfor_personhere; restart_action')
+# follow the recorded person to the car
+p.exec_action('updatefollowpersoncoord', 'stopfollowing', interrupt='personlost')
 
+# if we lost the person during the trip...
+while  (not p.get_condition('stopfollowing') ) or p.get_condition('personlost'):
+	p.exec_action('say', 'waitforme')
+	# look for someone...
+	p.exec_action('lookfor', 'persondetected',  interrupt='timeout_20')
+	# turn around looking for a person
+	if not  p.get_condition('persondetected'):
+		if rand.random()>0.5:
+			p.exec_action('turn','90')
+		else:
+			p.exec_action('turn','-90')
+	else:
+		# persondetected found someone
+		try:
+			#here should be new person location in robot coordinates
+			xwaving = p.memory_service.getData('Conditions/persondetected/robot_coordinates_x')
+			ywaving = p,memory_service.getData('Conditions/persondetected/robot_coordinates_y')
+
+			# move robot there...
+			p.exec_action("navigateto_naoqi",str(xwaving)+'_'+str(ywaving))
+			
+			#dramatic pause
+			time.sleep(1)
+	
+			#update our person tracked id 
+			if p.get_condition('personhere'):
+				# smoothly keep following them
+				p.exec_action('updatefollowpersoncoord', 'stopfollowing',interrupt='personlost')		
+		except:
+			pass:
 
 #previously asrenable_off;
 p.exec_action('asrenable','off')
 
 #previously saveposition_car;
 p.exec_action('saveposition','car')
-
-
 
 #### 3 - LOOK FOR HELP
 
@@ -65,7 +93,7 @@ while not  p.get_condition('persondetected'):
 		if rand.random()>0.5:
 			p.exec_action('turn','180')
 		else:
-			p.exec_action('vsay','comehere')
+			p.exec_action('say','comehere')
 
 #previously arm_up;
 p.exec_action('arm','up')

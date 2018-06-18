@@ -98,7 +98,7 @@ def actionThread_exec (params):
 
 
             if distance > 0.5:
-                vx = 0.5
+                vx = 0.3
             else:
                 vx = 0
 
@@ -116,7 +116,7 @@ def actionThread_exec (params):
                 vy = -1           
 
             # angle correnction
-            motion_service.moveToward(0.2, 0, w,[ ["MaxVelXY",0.55], 
+            motion_service.moveToward(vx, 0, w,[ ["MaxVelXY",0.55], 
                                                    ["MaxVelTheta",2],
                                                    ["MaxAccXY",0.55],
                                                    ["MaxAccTheta",3] ])
@@ -164,6 +164,8 @@ def init(session):
 
 
 def quit():
+    tracker_service.stopTracker()
+    tracker_service.unregisterAllTargets()
     print actionName+" quit"
     actionThread_exec.do_run = False
 

@@ -61,6 +61,8 @@ def actionThread_exec (params):
     motion_service.waitUntilMoveIsFinished()
     #motion_service.setExternalCollisionProtectionEnabled('Move', True)
 
+    print "MOVEMENT FINISH"
+
     # action end
     motion_service.stopMove()
     action_success(actionName,params)

@@ -278,6 +278,8 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
                 if self._python_plan.poll() is None:
                     info("stopped Python plan: %s")
                     self._python_plan.terminate()
+                    sleep(.5)
+                    self._python_plan.kill()
             self._python_plan = None
             memory_service.raiseEvent("PNP/QuitRunningActions/", "unused")
         except Exception as e:

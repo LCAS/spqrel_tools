@@ -42,7 +42,8 @@ class SpeechRecognition(object):
         self.asr_service.pause(True)
         #self.asr_service.removeAllContext()
         try:
-            self.asr_service.setVocabulary(vocabulary, True)
+            self.asr_service.setAudioExpression(False)
+	    self.asr_service.setVocabulary(vocabulary, True)
             #self.asr_service.setParameter("Sensitivity", 0.1)
             self.asr_service.setParameter("NbHypotheses", 3)
         except:

@@ -126,6 +126,8 @@ class SpeechRecognition(object):
                 print "Audio recorder stopped recording"
 
                 self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
+
+        self.memory_service.raiseEvent("VRanked", value)
         #self.audio_recorder.stopMicrophonesRecording()
         #print "Audio recorder stopped recording"
 

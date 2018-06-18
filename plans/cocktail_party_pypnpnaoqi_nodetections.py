@@ -55,42 +55,106 @@ def take_order(order_key='order1'):
         time.sleep(0.5)
 
 
-    p.exec_action("say", "What's_your_name?",interrupt='timeout_5')
+    # p.exec_action("say", "What's_your_name?",interrupt='timeout_5')
 
-    p.exec_action("asr", "name")
+    # p.exec_action("asr", "name")
 
-    try:
-        name_response = p.memory_service.getData("asrresponse").replace(" ", "_")
-    except:
-        name_response = "Linda"
-    print "name response", name_response
+    # try:
+    #     name_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+    # except:
+    #     name_response = "Linda"
+    # print "name response", name_response
 
-    if name_response != "":
-        p.exec_action("say", "Is_"+ name_response +"_your_name?",interrupt='timeout_5')
+    # if name_response != "":
+    #     p.exec_action("say", "Is_"+ name_response +"_your_name?",interrupt='timeout_5')
 
-        p.exec_action("asr", "confirm")
+    #     p.exec_action("asr", "confirm")
+
+    #     try:
+    #         confirm_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+    #     except:
+    #         confirm_response = "yes"
+    #     if confirm_response != "" and confirm_response == "yes":
+    #         p.exec_action("say", "What_drink_do_you_want?",interrupt='timeout_5')
+
+    #         p.exec_action("asr", "drink")
+
+    #         try:
+    #             drink_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+    #         except:
+    #             drink_response = "coke"
+
+    #         if drink_response != "":
+    #             p.exec_action("say", "I_will_bring_you_a_" + drink_response,interrupt='timeout_5')
+    #     else:
+    #         p.exec_action("say", "I_am_not_sure_I_understood_,_can_you_repeat?",interrupt='timeout_5')
+
+    # TODO 
+    p.exec_action("say", "hello,_whats_your_name?",interrupt='timeout_5')
+
+    got_name = False
+    attempts = 0
+    name_response = ''
+    while (not got_name and attempts < 2):
+        p.exec_action("asr", "name")
+        try:
+            name_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+        except:
+            name_response = 'Linda'
+        print "name response", name_response
+    
+        if name_response != "":
+            p.exec_action("say", "Is_"+ name_response +"_your_name?",interrupt='timeout_5')
+
+            p.exec_action("asr", "confirm")
+        
+            try:
+                confirm_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+            except:
+                confirm_response = 'yes'
+
+            if confirm_response != "" and confirm_response == "yes":
+                got_name = True
+            else:
+                attempts = attempts + 1
+                p.exec_action("say", "then_could_you_repeat_it_please?",interrupt='timeout_5')
+
+    got_drink = False
+    attempts = 0
+    drink_response = ''
+    while (not got_drink and attempts < 2):
+        p.exec_action("say", "What_drink_do_you_want?",interrupt='timeout_5')
+        p.exec_action("asr", "drink")
 
         try:
-            confirm_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+            drink_response = p.memory_service.getData("asrresponse").replace(" ", "_")
         except:
-            confirm_response = "yes"
-        if confirm_response != "" and confirm_response == "yes":
-            p.exec_action("say", "What_drink_do_you_want?",interrupt='timeout_5')
+            drink_response = 'coke'
+        print "drink response", drink_response
+        
+        if drink_response != "":
+            p.exec_action("say", "I_will_bring_you_a_" + drink_response,interrupt='timeout_5')
+            p.exec_action("say", "Is_that_correct",interrupt='timeout_5')
 
-            p.exec_action("asr", "drink")
-
+            p.exec_action("asr", "confirm")
             try:
-                drink_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+                confirm_response = p.memory_service.getData("asrresponse").replace(" ", "_")
             except:
-                drink_response = "coke"
+                confirm_response = 'yes'
 
-            if drink_response != "":
-                p.exec_action("say", "I_will_bring_you_a_" + drink_response,interrupt='timeout_5')
-        else:
-            p.exec_action("say", "I_am_not_sure_I_understood_,_can_you_repeat?",interrupt='timeout_5')
-        p.exec_action("say","Can_you_look_at_me_for_some_seconds?",interrupt='timeout_5')
-        p.exec_action('persondescription', order_key, interrupt='timeout_10')
-        p.exec_action("say", "thanks",interrupt='timeout_5')
+            if confirm_response != "" and confirm_response == "yes":
+                got_drink = True
+            else:
+                attempts = attempts + 1
+                p.exec_action("say", "then_could_you_repeat_it_please?",interrupt='timeout_5')
+
+    p.exec_action("say","ok_"+name_response+"_I_will_bring_you_a_" + drink_response,interrupt='timeout_5')
+
+
+
+    p.exec_action("say","Can_you_look_at_me_for_some_seconds?",interrupt='timeout_5')
+    p.exec_action('persondescription', order_key, interrupt='timeout_10')
+    p.exec_action("say", "thanks",interrupt='timeout_5')
 
 
     return (name_response, drink_response)
@@ -103,6 +167,11 @@ FAKE = True
 p = PNPCmd()
 
 p.begin()
+
+
+(name_1, drink_1) = take_order('order1')
+
+
 p.exec_action('setpose', '5.8_10.6')
 
 p.exec_action('taskstep', 'waiting')

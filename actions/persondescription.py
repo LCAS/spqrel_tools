@@ -117,6 +117,7 @@ def actionThread_exec (params):
         #tts_service.say("years old")
         #tts_service.say(faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"])
         #tts_service.say("hair")
+        tts_service.say("Face memorized")
     else:
         tts_service.say("I'm sorry, I see no faces in the image")
 

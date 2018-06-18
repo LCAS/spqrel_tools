@@ -14,15 +14,19 @@ p = PNPCmd()
 
 p.begin()
 
-#p.exec_action('modiminit', 'cocktailparty')
-#p.exec_action('interact', 'ready')
+p.exec_action('taskstep', 'waiting')
+p.exec_action('modiminit', 'cocktailparty')
+p.exec_action('interact', 'ready')
+
 while (not p.get_condition('dooropen')):
     time.sleep(1)
     
-#p.exec_action('interact', 'party')
+p.exec_action('interact', 'party')
+p.exec_action('taskstep', 'Entering')
 p.exec_action('enter', '30_0_0_4_true')
 
-p.exec_action('goto', 'partyroom', interrupt='aborted', recovery='skip_action')
+p.exec_action('taskstep', 'going_to_party_room')
+p.exec_action('navigateto', 'wp8', interrupt='aborted', recovery='restart_action')
 
 #while (not p.get_condition('personhere')):
 #    time.sleep(1)

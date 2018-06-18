@@ -16,7 +16,6 @@ p.begin()
 p.exec_action('taskstep', 'waiting')
 p.exec_action('modiminit', 'rips')
 p.exec_action('interact', 'ready')
-p.set_condition('dooropen', 'false')
 
 while (not p.get_condition('dooropen')):
     time.sleep(1)

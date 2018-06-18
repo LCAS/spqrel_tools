@@ -86,8 +86,11 @@ def actionThread_exec (params):
         print "Age: " , faces[f_center]["faceAttributes"]["age"]
         memory_service.insertData("Actions/persondescription/"+params+"/age",faces[f_center]["faceAttributes"]["age"])
         #Hair
-        print "Hair: " , faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"]
-        memory_service.insertData("Actions/persondescription/"+params+"/hair",faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"])
+        if len(faces[f_center]["faceAttributes"]["hair"]["hairColor"]) > 0:
+            print "Hair: " , faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"]
+            memory_service.insertData("Actions/persondescription/"+params+"/hair",faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"])
+        else:
+            memory_service.insertData("Actions/persondescription/"+params+"/hair", "black")
         #Beard
         if float(faces[f_center]["faceAttributes"]["facialHair"]["beard"]) >= 0.2:
             print "Beard: yes"

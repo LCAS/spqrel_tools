@@ -5,33 +5,32 @@
       isBeacon and isPlacement have been kept from Nagoya file
 -->
 <rooms>
-  <room name="bedroom">
-    <location name="bed" isBeacon="true" />
-    <location name="desk" isBeacon="true" isPlacement="true" />
-    <location name="side table" isPlacement="true" />
+  <room name="bedroom" waypoint="wp16">
+    <location name="bed" isBeacon="true" waypoint="wp16" />
+    <location name="desk" isBeacon="true" isPlacement="true" waypoint="wp9"  />
+    <location name="side table" isPlacement="true" waypoint="wp16"  />
     <!-- Chair Not labelled in the map image -->
-    <location name="chair" isBeacon="true" /> 
+    <location name="chair" isBeacon="true" waypoint="wp9"/> 
   </room>
-  <room name="kitchen">
-    <location name="cupboard" isPlacement="true" />
-    <location name="storage table" isPlacement="true" />
-    <location name="counter" isPlacement="true" />
-    <location name="sink" isBeacon="true" isPlacement="true" />
-    <location name="dishwasher" isPlacement="true" />
+  <room name="kitchen" waypoint="wp4">
+    <location name="cupboard" isPlacement="true"  waypoint="wp4"/>
+    <location name="storage table" isPlacement="true"  waypoint="wp5"/>
+    <location name="counter" isPlacement="true"  waypoint="wp5"/>
+    <location name="sink" isBeacon="true" isPlacement="true"  waypoint="wp5"/>
+    <location name="dishwasher" isPlacement="true"  waypoint="wp5"/>
   </room>
-  <room name="dining room">
-    <location name="dining table" isBeacon="true" isPlacement="true" />
-    <location name="chair" isBeacon="true" />
-    <location name="chair" isBeacon="true" />
+  <room name="dining room" waypoint="wp8">
+    <location name="dining table" isBeacon="true" isPlacement="true" waypoint="wp39"/>
+    <location name="chair" isBeacon="true" waypoint="wp12"/>
   </room>
 
-  <room name="living room">
-    <location name="couch" isBeacon="true" />
-    <location name="end table" isBeacon="true" isPlacement="true" />
-    <location name="bookcase" isPlacement="true" />
+  <room name="living room" waypoint="wp15">
+    <location name="couch" isBeacon="true" waypoint="wp15"/>
+    <location name="end table" isBeacon="true" isPlacement="true" waypoint="wp13"/>
+    <location name="bookcase" isPlacement="true" waypoint="wp11"/>
     <!-- Chair Not labelled in the map image -->
-    <location name="coat rack"/>
+    <location name="coat rack" waypoint="wp11"/>
   </room>
-  <room name="corridor">
+  <room name="corridor" waypoint="wp3">
   </room>
 </rooms>

@@ -94,15 +94,23 @@ class config_manager(object):
             rooms = []
             for locroom in xml_root.findall("room"):
                 locroomname = locroom.get("name")
+                locroomwp = locroom.get("waypoint")
                 # put in dictionary
                 self.inDictionary([locroomname])
                 locations = []
                 for loc in locroom.findall("location"):
                     locname = loc.get("name")
+                    locwp = loc.get("waypoint")
                     # put in dictionary
                     self.inDictionary([locname])
-                    locations.append({"name": locname})
-                rooms.append({"name": locroomname, "locationList": locations})
+                    locations.append({
+                        "name": locname,
+                        "waypoint": locwp
+                    })
+                rooms.append({
+                    "name": locroomname,
+                    "waypoint": locroomwp,
+                    "locationList": locations})
             return rooms
         elif config_name == "names":
             names = []

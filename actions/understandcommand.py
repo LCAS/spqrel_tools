@@ -10,9 +10,9 @@ import action_base
 from action_base import *
 
 
-actionName = "understandCommand"
+actionName = "understandcommand"
 
-intkey = "CommandInterpretations"
+intkey = "CommandInterpretation"
 
 interpretations = None
 
@@ -33,6 +33,10 @@ def actionThread_exec (params):
     #tts_service = getattr(t, "session", None).service("ALTextToSpeech")
     print "Action "+actionName+" started with params "+params
 
+    memory_service.insertData("GoogleTranscription", "How many doors there are in the kitchen?")
+
+    memory_service.raiseEvent("UnderstandCommand", (str(params)))
+
     memory_service.insertData("command_understood", 0)
 
     interpretations = None
@@ -43,7 +47,7 @@ def actionThread_exec (params):
 
     if len(interpretations) > 0:
         memory_service.insertData("command_understood", 1)
-        memory_service.insertData("command_annotations", interpretations)
+        memory_service.insertData("CommandInterpretation", interpretations)
 
 
     # action end

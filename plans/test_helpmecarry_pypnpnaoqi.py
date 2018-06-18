@@ -15,11 +15,11 @@ p.begin()
 c = 0
 
 #test arsenable AND stopfolloging
-p.exec_action('asrenable')
-while  (not p.get_condition('stopfollowing'))
-	if (c%100==0):
-		print("I'll follow until you say so...")
-		c = 0
+p.exec_action('asrenable','')
+
+
+# follow the recorded person to the car
+p.exec_action('updatefollowpersoncoord', 'stopfollowing', interrupt='personlost')
 
 p.exec_action('asrenable','off')
 

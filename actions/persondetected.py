@@ -26,8 +26,19 @@ def rhMonitorThread (memory_service):
         plist = memory_service.getData("PeoplePerception/PeopleList")
         v = 'false'
         try:
-            if (len(plist)>0):
-                memory_service.insertData("persondetectedid",plist[0])
+            if (len(plist)>0):            
+                try: 
+                    px,py,pz = memory_service.getData("PeoplePerception/Person/"+str(plist[0])+"/PositionInRobotFrame")
+                    print "[ Person detected ]"
+                    print "   X: " + str(px) + "  Y: " + str(py)
+                    w_px, w_py = point2world(memory_service,[px,py])
+                    memory_service.insertData("Condition/persondetected/world_coordinates",[w_px,w_py])
+                    memory_service.insertData("Condition/persondetected/robot_coordinates_x",px)
+                    memory_service.insertData("Condition/persondetected/robot_coordinates_y",py)
+                    memory_service.insertData("Condition/persondetected/id",plist[0])
+                except:
+                    pass
+
                 v = 'true'
         except:
             v = 'false'

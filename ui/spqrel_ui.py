@@ -4,7 +4,7 @@ import os
 import sys
 import webnsock
 import web
-from subprocess import check_output
+from subprocess import check_output, Popen, PIPE
 from signal import signal, SIGINT
 from logging import error, warn, info, debug, basicConfig, INFO
 from pprint import pformat, pprint
@@ -125,6 +125,8 @@ class SPQReLUIServer(webnsock.WebServer):
         for f in files:
             if f.endswith('.plan'):
                 plans[f.replace('.plan', '')] = f
+            if f.endswith('.py'):
+                plans[f] = f
         return plans
 
     def find_actions(self):
@@ -161,6 +163,7 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
     def __init__(self):
         global memory_service
         self.memory_service = memory_service
+        self._python_plan = None
         super(SQPReLProtocol, self).__init__()
 
     def onOpen(self):
@@ -180,12 +183,12 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
                 'data': data
             }))
 
-        self.als_pose = ALSubscriber(
-            memory_service, "NAOqiLocalizer/RobotPose",
-            lambda data: self.sendJSON({
-                'method': 'update_pose',
-                'data': data
-            }))
+        # self.als_pose = ALSubscriber(
+        #     memory_service, "NAOqiLocalizer/RobotPose",
+        #     lambda data: self.sendJSON({
+        #         'method': 'update_pose',
+        #         'data': data
+        #     }))
 
         self.answeroptions = ALSubscriber(
             memory_service, "AnswerOptions",
@@ -269,7 +272,33 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
         except Exception as e:
             print "failed translating plan: %s" % str(e)
 
+    def _ensure_py_stopped(self):
+        try:
+            if self._python_plan is not None:
+                if self._python_plan.poll() is None:
+                    info("stopped Python plan: %s")
+                    self._python_plan.terminate()
+            self._python_plan = None
+            memory_service.raiseEvent("PNP/QuitRunningActions/", "unused")
+        except Exception as e:
+            warn("failed stopping Python plan: %s" % str(e))
+
+    def _start_python_plan(self, plan_name):
+        self._ensure_py_stopped()
+        try:
+            info("start Python plan in %s" % self.__plan_dir)
+            self._python_plan = Popen(
+                ['python',
+                 plan_name],
+                cwd=self.__plan_dir,
+                stdin=PIPE
+            )
+            print "started Python plan"
+        except Exception as e:
+            print "failed starting Python plan: %s" % str(e)
+
     def _start_plan(self, plan_name):
+        self._ensure_py_stopped()
         try:
             print "start plan in %s" % self.__plan_dir
             print check_output(
@@ -301,8 +330,14 @@ class SQPReLProtocol(webnsock.JsonWSProtocol):
 
     def on_plan_start_button(self, payload):
         info('plans_start_button pressed: \n%s' % pformat(payload))
-        self._translate_plan(payload['plan'])
-        self._start_plan(payload['plan'])
+        p = payload['plan']
+        if p.endswith('.py'):
+            info('this is a Python plan')
+            self._start_python_plan(p)
+        else:
+            info('this is a linear plan')
+            self._translate_plan(p)
+            self._start_plan(p)
         # self.sendJSON({'method': 'ping'})
         # self.sendJSON({
         #     'method': 'modal_dlg',

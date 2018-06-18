@@ -10,13 +10,179 @@ except:
 import pnp_cmd_naoqi
 from pnp_cmd_naoqi import *
 
+def repeat_order(order_key='order1', name='Linda', drink='coke'):
+    try:
+        age = memory_service.getData("Actions/persondescription/%s/age" % order_key)
+        gender = memory_service.getData("Actions/persondescription/%s/gender" % order_key)
+        haircolor = memory_service.getData("Actions/persondescription/%s/hair" % order_key)
+        glasses = memory_service.getData("Actions/persondescription/%s/glasses" % order_key)
+
+        if gender == "male":
+            feat = memory_service.getData("Actions/persondescription/%s/beard"  % order_key)
+            if feat == "yes":
+                extra = "with_beard"
+            else:
+                extra = "no_beard"
+
+        else:
+            feat = memory_service.getData("Actions/persondescription/%s/makeup"  % order_key)
+            if feat == "yes":
+                extra = "with_makeup"
+            else:
+                extra = "no_makeup"
+
+        if glasses == "yes":
+            isglasses = "glasses"
+        else:
+            isglasses = "no_glasses"
+
+        order1_sentence = name+",_who_is_a_"+gender+",_around"+age+"_years_old,_with_"+haircolor+"_hair,_"+extra+",_and_with_"+isglasses+"_wants_a_"+drink
+        p.exec_action('say', order1_sentence, interrupt='timeout_5')
+    except:
+        p.exec_action(
+            'say', 'sorry_I_forgot_who_wanted_%s.' % drink,
+            interrupt='timeout_5')
+
+
+
+def take_order(order_key='order1'):
+    p.exec_action('say','Please_can_someone_come_here_to_place_an_order?',interrupt='timeout_5')
+
+    drink_response = "coke"
+    name_response = "Linda"
+
+    while (not p.get_condition('personhere')) and not FAKE:
+        time.sleep(0.5)
+
+
+    # p.exec_action("say", "What's_your_name?",interrupt='timeout_5')
+
+    # p.exec_action("asr", "name")
+
+    # try:
+    #     name_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+    # except:
+    #     name_response = "Linda"
+    # print "name response", name_response
+
+    # if name_response != "":
+    #     p.exec_action("say", "Is_"+ name_response +"_your_name?",interrupt='timeout_5')
+
+    #     p.exec_action("asr", "confirm")
+
+    #     try:
+    #         confirm_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+    #     except:
+    #         confirm_response = "yes"
+    #     if confirm_response != "" and confirm_response == "yes":
+    #         p.exec_action("say", "What_drink_do_you_want?",interrupt='timeout_5')
+
+    #         p.exec_action("asr", "drink")
+
+    #         try:
+    #             drink_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+    #         except:
+    #             drink_response = "coke"
+
+    #         if drink_response != "":
+    #             p.exec_action("say", "I_will_bring_you_a_" + drink_response,interrupt='timeout_5')
+    #     else:
+    #         p.exec_action("say", "I_am_not_sure_I_understood_,_can_you_repeat?",interrupt='timeout_5')
+
+    # TODO 
+    p.exec_action("say", "hello,_whats_your_name?",interrupt='timeout_5')
+
+    got_name = False
+    attempts = 0
+    name_response = ''
+    while (not got_name and attempts < 2):
+        p.exec_action("asr", "name")
+        try:
+            name_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+        except:
+            name_response = 'Linda'
+        print "name response", name_response
+    
+        if name_response != "":
+            p.exec_action("say", "Is_"+ name_response +"_your_name?",interrupt='timeout_5')
+
+            p.exec_action("asr", "confirm")
+        
+            try:
+                confirm_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+            except:
+                confirm_response = 'yes'
+
+            if confirm_response != "" and confirm_response == "yes":
+                got_name = True
+            else:
+                attempts = attempts + 1
+                p.exec_action("say", "then_could_you_repeat_it_please?",interrupt='timeout_5')
+
+    got_drink = False
+    attempts = 0
+    drink_response = ''
+    while (not got_drink and attempts < 2):
+        p.exec_action("say", "What_drink_do_you_want?",interrupt='timeout_5')
+        p.exec_action("asr", "drink")
+
+        try:
+            drink_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+        except:
+            drink_response = 'coke'
+        print "drink response", drink_response
+        
+        if drink_response != "":
+            p.exec_action("say", "I_will_bring_you_a_" + drink_response,interrupt='timeout_5')
+            p.exec_action("say", "Is_that_correct",interrupt='timeout_5')
+
+            p.exec_action("asr", "confirm")
+            try:
+                confirm_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+            except:
+                confirm_response = 'yes'
+
+            if confirm_response != "" and confirm_response == "yes":
+                got_drink = True
+            else:
+                attempts = attempts + 1
+                p.exec_action("say", "then_could_you_repeat_it_please?",interrupt='timeout_5')
+
+    p.exec_action("say","ok_"+name_response+"_I_will_bring_you_a_" + drink_response,interrupt='timeout_5')
+
+
+
+    p.exec_action("say","Can_you_look_at_me_for_some_seconds?",interrupt='timeout_5')
+    p.exec_action('persondescription', order_key, interrupt='timeout_10')
+    p.exec_action("say", "thanks",interrupt='timeout_5')
+
+
+    return (name_response, drink_response)
+
+
+
+
+FAKE = False
+
 p = PNPCmd()
 
 p.begin()
 
+
+p.exec_action('setpose', '5.8_10.6')
+
 p.exec_action('taskstep', 'waiting')
 p.exec_action('modiminit', 'cocktailparty')
 p.exec_action('interact', 'ready')
+
+
+
+###  delete that
+if FAKE:
+    print 'FAKE'
+    p.set_condition('dooropen', "true")
+###
+
 
 while (not p.get_condition('dooropen')):
     time.sleep(1)
@@ -26,203 +192,40 @@ p.exec_action('taskstep', 'Entering')
 p.exec_action('enter', '30_0_0_4_true')
 
 p.exec_action('taskstep', 'going_to_party_room')
-p.exec_action('navigateto', 'wp8', interrupt='aborted', recovery='restart_action')
+p.exec_action('navigateto', 'wp6', interrupt='aborted', recovery='restart_action')
 
+p.exec_action('turn','-135_ABS', interrupt='timeout_30')
 
 # start looking for orders
-p.exec_action('say', 'I_am_ready_to_take_the_orders')
+p.exec_action('say', 'I_am_ready_to_take_the_orders', interrupt='timeout_5')
 
-p.exec_action('headpose','0_-10')
+p.exec_action('headpose','0_-20',interrupt='timeout_5')
 
-
-
-#order 1
-p.exec_action('say','Please_can_you_come_here?')
-while (not p.get_condition('personhere')):
-     time.sleep(0.5)
-
-p.exec_action("say", "hello,_whats_your_name?")
-
-
-p.exec_action("say", "what_drink_do_you_want?")
-
-
-p.exec_action("say", "thanks")
-
-
-
-#order 2
-p.exec_action('say','Please_can_you_come_here?')
-while (not p.get_condition('personhere')):
-     time.sleep(0.5)
-
-p.exec_action("say", "hello,_whats_your_name?")
-
-
-
-p.exec_action("say", "what_drink_do_you_want?")
-
-
-p.exec_action("say", "thanks")
-
-
-#order 3
-p.exec_action('say','Please_can_you_come_here?')
-while (not p.get_condition('personhere')):
-     time.sleep(0.5)
-
-p.exec_action("say", "hello,_whats_your_name?")
-
-
-
-p.exec_action("say", "what_drink_do_you_want?")
-
-
-p.exec_action("say","can_you_look_at_me_for_some_seconds")
-
-
-p.exec_action("say", "thanks")
-
+(name_1, drink_1) = take_order('order1')
+time.sleep(5)
+(name_2, drink_2) = take_order('order2')
+time.sleep(5)
+(name_3, drink_3) = take_order('order3')
 
 
 # Go to the bar
 
-p.exec_action('goto', 'bar', interrupt='aborted', recovery='skip_action')
+p.exec_action('navigateto', 'wp12', interrupt='aborted', recovery='skip_action')
+p.exec_action('turn','90_ABS', interrupt='timeout_30')
 
-#say order1
-
-name = "John"
-age = memory_service.insertData("Actions/persondescription/order1/age")
-gender = memory_service.insertData("Actions/persondescription/order1/gender")
-haircolor = memory_service.insertData("Actions/persondescription/order1/hair")
-glasses = memory_service.insertData("Actions/persondescription/order1/glasses")
-
-if gender == "male":
-    feat = memory_service.insertData("Actions/persondescription/order1/beard")
-    if feat == "yes":
-        extra = "with beard"
-    else:
-        extra = "no beard"
-
-else
-    feat = memory_service.insertData("Actions/persondescription/order1/makeup")
-    if feat == "yes":
-        extra = "with makeup"
-    else:
-        extra = "no makeup"
-
-
-order_sentence = "Order 1"
-say()
-
+# say order1
 # example: 'John', who is a 'male/female', around '25' years old, with 'black' hair, 'nobeard/nomakeup', and 'noglasses' wants a 'coke'.
 
+repeat_order('order1', name_1, drink_1)
+repeat_order('order1', name_1, drink_1)
+repeat_order('order1', name_1, drink_1)
+
+# say order2
+
+# say order 3
 
 
 
-
-
-
-
-
-
-
-
-
-
-# Search for the person sitting
-p.exec_action('lookfor','personsitting',interrupt='timeout_20')
-
-if p.get_condition('personsitting'):
-    xsitting = p.memory_service.getData("Condition/personsitting/robot_coordinates_x")
-    ysitting = p.memory_service.getData("Condition/personsitting/robot_coordinates_y")
-
-    print "SITTING X: ",xsitting
-    print "SITTING Y: ",ysitting
-
-    p.exec_action("navigateto_naoqi",str(xsitting)+'_'+str(ysitting))
-
-
-    # TODO 
-    p.exec_action("say", "whats_your_name?")
-
-    # ASR function 
-    p.exec_action("say",'^person1name')
-
-
-    p.exec_action("say", "what_drink?")
-
-
-
-	p.exec_action('persondescription', 'order1')
-
-
-p.exec_action('headpose', '0_0')
-
-
-#p.exec_action("iswaving","0.2_0.5_wavingdetected")
-
-#xwaving = p.memory_service.getData('Actions/wavingdetected/wavingpersonx')
-#ywaving = p,memory_service.getData('Actions/wavingdetected/wavingpersony')
-
-#print "WAVING X: ",xwaving
-#print "WAVING Y: ",ywaving
-
-#p.exec_action("navigateto_naoqi",str(xwaving)+'_'+str(ywaving))
-
-
-
-
-
-
-
-
-
-
-
-
-
-p.exec_action('say', 'I_will_look_for_someone_calling_me')
-
-#while (not p.get_condition('personhere')):
-#    time.sleep(1)
-
-p.exec_action('lookfor', 'personhere')
-#print p.memory_service.getData('Actions/personhere/PersonAngleYaw')
-#print p.memory_service.getData('Actions/personhere/PersonAngleTurn')
-
-p.exec_action('turn', '^Actions/personhere/PersonAngleTurn')
-
-p.exec_action('say', 'hello')
-
-p.exec_action('goto', 'bar', interrupt='aborted', recovery='skip_action')
-
-p.exec_action('goto', 'door', interrupt='aborted', recovery='skip_action')
-
-#p.exec_action('interact', 'comehere')
-
-# p.exec_action('say', 'hello')
-
-# while (not p.get_condition('screentouched')):
-#     time.sleep(1)
-
-# p.exec_action('say', 'starting')
-
-# i=0
-
-#remove comment if you want the robot to move
-#p.exec_action('turn', '-90', interrupt='screentouched', recovery='skip_action')
-
-# while (i<5 and not p.get_condition('screentouched')):
-    
-#     y = -40 + 20*i
-#     p.exec_action('headpose', '%d_20' %y)
-#     time.sleep(0.5)
-#     i += 1
-
-# p.exec_action('headpose', '0_-10')
-
-# p.exec_action('say', 'goodbye')
 
 p.end()
 

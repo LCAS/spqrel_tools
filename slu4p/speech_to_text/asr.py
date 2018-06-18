@@ -6,6 +6,7 @@ import sys
 from os.path import expanduser
 import os
 import time
+from conditions import set_condition
 
 
 
@@ -127,7 +128,10 @@ class SpeechRecognition(object):
 
                 self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
 
-        self.memory_service.raiseEvent("VRanked", value)
+        for i, val in enumerate(len(value)):
+            if val in ["stop", "stop following", "don't follow", "stop following me"]:
+                if value[i+1] > "0.4":
+                    set_condition(self.memory, "stopfollowing", "true")
         #self.audio_recorder.stopMicrophonesRecording()
         #print "Audio recorder stopped recording"
 

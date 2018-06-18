@@ -13,6 +13,7 @@ class SpeechRecognition(object):
     USE_GOOGLE = True
     CHANNELS = [0, 0, 1, 0]
     audio_recorder = None
+    recording = False
 
     def __init__(self, vocab, app):
         super(SpeechRecognition, self).__init__()
@@ -42,8 +43,7 @@ class SpeechRecognition(object):
         self.asr_service.pause(True)
         #self.asr_service.removeAllContext()
         try:
-            self.asr_service.setAudioExpression(False)
-	    self.asr_service.setVocabulary(vocabulary, True)
+            self.asr_service.setVocabulary(vocabulary, True)
             #self.asr_service.setParameter("Sensitivity", 0.1)
             self.asr_service.setParameter("NbHypotheses", 3)
         except:
@@ -98,31 +98,32 @@ class SpeechRecognition(object):
 
     def onSpeechDetected(self, value):
         print "speechdetected=", value
-
-
-
-    def onWordRecognized(self, value):
-        print "value=",value
         if value == 1:
             if self.USE_GOOGLE:
-                #try:
-                #    self.AUDIO_FILE_DIR = self.memory_proxy.getData("NAOqibag/CurrentLogFolder") + "/asr_logs/"
-                #except:
-                self.AUDIO_FILE_DIR = expanduser('~') + '/bags/no_data/asr_logs/'
-                if not os.path.exists(self.AUDIO_FILE_DIR):
-                    os.makedirs(self.AUDIO_FILE_DIR)
+                if not recording:
+                    #try:
+                    #    self.AUDIO_FILE_DIR = self.memory_proxy.getData("NAOqibag/CurrentLogFolder") + "/asr_logs/"
+                    #except:
+                    self.AUDIO_FILE_DIR = expanduser('~') + '/bags/no_data/asr_logs/'
+                    if not os.path.exists(self.AUDIO_FILE_DIR):
+                        os.makedirs(self.AUDIO_FILE_DIR)
                     self.AUDIO_FILE_PATH = self.AUDIO_FILE_DIR + 'SPQReL_mic_'
 
                     #self.audio_recorder.stopMicrophonesRecording()
                     self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
                     self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
+                    self.recording = True
 
-                else:
-                    if self.USE_GOOGLE:
-                        self.audio_recorder.stopMicrophonesRecording()
-                        print "Audio recorder stopped recording"
 
-                        self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
+
+    def onWordRecognized(self, value):
+        print "value=",value
+        if self.USE_GOOGLE:
+            self.audio_recorder.stopMicrophonesRecording()
+            self.recording = False
+            print "Audio recorder stopped recording"
+
+            self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
         #self.audio_recorder.stopMicrophonesRecording()
         #print "Audio recorder stopped recording"
 

@@ -11,7 +11,7 @@ import pnp_cmd_naoqi
 from pnp_cmd_naoqi import *
 
 def load_semantic_info():
-    sem_locations = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/locations") )
+    sem_locations = eval( p.memory_service.getData("/semantic_info/locations") )
 
 def get_tosay(interpretations):
     to_say = ""
@@ -74,14 +74,17 @@ p.exec_action("waitfor","personhere")
 
 # = eval(p.memory_service.getData("CommandInterpretation"))
 
+
 p.exec_action("say","Hello._Go_for_the_question.")
 
+p.exec_action("asrenable", "")
 p.exec_action("understandcommand", "SPR")
+p.exec_action("asrenable", "off")
 
 interpretations = p.memory_service.getData("CommandInterpretation")
 print interpretations
 
-tosay = get_tosay(interpretations)+
+tosay = get_tosay(interpretations)
 
 if tosay != "":
     p.exec_action("say", tosay)

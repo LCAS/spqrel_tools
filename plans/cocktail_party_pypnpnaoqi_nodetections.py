@@ -162,14 +162,11 @@ def take_order(order_key='order1'):
 
 
 
-FAKE = True
+FAKE = False
 
 p = PNPCmd()
 
 p.begin()
-
-
-(name_1, drink_1) = take_order('order1')
 
 
 p.exec_action('setpose', '5.8_10.6')

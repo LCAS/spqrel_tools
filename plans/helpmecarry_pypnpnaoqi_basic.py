@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 
 try:
     from pnp_cmd_naoqi import *
@@ -25,6 +26,8 @@ while (not p.get_condition('personhere')):
 
 #previously vsay_hello;
 p.exec_action('say', 'hello')
+time.sleep(1)
+p.exec_action('say', 'i_will_help_you_carry')
 
 
 #### 2 - START THE FOLLOWING PHASE

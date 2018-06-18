@@ -154,11 +154,12 @@ class LanguageUnderstanding(object):
                     spotted_tasks.append({"task": task, "index": vb_index, "verb": vb, "requires": tasks_definition[task]["requires"]})
         # look for objects
         obj_spotted = []
+        objcat_spotted = []
         for objcat in self.objects:
             objcatname = objcat["name"]
             if objcatname in transcription:
                 objcat_index = transcription.find(objcatname)
-                obj_spotted.append({"objcat": objcatname, "index": objcat_index})
+                objcat_spotted.append({"objcat": objcatname, "index": objcat_index})
             for obj in objcat["objectList"]:
                 objname = obj["name"]
                 if objname in transcription:
@@ -181,11 +182,12 @@ class LanguageUnderstanding(object):
                 psn_spotted.append({"person": name, "index": name_index, "toguess": "name"})
         # look for locations
         loc_spotted = []
+        room_spotted = []
         for room in self.locations:
             roomname = room["name"]
             if roomname in transcription:
                 room_index = transcription.find(roomname)
-                loc_spotted.append({"room": roomname, "index": room_index})
+                room_spotted.append({"room": roomname, "index": room_index})
             for location in room["locationList"]:
                 locname = location["name"]
                 if locname in transcription:
@@ -206,6 +208,25 @@ class LanguageUnderstanding(object):
                 wts_index = transcription.find(wts)
                 wts_spotted.append({"wts": wts, "index": wts_index})
 
+        quest_spotted = []
+        max_quest_spotted = {}
+        for q in self.questions:
+            qstring = q["q"].replace("?", "").replace("!", "").replace(",", "").replace(".", "")
+            qsplit = qstring.split(" ")
+            tsplit = transcription.split(" ")
+            equalwords = sum([1 for qw in qsplit if qw in transcription])
+            print q, equalwords, len(tsplit)
+            if equalwords > len(tsplit)*0.7:
+                quest_spotted.append({"question": q, "equals": equalwords})
+        maxeq = 0
+        for quest in quest_spotted:
+            if quest["equals"] > maxeq:
+                max_quest_spotted = quest["question"]
+                maxeq = quest["equals"]
+
+        print maxeq
+
+
 
         # sort the complete list by index
         #complete_list = obj_spotted + psn_spotted + loc_spotted + wts_spotted
@@ -217,7 +238,8 @@ class LanguageUnderstanding(object):
                     "name": psn_spotted,
                     "location": loc_spotted,
                     "whattosay": wts_spotted,
-                    "question": []
+                    "room": room_spotted,
+                    "category": objcat_spotted
                     }
 
         # look for other things listed under "possible_names"
@@ -232,6 +254,7 @@ class LanguageUnderstanding(object):
         # for attcat in attr_spotted.keys():
         #     for att in attr_spotted[attcat]:
         #         if att["index"]
+
 
         for i in range(len(spotted_tasks)):
             n_req = 0
@@ -253,6 +276,8 @@ class LanguageUnderstanding(object):
                         else:
                             spotted_tasks[i]["requires"][n_req].update({"spotted":attr})
                 n_req += 1
+
+        spotted_tasks.append(max_quest_spotted)
 
         pp.pprint (spotted_tasks)
 

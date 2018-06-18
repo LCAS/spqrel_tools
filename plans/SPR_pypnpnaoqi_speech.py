@@ -10,12 +10,28 @@ except:
 import pnp_cmd_naoqi
 from pnp_cmd_naoqi import *
 
+def load_semantic_info():
+    sem_locations = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/locations") )
+
 def get_tosay(interpretations):
     to_say = ""
     for inter in interpretations:
+        # questions
         if "q" in inter.keys():
                 to_say = inter["a"]
                 break
+        # whereis
+        if "whereis" in inter.keys():
+            if "spotted" in inter["requires"]["location"].keys():
+                location_spot = inter["requires"]["location"]["spotted"]["name"]
+                for sem_room in sem_locations:
+                    for sem_location in sem_rooms["locationList"]:
+                        if sem_location["name"] == location_spot:
+                            to_say = "The " + location_spot + " is in the " + sem_rooms["name"]
+                            break
+        # howmanydoors
+        
+
     return to_say.replace(" ", "_")
 
 
@@ -25,7 +41,7 @@ p.begin()
 
 #p.exec_action('posture', 'stand')
 
-
+load_semantic_info()
 
 ###### GROUP DESCRIPTION #######
 

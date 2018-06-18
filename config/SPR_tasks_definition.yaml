@@ -1,0 +1,92 @@
+## actions commands
+#
+
+#arena
+
+whereis:
+    requires:
+      - location:
+          necessary: 1
+    possible_verbs: ["where is", "which room"]
+
+howmanydoors:
+  requires:
+    - room:
+        necessary: 1
+        possible_names: [bedroom, dining room, living room, kitchen, corridor, bathroom]
+  possible_verbs: ["how many doors"]
+
+howmany:
+  requires:
+    - room:
+        necessary: 1
+        possible_names: [bedroom, dining room, living room, kitchen, corridor, bathroom]
+    - location:
+        necessary: 1
+  possible_verbs: ["how many"]
+
+#crowd
+howmanypeople:
+  requires:
+    - people:
+        necessary: 1
+        possible_names: [children, adults, elders, males, females, " men ", women, boys, girls, people]
+  possible_verbs: ["how many", "tell me the number", "tell me"]
+
+#objects
+wherefind:
+  requires:
+    - object:
+        necessary: 0
+    - category:
+        necessary: 0
+        possible_names: [object, drinks, drink, cleaning stuff, snacks, snack, fruits, fruit, containers, container, food, cutlery, tableware]
+  possible_verbs: ["where can i find"]
+
+howmanycategory:
+  requires:
+    - category:
+        necessary: 1
+        possible_names: [object, drinks, drink, cleaning stuff, snacks, snack, fruits, fruit, containers, container, food, cutlery, tableware]
+  possible_verbs: ["how many"]
+
+whatobjects:
+  requires:
+    - placement:
+       necessary: 1
+  possible_verbs: ["what objects"]
+
+whatcategory:
+  requires:
+    - object:
+        necessary: 1
+  possible_verbs: ["what is the category"]
+
+samecategory:
+  requires:
+    - object:
+        necessary: 1
+    - object:
+        necessary: 1
+  possible_verbs: ["do "]
+
+whichadj:
+  requires:
+    - category:
+        necessary: 1
+        possible_names: ["object", drinks, drink, cleaning stuff, snacks, snack, fruits, fruit, containers, container, food, cutlery, tableware]
+    - adj:
+        necessary: 1
+        possible_names: [heaviest, smallest, biggest, lightest]
+  possible_verbs: ["which is the", "which is"]
+
+betweenadj:
+  requires:
+    - object:
+        necessary: 1
+    - object:
+        necessary: 1
+    - adj:
+        necessary: 1
+        possible_names: [heavier, smaller, bigger, lighter]
+  possible_verbs: ["between the", "between"]

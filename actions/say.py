@@ -52,7 +52,7 @@ def phraseToSay(memory_service,params):
         return "I will bring you a coke!"
     elif (params=='bringbeer'):
         return "I will bring you a beer!"
-    else: 
+    else:
         phrase = params.replace('_',' ')
         return phrase
 
@@ -69,13 +69,13 @@ def actionThread_exec (params):
     tosay = phraseToSay(memory_service,params)
     tts_service.say(tosay)
     print "  -- Say: "+tosay
-    # action init
+    action init
     while (getattr(t, "do_run", True) and val == 0):
         print "Wait text pronounced"
         # action exec
         val = memory_service.getData("ALTextToSpeech/TextDone")
         # action exec
-        time.sleep(0.5)
+        time.sleep(0.1)
 
     # action end
     action_success(actionName,params)

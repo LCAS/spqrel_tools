@@ -104,7 +104,20 @@ if not wavefound:
 
 
 # Go to the bar
-p.exec_action('navigateto', 'wp5', interrupt='aborted', recovery='skip_action')
+p.exec_action('navigateto', 'wp12', interrupt='aborted', recovery='skip_action')
+p.exec_action('turn', '90_ABS')
+
+
+# while not (p.get_condition('personhere'))
+#     #we can add interrupts and recovery actions in this way:
+#     p.exec_action('lookfor', 'personhere', interrupt='timeout_15') #interrupt after 15s
+
+#     if (p.get_condition('personhere')):
+#         #example of how to use some info from memory as parameter of an action
+#         p.exec_action('turn', '^Actions/personhere/PersonAngleTurn')
+#     else:
+#         #lookfor_personhere was interrupted. Then personhere is false
+#         p.exec_action('turn', '-45')
 
 
 #say order1

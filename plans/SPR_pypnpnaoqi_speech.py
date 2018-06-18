@@ -63,7 +63,6 @@ load_semantic_info()
 
 ###### GROUP DESCRIPTION #######
 
-
 p.exec_action("say", "hello")
 
 p.exec_action("say", "I_want_to_play_a_riddle_game,_I_will_give_you_some_seconds_to_get_ready.")

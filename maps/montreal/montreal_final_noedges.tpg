@@ -1,14 +1,5 @@
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint1_WayPoint2
-      node: WayPoint2
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint1_WayPoint34
-      node: WayPoint34
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint1_WayPoint18
-      node: WayPoint18
+    edges: []
     name: WayPoint1
     pointset: NA
     pose:
@@ -39,13 +30,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint2_WayPoint1
-      node: WayPoint1
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint2_WayPoint3
-      node: WayPoint3
+    edges: []
     name: WayPoint2
     pointset: NA
     pose:
@@ -76,13 +61,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint3_WayPoint2
-      node: WayPoint2
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint3_WayPoint4
-      node: WayPoint4
+    edges: []
     name: WayPoint3
     pointset: NA
     pose:
@@ -113,16 +92,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint4_WayPoint3
-      node: WayPoint3
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint4_WayPoint7
-      node: WayPoint7
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint4_WayPoint5
-      node: WayPoint5
+    edges: []
     name: WayPoint4
     pointset: NA
     pose:
@@ -153,13 +123,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint5_WayPoint4
-      node: WayPoint4
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint5_WayPoint6
-      node: WayPoint6
+    edges: []
     name: WayPoint5
     pointset: NA
     pose:
@@ -190,19 +154,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint6_WayPoint5
-      node: WayPoint5
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint6_WayPoint10
-      node: WayPoint10
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint6_WayPoint11
-      node: WayPoint11
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint6_WayPoint12
-      node: WayPoint12
+    edges: []
     name: WayPoint6
     pointset: NA
     pose:
@@ -233,13 +185,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint7_WayPoint4
-      node: WayPoint4
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint7_WayPoint8
-      node: WayPoint8
+    edges: []
     name: WayPoint7
     pointset: NA
     pose:
@@ -270,13 +216,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint8_WayPoint7
-      node: WayPoint7
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint8_WayPoint16
-      node: WayPoint16
+    edges: []
     name: WayPoint8
     pointset: NA
     pose:
@@ -307,13 +247,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint9_WayPoint10
-      node: WayPoint10
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint9_WayPoint16
-      node: WayPoint16
+    edges: []
     name: WayPoint9
     pointset: NA
     pose:
@@ -344,16 +278,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint10_WayPoint6
-      node: WayPoint6
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint10_WayPoint15
-      node: WayPoint15
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint10_WayPoint9
-      node: WayPoint9
+    edges: []
     name: WayPoint10
     pointset: NA
     pose:
@@ -384,16 +309,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint11_WayPoint6
-      node: WayPoint6
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint11_WayPoint13
-      node: WayPoint13
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint11_WayPoint39
-      node: WayPoint39
+    edges: []
     name: WayPoint11
     pointset: NA
     pose:
@@ -424,13 +340,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint12_WayPoint6
-      node: WayPoint6
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint12_WayPoint17
-      node: WayPoint17
+    edges: []
     name: WayPoint12
     pointset: NA
     pose:
@@ -461,13 +371,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint13_WayPoint11
-      node: WayPoint11
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint13_WayPoint14
-      node: WayPoint14
+    edges: []
     name: WayPoint13
     pointset: NA
     pose:
@@ -498,10 +402,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint14_WayPoint13
-      node: WayPoint13
+    edges: []
     name: WayPoint14
     pointset: NA
     pose:
@@ -532,10 +433,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint15_WayPoint10
-      node: WayPoint10
+    edges: []
     name: WayPoint15
     pointset: NA
     pose:
@@ -566,13 +464,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint16_WayPoint8
-      node: WayPoint8
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint16_WayPoint9
-      node: WayPoint9
+    edges: []
     name: WayPoint16
     pointset: NA
     pose:
@@ -603,13 +495,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint17_WayPoint12
-      node: WayPoint12
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint17_WayPoint39
-      node: WayPoint39
+    edges: []
     name: WayPoint17
     pointset: NA
     pose:
@@ -640,19 +526,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint18_WayPoint1
-      node: WayPoint1
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint18_WayPoint24
-      node: WayPoint24
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint18_WayPoint33
-      node: WayPoint33
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint18_WayPoint19
-      node: WayPoint19
+    edges: []
     name: WayPoint18
     pointset: NA
     pose:
@@ -683,13 +557,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint19_WayPoint18
-      node: WayPoint18
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint19_WayPoint20
-      node: WayPoint20
+    edges: []
     name: WayPoint19
     pointset: NA
     pose:
@@ -720,13 +588,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint20_WayPoint19
-      node: WayPoint19
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint20_WayPoint21
-      node: WayPoint21
+    edges: []
     name: WayPoint20
     pointset: NA
     pose:
@@ -757,13 +619,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint21_WayPoint20
-      node: WayPoint20
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint21_WayPoint22
-      node: WayPoint22
+    edges: []
     name: WayPoint21
     pointset: NA
     pose:
@@ -794,13 +650,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint22_WayPoint21
-      node: WayPoint21
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint22_WayPoint23
-      node: WayPoint23
+    edges: []
     name: WayPoint22
     pointset: NA
     pose:
@@ -831,16 +681,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint23_WayPoint22
-      node: WayPoint22
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint23_WayPoint30
-      node: WayPoint30
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint23_WayPoint35
-      node: WayPoint35
+    edges: []
     name: WayPoint23
     pointset: NA
     pose:
@@ -871,19 +712,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint24_WayPoint18
-      node: WayPoint18
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint24_WayPoint33
-      node: WayPoint33
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint24_WayPoint25
-      node: WayPoint25
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint24_WayPoint32
-      node: WayPoint32
+    edges: []
     name: WayPoint24
     pointset: NA
     pose:
@@ -914,16 +743,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint25_WayPoint26
-      node: WayPoint26
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint25_WayPoint24
-      node: WayPoint24
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint25_WayPoint32
-      node: WayPoint32
+    edges: []
     name: WayPoint25
     pointset: NA
     pose:
@@ -954,13 +774,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint26_WayPoint27
-      node: WayPoint27
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint26_WayPoint25
-      node: WayPoint25
+    edges: []
     name: WayPoint26
     pointset: NA
     pose:
@@ -991,13 +805,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint27_WayPoint28
-      node: WayPoint28
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint27_WayPoint26
-      node: WayPoint26
+    edges: []
     name: WayPoint27
     pointset: NA
     pose:
@@ -1028,13 +836,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint28_WayPoint29
-      node: WayPoint29
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint28_WayPoint27
-      node: WayPoint27
+    edges: []
     name: WayPoint28
     pointset: NA
     pose:
@@ -1065,13 +867,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint29_WayPoint31
-      node: WayPoint31
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint29_WayPoint28
-      node: WayPoint28
+    edges: []
     name: WayPoint29
     pointset: NA
     pose:
@@ -1102,13 +898,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint30_WayPoint23
-      node: WayPoint23
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint30_WayPoint31
-      node: WayPoint31
+    edges: []
     name: WayPoint30
     pointset: NA
     pose:
@@ -1139,16 +929,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint31_WayPoint30
-      node: WayPoint30
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint31_WayPoint37
-      node: WayPoint37
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint31_WayPoint29
-      node: WayPoint29
+    edges: []
     name: WayPoint31
     pointset: NA
     pose:
@@ -1179,13 +960,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint32_WayPoint25
-      node: WayPoint25
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint32_WayPoint24
-      node: WayPoint24
+    edges: []
     name: WayPoint32
     pointset: NA
     pose:
@@ -1216,13 +991,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint33_WayPoint24
-      node: WayPoint24
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint33_WayPoint18
-      node: WayPoint18
+    edges: []
     name: WayPoint33
     pointset: NA
     pose:
@@ -1253,10 +1022,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint34_WayPoint1
-      node: WayPoint1
+    edges: []
     name: WayPoint34
     pointset: NA
     pose:
@@ -1287,13 +1053,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint35_WayPoint23
-      node: WayPoint23
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint35_WayPoint36
-      node: WayPoint36
+    edges: []
     name: WayPoint35
     pointset: NA
     pose:
@@ -1324,10 +1084,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint36_WayPoint35
-      node: WayPoint35
+    edges: []
     name: WayPoint36
     pointset: NA
     pose:
@@ -1358,13 +1115,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint37_WayPoint31
-      node: WayPoint31
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint37_WayPoint38
-      node: WayPoint38
+    edges: []
     name: WayPoint37
     pointset: NA
     pose:
@@ -1395,13 +1146,7 @@
     - x: 0.689999997616
       y: -0.287000000477
 - node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint38_WayPoint38
-      node: WayPoint38
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint38_WayPoint37
-      node: WayPoint37
+    edges: []
     name: WayPoint38
     pointset: NA
     pose:
@@ -1413,43 +1158,6 @@
       position:
         x: 25.05
         y: 16.25
-        z: 0.0
-    verts:
-    - x: 0.689999997616
-      y: 0.287000000477
-    - x: 0.287000000477
-      y: 0.689999997616
-    - x: -0.287000000477
-      y: 0.689999997616
-    - x: -0.689999997616
-      y: 0.287000000477
-    - x: -0.689999997616
-      y: -0.287000000477
-    - x: -0.287000000477
-      y: -0.689999997616
-    - x: 0.287000000477
-      y: -0.689999997616
-    - x: 0.689999997616
-      y: -0.287000000477
-- node:
-    edges:
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint39_WayPoint17
-      node: WayPoint17
-    - action: NAOqiPlanner/Goal
-      edge_id: WayPoint39_WayPoint11
-      node: WayPoint11
-    name: WayPoint39
-    pointset: NA
-    pose:
-      orientation:
-        w: 1.0
-        x: 0.0
-        y: 0.0
-        z: 0.0
-      position:
-        x: 13.55
-        y: 2.9499999999999993
         z: 0.0
     verts:
     - x: 0.689999997616

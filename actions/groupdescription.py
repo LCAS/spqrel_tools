@@ -19,7 +19,7 @@ headers = { 'Content-Type': 'application/octet-stream',
 
 api_params = {
     'returnFaceId': 'true',
-    'returnFaceLandmarks': 'false',
+    'returnFaceLandmarks': 'true',
     'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,' +
                             'emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
 }

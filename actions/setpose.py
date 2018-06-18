@@ -8,28 +8,28 @@ import math
 import action_base
 from action_base import *
 
-import conditions
-from conditions import set_condition
+actionName = "setpose"
 
-actionName = "navigateto_naoqi"
-
-def actionThread_exec(params):
+def actionThread_exec (params):
+    global goal_reached
     global memory_service
 
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
 
-    print "Action " + actionName + " started with params " + str(params)
+    print "Action "+actionName+" started with params "+params
 
     # action init
-    p = params.split('_')
-    
-    navigation_service = getattr(t, "session", None).service("ALNavigation")
-    navigation_service.navigateTo(float(p[0]),float(p[1]))
+    print "  -- SetPose: "+ params
+    mem_key_setpose   = "NAOqiLocalizer/SetPose"
+    pose = params.split("_")
+    if (len(pose) == 3):
+        posef = [float(pose[0]), float(pose[1]), float(pose[2])]
+        memory_service.raiseEvent(mem_key_setpose, posef);
 
-    # action end
     action_success(actionName,params)
-    
+       
+
 
 def init(session):
     print actionName+" init"

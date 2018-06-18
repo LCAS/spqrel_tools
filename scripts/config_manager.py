@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import os
 import yaml
 from json import dumps, loads
 from naoqi import *
@@ -15,6 +16,12 @@ class config_manager(object):
 
         config_folder = os.path.join(os.environ["SPQREL_TOOLS"], "config")
 
+        # open dictionary file
+        dictionary_file = os.path.join(os.path.join(os.environ["SPQREL_TOOLS"], "slu4p/resources"), "nuance_dictionary.txt")
+        self.nuance_dictionary = open(dictionary_file, "w")
+        print "Saving to Nuance dictionary in:", dictionary_file
+
+        # load semantic info
         memory_keys = []
         for config_file in os.listdir(config_folder):
             [config_name, ext] = config_file.split(".")
@@ -45,12 +52,24 @@ class config_manager(object):
                     print e
                     exit(1)
 
+        # Close the dictionary file
+        self.nuance_dictionary.close()
+
         #for key in memory_keys:
         #    print key, ":"
         #    pp.pprint(eval(self.memProxy.getData(key)))
 
+    def inDictionary(self, values):
+        for value in values:
+            self.nuance_dictionary.write(value + "\n")
+
     def decode_yaml(self, yaml_file, config_name):
         content = yaml.load(yaml_file)
+
+        # put the verbs in the dictionary
+        for task in content:
+            self.inDictionary(content[task]["possible_verbs"])
+
         return content
 
     def decode_xml(self, xml_root, config_name):
@@ -59,31 +78,47 @@ class config_manager(object):
             categories = []
             for objcat in xml_root.findall("category"):
                 objcatname = objcat.get("name")
+                # put in dictionary
+                self.inDictionary([objcatname])
                 objcatlocation = objcat.get("defaultLocation")
                 objcatroom = objcat.get("room")
                 objects = []
                 for obj in objcat.findall("object"):
-                    objects.append({"name": obj.get("name")}) # TODO other parameters here
+                    objname = obj.get("name")
+                    # put in dictionary
+                    self.inDictionary([objname])
+                    objects.append({"name": objname}) # TODO other parameters here
                 categories.append({"name": objcatname, "defaultLocation": objcatlocation, "room": objcatroom, "objectList": objects})
             return categories
         elif config_name == "locations":
             rooms = []
             for locroom in xml_root.findall("room"):
                 locroomname = locroom.get("name")
+                # put in dictionary
+                self.inDictionary([locroomname])
                 locations = []
                 for loc in locroom.findall("location"):
-                    locations.append({"name": loc.get("name")})
+                    locname = loc.get("name")
+                    # put in dictionary
+                    self.inDictionary([locname])
+                    locations.append({"name": locname})
                 rooms.append({"name": locroomname, "locationList": locations})
             return rooms
         elif config_name == "names":
             names = []
             for name in xml_root.findall("name"):
-                names.append({"name": name.text, "gender": name.get("gender")})
+                namename = name.text
+                # put in dictionary
+                self.inDictionary([namename])
+                names.append({"name": namename, "gender": name.get("gender")})
             return names
         elif config_name == "questions":
             questions = []
             for question in xml_root.findall("question"):
-                questions.append({"q": question.find("q").text, "a": question.find("a").text})
+                questionstring = question.find("q").text
+                # put in dictionary
+                self.inDictionary([questionstring])
+                questions.append({"q": questionstring, "a": question.find("a").text})
             return questions
         else:
             return []

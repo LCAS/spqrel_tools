@@ -17,6 +17,7 @@ from action_base import *
 
 import conditions
 from conditions import set_condition
+from conditions import get_condition
 
 
 """
@@ -162,11 +163,21 @@ def wavingThread (params):
     paramList = params.split('_')
     sampleInterval = float(paramList[0])
     throttleInterval = float(paramList[1])
+    conditiontoend = paramList[2]
 
     print actionName+" thread started. Sample Period: "+ str(sampleInterval) + ", throttle Period: " + str(throttleInterval)
 
+    val = False
 
-    while getattr(t, "do_run", True):
+    # Services
+    try:
+        DarknetSRV = session.service("DarknetSRV")
+    except:
+        action_failed(actionName,params)
+
+    while (getattr(t, "do_run", True) and (not val)): 
+
+        val = False
         # get two images with time spacing...
         isOk = False
         while not isOk:
@@ -277,7 +288,16 @@ def wavingThread (params):
                 cnt+=1
 
         print ("-------------------------")
+        
+        print "conditiontoend: ", conditiontoend
+        val = get_condition(memory_service,conditiontoend)
+        print val
+
         time.sleep(throttleInterval)
+
+    action_success(actionName,params)
+
+
     print actionName+" thread quit"
 
 def init(session):
@@ -298,8 +318,6 @@ def init(session):
     # Select camera.
     video_service.setParam(vision_definitions.kCameraSelectID, camera)
 
-    # Services
-    DarknetSRV = session.service("DarknetSRV")
     
     action_base.init(session, actionName, wavingThread)
 

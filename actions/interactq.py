@@ -50,15 +50,17 @@ def actionThread_exec (params):
                 set_condition(memory_service, cc, 'false')
                 #print "Condition: ",cc,get_condition(memory_service, cc)
         except:
-            # now wait for the actual answer
-            data_str = "im.ask('"+params+"')"+"\n###ooo###\n\n"
-            #TODO make it interruptible !!!
-            rdata = csend(data_str)
-            rdata = rdata.strip() # rdata is the answer of the ask action
-        
-            count = count - 1
-            # action exec
-            time.sleep(0.1)
+            print "listConditions failed"
+
+        # now wait for the actual answer
+        data_str = "im.ask('"+params+"')"+"\n###ooo###\n\n"
+        #TODO make it interruptible !!!
+        rdata = csend(data_str)
+        rdata = rdata.strip() # rdata is the answer of the ask action
+            
+        count = count - 1
+        # action exec
+        time.sleep(0.1)
 
     print "setting condition: %s true"%rdata
     set_condition(memory_service, rdata, 'true')

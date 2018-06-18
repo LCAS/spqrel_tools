@@ -33,7 +33,7 @@ def actionThread_exec (params):
     #tts_service = getattr(t, "session", None).service("ALTextToSpeech")
     print "Action "+actionName+" started with params "+params
 
-    memory_service.insertData("GoogleTranscription", "How many doors there are in the kitchen?")
+    memory_service.insertData("GoogleTranscription", "Yonge Street in Ontario is the longest street in the word?")
 
     memory_service.raiseEvent("UnderstandCommand", (str(params)))
 

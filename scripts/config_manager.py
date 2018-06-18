@@ -117,7 +117,7 @@ class config_manager(object):
             for question in xml_root.findall("question"):
                 questionstring = question.find("q").text
                 # put in dictionary
-                self.inDictionary([questionstring])
+                #self.inDictionary([questionstring])
                 questions.append({"q": questionstring, "a": question.find("a").text})
             return questions
         else:

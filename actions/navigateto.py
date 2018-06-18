@@ -50,6 +50,9 @@ def actionThread_exec(params):
     print "  -- Goto: " + str(target)
     mem_key_goal = "TopologicalNav/Goal"
     mem_key_status = "TopologicalNav/Status"
+    mem_key_headcontrol = "PepperHeadControl/Enabled"
+
+    memory_service.raiseEvent(mem_key_headcontrol, True)
 
     acb = memory_service.subscriber(mem_key_status)
     acb.signal.connect(navstatus_cb)
@@ -68,6 +71,8 @@ def actionThread_exec(params):
     #headpose.moveHead(motion_service, headYaw, headPitch, headtime)
     print "Action " + actionName + " " + params + " terminated"
     # action end
+    memory_service.raiseEvent(mem_key_headcontrol, False)
+
     if goal_reached:
         action_base.action_success(actionName, params)
     else:
@@ -81,6 +86,8 @@ def init(session):
 
 def quit():
     print actionName + " quit"
+    mem_key_headcontrol = "PepperHeadControl/Enabled"
+    memory_service.raiseEvent(mem_key_headcontrol, False)
     actionThread_exec.do_run = False
 
 

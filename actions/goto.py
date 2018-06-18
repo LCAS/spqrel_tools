@@ -95,8 +95,8 @@ def actionThread_exec (params):
         # action exec
         
     # action end
-    memory_service.raiseEvent(mem_key_reset,True);
-    memory_service.raiseEvent(mem_key_headcontrol,False);
+    memory_service.raiseEvent(mem_key_reset,True)
+    memory_service.raiseEvent(mem_key_headcontrol, False)
     acb.signal.disconnect(acb_connect)
     action_success(actionName,params)
 
@@ -108,6 +108,8 @@ def init(session):
 
 def quit():
     print actionName+" quit"
+    mem_key_headcontrol = "PepperHeadControl/Enabled"
+    memory_service.raiseEvent(mem_key_headcontrol, False)
     actionThread_exec.do_run = False
     
 

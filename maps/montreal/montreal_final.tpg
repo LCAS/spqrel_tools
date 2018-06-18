@@ -1,15 +1,15 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint1_WayPoint2
-      node: WayPoint2
+      edge_id: wp1_wp2
+      node: wp2
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint1_WayPoint34
-      node: WayPoint34
+      edge_id: wp1_wp34
+      node: wp34
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint1_WayPoint18
-      node: WayPoint18
-    name: WayPoint1
+      edge_id: wp1_wp18
+      node: wp18
+    name: wp1
     pointset: NA
     pose:
       orientation:
@@ -41,12 +41,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint2_WayPoint1
-      node: WayPoint1
+      edge_id: wp2_wp1
+      node: wp1
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint2_WayPoint3
-      node: WayPoint3
-    name: WayPoint2
+      edge_id: wp2_wp3
+      node: wp3
+    name: wp2
     pointset: NA
     pose:
       orientation:
@@ -78,12 +78,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint3_WayPoint2
-      node: WayPoint2
+      edge_id: wp3_wp2
+      node: wp2
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint3_WayPoint4
-      node: WayPoint4
-    name: WayPoint3
+      edge_id: wp3_wp4
+      node: wp4
+    name: wp3
     pointset: NA
     pose:
       orientation:
@@ -115,15 +115,15 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint4_WayPoint3
-      node: WayPoint3
+      edge_id: wp4_wp3
+      node: wp3
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint4_WayPoint7
-      node: WayPoint7
+      edge_id: wp4_wp7
+      node: wp7
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint4_WayPoint5
-      node: WayPoint5
-    name: WayPoint4
+      edge_id: wp4_wp5
+      node: wp5
+    name: wp4
     pointset: NA
     pose:
       orientation:
@@ -155,12 +155,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint5_WayPoint4
-      node: WayPoint4
+      edge_id: wp5_wp4
+      node: wp4
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint5_WayPoint6
-      node: WayPoint6
-    name: WayPoint5
+      edge_id: wp5_wp6
+      node: wp6
+    name: wp5
     pointset: NA
     pose:
       orientation:
@@ -192,18 +192,18 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint6_WayPoint5
-      node: WayPoint5
+      edge_id: wp6_wp5
+      node: wp5
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint6_WayPoint10
-      node: WayPoint10
+      edge_id: wp6_wp10
+      node: wp10
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint6_WayPoint11
-      node: WayPoint11
+      edge_id: wp6_wp11
+      node: wp11
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint6_WayPoint12
-      node: WayPoint12
-    name: WayPoint6
+      edge_id: wp6_wp12
+      node: wp12
+    name: wp6
     pointset: NA
     pose:
       orientation:
@@ -235,12 +235,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint7_WayPoint4
-      node: WayPoint4
+      edge_id: wp7_wp4
+      node: wp4
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint7_WayPoint8
-      node: WayPoint8
-    name: WayPoint7
+      edge_id: wp7_wp8
+      node: wp8
+    name: wp7
     pointset: NA
     pose:
       orientation:
@@ -272,12 +272,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint8_WayPoint7
-      node: WayPoint7
+      edge_id: wp8_wp7
+      node: wp7
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint8_WayPoint16
-      node: WayPoint16
-    name: WayPoint8
+      edge_id: wp8_wp16
+      node: wp16
+    name: wp8
     pointset: NA
     pose:
       orientation:
@@ -309,12 +309,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint9_WayPoint10
-      node: WayPoint10
+      edge_id: wp9_wp10
+      node: wp10
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint9_WayPoint16
-      node: WayPoint16
-    name: WayPoint9
+      edge_id: wp9_wp16
+      node: wp16
+    name: wp9
     pointset: NA
     pose:
       orientation:
@@ -346,15 +346,15 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint10_WayPoint6
-      node: WayPoint6
+      edge_id: wp10_wp6
+      node: wp6
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint10_WayPoint15
-      node: WayPoint15
+      edge_id: wp10_wp15
+      node: wp15
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint10_WayPoint9
-      node: WayPoint9
-    name: WayPoint10
+      edge_id: wp10_wp9
+      node: wp9
+    name: wp10
     pointset: NA
     pose:
       orientation:
@@ -386,15 +386,15 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint11_WayPoint6
-      node: WayPoint6
+      edge_id: wp11_wp6
+      node: wp6
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint11_WayPoint13
-      node: WayPoint13
+      edge_id: wp11_wp13
+      node: wp13
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint11_WayPoint39
-      node: WayPoint39
-    name: WayPoint11
+      edge_id: wp11_wp39
+      node: wp39
+    name: wp11
     pointset: NA
     pose:
       orientation:
@@ -426,12 +426,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint12_WayPoint6
-      node: WayPoint6
+      edge_id: wp12_wp6
+      node: wp6
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint12_WayPoint17
-      node: WayPoint17
-    name: WayPoint12
+      edge_id: wp12_wp17
+      node: wp17
+    name: wp12
     pointset: NA
     pose:
       orientation:
@@ -463,12 +463,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint13_WayPoint11
-      node: WayPoint11
+      edge_id: wp13_wp11
+      node: wp11
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint13_WayPoint14
-      node: WayPoint14
-    name: WayPoint13
+      edge_id: wp13_wp14
+      node: wp14
+    name: wp13
     pointset: NA
     pose:
       orientation:
@@ -500,9 +500,9 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint14_WayPoint13
-      node: WayPoint13
-    name: WayPoint14
+      edge_id: wp14_wp13
+      node: wp13
+    name: wp14
     pointset: NA
     pose:
       orientation:
@@ -534,9 +534,9 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint15_WayPoint10
-      node: WayPoint10
-    name: WayPoint15
+      edge_id: wp15_wp10
+      node: wp10
+    name: wp15
     pointset: NA
     pose:
       orientation:
@@ -568,12 +568,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint16_WayPoint8
-      node: WayPoint8
+      edge_id: wp16_wp8
+      node: wp8
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint16_WayPoint9
-      node: WayPoint9
-    name: WayPoint16
+      edge_id: wp16_wp9
+      node: wp9
+    name: wp16
     pointset: NA
     pose:
       orientation:
@@ -605,12 +605,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint17_WayPoint12
-      node: WayPoint12
+      edge_id: wp17_wp12
+      node: wp12
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint17_WayPoint39
-      node: WayPoint39
-    name: WayPoint17
+      edge_id: wp17_wp39
+      node: wp39
+    name: wp17
     pointset: NA
     pose:
       orientation:
@@ -642,18 +642,18 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint18_WayPoint1
-      node: WayPoint1
+      edge_id: wp18_wp1
+      node: wp1
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint18_WayPoint24
-      node: WayPoint24
+      edge_id: wp18_wp24
+      node: wp24
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint18_WayPoint33
-      node: WayPoint33
+      edge_id: wp18_wp33
+      node: wp33
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint18_WayPoint19
-      node: WayPoint19
-    name: WayPoint18
+      edge_id: wp18_wp19
+      node: wp19
+    name: wp18
     pointset: NA
     pose:
       orientation:
@@ -685,12 +685,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint19_WayPoint18
-      node: WayPoint18
+      edge_id: wp19_wp18
+      node: wp18
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint19_WayPoint20
-      node: WayPoint20
-    name: WayPoint19
+      edge_id: wp19_wp20
+      node: wp20
+    name: wp19
     pointset: NA
     pose:
       orientation:
@@ -722,12 +722,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint20_WayPoint19
-      node: WayPoint19
+      edge_id: wp20_wp19
+      node: wp19
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint20_WayPoint21
-      node: WayPoint21
-    name: WayPoint20
+      edge_id: wp20_wp21
+      node: wp21
+    name: wp20
     pointset: NA
     pose:
       orientation:
@@ -759,12 +759,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint21_WayPoint20
-      node: WayPoint20
+      edge_id: wp21_wp20
+      node: wp20
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint21_WayPoint22
-      node: WayPoint22
-    name: WayPoint21
+      edge_id: wp21_wp22
+      node: wp22
+    name: wp21
     pointset: NA
     pose:
       orientation:
@@ -796,12 +796,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint22_WayPoint21
-      node: WayPoint21
+      edge_id: wp22_wp21
+      node: wp21
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint22_WayPoint23
-      node: WayPoint23
-    name: WayPoint22
+      edge_id: wp22_wp23
+      node: wp23
+    name: wp22
     pointset: NA
     pose:
       orientation:
@@ -833,15 +833,15 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint23_WayPoint22
-      node: WayPoint22
+      edge_id: wp23_wp22
+      node: wp22
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint23_WayPoint30
-      node: WayPoint30
+      edge_id: wp23_wp30
+      node: wp30
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint23_WayPoint35
-      node: WayPoint35
-    name: WayPoint23
+      edge_id: wp23_wp35
+      node: wp35
+    name: wp23
     pointset: NA
     pose:
       orientation:
@@ -873,18 +873,18 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint24_WayPoint18
-      node: WayPoint18
+      edge_id: wp24_wp18
+      node: wp18
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint24_WayPoint33
-      node: WayPoint33
+      edge_id: wp24_wp33
+      node: wp33
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint24_WayPoint25
-      node: WayPoint25
+      edge_id: wp24_wp25
+      node: wp25
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint24_WayPoint32
-      node: WayPoint32
-    name: WayPoint24
+      edge_id: wp24_wp32
+      node: wp32
+    name: wp24
     pointset: NA
     pose:
       orientation:
@@ -916,15 +916,15 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint25_WayPoint26
-      node: WayPoint26
+      edge_id: wp25_wp26
+      node: wp26
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint25_WayPoint24
-      node: WayPoint24
+      edge_id: wp25_wp24
+      node: wp24
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint25_WayPoint32
-      node: WayPoint32
-    name: WayPoint25
+      edge_id: wp25_wp32
+      node: wp32
+    name: wp25
     pointset: NA
     pose:
       orientation:
@@ -956,12 +956,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint26_WayPoint27
-      node: WayPoint27
+      edge_id: wp26_wp27
+      node: wp27
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint26_WayPoint25
-      node: WayPoint25
-    name: WayPoint26
+      edge_id: wp26_wp25
+      node: wp25
+    name: wp26
     pointset: NA
     pose:
       orientation:
@@ -993,12 +993,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint27_WayPoint28
-      node: WayPoint28
+      edge_id: wp27_wp28
+      node: wp28
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint27_WayPoint26
-      node: WayPoint26
-    name: WayPoint27
+      edge_id: wp27_wp26
+      node: wp26
+    name: wp27
     pointset: NA
     pose:
       orientation:
@@ -1030,12 +1030,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint28_WayPoint29
-      node: WayPoint29
+      edge_id: wp28_wp29
+      node: wp29
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint28_WayPoint27
-      node: WayPoint27
-    name: WayPoint28
+      edge_id: wp28_wp27
+      node: wp27
+    name: wp28
     pointset: NA
     pose:
       orientation:
@@ -1067,12 +1067,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint29_WayPoint31
-      node: WayPoint31
+      edge_id: wp29_wp31
+      node: wp31
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint29_WayPoint28
-      node: WayPoint28
-    name: WayPoint29
+      edge_id: wp29_wp28
+      node: wp28
+    name: wp29
     pointset: NA
     pose:
       orientation:
@@ -1104,12 +1104,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint30_WayPoint23
-      node: WayPoint23
+      edge_id: wp30_wp23
+      node: wp23
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint30_WayPoint31
-      node: WayPoint31
-    name: WayPoint30
+      edge_id: wp30_wp31
+      node: wp31
+    name: wp30
     pointset: NA
     pose:
       orientation:
@@ -1141,15 +1141,15 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint31_WayPoint30
-      node: WayPoint30
+      edge_id: wp31_wp30
+      node: wp30
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint31_WayPoint37
-      node: WayPoint37
+      edge_id: wp31_wp37
+      node: wp37
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint31_WayPoint29
-      node: WayPoint29
-    name: WayPoint31
+      edge_id: wp31_wp29
+      node: wp29
+    name: wp31
     pointset: NA
     pose:
       orientation:
@@ -1181,12 +1181,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint32_WayPoint25
-      node: WayPoint25
+      edge_id: wp32_wp25
+      node: wp25
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint32_WayPoint24
-      node: WayPoint24
-    name: WayPoint32
+      edge_id: wp32_wp24
+      node: wp24
+    name: wp32
     pointset: NA
     pose:
       orientation:
@@ -1218,12 +1218,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint33_WayPoint24
-      node: WayPoint24
+      edge_id: wp33_wp24
+      node: wp24
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint33_WayPoint18
-      node: WayPoint18
-    name: WayPoint33
+      edge_id: wp33_wp18
+      node: wp18
+    name: wp33
     pointset: NA
     pose:
       orientation:
@@ -1255,9 +1255,9 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint34_WayPoint1
-      node: WayPoint1
-    name: WayPoint34
+      edge_id: wp34_wp1
+      node: wp1
+    name: wp34
     pointset: NA
     pose:
       orientation:
@@ -1289,12 +1289,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint35_WayPoint23
-      node: WayPoint23
+      edge_id: wp35_wp23
+      node: wp23
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint35_WayPoint36
-      node: WayPoint36
-    name: WayPoint35
+      edge_id: wp35_wp36
+      node: wp36
+    name: wp35
     pointset: NA
     pose:
       orientation:
@@ -1326,9 +1326,9 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint36_WayPoint35
-      node: WayPoint35
-    name: WayPoint36
+      edge_id: wp36_wp35
+      node: wp35
+    name: wp36
     pointset: NA
     pose:
       orientation:
@@ -1360,12 +1360,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint37_WayPoint31
-      node: WayPoint31
+      edge_id: wp37_wp31
+      node: wp31
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint37_WayPoint38
-      node: WayPoint38
-    name: WayPoint37
+      edge_id: wp37_wp38
+      node: wp38
+    name: wp37
     pointset: NA
     pose:
       orientation:
@@ -1397,12 +1397,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint38_WayPoint38
-      node: WayPoint38
+      edge_id: wp38_wp38
+      node: wp38
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint38_WayPoint37
-      node: WayPoint37
-    name: WayPoint38
+      edge_id: wp38_wp37
+      node: wp37
+    name: wp38
     pointset: NA
     pose:
       orientation:
@@ -1434,12 +1434,12 @@
 - node:
     edges:
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint39_WayPoint17
-      node: WayPoint17
+      edge_id: wp39_wp17
+      node: wp17
     - action: NAOqiPlanner/Goal
-      edge_id: WayPoint39_WayPoint11
-      node: WayPoint11
-    name: WayPoint39
+      edge_id: wp39_wp11
+      node: wp11
+    name: wp39
     pointset: NA
     pose:
       orientation:

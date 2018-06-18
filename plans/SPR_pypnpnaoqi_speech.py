@@ -10,8 +10,13 @@ except:
 import pnp_cmd_naoqi
 from pnp_cmd_naoqi import *
 
-
-
+def get_tosay(interpretations):
+    to_say = ""
+    for inter in interpretations:
+        if "q" in inter.keys():
+                to_say = inter["a"]
+                break
+    return to_say.replace(" ", "_")
 
 
 p = PNPCmd()
@@ -57,10 +62,16 @@ p.exec_action("say","Hello._Go_for_the_question.")
 
 p.exec_action("understandcommand", "SPR")
 
-interpretation = p.memory_service.getData("CommandInterpretation")
-print interpretation
-p.exec_action("wait","3")
-p.exec_action('say','Sorry,_I_did_not_understand_question_1')
+interpretations = p.memory_service.getData("CommandInterpretation")
+print interpretations
+
+tosay = get_tosay(interpretations)+
+
+if tosay != "":
+    p.exec_action("say", tosay)
+else:
+    #p.exec_action("wait","3")
+    p.exec_action('say','Sorry,_I_did_not_understand_question_1')
 
 p.exec_action("wait","3")
 p.exec_action('say','Sorry,_I_did_not_understand_question_2')

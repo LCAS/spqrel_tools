@@ -192,7 +192,7 @@ p.exec_action('taskstep', 'Entering')
 p.exec_action('enter', '30_0_0_4_true')
 
 p.exec_action('taskstep', 'going_to_party_room')
-p.exec_action('navigateto', 'wp8', interrupt='aborted', recovery='restart_action')
+p.exec_action('navigateto', 'wp6', interrupt='aborted', recovery='restart_action')
 
 p.exec_action('turn','-135_ABS', interrupt='timeout_30')
 

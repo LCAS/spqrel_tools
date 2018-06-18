@@ -2,7 +2,7 @@ import os
 import sys
 
 try:
-	from pnp_cmd_naoqi import *
+    from pnp_cmd_naoqi import *
 except:
     print "Please set PNP_HOME environment variable to PetriNetPlans folder."
     sys.exit(1)
@@ -39,34 +39,34 @@ p.exec_action('updatefollowpersoncoord', 'stopfollowing', interrupt='personlost'
 
 # if we lost the person during the trip...
 while  (not p.get_condition('stopfollowing') ) or p.get_condition('personlost'):
-	p.exec_action('say', 'waitforme')
-	# look for someone...
-	p.exec_action('lookfor', 'persondetected',  interrupt='timeout_20')
-	# turn around looking for a person
-	if not  p.get_condition('persondetected'):
-		if rand.random()>0.5:
-			p.exec_action('turn','90')
-		else:
-			p.exec_action('turn','-90')
-	else:
-		# persondetected found someone
-		try:
-			#here should be new person location in robot coordinates
-			xwaving = p.memory_service.getData('Conditions/persondetected/robot_coordinates_x')
-			ywaving = p,memory_service.getData('Conditions/persondetected/robot_coordinates_y')
+    p.exec_action('say', 'waitforme')
+    # look for someone...
+    p.exec_action('lookfor', 'persondetected',  interrupt='timeout_20')
+    # turn around looking for a person
+    if not  p.get_condition('persondetected'):
+        if rand.random()>0.5:
+            p.exec_action('turn','90')
+        else:
+            p.exec_action('turn','-90')
+    else:
+        # persondetected found someone
+        try:
+            #here should be new person location in robot coordinates
+            xwaving = p.memory_service.getData('Conditions/persondetected/robot_coordinates_x')
+            ywaving = p,memory_service.getData('Conditions/persondetected/robot_coordinates_y')
 
-			# move robot there...
-			p.exec_action("navigateto_naoqi",str(xwaving)+'_'+str(ywaving))
-			
-			#dramatic pause
-			time.sleep(1)
-	
-			#update our person tracked id 
-			if p.get_condition('personhere'):
-				# smoothly keep following them
-				p.exec_action('updatefollowpersoncoord', 'stopfollowing',interrupt='personlost')		
-		except:
-			pass:
+            # move robot there...
+            p.exec_action("navigateto_naoqi",str(xwaving)+'_'+str(ywaving))
+            
+            #dramatic pause
+            time.sleep(1)
+    
+            #update our person tracked id 
+            if p.get_condition('personhere'):
+                # smoothly keep following them
+                p.exec_action('updatefollowpersoncoord', 'stopfollowing',interrupt='personlost')        
+        except:
+            pass
 
 #previously asrenable_off;
 p.exec_action('asrenable','off')
@@ -86,14 +86,14 @@ p.exec_action('headpose','0_-20')
 p.exec_action('navigateto', '^helplocation',interrupt='personhere',recovery='dialogue_whattime; waitfor_not_personhere; restart_action')
 
 while not  p.get_condition('persondetected'):
-	#previously  lookfor_persondetected; ! *if* timeout_lookfor_20 *do* 
-	p.exec_action('lookfor', 'persondetected',  interrupt='timeout_20')
+    #previously  lookfor_persondetected; ! *if* timeout_lookfor_20 *do* 
+    p.exec_action('lookfor', 'persondetected',  interrupt='timeout_20')
 
-	if not  p.get_condition('persondetected'):
-		if rand.random()>0.5:
-			p.exec_action('turn','180')
-		else:
-			p.exec_action('say','comehere')
+    if not  p.get_condition('persondetected'):
+        if rand.random()>0.5:
+            p.exec_action('turn','180')
+        else:
+            p.exec_action('say','comehere')
 
 #previously arm_up;
 p.exec_action('arm','up')
@@ -116,19 +116,19 @@ p.action_cmd('navigateto', '^car/waypoint','start')
 
 patience=0
 while (not p.get_condition('personbehind')):
-	p.action_cmd('navigateto', '^car/waypoint','stop')
-	if patience ==0:
-	    p.exec_action('say','comehere')
-		time.sleep(3)
-	if patience ==1:
-	    p.exec_action('say','comehere2')
-		time.sleep(3)
-	else:
-		break
-	patience+=1
-	# pray for the judge
-	#p.action_cmd('navigateto', '^car/waypoint','start')
-	
+    p.action_cmd('navigateto', '^car/waypoint','stop')
+    if patience ==0:
+        p.exec_action('say','comehere')
+        time.sleep(3)
+    if patience ==1:
+        p.exec_action('say','comehere2')
+        time.sleep(3)
+    else:
+        break
+    patience+=1
+    # pray for the judge
+    #p.action_cmd('navigateto', '^car/waypoint','start')
+    
 p.exec_action('navigateto', '^car/waypoint','start')
 
 #previously gotopos_^car/coordinates; ! *if* (not personbehind) *do*  turn_180; arm_up ; vsay_comehere ; turn_180 ; waitfor_personbehind; restart_action !

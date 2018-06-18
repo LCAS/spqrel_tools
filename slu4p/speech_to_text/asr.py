@@ -107,7 +107,7 @@ class SpeechRecognition(object):
                     os.makedirs(self.AUDIO_FILE_DIR)
                 self.AUDIO_FILE_PATH = self.AUDIO_FILE_DIR + 'SPQReL_mic_'
 
-                self.audio_recorder.stopMicrophonesRecording()
+                #self.audio_recorder.stopMicrophonesRecording()
                 self.AUDIO_FILE = self.AUDIO_FILE_PATH + str(time.time())
                 self.audio_recorder.startMicrophonesRecording(self.AUDIO_FILE + ".wav", "wav", 44100, self.CHANNELS)
 

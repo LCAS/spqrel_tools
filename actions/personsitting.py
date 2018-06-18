@@ -35,19 +35,22 @@ def rhMonitorThread (memory_service):
         if (plist!=None and len(plist)>0):
             for i in range (0,len(plist)):
                 personid = plist[i]
-                IsSitting = memory_service.getData("PeoplePerception/Person/"+str(personid)+"/IsSitting")
-                # Save person position
-                memory_service.insertData("personsitting/test",personid)
-                if (IsSitting == 1):
-                    px,py,pz = memory_service.getData("PeoplePerception/Person/"+str(personid)+"/PositionInRobotFrame")
-                    print "[ Person sitting ]"
-                    print "   X: " + str(px) + "  Y: " + str(py)
-                    w_px, w_py = point2world(memory_service,[px,py])
-                    memory_service.insertData("Condition/personsitting/world_coordinates",[w_px,w_py])
-                    memory_service.insertData("Condition/personsitting/robot_coordinates_x",px)
-                    memory_service.insertData("Condition/personsitting/robot_coordinates_y",py)
-                    memory_service.insertData("Condition/personsitting/id",personid)
-                    v = 'true'
+                try:
+                    IsSitting = memory_service.getData("PeoplePerception/Person/"+str(personid)+"/IsSitting")
+                    # Save person position
+                    memory_service.insertData("personsitting/test",personid)
+                    if (IsSitting == 1):
+                        px,py,pz = memory_service.getData("PeoplePerception/Person/"+str(personid)+"/PositionInRobotFrame")
+                        print "[ Person sitting ]"
+                        print "   X: " + str(px) + "  Y: " + str(py)
+                        w_px, w_py = point2world(memory_service,[px,py])
+                        memory_service.insertData("Condition/personsitting/world_coordinates",[w_px,w_py])
+                        memory_service.insertData("Condition/personsitting/robot_coordinates_x",px)
+                        memory_service.insertData("Condition/personsitting/robot_coordinates_y",py)
+                        memory_service.insertData("Condition/personsitting/id",personid)
+                        v = 'true'
+                except:
+                    pass
         #except:
         #    v = 'false'
         set_condition(memory_service,'personsitting',v)

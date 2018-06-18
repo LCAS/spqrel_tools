@@ -91,10 +91,10 @@ def actionThread_exec (params):
         #Beard
         if float(faces[f_center]["faceAttributes"]["facialHair"]["beard"]) >= 0.2:
             print "Beard: yes"
-            memory_service.insertData("Actions/persondescription/"+params+"/Beard","yes")
+            memory_service.insertData("Actions/persondescription/"+params+"/beard","yes")
         else:
             print "Beard: no"
-            memory_service.insertData("Actions/persondescription/"+params+"/Beard","no")  
+            memory_service.insertData("Actions/persondescription/"+params+"/beard","no")  
         # Makeup
         if faces[f_center]["faceAttributes"]["makeup"]["eyeMakeup"] == "true":
             print "Make up: yes"
@@ -111,12 +111,12 @@ def actionThread_exec (params):
             memory_service.insertData("Actions/persondescription/"+params+"/glasses","no")
         
 
-        tts_service.say("I see a ")
-        tts_service.say(faces[f_center]["faceAttributes"]["gender"])
-        tts_service.say(str(int(faces[f_center]["faceAttributes"]["age"])))
-        tts_service.say("years old")
-        tts_service.say(faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"])
-        tts_service.say("hair")
+        #tts_service.say("I see a ")
+        #tts_service.say(faces[f_center]["faceAttributes"]["gender"])
+        #tts_service.say(str(int(faces[f_center]["faceAttributes"]["age"])))
+        #tts_service.say("years old")
+        #tts_service.say(faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"])
+        #tts_service.say("hair")
     else:
         tts_service.say("I'm sorry, I see no faces in the image")
 

@@ -47,6 +47,7 @@ class SpeechRecognition(object):
             self.asr_service.setVocabulary(vocabulary, False)
             #self.asr_service.setParameter("Sensitivity", 0.1)
             self.asr_service.setParameter("NbHypotheses", 3)
+            self.asr_service.setAudioExpression(False)
         except:
             print "error setting vocabulary"
         self.asr_service.pause(False)

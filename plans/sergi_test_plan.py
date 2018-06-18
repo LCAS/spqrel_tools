@@ -15,13 +15,11 @@ p = PNPCmd()
 
 p.begin()
 
-#p.exec_action("posture","Stand")
+p.exec_action("posture","Stand")
 
 p.exec_action("say", "hello")
 
 p.exec_action("headpose", "0_-20")
-
-#p.exec_action("groupdescription", "")
 
 while (not p.get_condition('personhere')):
     print "waiting for a person..."

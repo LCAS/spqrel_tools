@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 
 try:
     from pnp_cmd_naoqi import *
@@ -12,7 +13,7 @@ p = PNPCmd()
 
 p.begin()
 
-
+p.exec_action('setpose', '11.5_8.6_0')
 
 #### 1 - WAIT FOR THE PERSON TO FOLLOW
 
@@ -25,12 +26,14 @@ while (not p.get_condition('personhere')):
 
 #previously vsay_hello;
 p.exec_action('say', 'hello')
+time.sleep(1)
+p.exec_action('say', 'i_will_help_you_carry')
 
 
 #### 2 - START THE FOLLOWING PHASE
 
 #previously asrenable;
-p.exec_action('asrenable')
+p.exec_action('asrenable','')
 
 #previously  followuntil_stopfollowing; ! *if* (personlost) *do* vsay_waitforme; navigateto_start; waitfor_personhere; restart_action !
 

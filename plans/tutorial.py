@@ -17,13 +17,10 @@ p = PNPCmd()
 
 p.begin()
 
+p.exec_action("asrenable", "")
+
 p.exec_action("understandcommand", "SPR")
 
-#time.sleep(10)
-
-#p.exec_action("asrenable", "off")
-#p.exec_action("understandcommand", "")
-
-#p.exec_action("asrenable", "off")
+p.exec_action("asrenable", "off")
 
 p.end()

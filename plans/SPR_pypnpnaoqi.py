@@ -29,7 +29,7 @@ p.exec_action("say", "hello")
 
 p.exec_action("say", "I_want_to_play_a_riddle_game,_I_will_give_you_some_seconds_to_get_ready.")
 
-p.exec_action('headpose', '0_-10')
+p.exec_action('headpose', '0_5')
 
 p.exec_action("wait","10")
 
@@ -47,8 +47,9 @@ p.exec_action("wait","1")
 
 p.exec_action("say","Who_wants_to_play")
 
+p.exec_action('headpose', '0_-10')
 
-p.exec_action("waitfor","personhere")
+p.exec_action("waitfor","personhere", interrupt="timeout_10")
 
 
 # = eval(p.memory_service.getData("CommandInterpretation"))

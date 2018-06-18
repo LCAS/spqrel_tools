@@ -33,7 +33,7 @@ p.exec_action('say', 'i_will_help_you_carry')
 #### 2 - START THE FOLLOWING PHASE
 
 #previously asrenable;
-p.exec_action('asrenable')
+p.exec_action('asrenable','')
 
 #previously  followuntil_stopfollowing; ! *if* (personlost) *do* vsay_waitforme; navigateto_start; waitfor_personhere; restart_action !
 

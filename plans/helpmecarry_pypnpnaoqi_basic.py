@@ -12,7 +12,7 @@ p = PNPCmd()
 
 p.begin()
 
-
+p.exec_action('setpose', '12_8_0')
 
 #### 1 - WAIT FOR THE PERSON TO FOLLOW
 

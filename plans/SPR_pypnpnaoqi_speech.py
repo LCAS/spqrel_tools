@@ -30,10 +30,28 @@ def get_tosay(interpretations):
                             to_say = "The " + location_spot + " is in the " + sem_rooms["name"]
                             break
         # howmanydoors
-        
+
 
     return to_say.replace(" ", "_")
 
+def waitAndUnderstand():
+    p.exec_action("asrenable", "")
+    p.exec_action("understandcommand", "SPR", interrupt="timeout_30")
+    p.exec_action("asrenable", "off")
+
+    try:
+        interpretations = p.memory_service.getData("CommandInterpretation")
+        print interpretations
+    except:
+        return 
+
+    tosay = get_tosay(interpretations)
+
+    if tosay != "":
+        p.exec_action("say", tosay)
+    else:
+        #p.exec_action("wait","3")
+        p.exec_action('say','Sorry,_I_did_not_understand_your_question')
 
 p = PNPCmd()
 
@@ -45,31 +63,31 @@ load_semantic_info()
 
 ###### GROUP DESCRIPTION #######
 
-
-p.exec_action("say", "hello")
-
-p.exec_action("say", "I_want_to_play_a_riddle_game,_I_will_give_you_some_seconds_to_get_ready.")
-
-p.exec_action('headpose', '0_-10')
-
-p.exec_action("wait","10")
-
-p.exec_action('turn', '180')
-
-p.exec_action("wait","5")
-
-p.exec_action("say","lookatme")
-
-p.exec_action("wait","1")
-
-p.exec_action("groupdescription", "",interrupt="timeout_30")
-
-p.exec_action("wait","1")
-
-p.exec_action("say","Who_wants_to_play")
-
-
-p.exec_action("waitfor","personhere")
+#
+# p.exec_action("say", "hello")
+#
+# p.exec_action("say", "I_want_to_play_a_riddle_game,_I_will_give_you_some_seconds_to_get_ready.")
+#
+# p.exec_action('headpose', '0_-10')
+#
+# p.exec_action("wait","10")
+#
+# p.exec_action('turn', '180')
+#
+# p.exec_action("wait","5")
+#
+# p.exec_action("say","lookatme")
+#
+# p.exec_action("wait","1")
+#
+# p.exec_action("groupdescription", "",interrupt="timeout_30")
+#
+# p.exec_action("wait","1")
+#
+# p.exec_action("say","Who_wants_to_play")
+#
+#
+# p.exec_action("waitfor","personhere")
 
 
 # = eval(p.memory_service.getData("CommandInterpretation"))
@@ -77,32 +95,23 @@ p.exec_action("waitfor","personhere")
 
 p.exec_action("say","Hello._Go_for_the_question.")
 
-p.exec_action("asrenable", "")
-p.exec_action("understandcommand", "SPR")
-p.exec_action("asrenable", "off")
+waitAndUnderstand()
+waitAndUnderstand()
+waitAndUnderstand()
+waitAndUnderstand()
+waitAndUnderstand()
 
-interpretations = p.memory_service.getData("CommandInterpretation")
-print interpretations
-
-tosay = get_tosay(interpretations)
-
-if tosay != "":
-    p.exec_action("say", tosay)
-else:
-    #p.exec_action("wait","3")
-    p.exec_action('say','Sorry,_I_did_not_understand_question_1')
-
-p.exec_action("wait","3")
-p.exec_action('say','Sorry,_I_did_not_understand_question_2')
-
-p.exec_action("wait","3")
-p.exec_action('say','Sorry,_I_did_not_understand_question_3')
-
-p.exec_action("wait","3")
-p.exec_action('say','Sorry,_I_did_not_understand_question_4')
-
-p.exec_action("wait","3")
-p.exec_action('say','Sorry,_I_did_not_understand_question_5')
+#p.exec_action("wait","3")
+#p.exec_action('say','Sorry,_I_did_not_understand_question_2')
+#
+#p.exec_action("wait","3")
+#p.exec_action('say','Sorry,_I_did_not_understand_question_3')
+#
+#p.exec_action("wait","3")
+#p.exec_action('say','Sorry,_I_did_not_understand_question_4')
+#
+#p.exec_action("wait","3")
+#p.exec_action('say','Sorry,_I_did_not_understand_question_5')
 
 
 p.exec_action("wait","1")

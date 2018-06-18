@@ -45,9 +45,12 @@ def actionThread_exec (params):
         print "Waiting for interpretations"
         time.sleep(0.5)
 
-    if len(interpretations) > 0:
+    if interpretations is not None and len(interpretations) > 0:
         memory_service.insertData("command_understood", 1)
         memory_service.insertData("CommandInterpretation", interpretations)
+
+
+
 
 
     # action end

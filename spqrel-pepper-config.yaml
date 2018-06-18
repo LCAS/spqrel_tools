@@ -19,18 +19,17 @@ windows:
     ./topological_navigation.py --tmap $TMAP
 - name: speech
   panes:
-  - cd $SPQREL_HOME/slu4p; python speech_to_text/local_speech_recognition.py -v resources/nuance_grammar.txt
-    -k resources/cloud_google_keys.txt
-  - sleep 3; cd $SPQREL_HOME/slu4p; python speech_reranking/reranker.py --noun-dictionary
-    resources/noun_dictionary.txt --verb-dictionary resources/verb_dictionary.txt
-    --nuance-grammar resources/nuance_grammar.txt
+  - cd $SPQREL_HOME/slu4p; python speech_to_text/asr.py --vocab resources/nuance_dictionary.txt
+  - cd $SPQREL_HOME/slu4p; python speech_to_text/google_client.py
   - sleep 6; cd $SPQREL_HOME/slu4p; python dialogue_management/dialogue_manager.py
     -a resources/aiml_kbs/spqrel
   - sleep 9; cd $SPQREL_HOME/slu4p; python text_to_speech/text_to_speech.py
 - name: lu4r
   panes:
-  - cd $LU4R_HOME; java -Xmx1G -jar lu4r-server-0.2.4.jar -c simple -o amr -l en -p 9001
   - cd $SPQREL_HOME/slu4p; python language_understanding/language_understanding.py
+  - sleep 3; cd $SPQREL_HOME/slu4p; python speech_reranking/reranker.py --noun-dictionary
+    resources/noun_dictionary.txt --verb-dictionary resources/verb_dictionary.txt
+    --nuance-grammar resources/nuance_grammar.txt
 - name: pnp
   panes:
   - cd $SPQREL_HOME; bin/pnp_naoqi
@@ -40,6 +39,7 @@ windows:
   - cd $SPQREL_HOME/worktree/spqrel_tools/ui; python ./spqrel_ui.py
   - cd $SPQREL_HOME/worktree/spqrel_tools/modim_actions/cocktail_party; python -m SimpleHTTPServer 8000
   - cd $SPQREL_HOME/worktree/modim/src/GUI; python ws_server.py -robot pepper 
+  - sleep 5; cd $SPQREL_HOME/worktree/pepper_tools/tablet/; python show_web.py --url http://198.18.0.1:8127/
   #- cd $SPQREL_HOME/worktree/robot_blockly; python scripts/pywebserver.py
   #- cd $SPQREL_HOME/worktree/robot_blockly; python scripts/robot_blockly_backend.py
 - name: dataset

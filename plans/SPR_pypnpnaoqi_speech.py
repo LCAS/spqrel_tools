@@ -40,7 +40,7 @@ def waitAndUnderstand():
     p.exec_action("asrenable", "off")
 
     try:
-        interpretations = p.memory_service.getData("CommandInterpretation")
+        interpretations = eval(p.memory_service.getData("CommandInterpretation"))
         print interpretations
     except:
         return

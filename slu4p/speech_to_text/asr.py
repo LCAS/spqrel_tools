@@ -100,7 +100,7 @@ class SpeechRecognition(object):
         print "speechdetected=", value
         if value == 1:
             if self.USE_GOOGLE:
-                if not recording:
+                if not self.recording:
                     #try:
                     #    self.AUDIO_FILE_DIR = self.memory_proxy.getData("NAOqibag/CurrentLogFolder") + "/asr_logs/"
                     #except:

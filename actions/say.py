@@ -69,7 +69,7 @@ def actionThread_exec (params):
     tosay = phraseToSay(memory_service,params)
     tts_service.say(tosay)
     print "  -- Say: "+tosay
-    action init
+    #action init
     while (getattr(t, "do_run", True) and val == 0):
         print "Wait text pronounced"
         # action exec

@@ -136,8 +136,8 @@ def actionThread_exec (params):
             #                                                  ["MaxAccTheta",3] ])
 
             
-            if data_list[0] > 1.9:
-                tts_service.say("You are too far, please could you slow down a bit? I'm a slow robot")
+            #if data_list[0] > 1.9:
+            #    tts_service.say("You are too far, please could you slow down a bit? I'm a slow robot")
             
 
         

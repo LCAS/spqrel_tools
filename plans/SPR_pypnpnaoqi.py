@@ -10,6 +10,10 @@ except:
 import pnp_cmd_naoqi
 from pnp_cmd_naoqi import *
 
+
+
+
+
 p = PNPCmd()
 
 p.begin()
@@ -19,6 +23,7 @@ p.begin()
 
 
 ###### GROUP DESCRIPTION #######
+
 
 p.exec_action("say", "hello")
 
@@ -43,28 +48,49 @@ p.exec_action("wait","1")
 p.exec_action("say","Who wants to play ")
 
 
-#####  5 FIRST QUESTIONS  ######
+p.exec_action("waitfor","personhere")
 
-p.exec_action('say','Question_1_answered')
-p.exec_action('say','Question_2_answered')
-p.exec_action('say','Question_3_answered')
-p.exec_action('say','Question_4_answered')
-p.exec_action('say','Question_5_answered')
+
+# = eval(p.memory_service.getData("CommandInterpretation"))
+
+p.exec_action("say","Hello._Go_for_the_question.")
+
+p.exec_action("wait","3")
+p.exec_action('say','Sorry,_I_did_not_understand_question_1')
+
+p.exec_action("wait","3")
+p.exec_action('say','Sorry,_I_did_not_understand_question_2')
+
+p.exec_action("wait","3")
+p.exec_action('say','Sorry,_I_did_not_understand_question_3')
+
+p.exec_action("wait","3")
+p.exec_action('say','Sorry,_I_did_not_understand_question_4')
+
+p.exec_action("wait","3")
+p.exec_action('say','Sorry,_I_did_not_understand_question_5')
+
+
+p.exec_action("wait","1")
+p.exec_action('say','Lets_start_the_blind_game.')
 
 
 ###### BLIND GAME #######
 
 #Question 1
 p.exec_action('say','Ask_me_a_question')
+p.exec_action("wait","1")
+
+
 
 while (not p.get_condition('sounddetected')):
     time.sleep(0.5)
 
 p.exec_action('turn', '^AngleSound')
 
-p.exec_action('say','Question_1_answered')
+p.exec_action('say','Sorry,_I_did_not_understand_question_1')
 
-p.exec_action("wait","4")
+p.exec_action("wait","3")
 
 
 #Question 2
@@ -75,9 +101,9 @@ while (not p.get_condition('sounddetected')):
 
 p.exec_action('turn', '^AngleSound')
 
-p.exec_action('say','Question_2_answered')
+p.exec_action('say','Sorry,_I_did_not_understand_question_2')
 
-p.exec_action("wait","4")
+p.exec_action("wait","3")
 
 
 #Question 3
@@ -88,9 +114,9 @@ while (not p.get_condition('sounddetected')):
 
 p.exec_action('turn', '^AngleSound')
 
-p.exec_action('say','Question_3_answered')
+p.exec_action('say','Sorry,_I_did_not_understand_question_3')
 
-p.exec_action("wait","4")
+p.exec_action("wait","3")
 
 
 #Question 4
@@ -101,9 +127,9 @@ while (not p.get_condition('sounddetected')):
 
 p.exec_action('turn', '^AngleSound')
 
-p.exec_action('say','Question_4_answered')
+p.exec_action('say','Sorry,_I_did_not_understand_question_4')
 
-p.exec_action("wait","4")
+p.exec_action("wait","3")
 
 
 #Question 5
@@ -114,9 +140,9 @@ while (not p.get_condition('sounddetected')):
 
 p.exec_action('turn', '^AngleSound')
 
-p.exec_action('say','Question_5_answered')
+p.exec_action('say','Sorry,_I_did_not_understand_question_5')
 
-p.exec_action("wait","4")
+p.exec_action("wait","3")
 
 
 p.exec_action("say", "Bye_mate")

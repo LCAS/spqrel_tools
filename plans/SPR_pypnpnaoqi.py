@@ -45,7 +45,7 @@ p.exec_action("groupdescription", "",interrupt="timeout_30")
 
 p.exec_action("wait","1")
 
-p.exec_action("say","Who wants to play ")
+p.exec_action("say","Who_wants_to_play")
 
 
 p.exec_action("waitfor","personhere")

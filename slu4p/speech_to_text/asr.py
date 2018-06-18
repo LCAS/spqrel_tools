@@ -43,7 +43,7 @@ class SpeechRecognition(object):
         self.asr_service.pause(True)
         #self.asr_service.removeAllContext()
         try:
-            self.asr_service.setVocabulary(vocabulary, True)
+            self.asr_service.setVocabulary(vocabulary, False)
             #self.asr_service.setParameter("Sensitivity", 0.1)
             self.asr_service.setParameter("NbHypotheses", 3)
         except:
@@ -119,11 +119,12 @@ class SpeechRecognition(object):
     def onWordRecognized(self, value):
         print "value=",value
         if self.USE_GOOGLE:
-            self.audio_recorder.stopMicrophonesRecording()
-            self.recording = False
-            print "Audio recorder stopped recording"
+            if self.recording:
+                self.audio_recorder.stopMicrophonesRecording()
+                self.recording = False
+                print "Audio recorder stopped recording"
 
-            self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
+                self.memory_service.raiseEvent("GoogleRequest", self.AUDIO_FILE)
         #self.audio_recorder.stopMicrophonesRecording()
         #print "Audio recorder stopped recording"
 

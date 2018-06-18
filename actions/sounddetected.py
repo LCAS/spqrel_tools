@@ -54,9 +54,9 @@ def rhMonitorThread (memory_service,motion_service):
                 turn_angle = sound_azimuth + head_yaw
                 turn_angle = int(turn_angle / math.pi * 180)
                 memory_service.insertData('AngleSound', str(turn_angle) + "_REL")
-                print "\n"
+               # print "\n"
                 print "[SoundDetected] time: ", sound_value[0][0], "azimuth(rad): ", sound_azimuth
-                print "\n"
+               # print "\n"
 
         set_condition(memory_service,'sounddetected',v)
         if v:

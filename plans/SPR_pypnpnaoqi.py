@@ -90,7 +90,7 @@ p.exec_action('turn', '^AngleSound')
 
 p.exec_action('say','Sorry,_I_did_not_understand_question_1')
 
-p.exec_action("wait","3")
+p.exec_action("wait","1")
 
 
 #Question 2
@@ -103,7 +103,7 @@ p.exec_action('turn', '^AngleSound')
 
 p.exec_action('say','Sorry,_I_did_not_understand_question_2')
 
-p.exec_action("wait","3")
+p.exec_action("wait","1")
 
 
 #Question 3
@@ -116,7 +116,7 @@ p.exec_action('turn', '^AngleSound')
 
 p.exec_action('say','Sorry,_I_did_not_understand_question_3')
 
-p.exec_action("wait","3")
+p.exec_action("wait","1")
 
 
 #Question 4
@@ -129,7 +129,7 @@ p.exec_action('turn', '^AngleSound')
 
 p.exec_action('say','Sorry,_I_did_not_understand_question_4')
 
-p.exec_action("wait","3")
+p.exec_action("wait","1")
 
 
 #Question 5
@@ -142,7 +142,7 @@ p.exec_action('turn', '^AngleSound')
 
 p.exec_action('say','Sorry,_I_did_not_understand_question_5')
 
-p.exec_action("wait","3")
+p.exec_action("wait","1")
 
 
 p.exec_action("say", "Bye_mate")

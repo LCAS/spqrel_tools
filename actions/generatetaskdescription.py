@@ -176,6 +176,32 @@ def describeBringing(task):
     verb = task["verb"]
     to_say = ""
 
+    obj = None
+    loc = None
+    name = None
+    for attribute in task["requires"]:
+        if "spotted" in attribute.keys():
+            num_spotted = len(attribute["spotted"])
+            if num_spotted > 0:
+                if "object" in attribute.keys():
+                    obj = attribute["spotted"]["text"]
+                elif "location" in attribute.keys():
+                    loc = attribute["spotted"]["text"]
+                elif "name" in attribute.keys():
+                    name = attribute["spotted"]["text"]
+
+    print "obj:", obj, "loc:", loc
+    if obj is None and name is None:
+        to_say = "I understood that I need to " + verb + " something to someone but I didn't got the command correctly."
+    elif obj is not None and name is not None:
+        to_say = "I understood that I need to " + verb + " the " + obj + " to " + name
+    elif obj is not None and loc is not None:
+        to_say = "I understood that I need to " + verb + " the " + obj + " to someone in the " + loc
+    elif obj is not None:
+        to_say = "I understood that I need to " + verb + " the " + obj + "to someone."
+    elif name is not None:
+        to_say = "I understood that I need to " + verb + " something to " + name
+
     return to_say
 
 def describeMotion(task):

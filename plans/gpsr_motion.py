@@ -10,22 +10,30 @@ except:
 import pnp_cmd_naoqi
 from pnp_cmd_naoqi import *
 
+from support.semantics_interpreter import SemanticResolver
 
 def gpsr_motion(p, req):
-    try:
-        return p.exec_action('navigateto', 'wp1',interrupt = 'timeout_40')
-    except:
-        return p.exec_action('say', "sorry_I_can't_do_this_right_now")
+
+    sr = SemanticResolver()
+    result = sr.parse_requires(req)
+
+    if result['wp'] is not None:
+        try:
+            return p.exec_action('navigateto', result['wp'],interrupt='aborted', recovery='restart_action')
+        except:
+            return p.exec_action('say', "sorry_I_can't_do_this_right_now")
+    else:
+        try:
+            return p.exec_action('navigateto', 'wp6',interrupt='aborted', recovery='restart_action')
+        except:
+            return p.exec_action('say', "sorry_I_can't_do_this_right_now")
+
 
 if __name__ == '__main__':
     p = PNPCmd()
 
     p.begin()
 
-    gpsr_motion(p, {
-        'whattosay': {
-            'location': 'kitchen'
-        }
-    })
+    gpsr_motion(p,'')
 
     p.end()

@@ -106,13 +106,13 @@ def describeTaking(task):
 
     print "obj:", obj, "loc:", loc
     if obj is None and loc is None:
-        to_say = "I understood that I need to " + verb + " something but I didn't got what. Can you please repeat what I need to "+ verb +"?"
+        to_say = "I understood that I need to " + verb + " something but I didn't got what."
     elif obj is not None and loc is not None:
-        to_say = "I understood that I need to " + verb + " the " + obj + " from the " + loc + ". I am going to take it!"
+        to_say = "I understood that I need to " + verb + " the " + obj + " from the " + loc + "."
     elif obj is not None:
-        to_say = "I understood that I need to " + verb + " the " + obj + ". I am going to take it!"
+        to_say = "I understood that I need to " + verb + " the " + obj
     elif loc is not None:
-        to_say = "I understood that I need to " + verb + " something from the " + loc + ". Can you please repeat which object?"
+        to_say = "I understood that I need to " + verb + " something from the " + loc + "."
 
     return to_say
 
@@ -133,13 +133,13 @@ def describePlacing(task):
 
     print "obj:", obj, "loc:", loc
     if obj is None and loc is None:
-        to_say = "I understood that I need to " + verb + " something but I didn't got what. Can you please repeat what I need to "+ verb +"?"
+        to_say = "I understood that I need to " + verb + " something but I didn't got what."
     elif obj is not None and loc is not None:
-        to_say = "I understood that I need to " + verb + " the " + obj + " on the " + loc + ". I am going to do it!"
+        to_say = "I understood that I need to " + verb + " the " + obj + " on the " + loc
     elif obj is not None:
-        to_say = "I understood that I need to " + verb + " the " + obj + ", but I am not sure where. Can you please repeat the location?"
+        to_say = "I understood that I need to " + verb + " the " + obj + ", but I am not sure where."
     elif loc is not None:
-        to_say = "I understood that I need to " + verb + " something on the "+ loc + ". Can you please repeat the object?"
+        to_say = "I understood that I need to " + verb + " something on the "+ loc + "."
     return to_say
 
 def describeLocating(task):
@@ -162,13 +162,13 @@ def describeLocating(task):
 
     print "obj:", obj, "loc:", loc
     if obj is None and name is None:
-        to_say = "I understood that I need to " + verb + " something but I didn't got what. Can you please repeat?"
+        to_say = "I understood that I need to " + verb + " something but I didn't got what."
     elif obj is not None and loc is not None:
-        to_say = "I understood that I need to " + verb + " the " + obj + " in the " + loc + ". I am going to do it!"
+        to_say = "I understood that I need to " + verb + " the " + obj + " in the " + loc
     elif obj is not None:
-        to_say = "I understood that I need to " + verb + " the " + obj + ". I am going to do it!"
+        to_say = "I understood that I need to " + verb + " the " + obj
     elif name is not None:
-        to_say = "I understood that I need to " + verb + " " + name + ". I am going to do it!"
+        to_say = "I understood that I need to " + verb + " " + name
 
     return to_say
 
@@ -192,9 +192,9 @@ def describeMotion(task):
 
     print "loc:", loc
     if loc is None:
-        to_say = "I understood that I need to " + verb + " but I didn't got where. Can you please repeat?"
+        to_say = "I understood that I need to " + verb + " but I didn't got where."
     else:
-        to_say = "I understood that I need to " + verb + " to " + loc + ". I am going there!"
+        to_say = "I understood that I need to " + verb + " to " + loc
 
     return to_say
 
@@ -212,7 +212,7 @@ def describeTell(task):
 
     print "wts:", wts
     if wts is None:
-        to_say = "I understood that I need to " + verb + " something, but not what. Can you please repeat?"
+        to_say = "I understood that I need to " + verb + " something, but not what."
     else:
         to_say = "I understood that I need to " + verb +" "+ wts + "!"
 

@@ -30,10 +30,10 @@ def gpsr_motion(p, req):
 
 
 if __name__ == '__main__':
-    p = PNPCmd()
+    #p = PNPCmd()
 
-    p.begin()
+    #p.begin()
 
-    gpsr_motion(p,'')
+    gpsr_motion(p,SemanticResolver().get_test())
 
-    p.end()
+    #p.end()

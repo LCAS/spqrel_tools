@@ -35,7 +35,7 @@ class GoogleClient(object):
 
     def onGoogleRequest(self, value):
         print "onGoogleRequest:", value
-        file_path = str(value)
+        file_path = str(value) + ".wav"
         if not self.busy:
             self.busy = True
             """

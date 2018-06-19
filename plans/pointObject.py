@@ -26,7 +26,7 @@ def main(params,p):
 
 
     #object to track
-    target=params#'cell phone'
+    target=params..replace('_',' ') #'cell phone'
 
     # camera properties in pixels
     maxX = 640
@@ -38,7 +38,7 @@ def main(params,p):
     lastT = 0
     angleInc=1000.0
     #main loop
-    p.exec_action('say', "Hi,_let's_point_a"+target.replace(' ','_') )
+    p.exec_action('say', "Hi,_let's_point_a"+params )
     
     while (angleInc!=0.0):
         #print "."
@@ -90,7 +90,7 @@ def main(params,p):
 
 
     p.exec_action('movearm', pointForwardStr)
-    p.exec_action('say', 'There,_I_found_your_'+target.replace(' ','_') )
+    p.exec_action('say', 'There,_I_found_your_'+params )
     time.sleep(3.0)
     p.exec_action('movearm', relaxPoseStr)
 
@@ -106,6 +106,7 @@ if __name__ == "__main__":
 
     plan.begin()
 
+    params = 'cell_phone'
     main(params,plan)
 
     plan.end()

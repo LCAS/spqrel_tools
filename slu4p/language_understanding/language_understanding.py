@@ -49,7 +49,7 @@ class LanguageUnderstanding(object):
 
     def callback(self, msg):
         print "callback=", msg
-        google_transcription = self.memory.getData("googleasrresponse").lower()
+        google_transcription = self.memory.getData("googleasrresponse")[0].lower()
         print "analysing google transcription:", google_transcription
         if msg == "SPR":
             print google_transcription

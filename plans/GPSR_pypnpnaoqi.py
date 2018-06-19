@@ -48,9 +48,9 @@ time.sleep(2)
 for n in range(3):
 
     #Attemps loop
-    repeat_attemps = 0
+    repeat_attempts = 0
     understood = False
-    while (repeat_attemps < 3 and not understood):
+    while (repeat_attempts < 3 and not understood):
         # This blocks until we get a transcription from google (start language_understanding/google_client.py)
         p.exec_action("googleasr", "gpsr", interrupt="timeout_20")
 
@@ -60,7 +60,7 @@ for n in range(3):
 
         if len(googleasr_value) == 0:
             p.exec_action("aimlsay", "misunderstand")
-            repeat_attemps = repeat_attemps + 1
+            repeat_attempts = repeat_attempts + 1
         else:
             #We understood something, we ask for confirmation
 
@@ -104,7 +104,7 @@ for n in range(3):
             if confirm_response != "" and confirm_response == "yes":
                 understood = True
             else:
-                attempts = attempts + 1
+                repeat_attempts = repeat_attempts + 1
                 p.exec_action("say", "then_could_you_repeat_the_command_please?",interrupt='timeout_5')
 
 

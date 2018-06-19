@@ -27,9 +27,9 @@ def main(params,p):
 
     #object to track
     target=params.replace('_',' ') #'cell phone'
-
+    step = 15
     # camera properties in pixels
-    maxX = 640
+    maxX = 320 # by 240
 
     #make sure hand is relaxed
     p.exec_action('movearm', relaxPoseStr)
@@ -53,7 +53,10 @@ def main(params,p):
 
         for item in detection:
             # get tracked object
-            print "Detected "+item['name'] +" at time "+str(item['timestamp']) 
+            count = count+1
+            if ( ( count %20 ) ==0):
+                print "Detected "+item['name'] +" at time "+str(item['timestamp']) 
+           
             if (item['name'] == target) and (item['timestamp'] > lastT):
 
                 # to prevent reusing the same detection
@@ -63,9 +66,9 @@ def main(params,p):
                 x = int( (  int(item['Xmax']) + int(item['Xmin']) ) / 2.0 )
 
                 # distance to the center
-                dx = (maxX/2) - x 
+                dx = x - (maxX/2)  
 
-                step = 5
+                #step = 5
                 # is it on the left side?
                 if dx>0:
                     print "It's right side, turning right!"
@@ -75,16 +78,14 @@ def main(params,p):
                     print "It's left side, turning left!"
                     angleInc = (step)
 
-                if abs(dx)<(100):
+                if abs(dx)<(10):
                     print "not worth moving ..."
                     angleInc= 0.0
                 
                 # some debug data
-                count = count+1
-                if ( ( count %20 ) ==0):
-                    print "I see a little: "+item['name'] 
-                    print "at: "+str(x) 
-                    print "inc: "+str(dx) 
+                print "I see a little: "+item['name'] 
+                print "at: "+str(x) 
+                print "inc: "+str(dx) 
                 
                 if (angleInc!=0.0):
                     p.exec_action('turn', str(angleInc))

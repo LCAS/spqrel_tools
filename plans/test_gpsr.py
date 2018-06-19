@@ -1,5 +1,6 @@
 import os
 import sys
+import pprint as pp
 
 try:
     sys.path.insert(0, os.getenv('PNP_HOME')+'/PNPnaoqi/py')
@@ -28,7 +29,7 @@ p.exec_action("understandcommand", "gpsr", interrupt="timeout_20")
 
 # get the interpretation
 commands_inter = eval(p.memory_service.getData("CommandInterpretation"))
-print "plan commands interpretation", commands_inter
+print "plan commands interpretation", pp.pprint(commands_inter)
 
 #TODO these need to be ordered in order to be executed in order
 for i, task in enumerate(commands_inter):

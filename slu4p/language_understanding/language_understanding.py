@@ -10,7 +10,7 @@ import pprint as pp
 
 class LanguageUnderstanding(object):
     PATH = ''
-    RANKED_EVENT = "UnderstandCommand"
+    UNDERSTAND_EVENT = "UnderstandCommand"
     SEMANTIC_INFO_MEM = "/semantic_info"
 
     def __init__(self, lip, lport, app):
@@ -29,10 +29,10 @@ class LanguageUnderstanding(object):
         self.lu4r_client = LU4RClient(lip, lport)
 
     def start(self):
-        self.ranked_sub = self.memory.subscriber(LanguageUnderstanding.RANKED_EVENT)
+        self.ranked_sub = self.memory.subscriber(LanguageUnderstanding.UNDERSTAND_EVENT)
         self.ranked_sub_id = self.ranked_sub.signal.connect(self.callback)
 
-        print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(LanguageUnderstanding.RANKED_EVENT)
+        print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(LanguageUnderstanding.UNDERSTAND_EVENT)
 
     def load_gpsr_xmls(self):
         # NOTE only parsing the GPSR tasks definitions
@@ -42,13 +42,16 @@ class LanguageUnderstanding(object):
         self.names = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/names") )
         self.locations = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/locations") )
         self.questions = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/questions") )
+        print "Semantic info loaded!"
 
     def quit(self):
         self.ranked_sub.signal.disconnect(self.ranked_sub_id)
 
     def callback(self, msg):
+        print "callback=", msg
+        google_transcription = self.memory.getData("googleasrresponse").lower()
+        print "analysing google transcription:", google_transcription
         if msg == "SPR":
-            google_transcription = self.memory.getData("GoogleTranscription").lower()
             print google_transcription
             #get ws interpretation
             ws_interpretation = self.doWordSpotting(google_transcription, "spr")
@@ -58,8 +61,8 @@ class LanguageUnderstanding(object):
             self.memory.raiseEvent("CommandInterpretation", ws_interpretation)
             self.memory.insertData("CommandInterpretation", ws_interpretation)
         elif msg == "GPSR":
-            transcriptions_dict = slu_utils.list_to_dict_w_probabilities(msg)
-            best_transcription = slu_utils.pick_best(transcriptions_dict)
+            #transcriptions_dict = slu_utils.list_to_dict_w_probabilities(google_transcription)
+            best_transcription = google_transcription
             print "[" + self.__class__.__name__ + "] User says: " + best_transcription
 
             # get lu4r interpretation
@@ -69,7 +72,7 @@ class LanguageUnderstanding(object):
             ws_interpretation = self.doWordSpotting(best_transcription, "gpsr")
 
             # merge interpretations TODO
-            merged_interpretation = self.mergeInterpretations(lu4r_interpretation, ws_interpretation)
+            #merged_interpretation = self.mergeInterpretations(lu4r_interpretation, ws_interpretation)
 
 
             print "[" + self.__class__.__name__ + "] LU4R Interpretation: " + str(lu4r_interpretation)
@@ -77,7 +80,7 @@ class LanguageUnderstanding(object):
             #print "[" + self.__class__.__name__ + "] Merged: " + str(merged_interpretation)
 
             interpretations = [lu4r_interpretation, ws_interpretation]
-            self.memory.raiseEvent("CommandInterpretations", interpretations)
+            self.memory.raiseEvent("CommandInterpretation", interpretations)
 
     def mergeInterpretations(self, lu4r_interpretation, ws_interpretation):
         lu4rDict = self.generateLu4rDict(lu4r_interpretation)

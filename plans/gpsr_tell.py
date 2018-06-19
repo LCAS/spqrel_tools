@@ -10,22 +10,23 @@ except:
 import pnp_cmd_naoqi
 from pnp_cmd_naoqi import *
 
+from support.semantics_interpreter import SemanticResolver
 
 def gpsr_tell(p, req):
+
+    sr = SemanticResolver()
+    result = sr.parse_requires(req)
+
     try:
-        return p.exec_action('say', 'motion')
+        return p.exec_action('say', result['text'],interrupt='timeout_5')
     except:
-        return p.exec_action('say', "sorry_I_can't_do_this_right_now")
+        return p.exec_action('say', "sorry_I_can't_do_this_right_now",interrupt='timeout_5')
 
 if __name__ == '__main__':
     p = PNPCmd()
 
     p.begin()
 
-    gpsr_tell(p, {
-        'whattosay': {
-            'text': 'test text'
-        }
-    })
+    gpsr_tell(p,'')
 
     p.end()

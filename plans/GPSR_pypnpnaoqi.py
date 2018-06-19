@@ -57,12 +57,12 @@ for n in range(3):
         googleasr_value = p.memory_service.getData("googleasrresponse")
         print "plan google response", googleasr_value
 
-        if googleasr_value =="":
+        if len(googleasr_value) == 0:
             p.exec_action("aimlsay", "misunderstand")
             repeat_attemps = repeat_attemps + 1
         else:
             #We understood something, we ask for confirmation
-                  
+
             # This blocks until we get the task description from the transcription (start language_understanding/language_understanding.py)
             p.exec_action("understandcommand", "gpsr", interrupt="timeout_20")
 
@@ -73,7 +73,7 @@ for n in range(3):
             #TODO these need to be ordered in order to be executed in order
             for i, task in enumerate(commands_inter):
                 print "Task", i, ": ", task["task"]
-                
+
                 print "\tParameters:"
                 for req in task["requires"]:
                     if "spotted" in req:
@@ -81,8 +81,17 @@ for n in range(3):
                             print "\t"*2, [k for k in req.keys() if k != "spotted"][0] +":", spotreq["text"]
 
             # repeat command to operator
-            p.exec_action("say", "I_understood")
-            p.exec_action("say", googleasr_value.replace(" ", "_"))
+            try:
+                p.memory_service.insertData("CurrentTaskInterpretation", str(task))
+                p.exec_action("generatetaskdescription", str(i))
+
+                to_say = str(p.memory_service.getData("task_description"))
+
+                p.exec_action("say", to_say.replace(" ", "_"))
+            except:
+                p.exec_action("say", "I_understood")
+                p.exec_action("say", googleasr_value.replace(" ", "_"))
+
             p.exec_action("say", "Is_that_correct",interrupt='timeout_5')
 
             p.exec_action("asr", "confirm")
@@ -97,7 +106,7 @@ for n in range(3):
                 attempts = attempts + 1
                 p.exec_action("say", "then_could_you_repeat_the_command_please?",interrupt='timeout_5')
 
-                
+
     #we exit the loop either if the correct command or run out of attempts
     if understand:
         p.exec_action("say", "I_am_sorry_I_cannot_do_that_now")
@@ -105,7 +114,7 @@ for n in range(3):
     else:
         p.exec_action("aimlsay", "nextquestion")
 
-    
+
     # understand the command
     #p.exec_action("understandcommand", "")
 
@@ -143,7 +152,7 @@ for n in range(3):
         #TODO else i did not understand
 
      #p.exec_action("aimlsay", "nextquestion")
-     
+
 ### exit the arena ###
 # "After the third command, it has to leave the arena."
 p.exec_action("aimlsay", "farewell")

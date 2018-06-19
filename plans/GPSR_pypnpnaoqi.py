@@ -2,6 +2,9 @@ import os
 import sys
 import time
 import pprint as pp
+from support.semantics_interpreter import SemanticResolver
+
+sr = SemanticResolver()
 
 try:
     sys.path.insert(0, os.getenv('PNP_HOME')+'/PNPnaoqi/py')
@@ -27,8 +30,8 @@ p.exec_action('enter', '30_0_0_4_true')
 
 p.exec_action('navigateto', 'wp5', interrupt='aborted', recovery='restart_action')
 
-while (not p.get_condition('personhere')):
-    time.sleep(1)
+#while (not p.get_condition('personhere')):
+#    time.sleep(1)
 
 #vsay_starting;
 p.exec_action("aimlsay", "greetings")
@@ -110,7 +113,16 @@ for n in range(3):
 
     #we exit the loop either if the correct command or run out of attempts
     if understood:
-        p.exec_action("say", "I_am_sorry_I_cannot_do_that_now")
+        p.exec_action("say", "OK_let's_give_it_a_go")
+        for i, task in enumerate(commands_inter):
+            try:
+                res = sr.parse_requires(task["requires"])
+                if res['wp'] is not None:
+                    p.exec_action("navigateto", res['wp'], interrupt='timeout_120')
+                    p.exec_action("say", "sorry_i_have_troubles_to_fully_complete_your_request")
+                p.exec_action("navigateto", 'wp5', interrupt='timeout_120')
+            except:
+                p.exec_action("say", "sorry_i_have_trouble_with_this_right_now")
 
     else:
         p.exec_action("aimlsay", "nextquestion")

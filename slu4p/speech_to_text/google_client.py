@@ -11,6 +11,7 @@ class GoogleClient(object):
     url = ''
     headers = {"Content-Type": "application/json"}
     FLAC_COMM = 'flac -f '
+    busy = False
 
     def __init__(self, language, key_file, app):
         super(GoogleClient, self).__init__()
@@ -35,22 +36,28 @@ class GoogleClient(object):
     def onGoogleRequest(self, value):
         print "onGoogleRequest:", value
         file_path = str(value) + ".wav"
+        if not self.busy:
+            self.busy = True
+            """
+            Convert Wave file into Flac file
+            """
+            if os.path.exists(file_path):
+                print "file exists"
+                if os.path.getsize(file_path) > 0:
+                    os.system(self.FLAC_COMM + file_path)
+                    f = open(value + '.flac', 'rb')
+                    flac_cont = f.read()
+                    f.close()
+                    res = [r.encode('ascii', 'ignore').lower() for r in self.recognize_data(flac_cont)]
 
-        """
-        Convert Wave file into Flac file
-        """
-        if os.path.exists(file_path):
-            print "file exists"
-            if os.path.getsize(file_path) > 0:
-                os.system(self.FLAC_COMM + file_path)
-                f = open(value + '.flac', 'rb')
-                flac_cont = f.read()
-                f.close()
-                res = [r.encode('ascii', 'ignore').lower() for r in self.recognize_data(flac_cont)]
+            transcriptions = self.recognize_file(file_path)
 
-        transcriptions = self.recognize_file(file_path)
+            #print transcriptions
 
-        print transcriptions
+            self.memory_service.raiseEvent("GoogleTranscription", transcriptions)
+
+            self.memory_service.insertData("GoogleTranscription", transcriptions)
+            self.busy = False
 
     def recognize_file(self, file_path):
         try:

@@ -445,7 +445,9 @@
     <category>
         <pattern>SPEAKLOUD</pattern>
         <template>
+	  <random>
                 <li>Please speak loud when my eyes turn blue.</li>
+            </random>
         </template>
     </category>
     

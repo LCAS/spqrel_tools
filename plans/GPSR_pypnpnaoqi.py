@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import pprint as pp
 
 try:
     sys.path.insert(0, os.getenv('PNP_HOME')+'/PNPnaoqi/py')
@@ -19,15 +20,15 @@ p.begin()
 
 p.exec_action('setpose', '5.8_10.6_0')
 
-while (not p.get_condition('dooropen')):
-    time.sleep(1)
+# while (not p.get_condition('dooropen')):
+#     time.sleep(1)
 
-p.exec_action('enter', '30_0_0_4_true')
+# p.exec_action('enter', '30_0_0_4_true')
+#
+# p.exec_action('navigateto', 'wp5', interrupt='aborted', recovery='restart_action')
 
-p.exec_action('navigateto', 'wp5', interrupt='aborted', recovery='restart_action')
-
-while (not p.get_condition('personhere')):
-    time.sleep(1)
+# while (not p.get_condition('personhere')):
+#     time.sleep(1)
 
 #vsay_starting;
 p.exec_action("aimlsay", "greetings")
@@ -80,17 +81,17 @@ for n in range(3):
                         for spotreq in req["spotted"]:
                             print "\t"*2, [k for k in req.keys() if k != "spotted"][0] +":", spotreq["text"]
 
-            # repeat command to operator
-            try:
-                p.memory_service.insertData("CurrentTaskInterpretation", str(task))
-                p.exec_action("generatetaskdescription", str(i))
+                # repeat command to operator
+                try:
+                    p.memory_service.insertData("CurrentTaskInterpretation", str(task))
+                    p.exec_action("generatetaskdescription", str(i))
 
-                to_say = str(p.memory_service.getData("task_description"))
+                    to_say = str(p.memory_service.getData("task_description"))
 
-                p.exec_action("say", to_say.replace(" ", "_"))
-            except:
-                p.exec_action("say", "I_understood")
-                p.exec_action("say", googleasr_value.replace(" ", "_"))
+                    p.exec_action("say", to_say.replace(" ", "_"))
+                except:
+                    p.exec_action("say", "I_understood")
+                    p.exec_action("say", googleasr_value.replace(" ", "_"))
 
             p.exec_action("say", "Is_that_correct",interrupt='timeout_5')
 
@@ -108,7 +109,7 @@ for n in range(3):
 
 
     #we exit the loop either if the correct command or run out of attempts
-    if understand:
+    if understood:
         p.exec_action("say", "I_am_sorry_I_cannot_do_that_now")
 
     else:

@@ -26,7 +26,7 @@ class tcol:
 # blacklisted_actions = ['personhere']
 blacklisted_actions = []
 
-# this is a list of tuples (Proxy, Subscriber) to 
+# this is a list of tuples (Proxy, Subscriber) to
 # initialise services at the beginning
 behaviours = [
     ('ALFaceDetection', 'Face_Behavior'),
@@ -36,6 +36,8 @@ behaviours = [
     ('ALSoundLocalization', 'Sound_Behavior'),
     ('ALMotion', 'Motion_Behavior'),
     ('ALWavingDetection', 'Waving_Behavior'),
+    ('ALSpeechRecognition', 'ASR_Behavior'),
+    ('ALAudioRecorder', 'Recorder_Behavior'),
     ('ALAnimationPlayer', None)
 ]
 

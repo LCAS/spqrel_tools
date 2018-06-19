@@ -20,7 +20,7 @@ interpretations = None
 def interpretations_callback(data):
     global interpretations
     interpretations = data #.strip()
-    print "Interpretations: ", interpretations
+    print "Interpretations: ", eval(interpretations)
 
 def actionThread_exec (params):
     global interpretations
@@ -29,6 +29,7 @@ def actionThread_exec (params):
 
     sub2 = memory_service.subscriber(intkey)
     idsub2 = sub2.signal.connect(interpretations_callback)
+
 
     #tts_service = getattr(t, "session", None).service("ALTextToSpeech")
     print "Action "+actionName+" started with params "+params
@@ -42,15 +43,12 @@ def actionThread_exec (params):
     interpretations = None
 
     while (getattr(t, "do_run", True) and interpretations is None):
-        print "Waiting for interpretations"
+        print "Waiting for interpretation..."
         time.sleep(0.5)
 
     if interpretations is not None and len(interpretations) > 0:
         memory_service.insertData("command_understood", 1)
         memory_service.insertData("CommandInterpretation", interpretations)
-
-
-
 
 
     # action end

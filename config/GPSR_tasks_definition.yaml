@@ -71,10 +71,7 @@ placing:
     lu4r_name: []
 
 answer:
-    requires:
-      - question:
-          lu4r_name: []
-          necessary: 0
+    requires: []
     possible_verbs: ["answer"]
     lu4r_name: []
 # guide:

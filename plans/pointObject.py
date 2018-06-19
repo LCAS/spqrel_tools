@@ -38,7 +38,7 @@ def main(params,p):
     lastT = 0
     angleInc=1000.0
     #main loop
-    p.exec_action('say', "Hi,_let's_point_a"+params )
+    p.exec_action('say', "Hi,_let's_point_a_"+params )
     
     while (angleInc!=0.0):
         #print "."

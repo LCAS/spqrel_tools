@@ -49,9 +49,10 @@ class LanguageUnderstanding(object):
 
     def callback(self, msg):
         print "callback=", msg
+        msg = msg.lower()
         google_transcription = self.memory.getData("googleasrresponse")[0].lower()
         print "analysing google transcription:", google_transcription
-        if msg == "SPR":
+        if msg == "spr":
             print google_transcription
             #get ws interpretation
             ws_interpretation = self.doWordSpotting(google_transcription, "spr")
@@ -60,7 +61,7 @@ class LanguageUnderstanding(object):
 
             self.memory.raiseEvent("CommandInterpretation", ws_interpretation)
             self.memory.insertData("CommandInterpretation", ws_interpretation)
-        elif msg == "GPSR":
+        elif msg == "gpsr":
             #transcriptions_dict = slu_utils.list_to_dict_w_probabilities(google_transcription)
             best_transcription = google_transcription
             print "[" + self.__class__.__name__ + "] User says: " + best_transcription

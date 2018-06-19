@@ -119,8 +119,11 @@ for n in range(3):
                 res = sr.parse_requires(task["requires"])
                 if res['wp'] is not None:
                     p.exec_action("navigateto", res['wp'], interrupt='timeout_120')
-                    p.exec_action("say", "sorry_i_have_troubles_to_fully_complete_your_request")
+                else:
+                    p.exec_action("navigateto", res['wp15'], interrupt='timeout_120')
+                p.exec_action("say", "sorry_i_have_troubles_to_fully_complete_your_request")
                 p.exec_action("navigateto", 'wp5', interrupt='timeout_120')
+                break
             except:
                 p.exec_action("say", "sorry_i_have_trouble_with_this_right_now")
 

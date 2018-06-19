@@ -26,7 +26,7 @@ def main(params,p):
 
 
     #object to track
-    target=params..replace('_',' ') #'cell phone'
+    target=params.replace('_',' ') #'cell phone'
 
     # camera properties in pixels
     maxX = 640

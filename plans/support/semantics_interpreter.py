@@ -103,6 +103,91 @@ class SemanticResolver:
         except Exception:
             return None
 
+    def parse_requires(self, d):
+        # [{'index': 0,
+        #   'requires': [{'object': {'lu4r_name': ['theme'], 'necessary': 1},
+        #                 'spotted': [{'category': 'cutlery',
+        #                              'index': 12,
+        #                              'text': 'fork'},
+        #                             {'index': 41,
+        #                              'text': ' it ',
+        #                              'toguess': 'object'}]},
+        #                {'location': {'lu4r_name': ['source'], 'necessary': 0},
+        #                 'spotted': [{'index': 26,
+        #                              'room': 'bedroom',
+        #                              'text': 'chair'},
+        #                             {'index': 26,
+        #                              'room': 'dining room',
+        #                              'text': 'chair'},
+        #                             {'index': 52,
+        #                              'room': 'living room',
+        #                              'text': 'bookcase'}]}],
+        #   'task': 'taking',
+        #   'verb': 'pick up'},
+        #  {'index': 36,
+        #   'requires': [{'object': {'lu4r_name': [], 'necessary': 1},
+        #                 'spotted': [{'category': 'cutlery',
+        #                              'index': 12,
+        #                              'text': 'fork'},
+        #                             {'index': 41,
+        #                              'text': ' it ',
+        #                              'toguess': 'object'}]},
+        #                {'location': {'lu4r_name': [], 'necessary': 1},
+        #                 'spotted': [{'index': 26,
+        #                              'room': 'bedroom',
+        #                              'text': 'chair'},
+        #                             {'index': 26,
+        #                              'room': 'dining room',
+        #                              'text': 'chair'},
+        #                             {'index': 52,
+        #                              'room': 'living room',
+        #                              'text': 'bookcase'}]}],
+        #   'task': 'placing',
+        #   'verb': 'place'}]
+        obj = None
+        location = None
+        text = None
+        room = None
+        name = None
+        try:
+            for r in d:
+                #logging.info('\nR: ' + pformat(r))
+                if 'spotted' in r:
+                    try:
+                        for s in r['spotted']:
+                            if 'text' in s:
+                                text = s['text']
+                            if 'room' in s:
+                                room = s['room']
+                            if 'name' in s:
+                                name = s['name']
+                            break
+                        if 'object' in r:
+                            obj = text
+                        if 'location' in r:
+                            location = text
+                    except Exception as e:
+                        logger.warning('exception %s' % e)
+        except Exception as e:
+            logger.warning('exception %s' % e)
+        res = {
+            'room': room,
+            'location': location,
+            'obj': obj,
+            'text': text,
+            'name': name,
+            'wp': None
+        }
+
+        if obj is not None and res['wp'] is None:
+            res['wp'] = self.resolve_wp(obj)
+        elif location is not None and res['wp'] is None:
+            res['wp'] = self.resolve_wp(location)
+        elif room is not None and res['wp'] is None:
+            res['wp'] = self.resolve_wp(room)
+        logger.info(pformat(res))
+        return res
+
     def load(self):
         config_folder = os.path.join(os.environ["SPQREL_TOOLS"], "config")
         files_to_load = [config_folder + '/Locations.xml']
@@ -137,11 +222,18 @@ class SemanticResolver:
 
 
 def main():
+
+    with open("/tmp/test.yaml", 'r') as stream:
+        test=yaml.load(stream)
+    #logger.info(pformat(test[0]['requires']))
     sr = SemanticResolver()
     sr.augment_entities()
-    logger.info(pformat(sr.entities))
 
-    print sr.resolve_wp('tableware')
+    sr.parse_requires(test[0]['requires'])
+    sr.parse_requires(test[1]['requires'])
+    #logger.info(pformat(sr.entities))
+
+    #print sr.resolve_wp('tableware')
 
 
 if __name__ == '__main__':

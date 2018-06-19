@@ -40,14 +40,6 @@ bringing:
     possible_verbs:  ["bring", "deliver", "give", "hand", "hand over"]
     lu4r_name: ["bringing", "giving"]
 
-cotheme:
-    requires:
-      - name:
-          lu4r_name: ["cotheme"]
-          necessary: 1
-    possible_verbs: ["follow", "come behind", "go behind", "come after", "go after", "accompany"]
-    lu4r_name: ["cotheme"]
-
 motion:
     requires:
       - location:
@@ -59,40 +51,47 @@ motion:
 tell:
     requires:
       - name:
-        lu4r_name: []
-        necessary: 0
+          lu4r_name: []
+          necessary: 0
       - whattosay:
-        lu4r_name: []
-        necessary: 1
+          lu4r_name: []
+          necessary: 1
     possible_verbs: ["tell", "say"]
     lu4r_name: ["tell", "say"]
 
 placing:
     requires:
       - object:
-        lu4r_name: []
-        necessary: 1
+          lu4r_name: []
+          necessary: 1
       - location:
-        lu4r_name: []
-        necessary: 1
+          lu4r_name: []
+          necessary: 1
     possible_verbs: ["put", "place", "leave", "set"]
-    lu4r_name: []
-
-guide:
-    requires:
-      - name:
-        lu4r_name: []
-        necessary: 1
-      - location:
-        lu4r_name: []
-        necessary: 1
-    possible_verbs: ["guide", "escort", "take", "lead", "accompany", "conduct"]
     lu4r_name: []
 
 answer:
     requires:
       - question:
-        lu4r_name: []
-        necessary: 0
+          lu4r_name: []
+          necessary: 0
     possible_verbs: ["answer"]
     lu4r_name: []
+# guide:
+#     requires:
+#       - name:
+#         lu4r_name: []
+#         necessary: 1
+#       - location:
+#         lu4r_name: []
+#         necessary: 1
+#     possible_verbs: ["guide", "escort", "take", "lead", "accompany", "conduct"]
+#     lu4r_name: []
+
+# cotheme:
+#     requires:
+#       - name:
+#           lu4r_name: ["cotheme"]
+#           necessary: 1
+#     possible_verbs: ["follow", "come behind", "go behind", "come after", "go after", "accompany"]
+#     lu4r_name: ["cotheme"]

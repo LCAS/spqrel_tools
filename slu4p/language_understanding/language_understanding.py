@@ -68,20 +68,22 @@ class LanguageUnderstanding(object):
 
             # get lu4r interpretation
             lu4r_interpretation = str(self.lu4r_client.parse_sentence(best_transcription))
+            print "[" + self.__class__.__name__ + "] LU4R Interpretation: " + str(lu4r_interpretation)
 
             # get ws interpretation
             ws_interpretation = self.doWordSpotting(best_transcription, "gpsr")
+            print "[" + self.__class__.__name__ + "] Word spotting: " + str(ws_interpretation)
 
             # merge interpretations TODO
             #merged_interpretation = self.mergeInterpretations(lu4r_interpretation, ws_interpretation)
 
 
-            print "[" + self.__class__.__name__ + "] LU4R Interpretation: " + str(lu4r_interpretation)
-            print "[" + self.__class__.__name__ + "] Word spotting: " + str(ws_interpretation)
             #print "[" + self.__class__.__name__ + "] Merged: " + str(merged_interpretation)
 
             interpretations = [lu4r_interpretation, ws_interpretation]
             self.memory.raiseEvent("CommandInterpretation", interpretations)
+        elif msg == "question":
+            pass
 
     def mergeInterpretations(self, lu4r_interpretation, ws_interpretation):
         lu4rDict = self.generateLu4rDict(lu4r_interpretation)
@@ -219,7 +221,7 @@ class LanguageUnderstanding(object):
             qsplit = qstring.split(" ")
             tsplit = transcription.split(" ")
             equalwords = sum([1 for qw in qsplit if qw in transcription])
-            print q, equalwords, len(tsplit)
+            #print q, equalwords, len(tsplit)
             if equalwords > len(tsplit)*0.7:
                 quest_spotted.append({"question": q, "equals": equalwords})
         maxeq = 0

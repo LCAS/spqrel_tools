@@ -14,6 +14,26 @@ coloredlogs.install(level='INFO', logger=logger)
 
 class SemanticResolver:
 
+    TESTSTR = """
+[{'object': {'lu4r_name': ['theme'], 'necessary': 1},
+                'spotted': [{'category': 'cutlery',
+                             'index': 12,
+                             'text': 'fork'},
+                            {'index': 41,
+                             'text': ' it ',
+                             'toguess': 'object'}]},
+               {'location': {'lu4r_name': ['source'], 'necessary': 0},
+                'spotted': [{'index': 26,
+                             'room': 'bedroom',
+                             'text': 'chair'},
+                            {'index': 26,
+                             'room': 'dining room',
+                             'text': 'chair'},
+                            {'index': 52,
+                             'room': 'living room',
+                             'text': 'bookcase'}]}]
+    """
+
     def __init__(self):
         self.categories = {}
         self.objects = {}
@@ -229,7 +249,7 @@ def main():
     sr = SemanticResolver()
     sr.augment_entities()
 
-    sr.parse_requires(test[0]['requires'])
+    sr.parse_requires(yaml.load(SemanticResolver.TESTSTR))
     sr.parse_requires(test[1]['requires'])
     #logger.info(pformat(sr.entities))
 

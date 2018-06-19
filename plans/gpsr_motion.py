@@ -13,7 +13,7 @@ from pnp_cmd_naoqi import *
 
 def gpsr_motion(p, req):
     try:
-        return p.exec_action('say', 'motion')
+        return p.exec_action('navigateto', 'wp1',interrupt = 'timeout_40')
     except:
         return p.exec_action('say', "sorry_I_can't_do_this_right_now")
 

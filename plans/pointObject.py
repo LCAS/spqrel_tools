@@ -136,6 +136,7 @@ def main(params,p):
         # finish
         p.action_cmd('darknetClient', '0.2', 'stop')
         p.exec_action('say', 'see_you' )
+        return True
         
 
 

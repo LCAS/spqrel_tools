@@ -49,39 +49,25 @@ class GoogleClient(object):
                     f = open(value + '.flac', 'rb')
                     flac_cont = f.read()
                     f.close()
-                    res = [r.encode('ascii', 'ignore').lower() for r in self.recognize_data(flac_cont)]
+                    transcriptions = [r.encode('ascii', 'ignore').lower() for r in self.recognize_data(flac_cont)]
 
-            transcriptions = self.recognize_file(file_path)
+                    self.memory_service.raiseEvent("GoogleResponse", transcriptions)
 
-            print transcriptions
+                    print transcriptions
 
-            self.memory_service.raiseEvent("GoogleResponse", transcriptions)
+                    self.busy = False
 
-            #self.memory_service.insertData("GoogleResponse", transcriptions)
-            self.busy = False
 
     def recognize_file(self, file_path):
         try:
             print "[" + self.__class__.__name__ + "] [GOOGLE] Recognizing file.."
             transcriptions = []
             data = open(file_path, "rb").read()
-            base64_data = base64.b64encode(data)
-            audio_json = {"content": base64_data}
-            config_json = {"languageCode": self.language}
-            json_data = {"config": config_json, "audio": audio_json}
-            response = requests.post(self.url, json=json_data, headers=self.headers, timeout=self.timeout)
-            json_res = json.loads(response.text)
-            if "results" in json_res.keys() and "alternatives" in json_res["results"][0].keys():
-                for alternative in json_res["results"][0]["alternatives"]:
-                    transcriptions.append(alternative["transcript"].lower())
+            transcriptions = self.recognize_data(data)
             return transcriptions
-        except ValueError as ve:
-            print ve.message
-            print "[" + self.__class__.__name__ + "] [RECOGNIZE]ERROR! Google APIs are temporary unavailable. Returning empty list.."
-            return []
-        except requests.exceptions.RequestException as e:
+        except Error as e:
             print e.message
-            print "[" + self.__class__.__name__ + "] [RECOGNIZE]ERROR! Unable to reach Google. Returning empty list.."
+            print "[" + self.__class__.__name__ + "] [RECOGNIZE]ERROR! Returning empty list.."
             return []
 
     def recognize_data(self, data):

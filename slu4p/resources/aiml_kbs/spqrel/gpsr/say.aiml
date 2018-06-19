@@ -443,6 +443,13 @@
     </category>
 
     <category>
+        <pattern>SPEAKLOUD</pattern>
+        <template>
+                <li>Please speak loud when my eyes turn blue.</li>
+        </template>
+    </category>
+    
+    <category>
         <pattern>NEXTQUESTION</pattern>
         <template>
             <random>

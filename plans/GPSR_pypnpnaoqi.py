@@ -17,49 +17,83 @@ p = PNPCmd()
 
 p.begin()
 
-#recdata_on;
-#p.exec_action("recdata", "on")
+p.exec_action('setpose', '5.8_10.6')
 
-### enter the arena and goto location ###
-#headpose_0_-10;
-p.exec_action("headpose", "0_-10")
+p.exec_action('navigateto', 'wp5', interrupt='aborted', recovery='restart_action')
+
+while (not p.get_condition('personhere')):
+    time.sleep(1)
 
 #vsay_starting;
 p.exec_action("aimlsay", "greetings")
 
-# "The robot enters the arena and drives to a designated position..."
-# TODO
-
-#turn_-90_ABS; # mayte check
-
 ###
 # "The robot can work on at most three commands. After the third command, it has to leave the arena."
 ###
-    # "...it has to wait for further commands."
+
+# "...it has to wait for further commands."
 p.exec_action("aimlsay", "requestcommand")
-    # TODO wait
+p.exec_action("aimlsay", "speakloud")
+# TODO wait
 
 time.sleep(2)
 
-
+#three runs
 for n in range(3):
-    # understand the command
-    p.exec_action("understandcommand", "")
 
-    if p.get_condition("commandunderstood"):
-        p.exec_action("extracttasks", "")
+    repeat_
+    # This blocks until we get a transcription from google (start language_understanding/google_client.py)
+    p.exec_action("googleasr", "gpsr", interrupt="timeout_20")
+
+    # get the google transcription
+    googleasr_value = p.memory_service.getData("googleasrresponse")
+    print "plan google response", googleasr_value
+
+    if googleasr_value =="":
+        p.exec_action("aimlsay", "misunderstand")
+        continue
+        
+    # This blocks until we get the task description from the transcription (start language_understanding/language_understanding.py)
+    p.exec_action("understandcommand", "gpsr", interrupt="timeout_20")
+
+    # get the interpretation
+    commands_inter = eval(p.memory_service.getData("CommandInterpretation"))
+    print "plan commands interpretation", pp.pprint(commands_inter)
+
+    #TODO these need to be ordered in order to be executed in order
+    for i, task in enumerate(commands_inter):
+        print "Task", i, ": ", task["task"]
+
+        print "\tParameters:"
+        for req in task["requires"]:
+            if "spotted" in req:
+                for spotreq in req["spotted"]:
+                    print "\t"*2, [k for k in req.keys() if k != "spotted"][0] +":", spotreq["text"]
+
+
+
+    # repeat command
+    p.exec_action("say", "I_understood")
+    p.exec_action("say", googleasr_value.replace(" ", "_"))
+    
+    
+    # understand the command
+    #p.exec_action("understandcommand", "")
+
+    #if p.get_condition("commandunderstood"):
+    #    p.exec_action("extracttasks", "")
 
         # repeat the commands understood to the operator
         # and ask when not sure
-        while not p.get_condition("alltasksconfirmed"):
+    #    while not p.get_condition("alltasksconfirmed"):
             # repeat the command to the operator
-            p.exec_action("generatetaskdescription", "")
+    #        p.exec_action("generatetaskdescription", "")
 
-            p.exec_action("describetask", "")
+    #        p.exec_action("describetask", "")
 
 
         #TODO if commands confirmed
-        p.exec_action("executetasks", "")
+    #    p.exec_action("executetasks", "")
         #TODO else ask to repeat
 
         #GPSRtask; ! *if* timeout_execplan_180 *do* skip_action !
@@ -70,15 +104,17 @@ for n in range(3):
         #p.exec_action("navigateto", "backdoorin") # TODO navigate to operator
         #asrenable;
         #p.exec_action("asrenable") # TODO why here?
-        if n < 2:
-            p.exec_action("aimlsay", "requestcommand")
-            time.sleep(2)
-    else:
-        if n < 2:
-            p.exec_action("aimlsay", "nextquestion")
-            time.sleep(2)
+    #    if n < 2:
+    #        p.exec_action("aimlsay", "requestcommand")
+    #        time.sleep(2)
+    #else:
+    #    if n < 2:
+    #        p.exec_action("aimlsay", "nextquestion")
+    #        time.sleep(2)
         #TODO else i did not understand
 
+     p.exec_action("aimlsay", "nextquestion")
+     
 ### exit the arena ###
 # "After the third command, it has to leave the arena."
 p.exec_action("aimlsay", "farewell")

@@ -29,20 +29,23 @@ while (not p.get_condition('personhere')):
 p.exec_action('say', 'hello')
 time.sleep(1)
 p.exec_action('say', 'i_will_help_you_carry')
-
+time.sleep(1)
+p.exec_action('say', 'please_guide_me_now')
+p.exec_action('say', 'touch_my_screen_when_we_have_arrived')
 
 #### 2 - START THE FOLLOWING PHASE
 
 #previously asrenable;
-p.exec_action('asrenable', '')
+#p.exec_action('asrenable', '')
 
 #previously  followuntil_stopfollowing; ! *if* (personlost) *do* vsay_waitforme; navigateto_start; waitfor_personhere; restart_action !
 
 # follow the recorded person to the car
-p.exec_action('updatefollowpersoncoord', 'stopfollowing', interrupt='personlost')
+# p.exec_action('updatefollowpersoncoord', 'stopfollowing', interrupt='personlost')
+p.exec_action('updatefollowpersoncoord', 'screentouched', interrupt='timeout_100')
 
 # if we lost the person during the trip...
-while  (not p.get_condition('stopfollowing') ) or p.get_condition('personlost'):
+while False:
     p.exec_action('say', 'waitforme')
     # look for someone...
     p.exec_action('lookfor', 'persondetected',  interrupt='timeout_20')

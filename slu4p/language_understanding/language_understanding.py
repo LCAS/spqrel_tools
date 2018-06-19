@@ -10,7 +10,7 @@ import pprint as pp
 
 class LanguageUnderstanding(object):
     PATH = ''
-    RANKED_EVENT = "UnderstandCommand"
+    UNDERSTAND_EVENT = "UnderstandCommand"
     SEMANTIC_INFO_MEM = "/semantic_info"
 
     def __init__(self, lip, lport, app):
@@ -29,10 +29,10 @@ class LanguageUnderstanding(object):
         self.lu4r_client = LU4RClient(lip, lport)
 
     def start(self):
-        self.ranked_sub = self.memory.subscriber(LanguageUnderstanding.RANKED_EVENT)
+        self.ranked_sub = self.memory.subscriber(LanguageUnderstanding.UNDERSTAND_EVENT)
         self.ranked_sub_id = self.ranked_sub.signal.connect(self.callback)
 
-        print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(LanguageUnderstanding.RANKED_EVENT)
+        print "[" + self.__class__.__name__ + "] Subscribers:", self.memory.getSubscribers(LanguageUnderstanding.UNDERSTAND_EVENT)
 
     def load_gpsr_xmls(self):
         # NOTE only parsing the GPSR tasks definitions
@@ -42,42 +42,50 @@ class LanguageUnderstanding(object):
         self.names = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/names") )
         self.locations = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/locations") )
         self.questions = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/questions") )
+        print "Semantic info loaded!"
 
     def quit(self):
         self.ranked_sub.signal.disconnect(self.ranked_sub_id)
 
     def callback(self, msg):
-        if msg == "SPR":
-            google_transcription = self.memory.getData("GoogleTranscription").lower()
-            print google_transcription
-            #get ws interpretation
-            ws_interpretation = self.doWordSpotting(google_transcription, "spr")
+        print "callback=", msg
+        msg = msg.lower()
+        if len(self.memory.getData("googleasrresponse")[0]) > 0:
+            google_transcription = self.memory.getData("googleasrresponse")[0].lower() + " "
+            if msg == "spr":
+                print google_transcription
+                #get ws interpretation
+                ws_interpretation = self.doWordSpotting(google_transcription, "spr")
 
-            print "[" + self.__class__.__name__ + "] Word spotting: " + str(ws_interpretation)
+                print "[" + self.__class__.__name__ + "] Word spotting: " + str(ws_interpretation)
 
-            self.memory.raiseEvent("CommandInterpretation", ws_interpretation)
-            self.memory.insertData("CommandInterpretation", ws_interpretation)
-        elif msg == "GPSR":
-            transcriptions_dict = slu_utils.list_to_dict_w_probabilities(msg)
-            best_transcription = slu_utils.pick_best(transcriptions_dict)
-            print "[" + self.__class__.__name__ + "] User says: " + best_transcription
+                self.memory.raiseEvent("CommandInterpretation", str(ws_interpretation))
+                self.memory.insertData("CommandInterpretation", str(ws_interpretation))
+            elif msg == "gpsr":
+                #transcriptions_dict = slu_utils.list_to_dict_w_probabilities(google_transcription)
+                best_transcription = google_transcription
+                print "[" + self.__class__.__name__ + "] User says: " + best_transcription
 
-            # get lu4r interpretation
-            lu4r_interpretation = str(self.lu4r_client.parse_sentence(best_transcription))
+                # get lu4r interpretation
+                #lu4r_interpretation = str(self.lu4r_client.parse_sentence(best_transcription))
+                #print "[" + self.__class__.__name__ + "] LU4R Interpretation: " + str(lu4r_interpretation)
 
-            # get ws interpretation
-            ws_interpretation = self.doWordSpotting(best_transcription, "gpsr")
+                # get ws interpretation
+                ws_interpretation = self.doWordSpotting(best_transcription, "gpsr")
+                #print "[" + self.__class__.__name__ + "] Word spotting: " + str(ws_interpretation)
 
-            # merge interpretations TODO
-            merged_interpretation = self.mergeInterpretations(lu4r_interpretation, ws_interpretation)
+                # merge interpretations TODO
+                #merged_interpretation = self.mergeInterpretations(lu4r_interpretation, ws_interpretation)
 
 
-            print "[" + self.__class__.__name__ + "] LU4R Interpretation: " + str(lu4r_interpretation)
-            print "[" + self.__class__.__name__ + "] Word spotting: " + str(ws_interpretation)
-            #print "[" + self.__class__.__name__ + "] Merged: " + str(merged_interpretation)
+                #print "[" + self.__class__.__name__ + "] Merged: " + str(merged_interpretation)
 
-            interpretations = [lu4r_interpretation, ws_interpretation]
-            self.memory.raiseEvent("CommandInterpretations", interpretations)
+                #interpretations = [lu4r_interpretation, ws_interpretation]
+                self.memory.raiseEvent("CommandInterpretation", str(ws_interpretation))
+            elif msg == "question":
+                pass
+        else:
+            return str([])
 
     def mergeInterpretations(self, lu4r_interpretation, ws_interpretation):
         lu4rDict = self.generateLu4rDict(lu4r_interpretation)
@@ -123,7 +131,7 @@ class LanguageUnderstanding(object):
                 arg_name, arg_value = arg[:end_ani], arg[start_avi:]
                 if ":mod" in arg_value:
                     splitted = arg_value.split("\t"*(depth+1) + ":mod")
-                    print splitted, arg_value
+                    #print splitted, arg_value
                     arg_value = splitted[0][:splitted[0].find("\n")]
                     mod_list = []
                     for split in splitted[1:]:
@@ -142,16 +150,22 @@ class LanguageUnderstanding(object):
         spotted_tasks = []
 
         if test == "spr":
-            tasks_definition = self.spr_tasks_definition
+            tasks_definition = self.spr_tasks_definition.copy()
         elif test == "gpsr":
-            tasks_definition = self.gpsr_tasks_definition
+            tasks_definition = self.gpsr_tasks_definition.copy()
 
         # look for verbs
         for task in tasks_definition.keys():
             for vb in tasks_definition[task]["possible_verbs"]:
                 if vb in transcription:
                     vb_index = transcription.find(vb)
-                    spotted_tasks.append({"task": task, "index": vb_index, "verb": vb, "requires": tasks_definition[task]["requires"]})
+                    requirements = []
+                    for req in tasks_definition[task]["requires"]:
+                        requirements.append(req.copy())
+                    spotted_tasks.append({"task": task, "index": vb_index, "verb": vb, "requires":requirements})
+                    #spotted_tasks.append({"task": task, "index": vb_index, "verb": vb, "requires": tasks_definition[task]["requires"]})
+
+
         # look for objects
         obj_spotted = []
         objcat_spotted = []
@@ -159,27 +173,31 @@ class LanguageUnderstanding(object):
             objcatname = objcat["name"]
             if objcatname in transcription:
                 objcat_index = transcription.find(objcatname)
-                objcat_spotted.append({"objcat": objcatname, "index": objcat_index})
-            for obj in objcat["objectList"]:
+                objcat_spotted.append({"text": objcatname, "index": objcat_index})
+            for obj in objcat["objectlist"]:
                 objname = obj["name"]
                 if objname in transcription:
                     obj_index = transcription.find(objname)
-                    obj_spotted.append({"objcat": objcatname, "index": obj_index, "obj": objname})
+                    obj_spotted.append({"category": objcatname, "index": obj_index, "text": objname})
         for obj in self.objects_to_guess:
             if obj in transcription:
                 obj_index = transcription.find(obj)
-                obj_spotted.append({"obj": obj, "index": obj_index, "toguess": "object"})
+                obj_spotted.append({"text": obj, "index": obj_index, "toguess": "object"})
         # look for persons
         psn_spotted = []
         for nametag in self.names:
             name = nametag["name"]
             if name in transcription:
                 name_index = transcription.find(name)
-                psn_spotted.append({"index": name_index, "person": name})
+                psn_spotted.append({"index": name_index, "text": name})
         for name in self.names_to_guess:
             if name in transcription:
                 name_index = transcription.find(name)
-                psn_spotted.append({"person": name, "index": name_index, "toguess": "name"})
+                psn_spotted.append({"text": name, "index": name_index, "toguess": "name"})
+        for uns in self.unk_name:
+            if uns in transcription:
+                uns_index = transcription.find(uns)
+                psn_spotted.append({"text": uns, "index": uns_index})
         # look for locations
         loc_spotted = []
         room_spotted = []
@@ -187,12 +205,12 @@ class LanguageUnderstanding(object):
             roomname = room["name"]
             if roomname in transcription:
                 room_index = transcription.find(roomname)
-                room_spotted.append({"room": roomname, "index": room_index})
-            for location in room["locationList"]:
+                loc_spotted.append({"text": roomname, "index": room_index})
+            for location in room["locationlist"]:
                 locname = location["name"]
                 if locname in transcription:
                     loc_index = transcription.find(locname)
-                    loc_spotted.append({"room": roomname, "index": loc_index, "loc": locname})
+                    loc_spotted.append({"room": roomname, "index": loc_index, "text": locname})
         # look for gestures
         #gest_spotted = []
         #for gest in self.gesturesxml.findall("gesture"):
@@ -206,7 +224,7 @@ class LanguageUnderstanding(object):
         for wts in self.whattosay:
             if wts in transcription:
                 wts_index = transcription.find(wts)
-                wts_spotted.append({"wts": wts, "index": wts_index})
+                wts_spotted.append({"text": wts, "index": wts_index})
 
         quest_spotted = []
         max_quest_spotted = {}
@@ -215,7 +233,7 @@ class LanguageUnderstanding(object):
             qsplit = qstring.split(" ")
             tsplit = transcription.split(" ")
             equalwords = sum([1 for qw in qsplit if qw in transcription])
-            print q, equalwords, len(tsplit)
+            #print q, equalwords, len(tsplit)
             if equalwords > len(tsplit)*0.7:
                 quest_spotted.append({"question": q, "equals": equalwords})
         maxeq = 0
@@ -223,10 +241,6 @@ class LanguageUnderstanding(object):
             if quest["equals"] > maxeq:
                 max_quest_spotted = quest["question"]
                 maxeq = quest["equals"]
-
-        print maxeq
-
-
 
         # sort the complete list by index
         #complete_list = obj_spotted + psn_spotted + loc_spotted + wts_spotted
@@ -238,7 +252,7 @@ class LanguageUnderstanding(object):
                     "name": psn_spotted,
                     "location": loc_spotted,
                     "whattosay": wts_spotted,
-                    "room": room_spotted,
+                    #"room": room_spotted,
                     "category": objcat_spotted
                     }
 
@@ -250,7 +264,6 @@ class LanguageUnderstanding(object):
 
 
         # fill the requirements with the complete spotted list
-        vb_indexes = sorted([t["index"] for t in spotted_tasks])
         # for attcat in attr_spotted.keys():
         #     for att in attr_spotted[attcat]:
         #         if att["index"]
@@ -258,8 +271,10 @@ class LanguageUnderstanding(object):
 
         for i in range(len(spotted_tasks)):
             n_req = 0
+
             for requirement in spotted_tasks[i]["requires"]:
                 name_requirement = requirement.keys()[0]
+                #pp.pprint(spotted_tasks)
                 if "possible_names" in requirement[name_requirement]:
                     for poss_name in requirement[name_requirement]["possible_names"]:
                         if poss_name in transcription:
@@ -272,13 +287,16 @@ class LanguageUnderstanding(object):
                     for attr in attr_spotted[name_requirement]:
                         #if attr["index"] > vb_indexes[i] and len(vb_indexes) > i and attr["index"] < vb_indexes[i + 1]:
                         if "spotted" in spotted_tasks[i]["requires"][n_req].keys():
-                            spotted_tasks[i]["requires"][n_req]["spotted"].append(attr)
+                            spotted_tasks[i]["requires"][n_req]["spotted"].append(attr.copy())
                         else:
-                            spotted_tasks[i]["requires"][n_req].update({"spotted":attr})
+                            spotted_tasks[i]["requires"][n_req].update({"spotted":[attr.copy()]})
                 n_req += 1
 
-        spotted_tasks.append(max_quest_spotted)
+        if len(max_quest_spotted.keys()) > 0:
+            spotted_tasks.append(max_quest_spotted)
 
+        #vb_indexes = sorted([t["index"] for t in spotted_tasks])
+        #spotted_tasks = [st for st in spotted_tasks if st["index"]]
         pp.pprint (spotted_tasks)
 
         return spotted_tasks
@@ -306,10 +324,17 @@ class LanguageUnderstanding(object):
     ]
 
     names_to_guess = [
-        " me ",
         " him ",
         " her "
     ]
+
+    unk_name = [
+        " me ",
+        "someone",
+        "a person"
+    ]
+
+
 
 def main():
     parser = argparse.ArgumentParser()

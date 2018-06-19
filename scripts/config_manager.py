@@ -31,7 +31,7 @@ class config_manager(object):
                 try:
                     xml_root = ET.parse(os.path.join(config_folder, config_file)).getroot()
                     info = self.decode_xml(xml_root, config_name)
-                    self.memProxy.insertData(memory_key, str(info))
+                    self.memProxy.insertData(memory_key, str(info).lower())
                     memory_keys.append(memory_key)
                     print "DONE"
                 except Exception, e:
@@ -44,7 +44,7 @@ class config_manager(object):
                 try:
                     yf = open(os.path.join(config_folder, config_file))
                     info = self.decode_yaml(yf, config_name)
-                    self.memProxy.insertData(memory_key, str(info))
+                    self.memProxy.insertData(memory_key, str(info).lower())
                     memory_keys.append(memory_key)
                     print "DONE"
                 except Exception, e:

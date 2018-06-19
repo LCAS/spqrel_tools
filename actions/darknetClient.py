@@ -140,6 +140,10 @@ def darkThread (params):
             result = video_service.getImageRemote(imgClient)
             isOk = isCorrectImage(result) 
 
+        imageWidth = result[0]
+        imageHeight = result[1]
+        #print(str(imageWidth)+", "+str(imageHeight))
+
         timestampSecs =  result[4]
         timestampMicrosecs =  result[5]
         

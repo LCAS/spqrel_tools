@@ -23,7 +23,6 @@ def onWordRecognized(msg):
 
 def actionThread_exec (params):
     global response
-    print "start"
     t = threading.currentThread()
 
     memory_service  = getattr(t, "mem_serv", None)
@@ -31,7 +30,6 @@ def actionThread_exec (params):
     #reset memory value
     memory_service.insertData("asrresponse", "")
 
-    print "insert"
 
     #establishing test vocabulary
     vocabulary = []
@@ -43,15 +41,12 @@ def actionThread_exec (params):
         vocabulary = ["yes", "no"]
 
     asr_service.pause(True)
-    print "pause"
     asr_service.removeAllContext()
     try:
         asr_service.setVocabulary(vocabulary, True)
     except:
         print "error setting vocabulary"
-    print "vocab"
     asr_service.pause(False)
-    print "unpause"
 
 
     response = None
@@ -62,8 +57,6 @@ def actionThread_exec (params):
 
     #save into memory
     memory_service.insertData("asrresponse", response)
-
-    print "exit"
 
     asr_service.pause(True)
 
@@ -81,10 +74,9 @@ def init(session):
 
     memory_service = session.service("ALMemory")
 
-    # Start the speech recognition engine with user Test_ASR
-    asr_service_name = "Test_ASR" + str(time.time())
-    asr_service.subscribe(asr_service_name)
-    print 'Speech recognition engine started'
+    ## Start the speech recognition engine with user Test_ASR
+    #asr_service_name = "Test_ASR" + str(time.time())
+    #asr_service.subscribe(asr_service_name)
 
 
     #subscribe to event WordRecognized
@@ -99,7 +91,7 @@ def quit():
     #Disconnecting callbacks and subscribers
     subWordRecognized.signal.disconnect(idSubWordRecognized)
 
-    asr_service.unsubscribe(asr_service_name)
+    #asr_service.unsubscribe(asr_service_name)
 
     asr_service.pause(True)
 

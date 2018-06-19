@@ -26,7 +26,7 @@ class LanguageUnderstanding(object):
 
         self.load_gpsr_xmls()
 
-        self.lu4r_client = LU4RClient(lip, lport)
+        #self.lu4r_client = LU4RClient(lip, lport)
 
     def start(self):
         self.ranked_sub = self.memory.subscriber(LanguageUnderstanding.UNDERSTAND_EVENT)
@@ -36,12 +36,12 @@ class LanguageUnderstanding(object):
 
     def load_gpsr_xmls(self):
         # NOTE only parsing the GPSR tasks definitions
-        self.gpsr_tasks_definition = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/gpsr_tasks_definition") )
-        self.spr_tasks_definition = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/spr_tasks_definition") )
-        self.objects = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/objects") )
-        self.names = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/names") )
-        self.locations = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/locations") )
-        self.questions = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/questions") )
+        self.gpsr_tasks_definition = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/gpsr_tasks_definition").lower())
+        self.spr_tasks_definition = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/spr_tasks_definition").lower())
+        self.objects = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/objects").lower())
+        self.names = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/names").lower())
+        self.locations = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/locations").lower())
+        self.questions = eval( self.memory.getData( self.SEMANTIC_INFO_MEM + "/questions").lower() )
         print "Semantic info loaded!"
 
     def quit(self):

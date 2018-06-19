@@ -50,39 +50,42 @@ class LanguageUnderstanding(object):
     def callback(self, msg):
         print "callback=", msg
         msg = msg.lower()
-        google_transcription = self.memory.getData("googleasrresponse")[0].lower() + " "
-        if msg == "spr":
-            print google_transcription
-            #get ws interpretation
-            ws_interpretation = self.doWordSpotting(google_transcription, "spr")
+        if len(self.memory.getData("googleasrresponse")[0]) > 0:
+            google_transcription = self.memory.getData("googleasrresponse")[0].lower() + " "
+            if msg == "spr":
+                print google_transcription
+                #get ws interpretation
+                ws_interpretation = self.doWordSpotting(google_transcription, "spr")
 
-            print "[" + self.__class__.__name__ + "] Word spotting: " + str(ws_interpretation)
+                print "[" + self.__class__.__name__ + "] Word spotting: " + str(ws_interpretation)
 
-            self.memory.raiseEvent("CommandInterpretation", ws_interpretation)
-            self.memory.insertData("CommandInterpretation", ws_interpretation)
-        elif msg == "gpsr":
-            #transcriptions_dict = slu_utils.list_to_dict_w_probabilities(google_transcription)
-            best_transcription = google_transcription
-            print "[" + self.__class__.__name__ + "] User says: " + best_transcription
+                self.memory.raiseEvent("CommandInterpretation", str(ws_interpretation))
+                self.memory.insertData("CommandInterpretation", str(ws_interpretation))
+            elif msg == "gpsr":
+                #transcriptions_dict = slu_utils.list_to_dict_w_probabilities(google_transcription)
+                best_transcription = google_transcription
+                print "[" + self.__class__.__name__ + "] User says: " + best_transcription
 
-            # get lu4r interpretation
-            #lu4r_interpretation = str(self.lu4r_client.parse_sentence(best_transcription))
-            #print "[" + self.__class__.__name__ + "] LU4R Interpretation: " + str(lu4r_interpretation)
+                # get lu4r interpretation
+                #lu4r_interpretation = str(self.lu4r_client.parse_sentence(best_transcription))
+                #print "[" + self.__class__.__name__ + "] LU4R Interpretation: " + str(lu4r_interpretation)
 
-            # get ws interpretation
-            ws_interpretation = self.doWordSpotting(best_transcription, "gpsr")
-            #print "[" + self.__class__.__name__ + "] Word spotting: " + str(ws_interpretation)
+                # get ws interpretation
+                ws_interpretation = self.doWordSpotting(best_transcription, "gpsr")
+                #print "[" + self.__class__.__name__ + "] Word spotting: " + str(ws_interpretation)
 
-            # merge interpretations TODO
-            #merged_interpretation = self.mergeInterpretations(lu4r_interpretation, ws_interpretation)
+                # merge interpretations TODO
+                #merged_interpretation = self.mergeInterpretations(lu4r_interpretation, ws_interpretation)
 
 
-            #print "[" + self.__class__.__name__ + "] Merged: " + str(merged_interpretation)
+                #print "[" + self.__class__.__name__ + "] Merged: " + str(merged_interpretation)
 
-            #interpretations = [lu4r_interpretation, ws_interpretation]
-            self.memory.raiseEvent("CommandInterpretation", ws_interpretation)
-        elif msg == "question":
-            pass
+                #interpretations = [lu4r_interpretation, ws_interpretation]
+                self.memory.raiseEvent("CommandInterpretation", str(ws_interpretation))
+            elif msg == "question":
+                pass
+        else:
+            return str([])
 
     def mergeInterpretations(self, lu4r_interpretation, ws_interpretation):
         lu4rDict = self.generateLu4rDict(lu4r_interpretation)
@@ -170,31 +173,31 @@ class LanguageUnderstanding(object):
             objcatname = objcat["name"]
             if objcatname in transcription:
                 objcat_index = transcription.find(objcatname)
-                objcat_spotted.append({"objcat": objcatname, "index": objcat_index})
+                objcat_spotted.append({"text": objcatname, "index": objcat_index})
             for obj in objcat["objectlist"]:
                 objname = obj["name"]
                 if objname in transcription:
                     obj_index = transcription.find(objname)
-                    obj_spotted.append({"objcat": objcatname, "index": obj_index, "obj": objname})
+                    obj_spotted.append({"category": objcatname, "index": obj_index, "text": objname})
         for obj in self.objects_to_guess:
             if obj in transcription:
                 obj_index = transcription.find(obj)
-                obj_spotted.append({"obj": obj, "index": obj_index, "toguess": "object"})
+                obj_spotted.append({"text": obj, "index": obj_index, "toguess": "object"})
         # look for persons
         psn_spotted = []
         for nametag in self.names:
             name = nametag["name"]
             if name in transcription:
                 name_index = transcription.find(name)
-                psn_spotted.append({"index": name_index, "person": name})
+                psn_spotted.append({"index": name_index, "text": name})
         for name in self.names_to_guess:
             if name in transcription:
                 name_index = transcription.find(name)
-                psn_spotted.append({"person": name, "index": name_index, "toguess": "name"})
+                psn_spotted.append({"text": name, "index": name_index, "toguess": "name"})
         for uns in self.unk_name:
             if uns in transcription:
                 uns_index = transcription.find(uns)
-                psn_spotted.append({"person": uns, "index": uns_index})
+                psn_spotted.append({"text": uns, "index": uns_index})
         # look for locations
         loc_spotted = []
         room_spotted = []
@@ -202,12 +205,12 @@ class LanguageUnderstanding(object):
             roomname = room["name"]
             if roomname in transcription:
                 room_index = transcription.find(roomname)
-                loc_spotted.append({"room": roomname, "index": room_index})
+                loc_spotted.append({"text": roomname, "index": room_index})
             for location in room["locationlist"]:
                 locname = location["name"]
                 if locname in transcription:
                     loc_index = transcription.find(locname)
-                    loc_spotted.append({"room": roomname, "index": loc_index, "loc": locname})
+                    loc_spotted.append({"room": roomname, "index": loc_index, "text": locname})
         # look for gestures
         #gest_spotted = []
         #for gest in self.gesturesxml.findall("gesture"):
@@ -221,7 +224,7 @@ class LanguageUnderstanding(object):
         for wts in self.whattosay:
             if wts in transcription:
                 wts_index = transcription.find(wts)
-                wts_spotted.append({"wts": wts, "index": wts_index})
+                wts_spotted.append({"text": wts, "index": wts_index})
 
         quest_spotted = []
         max_quest_spotted = {}
@@ -261,7 +264,6 @@ class LanguageUnderstanding(object):
 
 
         # fill the requirements with the complete spotted list
-        vb_indexes = sorted([t["index"] for t in spotted_tasks])
         # for attcat in attr_spotted.keys():
         #     for att in attr_spotted[attcat]:
         #         if att["index"]
@@ -293,6 +295,8 @@ class LanguageUnderstanding(object):
         if len(max_quest_spotted.keys()) > 0:
             spotted_tasks.append(max_quest_spotted)
 
+        #vb_indexes = sorted([t["index"] for t in spotted_tasks])
+        #spotted_tasks = [st for st in spotted_tasks if st["index"]]
         pp.pprint (spotted_tasks)
 
         return spotted_tasks

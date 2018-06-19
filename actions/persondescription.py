@@ -86,8 +86,11 @@ def actionThread_exec (params):
         print "Age: " , faces[f_center]["faceAttributes"]["age"]
         memory_service.insertData("Actions/persondescription/"+params+"/age",faces[f_center]["faceAttributes"]["age"])
         #Hair
-        print "Hair: " , faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"]
-        memory_service.insertData("Actions/persondescription/"+params+"/hair",faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"])
+        if len(faces[f_center]["faceAttributes"]["hair"]["hairColor"]) > 0:
+            print "Hair: " , faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"]
+            memory_service.insertData("Actions/persondescription/"+params+"/hair",faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"])
+        else:
+            memory_service.insertData("Actions/persondescription/"+params+"/hair", "black")
         #Beard
         if float(faces[f_center]["faceAttributes"]["facialHair"]["beard"]) >= 0.2:
             print "Beard: yes"
@@ -117,6 +120,7 @@ def actionThread_exec (params):
         #tts_service.say("years old")
         #tts_service.say(faces[f_center]["faceAttributes"]["hair"]["hairColor"][0]["color"])
         #tts_service.say("hair")
+        tts_service.say("Face memorized")
     else:
         tts_service.say("I'm sorry, I see no faces in the image")
 
@@ -125,8 +129,8 @@ def actionThread_exec (params):
 
     # action end
     print "Action "+actionName+" "+params+" terminated"
-    memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
-
+    #memory_service.raiseEvent("PNP_action_result_"+actionName,"success");
+    action_base.action_success(actionName, params)
 
 def init(session):
     print actionName+" init"

@@ -52,17 +52,60 @@ if sitfound:
 
     print "SITTING X: ",xsitting
     print "SITTING Y: ",ysitting
-
+    
     p.exec_action("navigateto_naoqi",str(xsitting)+'_'+str(ysitting))
-
 
     # TODO 
     p.exec_action("say", "hello,_whats_your_name?")
 
+    got_name = False
+    attempts = 0
+    name_response = ''
+    while (not got_name and attempts < 2):
+        p.exec_action("asr", "name")
 
+        name_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+        print "name response", name_response
+    
+        if name_response != "":
+            p.exec_action("say", "Is_"+ name_response +"_your_name?")
 
-    p.exec_action("say", "what_drink_do_you_want?")
+            p.exec_action("asr", "confirm")
+        
+            confirm_response = p.memory_service.getData("asrresponse").replace(" ", "_")
 
+            if confirm_response != "" and confirm_response == "yes":
+                got_name = True
+            else:
+                attempts = attempts + 1
+                p.exec_action("say", "then_could_you_repeat_it_please?")
+
+    got_drink = False
+    attempts = 0
+    drink_response = ''
+    while (not got_drink and attempts < 2):
+        p.exec_action("say", "What_drink_do_you_want?")
+        p.exec_action("asr", "drink")
+
+        drink_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+        print "drink response", drink_response
+        
+        if drink_response != "":
+            p.exec_action("say", "I_will_bring_you_a_" + drink_response)
+            p.exec_action("say", "Is_that_correct")
+
+            p.exec_action("asr", "confirm")
+
+            confirm_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+
+            if confirm_response != "" and confirm_response == "yes":
+                got_drink = True
+            else:
+                attempts = attempts + 1
+                p.exec_action("say", "then_could_you_repeat_it_please?")
+
+    p.exec_action("say","ok_"+name_response+"_I_will_bring_you_a_" + drink_response)
+    
     p.exec_action("say","can_you_look_at_me_for_some_seconds")
     p.exec_action('persondescription', 'order1')
 
@@ -106,12 +149,12 @@ p.exec_action('goto', 'bar', interrupt='aborted', recovery='skip_action')
 
 
 try:
-	name = "John"
+    name = name_response
     age = memory_service.insertData("Actions/persondescription/order1/age")
     gender = memory_service.insertData("Actions/persondescription/order1/gender")
     haircolor = memory_service.insertData("Actions/persondescription/order1/hair")
     glasses = memory_service.insertData("Actions/persondescription/order1/glasses")
-    drink = 'coke'
+    drink = drink_response
 
     if gender == "male":
         feat = memory_service.insertData("Actions/persondescription/order1/beard")

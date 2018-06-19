@@ -14,7 +14,7 @@ import pnp_cmd_naoqi
 from pnp_cmd_naoqi import *
 
 def targetInView(currPlan,objectName):
-    isObjectMissing = False
+    isObjectMissing = True
     foundItem =None
     try:
         detection = eval(currPlan.memory_service.getData('Actions/DarknetPerception/Detection'))
@@ -23,7 +23,7 @@ def targetInView(currPlan,objectName):
 
     for item in detection:           
         if (item['name'] == objectName):
-            isObjectMissing=True
+            isObjectMissing=False
             foundItem = item
 
     return (isObjectMissing,foundItem)
@@ -58,16 +58,15 @@ def main(params,p):
     totalAngle=0
     turnAngle=30
     objectMissing=True
-    while ( (totalAngle<360) or (objectMissing) ):
+    while ( (totalAngle<360) and (objectMissing) ):
        p.exec_action('say', "Let_me_see_around" )    
        time.sleep(1)
        (objectMissing,item)=targetInView(p,target)
-
-        if objectMissing:
+       if objectMissing:
             p.exec_action('say', "Nothing_here." )    
             p.exec_action('turn', str(turnAngle))       
             totalAngle+=turnAngle
-        else:
+       else:
             p.exec_action('say', "I_found_it" )    
 
     # after turning arround, did we succeeded?

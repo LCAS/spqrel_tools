@@ -31,7 +31,8 @@ def main(params,p):
     # camera properties in pixels
     maxX = 640
 
-
+    #make sure hand is relaxed
+    p.exec_action('movearm', relaxPoseStr)
 
     # start detecting objects
     p.action_cmd('darknetClient', '0.1', 'start')
@@ -79,12 +80,12 @@ def main(params,p):
                     angleInc= 0.0
                 
                 # some debug data
-                print "I see a little: "+item['name'] 
-                print "at: "+str(x) 
-                print "inc: "+str(dx) 
+                if (lastT%5==0):
+                    print "I see a little: "+item['name'] 
+                    print "at: "+str(x) 
+                    print "inc: "+str(dx) 
                 
                 if (angleInc!=0.0):
-                    p.exec_action('movearm', relaxPoseStr)
                     p.exec_action('turn', str(angleInc))
         time.sleep(0.5)
 

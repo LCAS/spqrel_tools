@@ -83,6 +83,10 @@ class GoogleClient(object):
             print e.message
             print "[" + self.__class__.__name__ + "] [RECOGNIZE]ERROR! Unable to reach Google. Returning empty list.."
             return []
+        except Error as e:
+            print e.message
+            print "[" + self.__class__.__name__ + "] [RECOGNIZE]ERROR! Returning empty list.."
+            return []
 
     def recognize_data(self, data):
         try:

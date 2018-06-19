@@ -80,7 +80,7 @@ def main(params,p):
                     angleInc= 0.0
                 
                 # some debug data
-                if (lastT%5==0):
+                if ((int(lastT)%5)==0):
                     print "I see a little: "+item['name'] 
                     print "at: "+str(x) 
                     print "inc: "+str(dx) 

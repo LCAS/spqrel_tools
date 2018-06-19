@@ -66,8 +66,8 @@ class LanguageUnderstanding(object):
             print "[" + self.__class__.__name__ + "] User says: " + best_transcription
 
             # get lu4r interpretation
-            lu4r_interpretation = str(self.lu4r_client.parse_sentence(best_transcription))
-            print "[" + self.__class__.__name__ + "] LU4R Interpretation: " + str(lu4r_interpretation)
+            #lu4r_interpretation = str(self.lu4r_client.parse_sentence(best_transcription))
+            #print "[" + self.__class__.__name__ + "] LU4R Interpretation: " + str(lu4r_interpretation)
 
             # get ws interpretation
             ws_interpretation = self.doWordSpotting(best_transcription, "gpsr")
@@ -79,8 +79,8 @@ class LanguageUnderstanding(object):
 
             #print "[" + self.__class__.__name__ + "] Merged: " + str(merged_interpretation)
 
-            interpretations = [lu4r_interpretation, ws_interpretation]
-            self.memory.raiseEvent("CommandInterpretation", str(interpretations))
+            #interpretations = [lu4r_interpretation, ws_interpretation]
+            self.memory.raiseEvent("CommandInterpretation", ws_interpretation)
         elif msg == "question":
             pass
 

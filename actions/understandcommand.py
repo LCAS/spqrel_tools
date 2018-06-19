@@ -38,7 +38,7 @@ def actionThread_exec (params):
 
     memory_service.raiseEvent("UnderstandCommand", (str(params)))
 
-    memory_service.insertData("command_understood", 0)
+    memory_service.insertData("CommandInterpretation", [])
 
     interpretations = None
 

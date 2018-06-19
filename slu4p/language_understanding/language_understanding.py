@@ -50,7 +50,7 @@ class LanguageUnderstanding(object):
     def callback(self, msg):
         print "callback=", msg
         msg = msg.lower()
-        if len(self.memory.getData("googleasrresponse")[0]) > 0:
+        if (len(self.memory.getData("googleasrresponse")) > 0 and len(self.memory.getData("googleasrresponse")[0]) > 0):
             google_transcription = self.memory.getData("googleasrresponse")[0].lower() + " "
             if msg == "spr":
                 print google_transcription
@@ -226,21 +226,21 @@ class LanguageUnderstanding(object):
                 wts_index = transcription.find(wts)
                 wts_spotted.append({"text": wts, "index": wts_index})
 
-        quest_spotted = []
-        max_quest_spotted = {}
-        for q in self.questions:
-            qstring = q["q"].replace("?", "").replace("!", "").replace(",", "").replace(".", "")
-            qsplit = qstring.split(" ")
-            tsplit = transcription.split(" ")
-            equalwords = sum([1 for qw in qsplit if qw in transcription])
-            #print q, equalwords, len(tsplit)
-            if equalwords > len(tsplit)*0.7:
-                quest_spotted.append({"question": q, "equals": equalwords})
-        maxeq = 0
-        for quest in quest_spotted:
-            if quest["equals"] > maxeq:
-                max_quest_spotted = quest["question"]
-                maxeq = quest["equals"]
+        #quest_spotted = []
+        #max_quest_spotted = {}
+        #for q in self.questions:
+        #    qstring = q["q"].replace("?", "").replace("!", "").replace(",", #"").replace(".", "")
+        #    qsplit = qstring.split(" ")
+        #    tsplit = transcription.split(" ")
+        #    equalwords = sum([1 for qw in qsplit if qw in transcription])
+        #    #print q, equalwords, len(tsplit)
+        #    if equalwords > len(tsplit)*0.7:
+        #        quest_spotted.append({"question": q, "equals": equalwords})
+        #maxeq = 0
+        #for quest in quest_spotted:
+        #    if quest["equals"] > maxeq:
+        #        max_quest_spotted = quest["question"]
+        #        maxeq = quest["equals"]
 
         # sort the complete list by index
         #complete_list = obj_spotted + psn_spotted + loc_spotted + wts_spotted
@@ -292,8 +292,8 @@ class LanguageUnderstanding(object):
                             spotted_tasks[i]["requires"][n_req].update({"spotted":[attr.copy()]})
                 n_req += 1
 
-        if len(max_quest_spotted.keys()) > 0:
-            spotted_tasks.append(max_quest_spotted)
+        #if len(max_quest_spotted.keys()) > 0:
+        #    spotted_tasks.append(max_quest_spotted)
 
         #vb_indexes = sorted([t["index"] for t in spotted_tasks])
         #spotted_tasks = [st for st in spotted_tasks if st["index"]]

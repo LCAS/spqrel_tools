@@ -78,13 +78,15 @@ def resolveMultipleSpotted(task):
             lowest_index = 1000
             lowest_attribute = None
             # TODO gound it
-            if num_spotted > 1:
+            if num_spotted > 0:
                 for spot in attribute["spotted"]:
                     if spot["index"] < lowest_index and spot["index"] > verb_index:
                         lowest_attribute = spot
                         lowest_index = spot["index"]
             if lowest_attribute is not None:
                 attribute["spotted"] = lowest_attribute
+            if type(attribute["spotted"]) == list:
+                attribute["spotted"] = attribute["spotted"][0]
     return task
 
 def describeTaking(task):
@@ -104,13 +106,13 @@ def describeTaking(task):
 
     print "obj:", obj, "loc:", loc
     if obj is None and loc is None:
-        to_say = "I understood that I need to " + verb + "something but I didn't got what. Can you please repeat what I need to "+ verb +"?"
+        to_say = "I understood that I need to " + verb + " something but I didn't got what. Can you please repeat what I need to "+ verb +"?"
     elif obj is not None and loc is not None:
         to_say = "I understood that I need to " + verb + " the " + obj + " from the " + loc + ". I am going to take it!"
     elif obj is not None:
         to_say = "I understood that I need to " + verb + " the " + obj + ". I am going to take it!"
     elif loc is not None:
-        to_say = "I understood that I need to " + verb + " somthing from the " + loc + ". Can you please repeat which object?"
+        to_say = "I understood that I need to " + verb + " something from the " + loc + ". Can you please repeat which object?"
 
     return to_say
 
@@ -131,13 +133,13 @@ def describePlacing(task):
 
     print "obj:", obj, "loc:", loc
     if obj is None and loc is None:
-        to_say = "I understood that I need to " + verb + "something but I didn't got what. Can you please repeat what I need to "+ verb +"?"
+        to_say = "I understood that I need to " + verb + " something but I didn't got what. Can you please repeat what I need to "+ verb +"?"
     elif obj is not None and loc is not None:
         to_say = "I understood that I need to " + verb + " the " + obj + " on the " + loc + ". I am going to do it!"
     elif obj is not None:
         to_say = "I understood that I need to " + verb + " the " + obj + ", but I am not sure where. Can you please repeat the location?"
     elif loc is not None:
-        to_say = "I understood that I need to " + verb + " the something on the "+ loc + ". Can you please repeat the object?"
+        to_say = "I understood that I need to " + verb + " something on the "+ loc + ". Can you please repeat the object?"
     return to_say
 
 def describeLocating(task):
@@ -160,7 +162,9 @@ def describeLocating(task):
 
     print "obj:", obj, "loc:", loc
     if obj is None and name is None:
-        to_say = "I understood that I need to " + verb + "something but I didn't got what. Can you please repeat?"
+        to_say = "I understood that I need to " + verb + " something but I didn't got what. Can you please repeat?"
+    elif obj is not None and loc is not None:
+        to_say = "I understood that I need to " + verb + " the " + obj + " in the " + loc + ". I am going to do it!"
     elif obj is not None:
         to_say = "I understood that I need to " + verb + " the " + obj + ". I am going to do it!"
     elif name is not None:
@@ -210,7 +214,7 @@ def describeTell(task):
     if wts is None:
         to_say = "I understood that I need to " + verb + " something, but not what. Can you please repeat?"
     else:
-        to_say = "I understood that I need to " + verb + wts + "!"
+        to_say = "I understood that I need to " + verb +" "+ wts + "!"
 
     return to_say
 

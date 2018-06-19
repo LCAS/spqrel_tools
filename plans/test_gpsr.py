@@ -15,13 +15,13 @@ p = PNPCmd()
 
 p.begin()
 
-# p.exec_action("say", "Ask_me_a_question!")
+p.exec_action("say", "Ask_me_a_question!")
 #
 # # This blocks until we get a transcription from google (start language_understanding/google_client.py)
-# p.exec_action("googleasr", "gpsr", interrupt="timeout_20")
+p.exec_action("googleasr", "gpsr", interrupt="timeout_20")
 
 # get the google transcription
-googleasr_value = p.memory_service.insertData("googleasrresponse", ["Pick up the fork from the chair and place it on the bookcase"])
+googleasr_value = p.memory_service.getData("googleasrresponse")
 print "plan google response", googleasr_value
 
 # This blocks until we get the task description from the transcription (start language_understanding/language_understanding.py)

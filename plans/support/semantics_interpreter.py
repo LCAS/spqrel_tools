@@ -123,6 +123,10 @@ class SemanticResolver:
         except Exception:
             return None
 
+    def get_test(self):
+        return yaml.load(SemanticResolver.TESTSTR)
+
+
     def parse_requires(self, d):
         # [{'index': 0,
         #   'requires': [{'object': {'lu4r_name': ['theme'], 'necessary': 1},
@@ -249,7 +253,7 @@ def main():
     sr = SemanticResolver()
     sr.augment_entities()
 
-    sr.parse_requires(yaml.load(SemanticResolver.TESTSTR))
+    sr.parse_requires(sr.get_test())
     sr.parse_requires(test[1]['requires'])
     #logger.info(pformat(sr.entities))
 

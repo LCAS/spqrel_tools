@@ -25,7 +25,6 @@ api_params = {
                             'emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
 }
 
-
 actionName = "persondescription"
 
 

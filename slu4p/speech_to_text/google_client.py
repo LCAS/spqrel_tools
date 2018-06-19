@@ -36,6 +36,7 @@ class GoogleClient(object):
     def onGoogleRequest(self, value):
         print "onGoogleRequest:", value
         file_path = str(value) + ".wav"
+        print "busy", self.busy
         if not self.busy:
             self.busy = True
             """
@@ -52,7 +53,7 @@ class GoogleClient(object):
 
             transcriptions = self.recognize_file(file_path)
 
-            #print transcriptions
+            print transcriptions
 
             self.memory_service.raiseEvent("GoogleResponse", transcriptions)
 

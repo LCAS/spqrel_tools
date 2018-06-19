@@ -22,6 +22,8 @@ p.exec_action('setpose', '5.8_10.6')
 while (not p.get_condition('dooropen')):
     time.sleep(1)
 
+p.exec_action('enter', '30_0_0_4_true')
+
 p.exec_action('navigateto', 'wp5', interrupt='aborted', recovery='restart_action')
 
 while (not p.get_condition('personhere')):

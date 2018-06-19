@@ -16,22 +16,13 @@ class SemanticResolver:
 
     TESTSTR = """
 [{'object': {'lu4r_name': ['theme'], 'necessary': 1},
-                'spotted': [{'category': 'cutlery',
+                'spotted': {'category': 'cutlery',
                              'index': 12,
-                             'text': 'fork'},
-                            {'index': 41,
-                             'text': ' it ',
-                             'toguess': 'object'}]},
+                             'text': 'fork'}},
                {'location': {'lu4r_name': ['source'], 'necessary': 0},
-                'spotted': [{'index': 26,
+                'spotted': {'index': 26,
                              'room': 'bedroom',
-                             'text': 'chair'},
-                            {'index': 26,
-                             'room': 'dining room',
-                             'text': 'chair'},
-                            {'index': 52,
-                             'room': 'living room',
-                             'text': 'bookcase'}]}]
+                             'text': 'chair'}}]
     """
 
     def __init__(self):
@@ -128,46 +119,6 @@ class SemanticResolver:
 
 
     def parse_requires(self, d):
-        # [{'index': 0,
-        #   'requires': [{'object': {'lu4r_name': ['theme'], 'necessary': 1},
-        #                 'spotted': [{'category': 'cutlery',
-        #                              'index': 12,
-        #                              'text': 'fork'},
-        #                             {'index': 41,
-        #                              'text': ' it ',
-        #                              'toguess': 'object'}]},
-        #                {'location': {'lu4r_name': ['source'], 'necessary': 0},
-        #                 'spotted': [{'index': 26,
-        #                              'room': 'bedroom',
-        #                              'text': 'chair'},
-        #                             {'index': 26,
-        #                              'room': 'dining room',
-        #                              'text': 'chair'},
-        #                             {'index': 52,
-        #                              'room': 'living room',
-        #                              'text': 'bookcase'}]}],
-        #   'task': 'taking',
-        #   'verb': 'pick up'},
-        #  {'index': 36,
-        #   'requires': [{'object': {'lu4r_name': [], 'necessary': 1},
-        #                 'spotted': [{'category': 'cutlery',
-        #                              'index': 12,
-        #                              'text': 'fork'},
-        #                             {'index': 41,
-        #                              'text': ' it ',
-        #                              'toguess': 'object'}]},
-        #                {'location': {'lu4r_name': [], 'necessary': 1},
-        #                 'spotted': [{'index': 26,
-        #                              'room': 'bedroom',
-        #                              'text': 'chair'},
-        #                             {'index': 26,
-        #                              'room': 'dining room',
-        #                              'text': 'chair'},
-        #                             {'index': 52,
-        #                              'room': 'living room',
-        #                              'text': 'bookcase'}]}],
-        #   'task': 'placing',
-        #   'verb': 'place'}]
         obj = None
         location = None
         text = None
@@ -178,14 +129,14 @@ class SemanticResolver:
                 #logging.info('\nR: ' + pformat(r))
                 if 'spotted' in r:
                     try:
-                        for s in r['spotted']:
-                            if 'text' in s:
-                                text = s['text']
-                            if 'room' in s:
-                                room = s['room']
-                            if 'name' in s:
-                                name = s['name']
-                            break
+                        s = r['spotted']
+                        if 'text' in s:
+                            text = s['text']
+                        if 'room' in s:
+                            room = s['room']
+                        if 'name' in s:
+                            name = s['name']
+
                         if 'object' in r:
                             obj = text
                         if 'location' in r:
@@ -247,14 +198,11 @@ class SemanticResolver:
 
 def main():
 
-    with open("/tmp/test.yaml", 'r') as stream:
-        test=yaml.load(stream)
     #logger.info(pformat(test[0]['requires']))
     sr = SemanticResolver()
     sr.augment_entities()
 
     sr.parse_requires(sr.get_test())
-    sr.parse_requires(test[1]['requires'])
     #logger.info(pformat(sr.entities))
 
     #print sr.resolve_wp('tableware')

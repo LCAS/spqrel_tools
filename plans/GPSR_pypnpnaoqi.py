@@ -20,6 +20,8 @@ p.begin()
 #recdata_on;
 #p.exec_action("recdata", "on")
 
+p.exec_action("setpose", "11.3_9_0")
+
 ### enter the arena and goto location ###
 #headpose_0_-10;
 p.exec_action("headpose", "0_-10")

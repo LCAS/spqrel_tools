@@ -26,20 +26,21 @@ def main(params,p):
 
 
     #object to track
-    target=params#'cell phone'
+    target=params.replace('_',' ') #'cell phone'
 
     # camera properties in pixels
     maxX = 640
 
-
+    #make sure hand is relaxed
+    p.exec_action('movearm', relaxPoseStr)
 
     # start detecting objects
     p.action_cmd('darknetClient', '0.1', 'start')
     lastT = 0
     angleInc=1000.0
     #main loop
-    p.exec_action('say', "Hi,_let's_point_a"+target.replace(' ','_') )
-    
+    p.exec_action('say', "Hi,_let's_point_a_"+params )
+    count = 0
     while (angleInc!=0.0):
         #print "."
         # read memory data
@@ -79,18 +80,19 @@ def main(params,p):
                     angleInc= 0.0
                 
                 # some debug data
-                print "I see a little: "+item['name'] 
-                print "at: "+str(x) 
-                print "inc: "+str(dx) 
+                count = count+1
+                if ( ( count %20 ) ==0):
+                    print "I see a little: "+item['name'] 
+                    print "at: "+str(x) 
+                    print "inc: "+str(dx) 
                 
                 if (angleInc!=0.0):
-                    p.exec_action('movearm', relaxPoseStr)
                     p.exec_action('turn', str(angleInc))
         time.sleep(0.5)
 
 
     p.exec_action('movearm', pointForwardStr)
-    p.exec_action('say', 'There,_I_found_your_'+target.replace(' ','_') )
+    p.exec_action('say', 'There,_I_found_your_'+params )
     time.sleep(3.0)
     p.exec_action('movearm', relaxPoseStr)
 
@@ -106,6 +108,7 @@ if __name__ == "__main__":
 
     plan.begin()
 
+    params = 'cell_phone'
     main(params,plan)
 
     plan.end()

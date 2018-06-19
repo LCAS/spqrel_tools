@@ -41,41 +41,65 @@ time.sleep(2)
 #three runs
 for n in range(3):
 
-    repeat_
-    # This blocks until we get a transcription from google (start language_understanding/google_client.py)
-    p.exec_action("googleasr", "gpsr", interrupt="timeout_20")
+    #Attemps loop
+    repeat_attemps = 0
+    understood = False
+    while (repeat_attemps < 3 and not understood):
+        # This blocks until we get a transcription from google (start language_understanding/google_client.py)
+        p.exec_action("googleasr", "gpsr", interrupt="timeout_20")
 
-    # get the google transcription
-    googleasr_value = p.memory_service.getData("googleasrresponse")
-    print "plan google response", googleasr_value
+        # get the google transcription
+        googleasr_value = p.memory_service.getData("googleasrresponse")
+        print "plan google response", googleasr_value
 
-    if googleasr_value =="":
-        p.exec_action("aimlsay", "misunderstand")
-        continue
-        
-    # This blocks until we get the task description from the transcription (start language_understanding/language_understanding.py)
-    p.exec_action("understandcommand", "gpsr", interrupt="timeout_20")
+        if googleasr_value =="":
+            p.exec_action("aimlsay", "misunderstand")
+            repeat_attemps = repeat_attemps + 1
+        else:
+            #We understood something, we ask for confirmation
+                  
+            # This blocks until we get the task description from the transcription (start language_understanding/language_understanding.py)
+            p.exec_action("understandcommand", "gpsr", interrupt="timeout_20")
 
-    # get the interpretation
-    commands_inter = eval(p.memory_service.getData("CommandInterpretation"))
-    print "plan commands interpretation", pp.pprint(commands_inter)
+            # get the interpretation
+            commands_inter = eval(p.memory_service.getData("CommandInterpretation"))
+            print "plan commands interpretation", pp.pprint(commands_inter)
 
-    #TODO these need to be ordered in order to be executed in order
-    for i, task in enumerate(commands_inter):
-        print "Task", i, ": ", task["task"]
+            #TODO these need to be ordered in order to be executed in order
+            for i, task in enumerate(commands_inter):
+                print "Task", i, ": ", task["task"]
+                
+                print "\tParameters:"
+                for req in task["requires"]:
+                    if "spotted" in req:
+                        for spotreq in req["spotted"]:
+                            print "\t"*2, [k for k in req.keys() if k != "spotted"][0] +":", spotreq["text"]
 
-        print "\tParameters:"
-        for req in task["requires"]:
-            if "spotted" in req:
-                for spotreq in req["spotted"]:
-                    print "\t"*2, [k for k in req.keys() if k != "spotted"][0] +":", spotreq["text"]
+            # repeat command to operator
+            p.exec_action("say", "I_understood")
+            p.exec_action("say", googleasr_value.replace(" ", "_"))
+            p.exec_action("say", "Is_that_correct",interrupt='timeout_5')
 
+            p.exec_action("asr", "confirm")
+            try:
+                confirm_response = p.memory_service.getData("asrresponse").replace(" ", "_")
+            except:
+                confirm_response = 'yes'
 
+            if confirm_response != "" and confirm_response == "yes":
+                understood = True
+            else:
+                attempts = attempts + 1
+                p.exec_action("say", "then_could_you_repeat_the_command_please?",interrupt='timeout_5')
 
-    # repeat command
-    p.exec_action("say", "I_understood")
-    p.exec_action("say", googleasr_value.replace(" ", "_"))
-    
+                
+    #we exit the loop either if the correct command or run out of attempts
+    if understand:
+        p.exec_action("say", "I_am_sorry_I_cannot_do_that_now")
+
+    else:
+        p.exec_action("aimlsay", "nextquestion")
+
     
     # understand the command
     #p.exec_action("understandcommand", "")
@@ -113,7 +137,7 @@ for n in range(3):
     #        time.sleep(2)
         #TODO else i did not understand
 
-     p.exec_action("aimlsay", "nextquestion")
+     #p.exec_action("aimlsay", "nextquestion")
      
 ### exit the arena ###
 # "After the third command, it has to leave the arena."

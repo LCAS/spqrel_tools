@@ -26,7 +26,7 @@ def main(params,p):
 
 
 	#object to track
-	target='cell phone'
+	target=params#'cell phone'
 
 	# camera properties in pixels
 	maxX = 640
@@ -36,8 +36,11 @@ def main(params,p):
 	# start detecting objects
 	p.action_cmd('darknetClient', '0.1', 'start')
 	lastT = 0
+	angleInc=1000.0
 	#main loop
-	while True:
+	p.exec_action('say', "Hi,_let's_point_a"+target.replace(' ','_') )
+	
+	while (angleInc!=0.0):
 		#print "."
 		# read memory data
 
@@ -49,7 +52,7 @@ def main(params,p):
 
 		for item in detection:
 			# get tracked object
-			print item['name'] +" "+str(item['timestamp']) 
+			print "Detected "+item['name'] +" at time "+str(item['timestamp']) 
 			if (item['name'] == target) and (item['timestamp'] > lastT):
 
 				# to prevent reusing the same detection
@@ -83,15 +86,20 @@ def main(params,p):
 				if (angleInc!=0.0):
 					p.exec_action('movearm', relaxPoseStr)
 					p.exec_action('turn', str(angleInc))
-				else:
-					p.exec_action('movearm', pointForwardStr)
+#				else:
+#					p.exec_action('movearm', pointForwardStr)
 
 		time.sleep(0.5)
 
 
+ 	p.exec_action('movearm', pointForwardStr)
+	p.exec_action('say', 'There,_I_found_your_'+target.replace(' ','_') )
+    time.sleep(3.0)
+	p.exec_action('movearm', relaxPoseStr)
+
 	# finish
 	p.action_cmd('darknetClient', '0.2', 'stop')
-
+	p.exec_action('say', 'see_you' )
 	    
 
 

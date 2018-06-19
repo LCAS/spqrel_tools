@@ -7,7 +7,7 @@ from pprint import pformat
 
 logging.basicConfig(level='INFO')
 
-class GPSR:
+class GPSR_tell:
 
     def __init__(self, p, sim=False):
         self.p = p
@@ -25,19 +25,26 @@ class GPSR:
                     'action %s with param %s failed to be started in plan: %s' %
                     (action, param, str(e)))
 
-    def execute(self):
+    def say(self, text=''):
+        self.a('say', text.replace(' ', '_'))
+
+    def execute(self, text_to_say, entity=None):
         # logging.info(pformat(sr.entities))
-        from gpsr_tell import GPSR_tell
-        tell = GPSR_tell(self.p, self.sim)
-        tell.execute('this is for you', 'kitchen')
-        self.a('taskstep', 'done')
+        if entity is not None:
+            wp = self.sr.resolve_wp(entity)
+            if wp is not None:
+                self.a('taskstep', 'going there')
+                self.a('navigateto', wp)
+        while self.p.get_condition('personhere') and not self.sim:
+            self.a('turn', '45')
+        self.say(text_to_say)
 
 
 def main():
     p = PNPCmd()
 
     p.begin()
-    plan = GPSR(p, sim=True)
+    plan = GPSR_tell(p, sim=False)
     plan.execute()
 
     p.end()

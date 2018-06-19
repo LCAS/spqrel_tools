@@ -13,6 +13,13 @@ from pnp_cmd_naoqi import *
 
 def gpsr_locating(p, req):
     try:
+        for i in range(3):
+            p.exec_action('turn','90')
+            if p.get_condition('persondetected'):
+                p.exec_action("say", "Hi_there",interrupt='timeout_5')
+                break
+            time.sleep(1)
+
         return p.exec_action('say', 'locating')
     except:
         return p.exec_action('say', "sorry_I_can't_do_this_right_now")

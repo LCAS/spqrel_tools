@@ -15,20 +15,30 @@ except Exception as e:
     print e
     sys.exit(1)
 
+
+pepper_ip = ''
+pepper_port = 9101
+
+try:
+    pepper_ip = os.getenv('PEPPER_IP')
+except Exception as e:
+    print "Please set PEPPER_IP environment variable."
+    print e
+    sys.exit(1)
+    
+    
 import ws_client
 from ws_client import *
 
 actionName = "interact"
-
-#pepper_ip = '192.168.1.134' # ethernet
-pepper_ip = '127.0.0.1'
-pepper_port = 9101
 
 def actionThread_exec (params):
     t = threading.currentThread()
     memory_service = getattr(t, "mem_serv", None)
     print "Action "+actionName+" started with params "+params
 
+    modim_client = ModimWSClient()
+    modim_client.setCmdServerAddr(pepper_ip, pepper_port)
     # action init
     count = 1
     # action init
@@ -36,9 +46,9 @@ def actionThread_exec (params):
         print "Action "+actionName+" "+params+" exec..."
         # action exec
         #csend
-        data_str = "im.execute('"+params+"')"+"\n###ooo###\n\n"
+        data_str = "im.execute('"+params+"')"
 
-        rdata = csend(data_str)
+        rdata = modim_client.csend(data_str)
         
         count = count - 1
         # action exec
@@ -46,6 +56,7 @@ def actionThread_exec (params):
 
     # action end
     action_success(actionName,params)
+    modim_client.cclose()
 
 def init(session):
     print actionName+" init"

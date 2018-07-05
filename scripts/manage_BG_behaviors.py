@@ -5,27 +5,46 @@
 import argparse
 import sys
 import os
+import qi
 
 from naoqi import ALProxy
 
 PEPPER_IP='127.0.0.1'
 PEPPER_PORT=9559
 
-def start_behaviors():
+behaviours = [
+    ('ALFaceDetection', 'Face_Behavior'),
+    ('ALFaceCharacteristics', 'Char_Behavior'),
+    ('ALPeoplePerception', 'People_Behavior'),
+    ('ALSittingPeopleDetection', 'Sitting_Behavior'),
+    ('ALSoundLocalization', 'Sound_Behavior'),
+    ('ALMotion', 'Motion_Behavior'),
+    ('ALWavingDetection', 'Waving_Behavior'),
+    ('ALSpeechRecognition', 'ASR_Behavior'),
+    ('ALAudioRecorder', 'Recorder_Behavior'),
+    ('ALAnimationPlayer', None)
+]
+
+bm_service = None
+ba_service = None
+sm_service = None
+
+def start_behaviors(session,pip,pport):
+    global bm_service, ba_service, sm_service
 
     print "==================================="
     print "   Starting background behaviors   "
     print "==================================="
 
 
-    facedetectionProxy = ALProxy("ALFaceDetection",os.getenv('PEPPER_IP'),9559)
-    facecharacteristicsProxy = ALProxy("ALFaceCharacteristics",os.getenv('PEPPER_IP'),9559)
-    peopledetectionProxy = ALProxy("ALPeoplePerception",os.getenv('PEPPER_IP'),9559)
-    peoplesittingProxy = ALProxy("ALSittingPeopleDetection",os.getenv('PEPPER_IP'),9559)
-    soundlocalizationProxy = ALProxy("ALSoundLocalization",os.getenv("PEPPER_IP"),9559)
-    motionProxy = ALProxy("ALMotion",os.getenv("PEPPER_IP"),9559)
-    wavingdetectionProxy = ALProxy("ALWavingDetection",os.getenv("PEPPER_IP"),9559)
-    animationProxy = ALProxy("ALAnimationPlayer",os.getenv("PEPPER_IP"),9559)
+    facedetectionProxy = ALProxy("ALFaceDetection",pip,pport)
+    facecharacteristicsProxy = ALProxy("ALFaceCharacteristics",pip,pport)
+    peopledetectionProxy = ALProxy("ALPeoplePerception",pip,pport)
+    peoplesittingProxy = ALProxy("ALSittingPeopleDetection",pip,pport)
+    soundlocalizationProxy = ALProxy("ALSoundLocalization",pip,pport)
+    #motionProxy = ALProxy("ALMotion",pip,pport)
+    wavingdetectionProxy = ALProxy("ALWavingDetection",pip,pport)
+    animationProxy = ALProxy("ALAnimationPlayer",pip,pport)
 
 
     facedetectionProxy.subscribe("Face_Behavior", 500, 0.0)
@@ -37,21 +56,33 @@ def start_behaviors():
     #motionProxy.subscribe("Motion_Behavior", 500, 0.0)
 
 
+    bm_service = session.service("ALBackgroundMovement")
+    ba_service = session.service("ALBasicAwareness")
+    sm_service = session.service("ALSpeakingMovement")
 
-def quit_behaviors():
+    bm_service.setEnabled(True)
+    ba_service.setEnabled(True)
+    sm_service.setEnabled(True)
+
+
+
+def quit_behaviors(session,pip,pport):
+    global bm_service, ba_service, sm_service
 
     print "==================================="
     print "   Quitting background behaviors   "
     print "==================================="
 
-    facedetectionProxy = ALProxy("ALFaceDetection",PEPPER_IP,PEPPER_PORT)
-    facecharacteristicsProxy = ALProxy("ALFaceCharacteristics",PEPPER_IP,PEPPER_PORT)    
-    peopledetectionProxy = ALProxy("ALPeoplePerception",PEPPER_IP,PEPPER_PORT)
-    peoplesittingProxy = ALProxy("ALSittingPeopleDetection",PEPPER_IP,PEPPER_PORT)
-    soundlocalizationProxy = ALProxy("ALSoundLocalization",PEPPER_IP,PEPPER_PORT)
-    motionProxy = ALProxy("ALMotion",PEPPER_IP,PEPPER_PORT)
-    wavingdetectionProxy = ALProxy("ALWavingDetection",PEPPER_IP,PEPPER_PORT)
-    animationProxy = ALProxy("ALAnimationPlayer", PEPPER_IP, PEPPER_PORT)
+    
+
+    facedetectionProxy = ALProxy("ALFaceDetection",pip,pport)
+    facecharacteristicsProxy = ALProxy("ALFaceCharacteristics",pip,pport)
+    peopledetectionProxy = ALProxy("ALPeoplePerception",pip,pport)
+    peoplesittingProxy = ALProxy("ALSittingPeopleDetection",pip,pport)
+    soundlocalizationProxy = ALProxy("ALSoundLocalization",pip,pport)
+    #motionProxy = ALProxy("ALMotion",pip,pport)
+    wavingdetectionProxy = ALProxy("ALWavingDetection",pip,pport)
+    animationProxy = ALProxy("ALAnimationPlayer",pip,pport)
 
     
     
@@ -62,6 +93,10 @@ def quit_behaviors():
     soundlocalizationProxy.unsubscribe("Sound_Behavior")
     wavingdetectionProxy.unsubscribe("Waving_Behavior")
     #motionProxy.unsubscribe("Motion_Behavior")
+
+    bm_service.setEnabled(False)
+    ba_service.setEnabled(False)
+    sm_service.setEnabled(False)
 
 
 if __name__ == "__main__":
@@ -75,19 +110,19 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    #session = qi.Session()
-    #try:
-    #    session.connect("tcp://" + args.ip + ":" + str(args.port))
+    session = qi.Session()
+    try:
+        session.connect("tcp://" + args.ip + ":" + str(args.port))
 
-    #except RuntimeError:
-    #    print ("Can't connect to Naoqi at ip \"" + args.ip + "\" on port " + str(args.port) +".\n"
-    #           "Please check your script arguments. Run with -h option for help.")
-    #    sys.exit(1)
+    except RuntimeError:
+        print ("Can't connect to Naoqi at ip \"" + args.ip + "\" on port " + str(args.port) +".\n"
+               "Please check your script arguments. Run with -h option for help.")
+        sys.exit(1)
 
     if (args.enabled==1):
-        start_behaviors()
+        start_behaviors(session,args.ip,args.port)
     else:
-        quit_behaviors()
+        quit_behaviors(session,args.ip,args.port)
 
 
 

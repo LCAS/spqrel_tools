@@ -4,25 +4,24 @@ import sys
 import time
 import os
 
-webpageinit = "http://198.18.0.1/apps/spqrel/img/spqrel_logo.jpg"
+# The IP of the robot from the tablet is 198.18.0.1
+webpageinit = "http://198.18.0.1/apps/spqrel/index.html"
+imageinit = "http://198.18.0.1/apps/spqrel/spqrel_logo.jpg"
+
 
 def do_init(session):
     print "Init webpage to ",webpageinit
 
     tablet_service = session.service("ALTabletService")
 
-    # Display a local image located in img folder in the root of the web server
-    # The ip of the robot from the tablet is 198.18.0.1
-    #tablet_service.showImage("http://198.18.0.1/apps/spqrel/spqrel_logo.jpg")
+    # Display a local web page/image located in the root of the web server
 
-    # tablet_service.showWebview("http://198.18.0.1/apps/spqrel")
+    # image display
+    #tablet_service.showImage(imageinit)
 
-    tablet_service.showImage(webpageinit)
+    # web page display
+    tablet_service.showWebview(webpageinit)
 
-    #time.sleep(10)
-
-    # Hide the web view
-    # tablet_service.hideImage()
 
 
 def main():
@@ -49,7 +48,7 @@ def main():
 
     do_init(app.session)
 
-    #app.run()
+    app.stop()
 
 
 

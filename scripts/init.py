@@ -10,7 +10,7 @@ import webinit, postureinit, behaviorinit, manage_BG_behaviors
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--pip", type=str, default='localhost',
+    parser.add_argument("--pip", type=str, default=os.getenv('PEPPER_IP'),
                         help="Robot IP address. On robot or Local Naoqi: use '127.0.0.1'.")
     parser.add_argument("--pport", type=int, default=9559,
                         help="Naoqi port number")
@@ -37,14 +37,18 @@ def main():
     time.sleep(1)
     webinit.do_init(session)
     time.sleep(1)
-    manage_BG_behaviors.start_behaviors()
-    time.sleep(1)
     postureinit.do_init(session)
+    time.sleep(1)
+    manage_BG_behaviors.start_behaviors(session,pip,pport)
 
     tts_service.say("Initialization completed.")
 
+    tabletService = session.service("ALTabletService")
+
+    
+
 if __name__ == "__main__":
     print "Waiting 10 seconds before starting ..."
-    time.sleep(10)
+    time.sleep(0)
     main()
 

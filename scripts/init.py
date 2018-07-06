@@ -48,7 +48,7 @@ def main():
     
 
 if __name__ == "__main__":
-    print "Waiting 10 seconds before starting ..."
-    time.sleep(0)
+    print "Waiting 15 seconds before starting ..."
+    time.sleep(15)
     main()
 

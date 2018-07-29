@@ -131,6 +131,23 @@ def rhMonitorThread (memory_service, rate, output_file):
         time.sleep(1.0/rate)
     print "Exiting Thread Log"
 
+
+# TTS callback
+#Event: "ALTextToSpeech/CurrentSentence"
+#callback(std::string eventName, std::string value, std::string subscriberIdentifier)
+
+def TTSCurrentSentenceCB(value):
+    print "TTSCurrentSentenceCB: ",value
+
+
+# Touch screen signal 
+
+# qi::Signal<float, float> ALTabletService::onTouchDown
+def touchscreenCB(x, y):
+    print "touchscreenCB: ", x, " ", y
+
+
+
 def logheader(output_file,keys_list):
     global bag_format
     if bag_format==0:  # SPQReL
@@ -234,6 +251,12 @@ def main():
     
     #Starting services
     memory_service  = session.service("ALMemory")
+    try:
+        tablet_service  = session.service("ALTabletService")
+    except:
+        tablet_service  = None
+        print 'Cannot open ALTabletService'
+    
 
     #Creating logging directory
     log_folder = time.strftime("%Y%m%d_%H%M%S", time.localtime())
@@ -266,11 +289,26 @@ def main():
     subscriber_camera = memory_service.subscriber("NAOqibag/EnableCamera")
     idEvent_camera = subscriber_camera.signal.connect(functools.partial(onEventCamera, pip, pport))
 
+    if (tablet_service!=None):
+        # Touch screen listener
+        sigTTS = tablet_service.onTouchDown.connect(callback)
+
+
+    eventTTS = 'ALTextToSpeech/CurrentSentence'
+    subTTS = memory_service.subscriber(eventTTS)
+    idEventTTS = subTTS.signal.connect(TTSCurrentSentenceCB)
+
 
     #Program stays at this point until we stop it
     app.run()
 
+
+    # Closing all event listeners
     subscriber_camera.signal.disconnect(idEvent_camera)
+    subTTS.signal.disconnect(idEventTTS)
+
+    if (tablet_service!=None):
+        tablet_service.onTouchDown.disconnect(sigTTS)
     
     if keylog_enabled:
         keylogThread.do_run = False

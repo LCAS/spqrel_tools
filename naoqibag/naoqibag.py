@@ -24,7 +24,8 @@ def readKeysFile(keys_file, memory_service):
     for line in keys_file:
         key = line.strip()
         if len(key) == 0 or key[0] == '#':
-            print "Skipped comment: ", key
+            #print "Skipped comment: ", key
+            pass
         elif key[0:7] == 'include':
             new_keys_filename = key[8:len(key)]
             try:
@@ -159,7 +160,7 @@ def checkValue(v):
     if (v!=None):
         return str(v)
     else:
-        return '0'
+        return 'NA'
 
 def logdata(output_file,values):
     global bag_format
@@ -173,16 +174,20 @@ def logdata(output_file,values):
     elif bag_format==1:  # CSV typed
         output_file.write(str(ts))
         output_file.write(',')
+        k = 0
         for v in values[0:len(values)-1]:
-            if (v==None):
-                r = False
             s = checkValue(v)
+            if (s=='NA'):
+                print '*** ',keys_list[k]
+                r = False
             output_file.write(s)
             output_file.write(',')
+            k += 1
         v = values[len(values)-1]
-        if (v==None):
-            r = False
         s = checkValue(v)
+        if (s=='NA'):
+            print '*** LAST ',v
+            r = False
         output_file.write(s)
         output_file.write('\n')
     return r
@@ -224,12 +229,12 @@ def main():
     try:
         connection_url = "tcp://" + pip + ":" + str(pport)
         app = qi.Application(["naoqibag", "--qi-url=" + connection_url ])
+        app.start()
     except RuntimeError:
         print ("Can't connect to Naoqi at ip \"" + pip + "\" on port " + str(pport) +".\n"
                "Please check your script arguments. Run with -h option for help.")
         sys.exit(1)
 
-    app.start()
     session = app.session
     
     #Starting services

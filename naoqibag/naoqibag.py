@@ -19,6 +19,9 @@ keys_list = []
 shortnames_list = []
 types_list = []
 
+TOUCHXKEY = 'Tablet/TouchX'
+TOUCHYKEY = 'Tablet/TouchY'
+
 def readKeysFile(keys_file, memory_service):
     global keys_list, shortnames_list, types_list
     for line in keys_file:
@@ -142,15 +145,22 @@ def rhMonitorThread (memory_service, rate, output_file):
 
 def TTSCurrentSentenceCB(value):
     print "TTSCurrentSentenceCB: ",value
+    #memory_service.insertData(key,val)
 
 
-# Touch screen signal 
-
-# qi::Signal<float, float> ALTabletService::onTouchDown
-def touchscreenCB(x, y):
-    print "touchscreenCB: ", x, " ", y
-
-
+# Touch screen callback
+def touchscreenCB(memory_service, ev, x, y):
+    touchxkey = 'Tablet/TouchX'
+    touchykey = 'Tablet/TouchY'
+    if ev=='down':
+        memory_service.insertData(TOUCHXKEY,x)
+        memory_service.insertData(TOUCHYKEY,y)
+    elif ev=='up':
+        memory_service.insertData(TOUCHXKEY,0)
+        memory_service.insertData(TOUCHYKEY,0)
+    else:
+        print "touchscreen ", ev, "  at ", x, " ", y
+        pass
 
 def logheader(output_file,keys_list):
     global bag_format
@@ -265,6 +275,8 @@ def main():
         tablet_service  = None
         print 'Cannot open ALTabletService'
     
+    memory_service.insertData(TOUCHXKEY,0)
+    memory_service.insertData(TOUCHYKEY,0)
 
     #Creating logging directory
     log_folder = time.strftime("%Y%m%d_%H%M%S", time.localtime())
@@ -299,13 +311,12 @@ def main():
 
     if (tablet_service!=None):
         # Touch screen listener
-        sigTTS = tablet_service.onTouchDown.connect(callback)
-
+        sigTTSD = tablet_service.onTouchDown.connect(functools.partial(touchscreenCB, memory_service, 'down'))
+        sigTTSU = tablet_service.onTouchUp.connect(functools.partial(touchscreenCB, memory_service, 'up'))
 
     eventTTS = 'ALTextToSpeech/CurrentSentence'
     subTTS = memory_service.subscriber(eventTTS)
     idEventTTS = subTTS.signal.connect(TTSCurrentSentenceCB)
-
 
     #Program stays at this point until we stop it
     app.run()
@@ -316,7 +327,8 @@ def main():
     subTTS.signal.disconnect(idEventTTS)
 
     if (tablet_service!=None):
-        tablet_service.onTouchDown.disconnect(sigTTS)
+        tablet_service.onTouchDown.disconnect(sigTTSD)
+        tablet_service.onTouchDown.disconnect(sigTTSU)
     
     if keylog_enabled:
         keylogThread.do_run = False

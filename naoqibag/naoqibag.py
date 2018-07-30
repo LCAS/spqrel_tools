@@ -112,8 +112,9 @@ def cameraMonitorThread (pip, pport, rate):
 
 
 def rhMonitorThread (memory_service, rate, output_file):
-    print 'Recording data at @%.2f Hz ...' %rate
-
+    print '%s Recording data at @%.2f Hz ...' %(time.strftime("%Y%m%d_%H%M%S", time.localtime()),rate)
+    ts0 = time.time()
+    tsl = []
     t = threading.currentThread()
     logheader(output_file,keys_list)
     while getattr(t, "do_run", True):
@@ -126,8 +127,10 @@ def rhMonitorThread (memory_service, rate, output_file):
         except Exception as e:
             sys.stdout.write('X') # error
             print e
-
-
+        dt = (int)(time.time() - ts0) / 60
+        if (dt not in tsl):
+            sys.stdout.write(str(dt))
+            tsl.append(dt)
         sys.stdout.flush()
         time.sleep(1.0/rate)
     print "Exiting Thread Log"
@@ -292,3 +295,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

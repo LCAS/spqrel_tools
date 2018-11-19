@@ -49,8 +49,6 @@ def main():
 
     tts_service.say("Initialization completed.")
 
-    tabletService = session.service("ALTabletService")
-
     tmuxinit.do_init()
 
     tts_service.say("I am ready.")

@@ -50,7 +50,10 @@ def tabletshow(tablet_service):
     #tablet_service.showImage(imageinit)
 
     # web page display
-    tablet_service.showWebview(webpageinit)
+    try:
+        tablet_service.showWebview(webpageinit)
+    except:
+        pass
 
 
 def main():

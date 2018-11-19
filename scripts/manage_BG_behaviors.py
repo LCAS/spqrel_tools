@@ -99,6 +99,11 @@ def quit_behaviors(session,pip,pport):
     sm_service.setEnabled(False)
 
 
+def stop_behavior(session, behaviorName):
+    behman_service = session.service("ALBehaviorManager")
+    behman_service.stopBehavior(behaviorName)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--ip", type=str, default=os.getenv('PEPPER_IP'),

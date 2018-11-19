@@ -39,7 +39,12 @@ def main():
     #webinit.do_init(session)
     #time.sleep(1)
     postureinit.do_init(session)
-    time.sleep(1)
+    time.sleep(3)
+
+    manage_BG_behaviors.stop_behavior(session, 'boot-config'):
+
+    time.sleep(3)
+
     manage_BG_behaviors.start_behaviors(session,pip,pport)
 
     tts_service.say("Initialization completed.")

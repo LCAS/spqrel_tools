@@ -12,7 +12,7 @@ actionName = "bow"
 
 
 def actionThread_exec (params):
-    t = threading.currentThread()
+    t = threading.current_thread()
     session = getattr(t, "session", None)
     memory_service = getattr(t, "mem_serv", None)
     rp_service = session.service("ALRobotPosture")
@@ -47,5 +47,3 @@ if __name__ == "__main__":
     app.run()
 
     quit()
-
-
